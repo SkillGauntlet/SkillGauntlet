@@ -423,10 +423,11 @@ async function interactive() {
   const S = { targets: [], host: null, depth: null, model: null, wantProbe: false };
 
   const sourceStep = async () => {
+    say(`\n${t('sourceNote')}`);
     const source = await choose(t('sourceQ'), [
       { label: t('srcInstalled'), hint: t('srcInstalledHint'), value: 'installed' },
       { label: t('srcPath'), value: 'path' },
-      { label: t('srcRepo'), hint: 'owner/repo', value: 'repo' },
+      { label: t('srcRepo'), hint: t('srcRepoHint'), value: 'repo' },
     ], 1);
 
     let targets = [];
