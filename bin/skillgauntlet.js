@@ -13,7 +13,7 @@ import { fingerprint, cacheFileFor, readCachedQueries, writeCachedQueries } from
 import { openRun, querySetHash, readRun, validRecords } from '../lib/runs.js';
 import { DEPTHS, minutesFor } from '../lib/depth.js';
 import { ask, choose, select, confirm, say, closeUi, hasTerminal, setBack, Back } from '../lib/ui.js';
-import { hostModels } from '../lib/models.js';
+import { hostModels, unknownModel } from '../lib/models.js';
 import { browseDir } from '../lib/browse.js';
 import { withTicker } from '../lib/ticker.js';
 import { renderResult, bar } from '../lib/chart.js';
@@ -119,6 +119,14 @@ const waitText = (label, extra = {}) => ({ label, elapsed: t('waitElapsed'), abo
 // Asking a host CLI for its models takes a few seconds (CodeBuddy about three), so it shows a wait line and is
 // remembered for the rest of the run.
 const modelCache = new Map();
+
+// A typed model the host does not list: say so now, while nothing has been spent, and ask again.
+function notListed(model, known, label) {
+  const list = unknownModel(model, known);
+  if (!list) return false;
+  say(`\n${t('modelUnknown', { model, host: label, list: list.slice(0, 8).join(', ') })}`);
+  return true;
+}
 function modelsOf(host, label) {
   if (!modelCache.has(host)) {
     modelCache.set(host, withTicker(waitText(t('waitModels', { host: label }), { slowAfter: 600 }), () => hostModels(host, resolveBin(host))));
@@ -531,6 +539,7 @@ async function interactive() {
       ], 1);
       S.depth = DEPTHS[depthId];
       S.model = await pickModel(modelsOf('codebuddy', 'CodeBuddy'));
+      if (notListed(S.model, modelsOf('codebuddy', 'CodeBuddy'), 'CodeBuddy')) return AGAIN;
       if (isDeepseekModel(S.model) && !process.env.DEEPSEEK_API_KEY) {
         say(`\n${t('needDeepseekKey')}`);
         return END;
@@ -539,6 +548,7 @@ async function interactive() {
     } else {
       say(`\n${t('codexNote')}`);
       S.model = await pickModel(modelsOf('codex', 'Codex'));
+      if (notListed(S.model, modelsOf('codex', 'Codex'), 'Codex')) return AGAIN;
       if (isDeepseekModel(S.model) && !process.env.DEEPSEEK_API_KEY) {
         say(`\n${t('needDeepseekKey')}`);
         return END;

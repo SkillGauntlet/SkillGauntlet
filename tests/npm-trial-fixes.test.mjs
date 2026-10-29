@@ -186,3 +186,13 @@ test('--version prints the package version', async () => {
   const r = spawnSync(process.execPath, [path.join(ROOT_DIR, 'bin', 'skillgauntlet.js'), '--version'], { encoding: 'utf8' });
   assert.equal(r.stdout.trim(), JSON.parse(fs.readFileSync(path.join(ROOT_DIR, 'package.json'), 'utf8')).version);
 });
+
+test('a typed model the host does not list is caught before anything is spent', async () => {
+  const { unknownModel } = await import('../lib/models.js');
+  const known = ['hy3', 'deepseek-v4.1-flash'];
+  assert.deepEqual(unknownModel('custom-local:deepseek-flash', known), known);
+  assert.equal(unknownModel('hy3', known), null);
+  assert.equal(unknownModel(null, known), null);      // the default model
+  assert.equal(unknownModel('deepseek-flash', known), null); // the package's own DeepSeek route
+  assert.equal(unknownModel('anything', []), null);   // the list could not be read: do not block
+});
