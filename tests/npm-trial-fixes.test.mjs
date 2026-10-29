@@ -108,3 +108,23 @@ test('the quick tier asks for enough negatives that its result can be graded', a
   assert.equal(minutesFor(24), 1);
   assert.equal(minutesFor(300), 10);
 });
+
+test('searchHost finds an exact name before a release-style name and ignores unrelated variants', async () => {
+  const { searchHost, installCommand, installHost } = await import('../lib/findhost.js');
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'sg-find-'));
+  const dl = path.join(dir, 'codewhale-win');
+  fs.mkdirSync(dl);
+  fs.writeFileSync(path.join(dl, 'codewhale-windows-x64.exe'), 'x');
+  fs.writeFileSync(path.join(dir, 'codewhale-notes.txt'), 'x');
+  fs.writeFileSync(path.join(dir, 'codewhale-code.cmd'), 'x'); // a different tool sharing the prefix
+  assert.deepEqual(searchHost('codewhale', [dir]).map((f) => path.basename(f)), ['codewhale-windows-x64.exe']);
+  fs.writeFileSync(path.join(dir, 'codewhale.exe'), 'x');
+  assert.equal(path.basename(searchHost('codewhale', [dir])[0]), 'codewhale.exe');
+  assert.equal(installCommand('codewhale'), null);
+  assert.match(installCommand('codebuddy'), /^npm install -g @tencent-ai\/codebuddy-code$/);
+  const ran = [];
+  installHost('codebuddy', (c) => ran.push(c));
+  assert.equal(ran.length, 1);
+  assert.throws(() => installHost('codewhale'), /no installer/);
+  fs.rmSync(dir, { recursive: true, force: true });
+});

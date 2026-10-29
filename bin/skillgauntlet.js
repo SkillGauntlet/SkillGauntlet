@@ -18,7 +18,8 @@ import { browseDir } from '../lib/browse.js';
 import { withTicker } from '../lib/ticker.js';
 import { renderResult, bar } from '../lib/chart.js';
 import { setLang, detectLang, errorText, t } from '../lib/i18n.js';
-import { resolveBin, backend, backendFor, isDeepseekModel, HOSTS, checkModel, draftQueries, draftQuality, runTrial, requireHost, pingHost } from '../lib/trial.js';
+import { resolveBin, backend, backendFor, isDeepseekModel, HOSTS, checkModel, draftQueries, draftQuality, runTrial, requireHost, pingHost, setHostBin, binInstalled } from '../lib/trial.js';
+import { HOST_CLI, searchHost, installCommand, installHost } from '../lib/findhost.js';
 import { runGain } from '../lib/gain.js';
 import { ERROR_STREAK_STOP, executeTrials, finishRun, resumeRun } from '../lib/execute.js';
 import { cmdSubmit } from '../lib/submit.js';
@@ -42,6 +43,38 @@ function writeOut(skillDir, name, md, sc) {
   fs.writeFileSync(path.join(out, `${name}.md`), md);
   fs.writeFileSync(path.join(out, `${name}.scorecard.json`), `${JSON.stringify(sc, null, 2)}\n`);
   return out;
+}
+
+// The host CLI is not on PATH. Look for it elsewhere on the machine, offer to install it where an installer
+// exists, and otherwise let the user pick another host. True when the host can now be used.
+async function fixMissingHost(hostId, err) {
+  const { bin } = HOST_CLI[hostId];
+  const label = err.vars?.host || hostId;
+  say(`\n${t('hostNotOnPath', { host: label })}`);
+  const options = searchHost(hostId).slice(0, 3).map((f) => ({ label: t('hostUseFound', { path: f }), value: { use: f } }));
+  const cmd = installCommand(hostId);
+  if (cmd) options.push({ label: t('hostInstallNow', { cmd }), value: { install: true } });
+  else say(t(err.howKey));
+  options.push({ label: t('hostOther'), value: { other: true } });
+
+  const pick = await select(t('hostFixQ'), options, 0);
+  if (pick.use) {
+    setHostBin(bin, pick.use);
+    say(`  ${pick.use}`);
+    return true;
+  }
+  if (pick.install) {
+    say(`\n${t('hostInstalling', { host: label })}`);
+    try { installHost(hostId); } catch (e) {
+      say(t('hostInstallFailed', { why: e.message }));
+      return false;
+    }
+    if (binInstalled(bin)) return true;
+    const again = searchHost(hostId)[0]; // npm's folder may not be on this process's PATH yet
+    if (again) { setHostBin(bin, again); return true; }
+    say(t('hostStillMissing', { host: label }));
+  }
+  return false;
 }
 
 let approvedFollowing = false; // the user said not to ask again for the remaining skills
@@ -358,8 +391,7 @@ async function interactive() {
     const hostId = { claude: 'claude-code', codebuddy: 'codebuddy', codewhale: 'codewhale' }[S.host];
     if (hostId) {
       try { requireHost(hostId); } catch (err) {
-        say(`\n${errorText(err)}`);
-        return END;
+        if (!(await fixMissingHost(hostId, err))) return AGAIN;
       }
     }
     return null;
