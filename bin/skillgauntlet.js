@@ -14,7 +14,7 @@ import { openRun, querySetHash } from '../lib/runs.js';
 import { DEPTHS, estimate } from '../lib/depth.js';
 import { ask, choose, select, confirm, say, closeUi } from '../lib/ui.js';
 import { setLang, detectLang, errorText, t } from '../lib/i18n.js';
-import { resolveBin, backend, backendFor, isDeepseekModel, HOSTS, checkModel, draftQueries, draftQuality, runTrial, requireHost } from '../lib/trial.js';
+import { resolveBin, backend, backendFor, isDeepseekModel, HOSTS, checkModel, draftQueries, draftQuality, runTrial, requireHost, pingHost } from '../lib/trial.js';
 import { runGain } from '../lib/gain.js';
 import { ERROR_STREAK_STOP, executeTrials, finishRun, resumeRun } from '../lib/execute.js';
 
@@ -39,9 +39,17 @@ function writeOut(skillDir, name, md, sc) {
   return out;
 }
 
+const hostChecked = new Set();
+const HOST_LABEL = { 'claude-code': 'Claude Code', codebuddy: 'CodeBuddy', codewhale: 'Codewhale' };
+
 async function runTriggerLayer({ skillDir, skillName, depth, model, host = 'claude-code' }) {
   requireHost(host);
   const bin = resolveBin(HOSTS[host].bin);
+  if (!hostChecked.has(host)) {
+    say(`  ${t('hostPing', { host: HOST_LABEL[host] || host })}`);
+    pingHost(host, { bin, model });
+    hostChecked.add(host);
+  }
   const cacheFile = cacheFileFor(skillDir, depth);
   const want = { perClause: depth.perClause, negatives: depth.negatives, skillFingerprint: fingerprint(skillDir) };
 
@@ -227,19 +235,26 @@ async function pickRemote() {
       return [];
     }
     if (parsed.hint) {
-      const hit = found.find((d) => relLabel(resolved.dir, d) === parsed.hint || d.endsWith(`/${parsed.hint}`));
+      const hit = found.find((d) => relLabel(resolved.dir, d) === parsed.hint || d.replace(/\\/g, '/').endsWith(`/${parsed.hint}`));
       if (hit) return [{ name: path.basename(hit), dir: hit, root: resolved.dir }];
       say(`  ${t('notFoundNamed', { name: parsed.hint, list: found.map((d) => relLabel(resolved.dir, d)).slice(0, 8).join(', ') })}`);
       return [];
     }
     if (found.length === 1) return [{ name: path.basename(found[0]), dir: found[0], root: resolved.dir }];
-    say(`  ${t('multiFound', { n: found.length })}`);
-    const name = await ask(t('pickOneQ'));
-    const hit = found.find((d) => path.basename(d) === name.trim());
-    if (hit) return [{ name: path.basename(hit), dir: hit, root: resolved.dir }];
-    say(`  ${t('notFoundNamed', { name: name.trim(), list: found.map((d) => relLabel(resolved.dir, d)).slice(0, 8).join(', ') })}`);
-    return [];
+    say(`\n${t('multiFound', { n: found.length })}`);
+    return pickAmong(found, resolved.dir);
   }
+}
+
+// Several skills in one place: all of them, or one picked from the full list.
+async function pickAmong(found, root) {
+  const scope = await choose(t('scopeQ'), [
+    { label: t('scopeAll'), hint: t('scopeAllHint', { n: found.length }), value: 'all' },
+    { label: t('scopeOne'), hint: t('scopeOneHint'), value: 'one' },
+  ], 2);
+  if (scope === 'all') return found.map((d) => ({ name: path.basename(d), dir: d, root }));
+  const dir = await select(t('pickOneQ'), found.map((d) => ({ label: relLabel(root, d), value: d })), 0);
+  return [{ name: path.basename(dir), dir, root }];
 }
 
 async function interactive() {
@@ -280,6 +295,15 @@ async function interactive() {
     { label: t('hostCodewhale'), hint: t('hostCodewhaleHint'), value: 'codewhale' },
     { label: t('hostCodex'), hint: t('hostCodexHint'), value: 'codex' },
   ], 1);
+
+  // Look for the host CLI before any question about depth or model: a missing one ends the run here, for free.
+  const hostId = { claude: 'claude-code', codebuddy: 'codebuddy', codewhale: 'codewhale' }[host];
+  if (hostId) {
+    try { requireHost(hostId); } catch (err) {
+      say(`\n${errorText(err)}`);
+      return;
+    }
+  }
 
   let depth = null;
   let model = null;
@@ -346,7 +370,7 @@ async function interactive() {
       { label: t('depthStandard'), hint: t('depthStandardHint'), value: 'standard' },
     ], 1);
     depth = DEPTHS[depthId];
-    model = (await ask(t('modelQ'), '')).trim() || null;
+    model = (await ask(t('modelOptionalQ'), '')).trim() || null;
     if (isDeepseekModel(model) && !process.env.DEEPSEEK_API_KEY) {
       say(`\n${t('needDeepseekKey')}`);
       return;
@@ -355,7 +379,7 @@ async function interactive() {
     say(`\n${t('codebuddyEstimate', { skills: targets.length, trials: est.trials * targets.length })}`);
   } else {
     say(`\n${t('codexNote')}`);
-    model = (await ask(t('modelQ'), '')).trim() || null;
+    model = (await ask(t('modelOptionalQ'), '')).trim() || null;
     if (isDeepseekModel(model) && !process.env.DEEPSEEK_API_KEY) {
       say(`\n${t('needDeepseekKey')}`);
       return;
