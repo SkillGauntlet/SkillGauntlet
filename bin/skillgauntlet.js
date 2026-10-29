@@ -43,6 +43,7 @@ function writeOut(skillDir, name, md, sc) {
 }
 
 const hostChecked = new Set();
+const finishedRuns = []; // run directories of complete runs, offered for contribution at the end
 const waitText = (label) => ({ label, elapsed: t('waitElapsed'), abortHint: t('waitAbort') });
 const HOST_LABEL = { 'claude-code': 'Claude Code', codebuddy: 'CodeBuddy', codewhale: 'Codewhale' };
 
@@ -119,6 +120,7 @@ async function runTriggerLayer({ skillDir, skillName, depth, model, host = 'clau
     say(`  ${t('runSaved', { path: run.dir })}`);
     if (outcome.stopped) reportStopped(outcome.stopped, run.dir, model);
     else if (result?.incomplete) reportIncomplete(result.incomplete, run.dir, model);
+    else finishedRuns.push(run.dir);
     return result;
   } catch (err) {
     run.close(null, { interrupted: true });
@@ -468,8 +470,13 @@ async function interactive() {
     if ((host === 'claude' || host === 'codebuddy' || host === 'codewhale') && process.exitCode === 3) break;
   }
 
-  // Nothing is uploaded from here. Contributing a run is a separate, deliberate command (`submit`), which
-  // scrubs, previews and asks first; saying so plainly beats a yes/no prompt in the middle of a test run.
+  // Nothing is uploaded without a yes here and a second yes after the preview: `submit` scrubs local paths and
+  // keys, shows exactly what would go, and only then opens the pull request. Declining leaves the run on disk.
+  if (finishedRuns.length && hasTerminal() && process.exitCode !== 3
+    && await confirm(t('contributeQ', { n: finishedRuns.length }), false)) {
+    for (const dir of finishedRuns) await cmdSubmit([dir]);
+    return;
+  }
   say(`\n${t('shareState')}`);
 }
 
