@@ -1,0 +1,185 @@
+{
+  "schema": "skillgauntlet/queries/1",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "how do i install ruflo into this repo? it's C:/dev/acme-api, node 20 is already set up",
+      "shouldTrigger": true,
+      "clause": "install/init ruflo in a project",
+      "shares": "",
+      "borrows": "",
+      "note": "Installing ruflo into an existing project."
+    },
+    {
+      "id": "q02",
+      "query": "帮我在 ~/projects/shop-ui 里初始化 ruflo，顺手把 .claude 配置也生成好",
+      "shouldTrigger": true,
+      "clause": "install/init ruflo in a project",
+      "shares": "",
+      "borrows": "",
+      "note": "Initializes ruflo in a specific project."
+    },
+    {
+      "id": "q03",
+      "query": "spin up a hierarchical ruflo swarm: one lead agent plus 4 workers to refactor src/auth/*.ts",
+      "shouldTrigger": true,
+      "clause": "run multi-agent swarms with hierarchical coordination",
+      "shares": "",
+      "borrows": "",
+      "note": "Runs a ruflo swarm with explicit hierarchical roles."
+    },
+    {
+      "id": "q04",
+      "query": "用 ruflo 跑个多层级的 swarm，先把 packages/api 的测试补全，再让 reviewer agent 过一遍",
+      "shouldTrigger": true,
+      "clause": "run multi-agent swarms with hierarchical coordination",
+      "shares": "",
+      "borrows": "",
+      "note": "Runs a hierarchical multi-agent swarm via ruflo."
+    },
+    {
+      "id": "q05",
+      "query": "use ruflo's memory tools to stash the auth conventions from last session, then search them by meaning",
+      "shouldTrigger": true,
+      "clause": "use ruflo's 314+ MCP tools for memory, routing, hooks, sub-agents, or workflows",
+      "shares": "",
+      "borrows": "",
+      "note": "Uses ruflo MCP memory tools for semantic storage and retrieval."
+    },
+    {
+      "id": "q06",
+      "query": "调一下 ruflo 的 MCP hook，让每次改完 .tsx 文件自动跑路由学习和格式化",
+      "shouldTrigger": true,
+      "clause": "use ruflo's 314+ MCP tools for memory, routing, hooks, sub-agents, or workflows",
+      "shares": "",
+      "borrows": "",
+      "note": "Uses ruflo MCP hooks and routing behavior."
+    },
+    {
+      "id": "q07",
+      "query": "run ruflo doctor --fix in C:/dev/acme-api, it keeps saying the memory db is missing",
+      "shouldTrigger": true,
+      "clause": "check ruflo status/version/doctor health",
+      "shares": "",
+      "borrows": "",
+      "note": "Runs ruflo doctor health checks and fixes."
+    },
+    {
+      "id": "q08",
+      "query": "看下这台机器上 ruflo 的版本和健康状态，doctor 老报 Node 不对",
+      "shouldTrigger": true,
+      "clause": "check ruflo status/version/doctor health",
+      "shares": "",
+      "borrows": "",
+      "note": "Checks ruflo version and doctor health."
+    },
+    {
+      "id": "q09",
+      "query": "which ruflo plugin should i use for a security audit of this monorepo?",
+      "shouldTrigger": true,
+      "clause": "discover which ruflo plugin fits the task",
+      "shares": "",
+      "borrows": "",
+      "note": "Asks which ruflo plugin fits the security audit task."
+    },
+    {
+      "id": "q10",
+      "query": "我这活儿是抓竞品价格做日报，ruflo 那堆插件里哪个比较合适？",
+      "shouldTrigger": true,
+      "clause": "discover which ruflo plugin fits the task",
+      "shares": "",
+      "borrows": "",
+      "note": "Asks for plugin discovery based on the task."
+    },
+    {
+      "id": "q11",
+      "query": "how do i init a pnpm workspace in C:/dev/shop and add eslint + prettier?",
+      "shouldTrigger": false,
+      "clause": "install/init ruflo in a project",
+      "shares": "init",
+      "borrows": "install/init",
+      "note": "This is plain JavaScript tooling setup, not installing or initializing ruflo."
+    },
+    {
+      "id": "q12",
+      "query": "给这个项目初始化一个 .mcp.json，接我们自己的 Postgres MCP server",
+      "shouldTrigger": false,
+      "clause": "install/init ruflo in a project",
+      "shares": "项目初始化",
+      "borrows": "init ruflo in a project",
+      "note": "This configures the user's own MCP server, not ruflo installation."
+    },
+    {
+      "id": "q13",
+      "query": "build a LangGraph multi-agent supervisor in py with a planner and two tool agents",
+      "shouldTrigger": false,
+      "clause": "run multi-agent swarms with hierarchical coordination",
+      "shares": "multi-agent",
+      "borrows": "multi-agent swarms",
+      "note": "This asks to implement another orchestration framework, not run a ruflo swarm."
+    },
+    {
+      "id": "q14",
+      "query": "用 CrewAI 搭个 hierarchical process 的 multi-agent 团队，写竞品调研报告",
+      "shouldTrigger": false,
+      "clause": "run multi-agent swarms with hierarchical coordination",
+      "shares": "hierarchical process 的 multi-agent",
+      "borrows": "multi-agent swarms with hierarchical coordination",
+      "note": "This is a CrewAI implementation request, not ruflo swarm orchestration."
+    },
+    {
+      "id": "q15",
+      "query": "add a redis memory cache to the express app in src/cache.ts",
+      "shouldTrigger": false,
+      "clause": "use ruflo's 314+ MCP tools for memory, routing, hooks, sub-agents, or workflows",
+      "shares": "memory",
+      "borrows": "memory",
+      "note": "This is application caching, not ruflo MCP memory tooling."
+    },
+    {
+      "id": "q16",
+      "query": "在 .husky 里加个 pre-commit hook，提交前跑 prettier 格式化 ts",
+      "shouldTrigger": false,
+      "clause": "use ruflo's 314+ MCP tools for memory, routing, hooks, sub-agents, or workflows",
+      "shares": "hook",
+      "borrows": "hooks",
+      "note": "This is a git hook, not a ruflo agent lifecycle hook."
+    },
+    {
+      "id": "q17",
+      "query": "check the node and npm version required by package.json engines before I bump deps",
+      "shouldTrigger": false,
+      "clause": "check ruflo status/version/doctor health",
+      "shares": "version",
+      "borrows": "version",
+      "note": "This checks project runtime versions, not ruflo's version or doctor health."
+    },
+    {
+      "id": "q18",
+      "query": "帮我跑一下 staging api 的 health check，地址是 https://staging.acme.dev/healthz",
+      "shouldTrigger": false,
+      "clause": "check ruflo status/version/doctor health",
+      "shares": "health check",
+      "borrows": "doctor health",
+      "note": "This checks an application endpoint, not ruflo doctor health."
+    },
+    {
+      "id": "q19",
+      "query": "找个 webpack 插件把生产构建里的 console.log 全去掉",
+      "shouldTrigger": false,
+      "clause": "discover which ruflo plugin fits the task",
+      "shares": "插件",
+      "borrows": "plugin",
+      "note": "This selects a build-tool plugin, not a ruflo plugin."
+    },
+    {
+      "id": "q20",
+      "query": "discover which built-in Claude Code skill fits a docs migration in this repo",
+      "shouldTrigger": false,
+      "clause": "discover which ruflo plugin fits the task",
+      "shares": "discover which",
+      "borrows": "discover which",
+      "note": "This is built-in skill selection, not discovery of a ruflo plugin."
+    }
+  ]
+}
