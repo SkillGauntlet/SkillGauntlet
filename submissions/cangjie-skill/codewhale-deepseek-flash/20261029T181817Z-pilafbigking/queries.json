@@ -1,0 +1,167 @@
+{
+  "schema": "skillgauntlet/queries/1",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "turn this book into skills: books/poor-charlies-almanack.epub — i want the mental models as something my agent can actually call",
+      "shouldTrigger": true,
+      "clause": "拆书 / turn a book into skills",
+      "shares": "",
+      "borrows": "",
+      "note": "Explicit book-to-skill request, names the source file."
+    },
+    {
+      "id": "q02",
+      "query": "帮我把《影响力》拆成 skill,书在 D:\\read\\influence.pdf,想让 agent 真能用上里面的方法",
+      "shouldTrigger": true,
+      "clause": "拆书 / turn a book into skills",
+      "shares": "",
+      "borrows": "",
+      "note": "拆书 + 做成 skill，带文本路径。"
+    },
+    {
+      "id": "q03",
+      "query": "蒸馏一本书:吴军《见识》,txt 在 D:\\read\\jianshi.txt,出几个能用的 skill",
+      "shouldTrigger": true,
+      "clause": "distill a book (蒸馏一本书)",
+      "shares": "",
+      "borrows": "",
+      "note": "明文『蒸馏一本书』并要求产出 skill。"
+    },
+    {
+      "id": "q04",
+      "query": "can you distill Naval's Almanack into a handful of skills? epub is at ~/dl/naval.epub",
+      "shouldTrigger": true,
+      "clause": "distill a book (蒸馏一本书)",
+      "shares": "",
+      "borrows": "",
+      "note": "distill a book into skills, single book source."
+    },
+    {
+      "id": "q05",
+      "query": "这个 B 站视频的转写稿帮我蒸馏成 skill,srt 在 downloads/bv1xx.srt",
+      "shouldTrigger": true,
+      "clause": "video / podcast / course → skill",
+      "shares": "",
+      "borrows": "",
+      "note": "视频转写稿 → skill。"
+    },
+    {
+      "id": "q06",
+      "query": "got a 3 hour podcast transcript in ./pod/ep12.txt — turn it into skills my agent can invoke",
+      "shouldTrigger": true,
+      "clause": "video / podcast / course → skill",
+      "shares": "",
+      "borrows": "",
+      "note": "Podcast transcript → invocable skills."
+    },
+    {
+      "id": "q07",
+      "query": "从这份 40 页的访谈转写里把可复用的方法论抽成原子能力,agent 要能直接调用",
+      "shouldTrigger": true,
+      "clause": "extract frameworks & methodologies into atomic reusable skills",
+      "shares": "",
+      "borrows": "",
+      "note": "访谈长文 → 原子化可调用能力。"
+    },
+    {
+      "id": "q08",
+      "query": "pull the frameworks and decision rules out of this 600-page course handout into separate atomic skills",
+      "shouldTrigger": true,
+      "clause": "extract frameworks & methodologies into atomic reusable skills",
+      "shares": "",
+      "borrows": "",
+      "note": "Frameworks/rules extraction into atomic skills."
+    },
+    {
+      "id": "q09",
+      "query": "帮我拆一下《人类简史》这本书的章节骨架,每章给我两百字摘要",
+      "shouldTrigger": false,
+      "clause": "拆书 / turn a book into skills",
+      "shares": "拆一下《人类简史》这本书",
+      "borrows": "拆书 / 把 XX 书做成 skill",
+      "note": "Asks for a chapter skeleton and per-chapter summaries, not executable skills."
+    },
+    {
+      "id": "q10",
+      "query": "把《原则》这本书的读后感写一下,1500 字,我想发公众号",
+      "shouldTrigger": false,
+      "clause": "拆书 / turn a book into skills",
+      "shares": "把《原则》这本书",
+      "borrows": "把 XX 书做成 skill",
+      "note": "A book review, which the description explicitly excludes."
+    },
+    {
+      "id": "q11",
+      "query": "把这本书的 PDF 切块灌进向量库,我后面要拿来问答",
+      "shouldTrigger": false,
+      "clause": "拆书 / turn a book into skills",
+      "shares": "把这本书",
+      "borrows": "turn a book ... into skills",
+      "note": "RAG ingestion of a book file, no methodology extraction into skills."
+    },
+    {
+      "id": "q12",
+      "query": "蒸馏一下这篇公众号长文的三个要点,简单说说就行",
+      "shouldTrigger": false,
+      "clause": "distill a book (蒸馏一本书)",
+      "shares": "蒸馏一下",
+      "borrows": "蒸馏一本书",
+      "note": "Plain summarization of key points, explicitly outside the skill."
+    },
+    {
+      "id": "q13",
+      "query": "把《毛选》里教员的说话风格做成一个角色,模仿他的语气回我消息",
+      "shouldTrigger": false,
+      "clause": "distill a book (蒸馏一本书)",
+      "shares": "把《毛选》",
+      "borrows": "把 XX 书做成 skill",
+      "note": "Author-persona role-play, which belongs to nuwa-skill."
+    },
+    {
+      "id": "q14",
+      "query": "把这个 B 站视频的英文字幕翻成中文 srt,时间轴别乱",
+      "shouldTrigger": false,
+      "clause": "video / podcast / course → skill",
+      "shares": "这个 B 站视频",
+      "borrows": "把这个视频……蒸馏成 skill",
+      "note": "Subtitle translation of the same video, not distillation into skills."
+    },
+    {
+      "id": "q15",
+      "query": "这一期播客帮我把 shownotes 和时间戳整理出来",
+      "shouldTrigger": false,
+      "clause": "video / podcast / course → skill",
+      "shares": "这一期播客",
+      "borrows": "播客",
+      "note": "Show-notes/metadata cleanup for the same audio, no capability extraction."
+    },
+    {
+      "id": "q16",
+      "query": "我这个 skill 老是该触发的时候不触发,帮我改改 description",
+      "shouldTrigger": false,
+      "clause": "extract frameworks & methodologies into atomic reusable skills",
+      "shares": "skill",
+      "borrows": "executable skills",
+      "note": "Skill-description tuning for an existing skill, which is darwin-skill's job."
+    },
+    {
+      "id": "q17",
+      "query": "把这些 skill 装到 ~/.claude/skills,确保 agent 能调用",
+      "shouldTrigger": false,
+      "clause": "extract frameworks & methodologies into atomic reusable skills",
+      "shares": "agent 能调用",
+      "borrows": "skills that an agent can invoke in real-world situations",
+      "note": "Installation of existing skills, with no long-form content being distilled."
+    },
+    {
+      "id": "q18",
+      "query": "从这份访谈里把嘉宾提到的人名、公司、书单列个表",
+      "shouldTrigger": false,
+      "clause": "extract frameworks & methodologies into atomic reusable skills",
+      "shares": "从这份访谈里",
+      "borrows": "interview",
+      "note": "Entity extraction from the same interview transcript, not methodologies or frameworks."
+    }
+  ]
+}
