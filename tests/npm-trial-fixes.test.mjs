@@ -128,3 +128,17 @@ test('searchHost finds an exact name before a release-style name and ignores unr
   assert.throws(() => installHost('nothing'), /no installer/);
   fs.rmSync(dir, { recursive: true, force: true });
 });
+
+test('a skill is known by its frontmatter name, not by the folder it sits in', async () => {
+  const { skillNameOf } = await import('../lib/discover.js');
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'sg-name-'));
+  const dir = path.join(root, 'ruvnet__ruflo');
+  fs.mkdirSync(dir);
+  fs.writeFileSync(path.join(dir, 'SKILL.md'), '---\nname: ruflo\ndescription: x\n---\nbody');
+  assert.equal(skillNameOf(dir), 'ruflo');
+  fs.writeFileSync(path.join(dir, 'SKILL.md'), '---\ndescription: x\n---\nbody');
+  assert.equal(skillNameOf(dir), 'ruvnet__ruflo');
+  fs.writeFileSync(path.join(dir, 'SKILL.md'), '---\nname: "has spaces & slashes/"\n---\nbody');
+  assert.equal(skillNameOf(dir), 'ruvnet__ruflo');
+  fs.rmSync(root, { recursive: true, force: true });
+});

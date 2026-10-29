@@ -6,7 +6,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { analyze } from '../lib/static.js';
 import { staticMarkdown, trialSection, gainSection, probeSection, scorecard } from '../lib/report.js';
-import { findSkills, resolveSpec } from '../lib/discover.js';
+import { findSkills, resolveSpec, skillNameOf } from '../lib/discover.js';
 import { installedSkills } from '../lib/installed.js';
 import { probeActivation } from '../lib/codex.js';
 import { fingerprint, cacheFileFor, readCachedQueries, writeCachedQueries } from '../lib/queries.js';
@@ -375,7 +375,7 @@ async function interactive() {
       }
     } else targets = await pickRemote();
     if (!targets.length) return hasTerminal() ? AGAIN : END;
-    S.targets = targets;
+    S.targets = targets.map((tg) => ({ ...tg, name: skillNameOf(tg.dir) }));
     return null;
   };
 
