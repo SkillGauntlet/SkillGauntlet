@@ -14,7 +14,7 @@ import { openRun, querySetHash } from '../lib/runs.js';
 import { DEPTHS, estimate } from '../lib/depth.js';
 import { ask, choose, select, confirm, say, closeUi } from '../lib/ui.js';
 import { setLang, detectLang, errorText, t } from '../lib/i18n.js';
-import { resolveBin, backend, backendFor, isDeepseekModel, HOSTS, checkModel, draftQueries, draftQuality, runTrial } from '../lib/trial.js';
+import { resolveBin, backend, backendFor, isDeepseekModel, HOSTS, checkModel, draftQueries, draftQuality, runTrial, requireHost } from '../lib/trial.js';
 import { runGain } from '../lib/gain.js';
 import { ERROR_STREAK_STOP, executeTrials, finishRun, resumeRun } from '../lib/execute.js';
 
@@ -40,6 +40,7 @@ function writeOut(skillDir, name, md, sc) {
 }
 
 async function runTriggerLayer({ skillDir, skillName, depth, model, host = 'claude-code' }) {
+  requireHost(host);
   const bin = resolveBin(HOSTS[host].bin);
   const cacheFile = cacheFileFor(skillDir, depth);
   const want = { perClause: depth.perClause, negatives: depth.negatives, skillFingerprint: fingerprint(skillDir) };
@@ -171,6 +172,7 @@ async function cmdResume(args) {
   const full = path.resolve(dir);
   const runMeta = JSON.parse(fs.readFileSync(path.join(full, 'meta.json'), 'utf8'));
   const runHost = runMeta.host || 'claude-code';
+  requireHost(runHost);
   const result = await resumeRun({
     dir: full,
     bin: resolveBin((HOSTS[runHost] || HOSTS['claude-code']).bin),
@@ -387,7 +389,7 @@ async function interactive() {
           skillDir: target.dir, skillName: target.name, depth, model, host: { claude: 'claude-code', codebuddy: 'codebuddy', codewhale: 'codewhale' }[host],
         });
       } catch (err) {
-        say(`  ${t('trialFail', { err: err.message })}`);
+        say(`  ${t('trialFail', { err: errorText(err) })}`);
       }
       if (host === 'claude' && depth.layers.includes('gain')) {
         say(`  ${t('gainNote')}`);
