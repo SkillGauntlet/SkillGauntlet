@@ -89,3 +89,15 @@ test('the wait bar draws its label and counts seconds, and the wrapper is a no-o
   assert.match(r.stdout, /Ctrl\+C aborts/);
   assert.equal(withTicker({ label: 'x', elapsed: '{s}', abortHint: 'h' }, () => 42), 42);
 });
+
+test('model lists are read from the host and any failure gives an empty list', async () => {
+  const { parseCodebuddyModels, parseCodexModels, hostModels } = await import('../lib/models.js');
+  assert.deepEqual(parseCodebuddyModels('  --model <model>  Model. Currently supported: (hy3, deepseek-v4-pro, custom-local:x)\n'), ['hy3', 'deepseek-v4-pro', 'custom-local:x']);
+  assert.deepEqual(parseCodebuddyModels('no list here'), []);
+  const json = JSON.stringify({ models: [{ slug: 'a', visibility: 'list' }, { slug: 'b', visibility: 'hide' }] });
+  assert.deepEqual(parseCodexModels(json), ['a']);
+  assert.deepEqual(parseCodexModels('not json'), []);
+  assert.deepEqual(hostModels('codex', 'codex', () => json), ['a']);
+  assert.deepEqual(hostModels('codex', 'codex', () => { throw new Error('x'); }), []);
+  assert.deepEqual(hostModels('codewhale', 'codewhale', () => json), []);
+});

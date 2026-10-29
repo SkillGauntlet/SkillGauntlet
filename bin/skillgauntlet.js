@@ -12,7 +12,8 @@ import { probeActivation } from '../lib/codex.js';
 import { fingerprint, cacheFileFor, readCachedQueries, writeCachedQueries } from '../lib/queries.js';
 import { openRun, querySetHash } from '../lib/runs.js';
 import { DEPTHS, estimate } from '../lib/depth.js';
-import { ask, choose, select, confirm, say, closeUi, hasTerminal } from '../lib/ui.js';
+import { ask, choose, select, confirm, say, closeUi, hasTerminal, setBack, Back } from '../lib/ui.js';
+import { hostModels } from '../lib/models.js';
 import { browseDir } from '../lib/browse.js';
 import { withTicker } from '../lib/ticker.js';
 import { setLang, detectLang, errorText, t } from '../lib/i18n.js';
@@ -286,134 +287,169 @@ async function interactive() {
   say(t('title'));
   say(t('rule'));
 
-  const source = await choose(t('sourceQ'), [
-    { label: t('srcInstalled'), hint: t('srcInstalledHint'), value: 'installed' },
-    { label: t('srcPath'), value: 'path' },
-    { label: t('srcRepo'), hint: 'owner/repo', value: 'repo' },
-  ], 1);
+  setBack(true);
 
-  let targets = [];
-  if (source === 'installed') targets = await pickInstalled();
-  else if (source === 'path') {
-    // Arrow keys walk the folders; typing a path stays available as the last entry (and is all a pipe has).
-    const browsed = hasTerminal() ? await browseDir((a, b, c) => select(a, b, c, { clear: true })) : null;
-    if (browsed) say(`  ${browsed}`);
-    const root = path.resolve(browsed ?? await ask(t('srcPath')));
-    const found = findSkills(root);
-    if (!found.length) say(`\n${t('noSkill')}`);
-    else if (found.length === 1) targets = [{ name: path.basename(found[0]), dir: found[0], root }];
-    else {
-      say(`\n${t('multiFound', { n: found.length })}`);
-      targets = await pickAmong(found, root);
-    }
-  } else targets = await pickRemote();
-  if (!targets.length) return;
+  // The questions run as steps so ← or Esc can return to the previous one (a step that ends the run returns END).
+  const END = Symbol('end');
+  const AGAIN = Symbol('again');
+  const S = { targets: [], host: null, depth: null, model: null, wantProbe: false };
 
-  const host = await choose(t('hostQ'), [
-    { label: t('hostClaude'), hint: t('hostClaudeHint'), value: 'claude' },
-    { label: t('hostCodebuddy'), hint: t('hostCodebuddyHint'), value: 'codebuddy' },
-    { label: t('hostCodewhale'), hint: t('hostCodewhaleHint'), value: 'codewhale' },
-    { label: t('hostCodex'), hint: t('hostCodexHint'), value: 'codex' },
-  ], 1);
-
-  // Look for the host CLI before any question about depth or model: a missing one ends the run here, for free.
-  const hostId = { claude: 'claude-code', codebuddy: 'codebuddy', codewhale: 'codewhale' }[host];
-  if (hostId) {
-    try { requireHost(hostId); } catch (err) {
-      say(`\n${errorText(err)}`);
-      return;
-    }
-  }
-
-  let depth = null;
-  let model = null;
-  let wantProbe = false;
-
-  if (host === 'claude') {
-    const depthId = await choose(t('depthQ'), [
-      { label: t('depthQuick'), hint: t('depthQuickHint'), value: 'quick' },
-      { label: t('depthStandard'), hint: t('depthStandardHint'), value: 'standard' },
-      { label: t('depthDeep'), hint: t('depthDeepHint'), value: 'deep' },
-    ], 2);
-    depth = DEPTHS[depthId];
-
-    const provider = await choose(t('providerQ'), [
-      { label: t('provClaude'), hint: t('provClaudeHint'), value: 'claude' },
-      { label: t('provDeepseek'), hint: t('provDeepseekHint'), value: 'deepseek' },
-      { label: t('provManual'), value: 'manual' },
+  const sourceStep = async () => {
+    const source = await choose(t('sourceQ'), [
+      { label: t('srcInstalled'), hint: t('srcInstalledHint'), value: 'installed' },
+      { label: t('srcPath'), value: 'path' },
+      { label: t('srcRepo'), hint: 'owner/repo', value: 'repo' },
     ], 1);
 
-    if (provider === 'claude') {
-      model = await choose(t('modelQ'), [
-        { label: 'haiku', hint: t('modelCheap'), value: 'haiku' },
-        { label: 'sonnet', hint: t('modelDaily'), value: 'sonnet' },
-        { label: 'opus', hint: t('modelExpensive'), value: 'opus' },
-      ], 1);
-    } else if (provider === 'deepseek') {
-      if (!process.env.ANTHROPIC_BASE_URL) {
-        say(`\n${t('needBaseUrl')}`);
-        return;
+    let targets = [];
+    if (source === 'installed') targets = await pickInstalled();
+    else if (source === 'path') {
+      // Arrow keys walk the folders; typing a path stays available as the last entry (and is all a pipe has).
+      const browsed = hasTerminal() ? await browseDir((a, b, c) => select(a, b, c, { clear: true })) : null;
+      if (browsed) say(`  ${browsed}`);
+      const root = path.resolve(browsed ?? await ask(t('srcPath')));
+      const found = findSkills(root);
+      if (!found.length) say(`\n${t('noSkill')}`);
+      else if (found.length === 1) targets = [{ name: path.basename(found[0]), dir: found[0], root }];
+      else {
+        say(`\n${t('multiFound', { n: found.length })}`);
+        targets = await pickAmong(found, root);
       }
-      model = await choose(t('modelQ'), [
-        { label: 'deepseek-v4-flash', value: 'deepseek-v4-flash' },
-        { label: 'deepseek-v4-pro', value: 'deepseek-v4-pro' },
+    } else targets = await pickRemote();
+    if (!targets.length) return hasTerminal() ? AGAIN : END;
+    S.targets = targets;
+    return null;
+  };
+
+  const hostStep = async () => {
+    S.host = await choose(t('hostQ'), [
+      { label: t('hostClaude'), hint: t('hostClaudeHint'), value: 'claude' },
+      { label: t('hostCodebuddy'), hint: t('hostCodebuddyHint'), value: 'codebuddy' },
+      { label: t('hostCodewhale'), hint: t('hostCodewhaleHint'), value: 'codewhale' },
+      { label: t('hostCodex'), hint: t('hostCodexHint'), value: 'codex' },
+    ], 1);
+
+    // Look for the host CLI before any question about depth or model: a missing one ends the run here, for free.
+    const hostId = { claude: 'claude-code', codebuddy: 'codebuddy', codewhale: 'codewhale' }[S.host];
+    if (hostId) {
+      try { requireHost(hostId); } catch (err) {
+        say(`\n${errorText(err)}`);
+        return END;
+      }
+    }
+    return null;
+  };
+
+  const optionsStep = async () => {
+    const { host, targets } = S;
+    S.depth = null;
+    S.model = null;
+    S.wantProbe = false;
+
+    if (host === 'claude') {
+      const depthId = await choose(t('depthQ'), [
+        { label: t('depthQuick'), hint: t('depthQuickHint'), value: 'quick' },
+        { label: t('depthStandard'), hint: t('depthStandardHint'), value: 'standard' },
+        { label: t('depthDeep'), hint: t('depthDeepHint'), value: 'deep' },
+      ], 2);
+      S.depth = DEPTHS[depthId];
+
+      const provider = await choose(t('providerQ'), [
+        { label: t('provClaude'), hint: t('provClaudeHint'), value: 'claude' },
+        { label: t('provDeepseek'), hint: t('provDeepseekHint'), value: 'deepseek' },
+        { label: t('provManual'), value: 'manual' },
       ], 1);
-    } else model = await ask(t('modelQ'));
-    checkModel(model, false);
-    say(`\n${t('backendLine', { backend: backend(), model })}`);
 
-    const est = estimate(depthId, 3);
-    say(`\n${t('estimate', {
-      skills: targets.length,
-      trials: est.trials,
-      minutes: est.minutes,
-      totalMinutes: est.minutes * targets.length,
-    })}`);
-  } else if (host === 'codewhale') {
-    say(`\n${t('codewhaleNote')}`);
-    const depthId = await choose(t('depthQ'), [
-      { label: t('depthQuick'), hint: t('depthQuickHint'), value: 'quick' },
-      { label: t('depthStandard'), hint: t('depthStandardHint'), value: 'standard' },
-    ], 1);
-    depth = DEPTHS[depthId];
-    model = (await pickModel(['deepseek-flash'])) || 'deepseek-flash';
-    if (!process.env.DEEPSEEK_API_KEY) {
-      say(`\n${t('needDeepseekKey')}`);
-      return;
-    }
-    const est = estimate(depthId, 3);
-    say(`\n${t('codewhaleEstimate', { skills: targets.length, trials: est.trials * targets.length })}`);
-  } else if (host === 'codebuddy') {
-    say(`\n${t('codebuddyNote')}`);
-    const depthId = await choose(t('depthQ'), [
-      { label: t('depthQuick'), hint: t('depthQuickHint'), value: 'quick' },
-      { label: t('depthStandard'), hint: t('depthStandardHint'), value: 'standard' },
-    ], 1);
-    depth = DEPTHS[depthId];
-    model = await pickModel(['deepseek-flash']);
-    if (isDeepseekModel(model) && !process.env.DEEPSEEK_API_KEY) {
-      say(`\n${t('needDeepseekKey')}`);
-      return;
-    }
-    const est = estimate(depthId, 3);
-    say(`\n${t('codebuddyEstimate', { skills: targets.length, trials: est.trials * targets.length })}`);
-  } else {
-    say(`\n${t('codexNote')}`);
-    model = await pickModel();
-    if (isDeepseekModel(model) && !process.env.DEEPSEEK_API_KEY) {
-      say(`\n${t('needDeepseekKey')}`);
-      return;
-    }
-    wantProbe = await confirm(t('probeQ'), false);
-    say(`\n${wantProbe
-      ? t('codexEstimate', { skills: targets.length, runs: 2 })
-      : t('codexStaticOnly', { skills: targets.length })}`);
-  }
+      let model;
+      if (provider === 'claude') {
+        model = await choose(t('modelQ'), [
+          { label: 'haiku', hint: t('modelCheap'), value: 'haiku' },
+          { label: 'sonnet', hint: t('modelDaily'), value: 'sonnet' },
+          { label: 'opus', hint: t('modelExpensive'), value: 'opus' },
+        ], 1);
+      } else if (provider === 'deepseek') {
+        if (!process.env.ANTHROPIC_BASE_URL) {
+          say(`\n${t('needBaseUrl')}`);
+          return END;
+        }
+        model = await choose(t('modelQ'), [
+          { label: 'deepseek-v4-flash', value: 'deepseek-v4-flash' },
+          { label: 'deepseek-v4-pro', value: 'deepseek-v4-pro' },
+        ], 1);
+      } else model = await ask(t('modelQ'));
+      checkModel(model, false);
+      S.model = model;
+      say(`\n${t('backendLine', { backend: backend(), model })}`);
 
-  if (!(await confirm(t('confirmRun'), false))) {
-    say(t('cancelled'));
-    return;
+      const est = estimate(depthId, 3);
+      say(`\n${t('estimate', {
+        skills: targets.length,
+        trials: est.trials,
+        minutes: est.minutes,
+        totalMinutes: est.minutes * targets.length,
+      })}`);
+    } else if (host === 'codewhale') {
+      say(`\n${t('codewhaleNote')}`);
+      const depthId = await choose(t('depthQ'), [
+        { label: t('depthQuick'), hint: t('depthQuickHint'), value: 'quick' },
+        { label: t('depthStandard'), hint: t('depthStandardHint'), value: 'standard' },
+      ], 1);
+      S.depth = DEPTHS[depthId];
+      S.model = (await pickModel(['deepseek-flash'])) || 'deepseek-flash';
+      if (!process.env.DEEPSEEK_API_KEY) {
+        say(`\n${t('needDeepseekKey')}`);
+        return END;
+      }
+      const est = estimate(depthId, 3);
+      say(`\n${t('codewhaleEstimate', { skills: targets.length, trials: est.trials * targets.length })}`);
+    } else if (host === 'codebuddy') {
+      say(`\n${t('codebuddyNote')}`);
+      const depthId = await choose(t('depthQ'), [
+        { label: t('depthQuick'), hint: t('depthQuickHint'), value: 'quick' },
+        { label: t('depthStandard'), hint: t('depthStandardHint'), value: 'standard' },
+      ], 1);
+      S.depth = DEPTHS[depthId];
+      S.model = await pickModel(hostModels('codebuddy', resolveBin('codebuddy')));
+      if (isDeepseekModel(S.model) && !process.env.DEEPSEEK_API_KEY) {
+        say(`\n${t('needDeepseekKey')}`);
+        return END;
+      }
+      const est = estimate(depthId, 3);
+      say(`\n${t('codebuddyEstimate', { skills: targets.length, trials: est.trials * targets.length })}`);
+    } else {
+      say(`\n${t('codexNote')}`);
+      S.model = await pickModel(hostModels('codex', resolveBin('codex')));
+      if (isDeepseekModel(S.model) && !process.env.DEEPSEEK_API_KEY) {
+        say(`\n${t('needDeepseekKey')}`);
+        return END;
+      }
+      S.wantProbe = await confirm(t('probeQ'), false);
+      say(`\n${S.wantProbe
+        ? t('codexEstimate', { skills: targets.length, runs: 2 })
+        : t('codexStaticOnly', { skills: targets.length })}`);
+    }
+    return null;
+  };
+
+  const confirmStep = async () => {
+    if (!(await confirm(t('confirmRun'), false))) {
+      say(t('cancelled'));
+      return END;
+    }
+    return null;
+  };
+
+  const steps = [sourceStep, hostStep, optionsStep, confirmStep];
+  for (let i = 0; i < steps.length;) {
+    let r;
+    try { r = await steps[i](); } catch (err) {
+      if (err instanceof Back) { i = Math.max(0, i - 1); continue; }
+      throw err;
+    }
+    if (r === END) return;
+    if (r !== AGAIN) i += 1;
   }
+  const { targets, host, depth, model, wantProbe } = S;
 
   for (const target of targets) {
     say(`\n──── ${target.name} ────`);
