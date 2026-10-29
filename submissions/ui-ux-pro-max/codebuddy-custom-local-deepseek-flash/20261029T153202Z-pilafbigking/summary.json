@@ -1,0 +1,166 @@
+{
+  "trials": 24,
+  "recall": 0.2,
+  "fpr": 0,
+  "noToolRate": 0,
+  "questions": [
+    {
+      "query": "need a landing page for our invoicing saas, clean modern look - can u build it",
+      "shouldTrigger": true,
+      "hits": 1,
+      "n": 1
+    },
+    {
+      "query": "帮我设计个健身 app 的首页，深色系，要有高级感",
+      "shouldTrigger": true,
+      "hits": 1,
+      "n": 1
+    },
+    {
+      "query": "our PricingCard component is a mess, refactor it into variants",
+      "shouldTrigger": true,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "把这个 Button 组件重构下，要支持三种尺寸加禁用态",
+      "shouldTrigger": true,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "帮我看看这个注册页有没有体验上的毛病",
+      "shouldTrigger": true,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "review the checkout flow in src/pages/checkout.tsx for ux problems",
+      "shouldTrigger": true,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "the modal overflows the viewport on safari, fix the layout",
+      "shouldTrigger": true,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "移动端卡片标题被截断了，文字溢出，怎么修",
+      "shouldTrigger": true,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "we need a design token set and color palette for a fintech dashboard",
+      "shouldTrigger": true,
+      "hits": 1,
+      "n": 1
+    },
+    {
+      "query": "给我们这套后台定一套设计系统，颜色字号间距都规范下来",
+      "shouldTrigger": true,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "form errors arent announced by screen readers, need a11y fixes",
+      "shouldTrigger": true,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "这个下拉菜单键盘完全操作不了，焦点也丢了，无障碍得处理",
+      "shouldTrigger": true,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "sidebar collapses weirdly on tablet widths, need responsive behavior",
+      "shouldTrigger": true,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "手机上导航改成底部 tab，桌面还是侧边栏，把响应式布局做了",
+      "shouldTrigger": true,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "pick a font pairing and color scheme for a playful kids learning app",
+      "shouldTrigger": true,
+      "hits": 1,
+      "n": 1
+    },
+    {
+      "query": "正文字号 14px 感觉太小，行高和字色也灰得看不清，帮我调下排版",
+      "shouldTrigger": true,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "build a revenue line chart with tooltips and legend for the dashboard",
+      "shouldTrigger": true,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "这个销售图表的图例和 hover 提示不清楚，优化下数据可视化",
+      "shouldTrigger": true,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "implement this settings screen in SwiftUI with proper safe areas",
+      "shouldTrigger": true,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "用 tailwind 把这个卡片布局实现出来，注意 hover 态",
+      "shouldTrigger": true,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "帮我用 matplotlib 把 data/sales.csv 画成折线图导出 png，放进周报里",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "帮我 review 一下这个 PR 的 diff，逻辑有没有坑",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "把我们的设计规范整理成一份 Confluence 文档，给新人培训用",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "用 Next.js 写个 cron job 每天把订单同步到 S3，代码放 src/jobs/",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    }
+  ],
+  "failedTrials": 0,
+  "incomplete": 0,
+  "model": "deepseek-flash",
+  "backend": "codebuddy:api.deepseek.com",
+  "host": "codebuddy",
+  "runs": 1,
+  "recallCi": [
+    0.0806563532712,
+    0.41602172202575993
+  ],
+  "fprCi": [
+    0,
+    0.48990002040399916
+  ]
+}
