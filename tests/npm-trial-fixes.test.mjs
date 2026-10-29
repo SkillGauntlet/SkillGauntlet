@@ -59,3 +59,23 @@ test('no estimate or hint promises "no cash"', () => {
     }
   }
 });
+
+test('browseDir walks folders with a scripted selection and can hand over to typing', async () => {
+  const { browseDir } = await import('../lib/browse.js');
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'sg-browse-'));
+  fs.mkdirSync(path.join(root, 'a', 'inner'), { recursive: true });
+  fs.mkdirSync(path.join(root, '.hidden'));
+  fs.writeFileSync(path.join(root, 'a', 'SKILL.md'), 'x');
+  setLang('en');
+  const seen = [];
+  const script = (steps) => async (title, options) => {
+    seen.push(options.map((o) => o.label));
+    return steps.shift()(options);
+  };
+  const go = (name) => (opts) => opts.find((o) => o.label === name).value;
+  const picked = await browseDir(script([go(`a${path.sep}`), go('✔ Use this folder')]), root);
+  assert.equal(picked, path.join(root, 'a'));
+  assert.ok(!seen[0].some((l) => l.startsWith('.hidden')), 'plain dot folders are not offered');
+  assert.equal(await browseDir(script([go('✎ Type a path…')]), root), null);
+  fs.rmSync(root, { recursive: true, force: true });
+});

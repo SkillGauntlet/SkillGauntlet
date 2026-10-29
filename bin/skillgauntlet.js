@@ -12,7 +12,8 @@ import { probeActivation } from '../lib/codex.js';
 import { fingerprint, cacheFileFor, readCachedQueries, writeCachedQueries } from '../lib/queries.js';
 import { openRun, querySetHash } from '../lib/runs.js';
 import { DEPTHS, estimate } from '../lib/depth.js';
-import { ask, choose, select, confirm, say, closeUi } from '../lib/ui.js';
+import { ask, choose, select, confirm, say, closeUi, hasTerminal } from '../lib/ui.js';
+import { browseDir } from '../lib/browse.js';
 import { setLang, detectLang, errorText, t } from '../lib/i18n.js';
 import { resolveBin, backend, backendFor, isDeepseekModel, HOSTS, checkModel, draftQueries, draftQuality, runTrial, requireHost, pingHost } from '../lib/trial.js';
 import { runGain } from '../lib/gain.js';
@@ -214,6 +215,19 @@ async function pickInstalled() {
   return hit ? [{ name: hit.name, dir: hit.dir, root: hit.root }] : [];
 }
 
+// A model for hosts that have an account default: pick it, a known name, or type one. Returns null for the default.
+async function pickModel(known = []) {
+  if (!hasTerminal()) return (await ask(t('modelOptionalQ'), '')).trim() || null;
+  const other = '\u0000other';
+  const v = await select(t('modelQ'), [
+    { label: t('modelDefault'), value: '' },
+    ...known.map((m) => ({ label: m, value: m })),
+    { label: t('modelOther'), value: other },
+  ], 0);
+  if (v === other) return (await ask(t('modelOptionalQ'), '')).trim() || null;
+  return v || null;
+}
+
 async function pickRemote() {
   for (;;) {
     const raw = await ask(t('askRepo'));
@@ -278,13 +292,15 @@ async function interactive() {
   let targets = [];
   if (source === 'installed') targets = await pickInstalled();
   else if (source === 'path') {
-    const root = path.resolve(await ask(t('srcPath')));
+    // Arrow keys walk the folders; typing a path stays available as the last entry (and is all a pipe has).
+    const browsed = hasTerminal() ? await browseDir(select) : null;
+    const root = path.resolve(browsed ?? await ask(t('srcPath')));
     const found = findSkills(root);
     if (!found.length) say(`\n${t('noSkill')}`);
     else if (found.length === 1) targets = [{ name: path.basename(found[0]), dir: found[0], root }];
     else {
-      const name = await select(t('pickOneQ'), found.map((d) => ({ label: relLabel(root, d), value: d })), 0);
-      targets = [{ name: path.basename(name), dir: name, root }];
+      say(`\n${t('multiFound', { n: found.length })}`);
+      targets = await pickAmong(found, root);
     }
   } else targets = await pickRemote();
   if (!targets.length) return;
@@ -356,7 +372,7 @@ async function interactive() {
       { label: t('depthStandard'), hint: t('depthStandardHint'), value: 'standard' },
     ], 1);
     depth = DEPTHS[depthId];
-    model = (await ask(t('modelQ'), 'deepseek-flash')).trim() || 'deepseek-flash';
+    model = (await pickModel(['deepseek-flash'])) || 'deepseek-flash';
     if (!process.env.DEEPSEEK_API_KEY) {
       say(`\n${t('needDeepseekKey')}`);
       return;
@@ -370,7 +386,7 @@ async function interactive() {
       { label: t('depthStandard'), hint: t('depthStandardHint'), value: 'standard' },
     ], 1);
     depth = DEPTHS[depthId];
-    model = (await ask(t('modelOptionalQ'), '')).trim() || null;
+    model = await pickModel(['deepseek-flash']);
     if (isDeepseekModel(model) && !process.env.DEEPSEEK_API_KEY) {
       say(`\n${t('needDeepseekKey')}`);
       return;
@@ -379,7 +395,7 @@ async function interactive() {
     say(`\n${t('codebuddyEstimate', { skills: targets.length, trials: est.trials * targets.length })}`);
   } else {
     say(`\n${t('codexNote')}`);
-    model = (await ask(t('modelOptionalQ'), '')).trim() || null;
+    model = await pickModel();
     if (isDeepseekModel(model) && !process.env.DEEPSEEK_API_KEY) {
       say(`\n${t('needDeepseekKey')}`);
       return;
