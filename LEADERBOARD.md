@@ -4,7 +4,7 @@
 
 **These are automated test results.** The questions were drafted by AI and not reviewed by hand. A row describes how one skill triggered on the host and model named in its table, at the pinned SKILL.md; it is not an overall judgement of the skill. Disagree with a result? Open an appeal (see "Appeals" in [CONTRIBUTING.md](CONTRIBUTING.md)).
 
-19 skills, 37 rows: 36 from the maintainer's batches in `step0/data/`, 1 community submissions. Want a row filled in or confirmed? See "Submit your results" in the [README](README.md).
+20 skills, 38 rows: 36 from the maintainer's batches in `step0/data/`, 2 community submissions. Want a row filled in or confirmed? See "Submit your results" in the [README](README.md).
 
 ## How to read it
 
@@ -60,3 +60,9 @@
 | Skill | Model | Grade | Recall (95% CI) | False positives (95% CI) | Questions (pos / neg) | Data quality | Submissions | Last tested | Data | Credit |
 |---|---|---|---|---|---|---|---|---|---|---|
 | [ui-ux-pro-max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/tree/28b3b8dee8c976df4fa3e94aed4e092ad43fcb03/.claude/skills/ui-ux-pro-max) | custom-local:deepseek-flash | insufficient data | 20% (8–42%) | 0% (0–49%) | 20 / 4 | community single sample | 1 | 2026-10-29 | [raw data](submissions/ui-ux-pro-max/codebuddy-custom-local-deepseek-flash/20261029T153202Z-pilafbigking/) | [pilafbigking](https://github.com/pilafbigking) |
+
+## Codewhale
+
+| Skill | Model | Grade | Recall (95% CI) | False positives (95% CI) | Questions (pos / neg) | Data quality | Submissions | Last tested | Data | Credit |
+|---|---|---|---|---|---|---|---|---|---|---|
+| [ruflo](https://github.com/ruvnet/ruflo/tree/7f6fb3345b7f4ea1d7acc4905ea88bad29136066) | deepseek-flash | triggers well | 100% (72–100%) | 0% (0–28%) | 10 / 10 | community single sample | 1 | 2026-10-29 | [raw data](submissions/ruflo/codewhale-deepseek-flash/20261029T164010Z-pilafbigking/) | [pilafbigking](https://github.com/pilafbigking) |
