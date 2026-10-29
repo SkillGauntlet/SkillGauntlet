@@ -1,0 +1,128 @@
+{
+  "skill": "doc-coauthoring",
+  "skill_md_sha256": "acb9b89b228fb818ffe2f464e40b1cdbf6948b50ceeeb7378f0e5b9d78c996ad",
+  "reviewed": false,
+  "review_notes": "Human review: drop queries that copy the description; make sure negatives are near misses rather than unrelated tasks; set reviewed to true when done.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "帮我写一份技术方案文档，关于把订单服务从单体拆成微服务，给架构组评审用，你先问我需要的信息吧",
+      "should_trigger": true,
+      "note": "Chinese request to write a technical proposal for review, mirrors 'creating proposals/specs' trigger and invites the structured context-gathering flow"
+    },
+    {
+      "id": "q02",
+      "query": "need to write a design doc for the new feature flag system, team is kinda split on whether to use LaunchDarkly or roll our own",
+      "should_trigger": true,
+      "note": "English, casual, names a doc type ('design doc') and a decision to be made, a natural fit for the decision/design doc workflow"
+    },
+    {
+      "id": "q03",
+      "query": "draft a decision doc for picking postgres vs dynamo for the events store, stakeholders are the platform leads",
+      "should_trigger": true,
+      "note": "English terse request for a decision doc with a named audience, matches the decision-doc trigger"
+    },
+    {
+      "id": "q04",
+      "query": "我要出一个 RFC，关于统一前端的状态管理方案，大概要说明为什么不用 redux 了",
+      "should_trigger": true,
+      "note": "Chinese request naming the RFC doc type with a concrete decision context, matches the RFC trigger"
+    },
+    {
+      "id": "q05",
+      "query": "write up the incident postmortem for last tuesday's payment outage, root cause was the connection pool config",
+      "should_trigger": true,
+      "note": "English 'write up' phrasing for a structured writeup; postmortem is a structured doc type the skill's 'similar structured content' clause covers"
+    },
+    {
+      "id": "q06",
+      "query": "帮我起草一个 PRD，做的是企业版的 SSO 登录，产品经理下周要看",
+      "should_trigger": true,
+      "note": "Chinese request for a PRD with a deadline, explicitly names a doc type from the trigger list"
+    },
+    {
+      "id": "q07",
+      "query": "help me spec out the migration plan for moving our cron jobs to k8s cronjobs, file is docs/migration.md, not sure what sections it needs",
+      "should_trigger": true,
+      "note": "Terse English with a file reference and uncertainty about structure, which triggers the structure-suggestion path of the workflow"
+    },
+    {
+      "id": "q08",
+      "query": "想写个提案，建议把日志系统从 ELK 换成 Loki，给老板看的，帮我理理思路",
+      "should_trigger": true,
+      "note": "Chinese proposal-writing request framed for a manager audience, matches 'creating proposals' trigger"
+    },
+    {
+      "id": "q09",
+      "query": "technical spec for the rate limiter v2, team wants it before sprint planning on friday, typo-heavy notes in specs/ratelimit-notes.txt",
+      "should_trigger": true,
+      "note": "English technical spec request with a file pointer and deadline, combines the 'drafting specs' trigger with context-heavy input"
+    },
+    {
+      "id": "q10",
+      "query": "我们组要写一份关于 monorepo 迁移的决策文档，你先帮我梳理一下要问的问题",
+      "should_trigger": true,
+      "note": "Chinese request for a decision doc that explicitly asks the agent to lead the clarifying process, matching the workflow's first stage"
+    },
+    {
+      "id": "q11",
+      "query": "fix the typo in README.md line 42, it says 'recieve' instead of 'receive'",
+      "should_trigger": false,
+      "note": "Near miss: documentation file but a trivial proofreading edit, not a substantial co-authored document; no doc-type or writing-task signal"
+    },
+    {
+      "id": "q12",
+      "query": "帮我给 utils/date.py 里的 parse_iso 函数加上 docstring 和类型注解",
+      "should_trigger": false,
+      "note": "Near miss: writing docs for code in a single function, a code-annotation task a coding skill would own rather than structured doc co-authoring"
+    },
+    {
+      "id": "q13",
+      "query": "generate API reference docs from our openapi.yaml with redoc, just need the build script working",
+      "should_trigger": false,
+      "note": "Near miss: documentation tooling/build pipeline work, owned by a docs-generation or devops skill rather than the collaborative writing workflow"
+    },
+    {
+      "id": "q14",
+      "query": "这个 PR 的 diff 帮我总结一下，写成 changelog 的一条就行",
+      "should_trigger": false,
+      "note": "Near miss: short changelog entry summarizing a diff, a one-off summary task rather than a structured document; the skill targets substantial docs"
+    },
+    {
+      "id": "q15",
+      "query": "rewrite this paragraph to sound less corny: 'Our platform is the bedrock of tomorrow's innovation'",
+      "should_trigger": false,
+      "note": "Near miss: copy-editing a single sentence rather than building a document through the staged workflow"
+    },
+    {
+      "id": "q16",
+      "query": "explain what the saga pattern is and when it makes sense for distributed transactions",
+      "should_trigger": false,
+      "note": "Near miss: conceptual explanation question on a technical topic, no request to produce or co-author a document"
+    },
+    {
+      "id": "q17",
+      "query": "把 CHANGELOG.md 的格式从 v1 改成 keep-a-changelog 的样式，别动内容",
+      "should_trigger": false,
+      "note": "Near miss: mechanical reformatting of an existing file, a transformation task rather than authoring a new structured doc"
+    },
+    {
+      "id": "q18",
+      "query": "在 docs/ 下面加个 mkdocs.yml 配置，把 nav 顺序调一下",
+      "should_trigger": false,
+      "note": "Near miss: static site configuration for a docs folder, a tooling task not a writing task"
+    },
+    {
+      "id": "q19",
+      "query": "review this design doc at docs/cache-design.md for factual errors in the numbers section, don't rewrite anything",
+      "should_trigger": false,
+      "note": "[kept: borderline] Reviewing numbers in a design doc without rewriting; review rather than co-authoring"
+    },
+    {
+      "id": "q20",
+      "query": "写一段 Python 脚本，把 docs 目录下所有 md 文件的标题提取成 JSON 索引",
+      "should_trigger": false,
+      "note": "Near miss: scripting over docs files, a coding task that happens to touch documentation, not authoring a document"
+    }
+  ]
+}

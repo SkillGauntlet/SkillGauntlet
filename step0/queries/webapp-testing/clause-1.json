@@ -1,0 +1,225 @@
+{
+  "skill": "webapp-testing",
+  "skill_md_sha256": "8bc27790f6e6dfc2bfa6692326d4518baacf6a31dcc646d963c729adad2f7e34",
+  "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28",
+  "review": "none: AI-drafted. The method tests each skill with two or more independently drafted sets and reports the spread between them instead of reviewing each set by hand.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "写个 playwright 脚本，打开 localhost:5173 点一下登录按钮，把用户名密码填进去提交",
+      "should_trigger": true,
+      "clause": "Interacting with local web apps via Playwright",
+      "note": "Asks to drive a local web app with a Playwright script."
+    },
+    {
+      "id": "q02",
+      "query": "my vite dev server is on localhost:3000, can you use playwright to click through the sidebar menu and fill in the settings form?",
+      "should_trigger": true,
+      "clause": "Interacting with local web apps via Playwright",
+      "note": "Automating interactions on a local app using Playwright."
+    },
+    {
+      "id": "q03",
+      "query": "用 playwright 自动化操作一下本地的 index.html，列出页面上所有按钮和输入框",
+      "should_trigger": true,
+      "clause": "Interacting with local web apps via Playwright",
+      "note": "Local static HTML element discovery with Playwright."
+    },
+    {
+      "id": "q04",
+      "query": "start backend (python server.py, port 3000) and frontend (npm run dev, port 5173) together and run a playwright script against them",
+      "should_trigger": true,
+      "clause": "Interacting with local web apps via Playwright",
+      "note": "Multi-server lifecycle plus Playwright automation of a local app."
+    },
+    {
+      "id": "q05",
+      "query": "帮我测一下本地的待办事项应用，添加一条任务后列表里是不是真的出现了",
+      "should_trigger": true,
+      "clause": "Verifying frontend functionality",
+      "note": "Verify a frontend feature works in a local app."
+    },
+    {
+      "id": "q06",
+      "query": "can you check that the checkout form on localhost:8080 actually validates empty email and shows the error message?",
+      "should_trigger": true,
+      "clause": "Verifying frontend functionality",
+      "note": "Verifying frontend validation behavior in the browser."
+    },
+    {
+      "id": "q07",
+      "query": "我改完了搜索框的代码，跑一下浏览器确认输入关键字后结果能正常过滤",
+      "should_trigger": true,
+      "clause": "Verifying frontend functionality",
+      "note": "Confirm a changed feature works in a real browser."
+    },
+    {
+      "id": "q08",
+      "query": "verify the dark mode toggle in my react app still works after the refactor, app is running locally",
+      "should_trigger": true,
+      "clause": "Verifying frontend functionality",
+      "note": "Frontend functional verification after refactor."
+    },
+    {
+      "id": "q09",
+      "query": "我的下拉菜单点了没反应，帮我在浏览器里复现一下看看到底哪里出问题",
+      "should_trigger": true,
+      "clause": "Debugging UI behavior",
+      "note": "Reproduce and debug a UI bug in the browser."
+    },
+    {
+      "id": "q10",
+      "query": "the modal won't close when I click the X on localhost:4200, can you poke at it in a browser and figure out why",
+      "should_trigger": true,
+      "clause": "Debugging UI behavior",
+      "note": "Debugging interactive UI behavior live."
+    },
+    {
+      "id": "q11",
+      "query": "页面加载完按钮是灰的，不知道是不是 JS 还没执行完，帮我看看渲染后的 DOM 是什么状态",
+      "should_trigger": true,
+      "clause": "Debugging UI behavior",
+      "note": "Inspect rendered DOM to debug UI state."
+    },
+    {
+      "id": "q12",
+      "query": "layout looks broken on the dashboard page when the sidebar collapses, need to see what's happening in the running app",
+      "should_trigger": true,
+      "clause": "Debugging UI behavior",
+      "note": "Debug a layout issue in a running local app."
+    },
+    {
+      "id": "q13",
+      "query": "给我本地 localhost:5173 首页截个全页面的图，存成 home.png",
+      "should_trigger": true,
+      "clause": "Capturing browser screenshots",
+      "note": "Full-page screenshot of local app."
+    },
+    {
+      "id": "q14",
+      "query": "take a screenshot of the pricing page in my running dev server after the login step",
+      "should_trigger": true,
+      "clause": "Capturing browser screenshots",
+      "note": "Screenshot after navigating a flow."
+    },
+    {
+      "id": "q15",
+      "query": "帮我把 report.html 在浏览器里打开然后截图看看样式对不对",
+      "should_trigger": true,
+      "clause": "Capturing browser screenshots",
+      "note": "Screenshot a local static HTML file."
+    },
+    {
+      "id": "q16",
+      "query": "grab screenshots of the signup flow at each step so I can review them, app on port 3000",
+      "should_trigger": true,
+      "clause": "Capturing browser screenshots",
+      "note": "Multi-step screenshot capture."
+    },
+    {
+      "id": "q17",
+      "query": "打开我本地的页面，把浏览器控制台的报错和 console.log 都抓出来给我",
+      "should_trigger": true,
+      "clause": "Viewing browser logs",
+      "note": "Capture console output from local page."
+    },
+    {
+      "id": "q18",
+      "query": "there's some red error in the browser console when my app loads at localhost:3000, can you grab the console logs?",
+      "should_trigger": true,
+      "clause": "Viewing browser logs",
+      "note": "Retrieve browser console errors."
+    },
+    {
+      "id": "q19",
+      "query": "跑一下页面，把所有 console.warn 和网络请求失败的日志收集起来",
+      "should_trigger": true,
+      "clause": "Viewing browser logs",
+      "note": "Collect warnings and failed request logs from browser."
+    },
+    {
+      "id": "q20",
+      "query": "log everything the page prints to console while I click through the form, save to console.txt",
+      "should_trigger": true,
+      "clause": "Viewing browser logs",
+      "note": "Console logging during automation."
+    },
+    {
+      "id": "q21",
+      "query": "写一个 Selenium 脚本去自动登录我们公司的内部网站",
+      "should_trigger": false,
+      "clause": "Interacting with local web apps via Playwright",
+      "note": "Selenium on a remote site, not Playwright on local app."
+    },
+    {
+      "id": "q22",
+      "query": "scrape product prices from amazon.com with playwright and save to csv",
+      "should_trigger": false,
+      "clause": "Interacting with local web apps via Playwright",
+      "note": "Web scraping a public site, not testing a local app."
+    },
+    {
+      "id": "q23",
+      "query": "给我的 Express 后端写 jest 单元测试，覆盖 /users 接口",
+      "should_trigger": false,
+      "clause": "Verifying frontend functionality",
+      "note": "Backend unit tests, not browser frontend verification."
+    },
+    {
+      "id": "q24",
+      "query": "write vitest unit tests for my formatDate utility function in utils.ts",
+      "should_trigger": false,
+      "clause": "Verifying frontend functionality",
+      "note": "Pure unit tests with no browser involved."
+    },
+    {
+      "id": "q25",
+      "query": "帮我 review 一下这个 React 组件的代码，看有没有 useEffect 的坑",
+      "should_trigger": false,
+      "clause": "Debugging UI behavior",
+      "note": "Static code review, no running browser."
+    },
+    {
+      "id": "q26",
+      "query": "CSS 里 flex 布局怎么让子元素垂直居中？",
+      "should_trigger": false,
+      "clause": "Debugging UI behavior",
+      "note": "General CSS question, no app to test."
+    },
+    {
+      "id": "q27",
+      "query": "design a hero banner mockup in Figma style and give me the exported PNG",
+      "should_trigger": false,
+      "clause": "Capturing browser screenshots",
+      "note": "Design asset creation, not browser screenshot."
+    },
+    {
+      "id": "q28",
+      "query": "我想把桌面截图工具的快捷键改成 Ctrl+Shift+S，怎么设置",
+      "should_trigger": false,
+      "clause": "Capturing browser screenshots",
+      "note": "OS screenshot tool settings, unrelated."
+    },
+    {
+      "id": "q29",
+      "query": "帮我看一下服务器上 nginx 的 access.log，统计一下 500 错误的数量",
+      "should_trigger": false,
+      "clause": "Viewing browser logs",
+      "note": "Server log analysis, not browser logs."
+    },
+    {
+      "id": "q30",
+      "query": "set up Sentry to collect production frontend errors from real users",
+      "should_trigger": false,
+      "clause": "Viewing browser logs",
+      "note": "Production error monitoring, not local browser log capture."
+    }
+  ],
+  "clauses": [
+    "Interacting with local web apps via Playwright",
+    "Verifying frontend functionality",
+    "Debugging UI behavior",
+    "Capturing browser screenshots",
+    "Viewing browser logs"
+  ]
+}

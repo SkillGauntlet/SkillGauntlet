@@ -1,0 +1,38 @@
+{
+  "skill": "webapp-testing",
+  "tasks": [
+    {
+      "id": "t1",
+      "prompt": "给 index.html 写一个 Playwright 测试，断言页面上有 Hello 这个标题。",
+      "files": {
+        "index.html": "<!doctype html>\n<html><head><title>demo</title></head><body><h1>Hello</h1></body></html>\n"
+      }
+    },
+    {
+      "id": "t2",
+      "prompt": "给 login.html 写一个 Playwright 测试，断言点提交按钮后出现“已登录”。",
+      "files": {
+        "login.html": "<!doctype html>\n<html><body><button id=\"go\">submit</button><p id=\"out\"></p><script>document.getElementById('go').onclick=()=>{document.getElementById('out').textContent='已登录'}</script></body></html>\n"
+      }
+    }
+  ],
+  "contracts": [
+    {
+      "desc": "a test file was added", "descI18n": {"zh": "新增了测试文件", "ja": "テストファイルが追加された"},
+      "type": "files_added_matching",
+      "glob": "**/*.spec.*"
+    },
+    {
+      "desc": "the test file uses Playwright", "descI18n": {"zh": "测试文件用到了 Playwright", "ja": "テストファイルが Playwright を使っている"},
+      "type": "file_contains",
+      "glob": "**/*.spec.*",
+      "regex": "[Pp]laywright"
+    },
+    {
+      "desc": "the test contains an assertion", "descI18n": {"zh": "测试里有断言", "ja": "テストにアサーションがある"},
+      "type": "file_contains",
+      "glob": "**/*.spec.*",
+      "regex": "expect\\s*\\("
+    }
+  ]
+}

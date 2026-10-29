@@ -1,0 +1,122 @@
+{
+  "skill": "skill-creator",
+  "skill_md_sha256": "e030e7685e26283b4a76f5202aa3ae8516fb41dde799be5ae8ea6393ec009fe9",
+  "reviewed": false,
+  "review_notes": "Human review: drop queries that copy the description; make sure negatives are near misses rather than unrelated tasks; set reviewed to true when done.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "I want a skill that turns our git log into CHANGELOG entries grouped by feat/fix/chore. can you help me set it up from scratch",
+      "should_trigger": true,
+      "note": "Explicit request to create a new skill from scratch, with a concrete workflow and output format"
+    },
+    {
+      "id": "q02",
+      "query": "my skill at ~/.claude/skills/pdf-merge/SKILL.md never fires when I ask to combine pdfs, can you tighten up the description so it triggers",
+      "should_trigger": true,
+      "note": "Asks to improve an existing skill's description for triggering accuracy"
+    },
+    {
+      "id": "q03",
+      "query": "run the evals for csv-cleaner and tell me which assertions fail, compare against a no-skill baseline",
+      "should_trigger": true,
+      "note": "Asks to run skill evals and benchmark against a baseline, matching the eval workflow"
+    },
+    {
+      "id": "q04",
+      "query": "帮我写一个技能，把会议录音转写稿整理成纪要，要有待办事项和决议那种格式。从头建一个",
+      "should_trigger": true,
+      "note": "Chinese request to create a new skill from scratch with a specified output format"
+    },
+    {
+      "id": "q05",
+      "query": "我的 sql-review skill 有点啰嗦，帮我改一下，顺便把 description 写得更容易触发",
+      "should_trigger": true,
+      "note": "Chinese request to revise an existing skill and optimize its description"
+    },
+    {
+      "id": "q06",
+      "query": "跑一下 invoice-extract 这个 skill 的测试用例，做个 benchmark，看看结果方差大不大",
+      "should_trigger": true,
+      "note": "Chinese request to run test cases and do variance analysis on a skill"
+    },
+    {
+      "id": "q07",
+      "query": "optimize the description for my api-docs-writer skill, I keep having to name it explicitly and it should kick in on its own",
+      "should_trigger": true,
+      "note": "Description optimization for better triggering on an existing skill"
+    },
+    {
+      "id": "q08",
+      "query": "把这个 skill 的测试集整理成 evals/evals.json 的格式，先给我写 3 条测试 prompt 看看",
+      "should_trigger": true,
+      "note": "Asks to create test prompts in the evals.json format, a core skill-creator step"
+    },
+    {
+      "id": "q09",
+      "query": "need a new skill for scaffolding Terraform modules in our infra repo, interview me first about what inputs it should take",
+      "should_trigger": true,
+      "note": "Requests skill creation and explicitly asks for an interview step before drafting"
+    },
+    {
+      "id": "q10",
+      "query": "对比一下 v1 和 v2 版本的 skill 效果，用 eval viewer 打开结果，我要给每条用例写反馈",
+      "should_trigger": true,
+      "note": "Chinese request to review skill iteration outputs in the eval viewer and give feedback"
+    },
+    {
+      "id": "q11",
+      "query": "add a slash command in .claude/commands/ called lint-fix that runs our eslint config and reports the count of errors",
+      "should_trigger": false,
+      "note": "Near miss: creates a custom slash command, a sibling Claude Code feature, not a skill"
+    },
+    {
+      "id": "q12",
+      "query": "帮我在 .claude/agents/ 下面写一个 code-reviewer 子代理的定义，只允许它读文件不能改",
+      "should_trigger": false,
+      "note": "Near miss: defines a subagent configuration, a different Claude Code primitive from skills"
+    },
+    {
+      "id": "q13",
+      "query": "add a PostToolUse hook in settings.json that runs prettier on any .ts file after I edit it",
+      "should_trigger": false,
+      "note": "Near miss: configures a Claude Code hook, a different mechanism from a skill"
+    },
+    {
+      "id": "q14",
+      "query": "我们的 CLAUDE.md 太长了，帮我精简一下，把重复的规则合并掉",
+      "should_trigger": false,
+      "note": "Near miss: edits the project memory file, not creating or evaluating a skill"
+    },
+    {
+      "id": "q15",
+      "query": "write a Python MCP server that exposes our read-only postgres queries as tools for the agent",
+      "should_trigger": false,
+      "note": "Near miss: building an MCP server is tool integration, not skill authoring"
+    },
+    {
+      "id": "q16",
+      "query": "用 Anthropic SDK 写个脚本，批量把 reviews.csv 里的评论做情感分类，结果输出到新 csv",
+      "should_trigger": false,
+      "note": "Near miss: uses the LLM API in an application script, not a skill"
+    },
+    {
+      "id": "q17",
+      "query": "my jest tests for the checkout component are flaky in CI, figure out why and fix them",
+      "should_trigger": false,
+      "note": "Near miss: general test debugging in application code, no skill involved"
+    },
+    {
+      "id": "q18",
+      "query": "set up a GitHub Actions workflow that runs our eval script on every pull request and fails the build if accuracy drops",
+      "should_trigger": false,
+      "note": "Near miss: CI pipeline work that mentions evals but does not ask to create or test a skill"
+    },
+    {
+      "id": "q19",
+      "query": "给这个 Python 包写一个 README，讲清楚安装方法和基本用法，再加个 FAQ",
+      "should_trigger": false,
+      "note": "Near miss: documentation writing for a code package, not skill creation"
+    }
+  ]
+}

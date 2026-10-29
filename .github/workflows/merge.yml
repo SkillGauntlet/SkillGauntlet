@@ -1,0 +1,19 @@
+# Placeholder. Deliberately does nothing yet.
+#
+# The design splits CI in two: validate.yml checks a contribution with read-only permissions and no secrets;
+# this workflow is where a later "merge on verdict" step will live. Keeping them apart means code from a fork
+# never runs in a job that holds a write token. There is nothing to merge until leaderboard submissions exist,
+# so the job below only records that it ran. Do not add pull_request_target here: when this starts doing real
+# work, trigger it from workflow_run on validate.yml and read validate's artifacts as untrusted data.
+name: merge
+
+on:
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  placeholder:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "No merge logic yet; see the comment at the top of this file."

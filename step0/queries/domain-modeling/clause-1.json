@@ -1,0 +1,167 @@
+{
+  "skill": "domain-modeling",
+  "skill_md_sha256": "b62d997256cc073e123d4303da8e9db00db0e28de9739660ca3e55ab76e09cdb",
+  "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28",
+  "review": "none: AI-drafted. The method tests each skill with two or more independently drafted sets and reports the spread between them instead of reviewing each set by hand.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "我们代码里 'account' 到底指 Customer 还是 User？感觉大家用得很乱，帮我理一下该叫什么",
+      "should_trigger": true,
+      "clause": "Discussing codebase terminology",
+      "note": "Overloaded term needing a canonical name; terminology discussion."
+    },
+    {
+      "id": "q02",
+      "query": "in our repo 'cancellation' sometimes means whole order and sometimes just a line item. can we pin down what to call each?",
+      "should_trigger": true,
+      "clause": "Discussing codebase terminology",
+      "note": "Sharpening ambiguous vocabulary in the codebase."
+    },
+    {
+      "id": "q03",
+      "query": "团队里 'tenant'、'workspace'、'org' 混着用，我们先讨论下该统一成哪个词，边界在哪",
+      "should_trigger": true,
+      "clause": "Discussing codebase terminology",
+      "note": "Naming consistency discussion across domain concepts."
+    },
+    {
+      "id": "q04",
+      "query": "what should we even call a 'shipment' vs a 'delivery' in this codebase? i keep seeing both in src/fulfillment",
+      "should_trigger": true,
+      "clause": "Discussing codebase terminology",
+      "note": "Clarifying domain terms used in code."
+    },
+    {
+      "id": "q05",
+      "query": "帮我在 GLOSSARY.md 里加一个词条：'Refund' 指已完成的资金退回，不包括 chargeback",
+      "should_trigger": true,
+      "clause": "Writing or editing GLOSSARY.md",
+      "note": "Direct request to add a glossary entry."
+    },
+    {
+      "id": "q06",
+      "query": "add 'Backorder' to GLOSSARY.md, we just agreed it means an order line with no stock at placement time",
+      "should_trigger": true,
+      "clause": "Writing or editing GLOSSARY.md",
+      "note": "Adding a resolved term to the glossary."
+    },
+    {
+      "id": "q07",
+      "query": "GLOSSARY.md 里 Customer 的定义过时了，现在 guest checkout 也算，改一下",
+      "should_trigger": true,
+      "clause": "Writing or editing GLOSSARY.md",
+      "note": "Editing an existing glossary definition."
+    },
+    {
+      "id": "q08",
+      "query": "create a GLOSSARY.md for this repo, start with Order, Invoice and Ledger entry",
+      "should_trigger": true,
+      "clause": "Writing or editing GLOSSARY.md",
+      "note": "Creating a new glossary file."
+    },
+    {
+      "id": "q09",
+      "query": "我们决定订单用 event sourcing，帮我记一条 ADR 放到 docs/adr 里",
+      "should_trigger": true,
+      "clause": "Recording or editing an ADR",
+      "note": "Recording a new architectural decision."
+    },
+    {
+      "id": "q10",
+      "query": "write an ADR for choosing postgres over dynamo for the write model, we weighed both for a week",
+      "should_trigger": true,
+      "clause": "Recording or editing an ADR",
+      "note": "ADR for a real trade-off decision."
+    },
+    {
+      "id": "q11",
+      "query": "docs/adr/0002-postgres-for-write-model.md 要改一下，状态改成 superseded，补充新的原因",
+      "should_trigger": true,
+      "clause": "Recording or editing an ADR",
+      "note": "Editing an existing ADR."
+    },
+    {
+      "id": "q12",
+      "query": "can you update adr 0001 to mention we later dropped the snapshot idea and why",
+      "should_trigger": true,
+      "clause": "Recording or editing an ADR",
+      "note": "Editing an existing ADR with rationale."
+    },
+    {
+      "id": "q13",
+      "query": "读一下 GLOSSARY.md，然后用里面的术语给 OrderService 写个单元测试",
+      "should_trigger": false,
+      "clause": "Writing or editing GLOSSARY.md",
+      "note": "Merely consuming the glossary for vocabulary; a test-writing job."
+    },
+    {
+      "id": "q14",
+      "query": "rename the variable `acct` to `customerAccount` across src/billing, just a refactor",
+      "should_trigger": false,
+      "clause": "Discussing codebase terminology",
+      "note": "Mechanical rename, not a terminology discussion."
+    },
+    {
+      "id": "q15",
+      "query": "写个 README 的 Glossary 章节，给外部用户解释 API 里的缩写 SDK、JWT、OAuth",
+      "should_trigger": false,
+      "clause": "Writing or editing GLOSSARY.md",
+      "note": "Generic technical acronyms for end-user docs, not the project domain glossary."
+    },
+    {
+      "id": "q16",
+      "query": "generate API reference docs from the OpenAPI spec in api/openapi.yaml",
+      "should_trigger": false,
+      "clause": "Writing or editing GLOSSARY.md",
+      "note": "Documentation generation, not domain glossary."
+    },
+    {
+      "id": "q17",
+      "query": "我们要不要把 Kafka 换成 RabbitMQ？帮我对比一下优缺点和迁移成本",
+      "should_trigger": false,
+      "clause": "Recording or editing an ADR",
+      "note": "Technology comparison without recording a decision."
+    },
+    {
+      "id": "q18",
+      "query": "write a design doc / RFC for the new notification system with sequence diagrams",
+      "should_trigger": false,
+      "clause": "Recording or editing an ADR",
+      "note": "Design doc is a different artifact from an ADR."
+    },
+    {
+      "id": "q19",
+      "query": "git log 里帮我找下上次改 docs/adr 目录是谁提交的",
+      "should_trigger": false,
+      "clause": "Recording or editing an ADR",
+      "note": "Git history lookup, not recording or editing an ADR."
+    },
+    {
+      "id": "q20",
+      "query": "add a CHANGELOG entry for v2.3.0 listing the order cancellation fixes",
+      "should_trigger": false,
+      "clause": "Recording or editing an ADR",
+      "note": "Changelog edit, shares decision/record vocabulary but is a different file."
+    },
+    {
+      "id": "q21",
+      "query": "给 UserProfile 类加个 displayName 字段，顺便加上校验，名字最长 50 字符",
+      "should_trigger": false,
+      "clause": "Discussing codebase terminology",
+      "note": "Ordinary feature implementation using domain nouns."
+    },
+    {
+      "id": "q22",
+      "query": "translate the comments in src/ordering/*.ts from Chinese to English",
+      "should_trigger": false,
+      "clause": "Discussing codebase terminology",
+      "note": "Translation task, not about sharpening domain terms."
+    }
+  ],
+  "clauses": [
+    "Discussing codebase terminology",
+    "Writing or editing GLOSSARY.md",
+    "Recording or editing an ADR"
+  ]
+}

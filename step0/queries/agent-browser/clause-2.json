@@ -1,0 +1,254 @@
+{
+  "skill": "agent-browser",
+  "skill_md_sha256": "19c4b9f790f8a36cb2c485cb91ad36d6506b60e3cc32df299554ac9c8694247f",
+  "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28",
+  "review": "none: AI-drafted. The method tests each skill with two or more independently drafted sets and reports the spread between them instead of reviewing each set by hand.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "open https://news.ycombinator.com and grab the titles + links of the top 30 stories into hn.json",
+      "should_trigger": true,
+      "clause": "General website interaction and web automation",
+      "note": "Scraping data from a page with a browser is core web automation."
+    },
+    {
+      "id": "q02",
+      "query": "帮我登录一下 staging.myshop.com，用户名 test01，然后把购物车里的商品截个图",
+      "should_trigger": true,
+      "clause": "General website interaction and web automation",
+      "note": "Login plus screenshot on a website is general browser interaction."
+    },
+    {
+      "id": "q03",
+      "query": "fill out the contact form on acme-demo.com/contact with dummy data and click submit, tell me what the confirmation says",
+      "should_trigger": true,
+      "clause": "General website interaction and web automation",
+      "note": "Form filling and clicking a button on a site."
+    },
+    {
+      "id": "q04",
+      "query": "用浏览器打开 example.com/pricing 把三个套餐的价格抓下来存成 csv",
+      "should_trigger": true,
+      "clause": "General website interaction and web automation",
+      "note": "Extracting data from a web page via browser automation."
+    },
+    {
+      "id": "q05",
+      "query": "can you dogfood our new checkout flow at localhost:3000 and write up every bug you hit",
+      "should_trigger": true,
+      "clause": "Exploratory testing, dogfooding, QA",
+      "note": "Explicit dogfooding and bug hunt of a web app."
+    },
+    {
+      "id": "q06",
+      "query": "帮我对 localhost:5173 的后台管理系统做一轮探索性测试，找找有没有奇怪的bug，输出报告到 qa-report.md",
+      "should_trigger": true,
+      "clause": "Exploratory testing, dogfooding, QA",
+      "note": "Exploratory testing with a QA report output."
+    },
+    {
+      "id": "q07",
+      "query": "do a QA pass on our signup page, click around like a confused user and note anything that feels broken or janky",
+      "should_trigger": true,
+      "clause": "Exploratory testing, dogfooding, QA",
+      "note": "QA and app quality review through exploration."
+    },
+    {
+      "id": "q08",
+      "query": "bug hunt time: go through the whole onboarding at app.staging.foo.io and screenshot anything off, ranked by severity",
+      "should_trigger": true,
+      "clause": "Exploratory testing, dogfooding, QA",
+      "note": "Bug hunt with severity-ranked findings."
+    },
+    {
+      "id": "q09",
+      "query": "我想自动化操作本地的 VS Code 桌面版，帮我写个脚本打开命令面板并运行 'Format Document'",
+      "should_trigger": true,
+      "clause": "Electron desktop app automation",
+      "note": "Driving VS Code, an Electron app."
+    },
+    {
+      "id": "q10",
+      "query": "automate the Discord desktop app - switch to the #general channel and screenshot the last few messages",
+      "should_trigger": true,
+      "clause": "Electron desktop app automation",
+      "note": "Discord desktop is an Electron app to be automated."
+    },
+    {
+      "id": "q11",
+      "query": "Figma 桌面客户端里帮我自动点开 'Design System' 文件然后导出第一个 frame",
+      "should_trigger": true,
+      "clause": "Electron desktop app automation",
+      "note": "Figma desktop app automation."
+    },
+    {
+      "id": "q12",
+      "query": "need to script the Notion desktop app to create a new page called 'Weekly Notes' and paste in some text, how do i drive it",
+      "should_trigger": true,
+      "clause": "Electron desktop app automation",
+      "note": "Notion desktop Electron app automation."
+    },
+    {
+      "id": "q13",
+      "query": "check my slack unreads and give me a summary of what i missed",
+      "should_trigger": true,
+      "clause": "Slack tasks (unreads, send, search)",
+      "note": "Checking Slack unreads."
+    },
+    {
+      "id": "q14",
+      "query": "帮我在 slack 的 #dev-team 频道发一条消息：今晚部署推迟到明天上午",
+      "should_trigger": true,
+      "clause": "Slack tasks (unreads, send, search)",
+      "note": "Sending a Slack message."
+    },
+    {
+      "id": "q15",
+      "query": "search slack for any convo about the 'invoice-sync outage' last week and list who said what",
+      "should_trigger": true,
+      "clause": "Slack tasks (unreads, send, search)",
+      "note": "Searching Slack conversations."
+    },
+    {
+      "id": "q16",
+      "query": "看下 slack 里有没有人@我，有的话列出来是哪个频道的",
+      "should_trigger": true,
+      "clause": "Slack tasks (unreads, send, search)",
+      "note": "Checking Slack mentions/unreads."
+    },
+    {
+      "id": "q17",
+      "query": "I want to run agent-browser inside a Vercel Sandbox microVM so my agent can scrape pages, how do I set that up",
+      "should_trigger": true,
+      "clause": "Vercel Sandbox microVM browser automation",
+      "note": "Browser automation inside Vercel Sandbox."
+    },
+    {
+      "id": "q18",
+      "query": "在 Vercel Sandbox 里起一个 microVM，装好 chromium 然后跑个截图脚本，帮我写 sandbox.ts",
+      "should_trigger": true,
+      "clause": "Vercel Sandbox microVM browser automation",
+      "note": "Setting up a screenshot script in a Vercel Sandbox."
+    },
+    {
+      "id": "q19",
+      "query": "my preview deploy is behind Vercel protection, how can the headless browser inside the sandbox get past it to test the page",
+      "should_trigger": true,
+      "clause": "Vercel Sandbox microVM browser automation",
+      "note": "Protected Vercel deployment access from a sandbox browser."
+    },
+    {
+      "id": "q20",
+      "query": "用 vercel sandbox 跑浏览器自动化，每次任务开一个新 microVM，跑完就销毁，怎么搭",
+      "should_trigger": true,
+      "clause": "Vercel Sandbox microVM browser automation",
+      "note": "Per-task microVM browser automation setup."
+    },
+    {
+      "id": "q21",
+      "query": "set up an AWS Bedrock AgentCore cloud browser session and drive it to log into our internal portal",
+      "should_trigger": true,
+      "clause": "AWS Bedrock AgentCore cloud browsers",
+      "note": "Using AgentCore cloud browsers for automation."
+    },
+    {
+      "id": "q22",
+      "query": "怎么把浏览器自动化接到 AWS Bedrock AgentCore 的云浏览器上？我有 us-east-1 的权限",
+      "should_trigger": true,
+      "clause": "AWS Bedrock AgentCore cloud browsers",
+      "note": "Connecting browser automation to AgentCore."
+    },
+    {
+      "id": "q23",
+      "query": "run my scraping task on an agentcore remote browser instead of local chrome, need the session id and live view url",
+      "should_trigger": true,
+      "clause": "AWS Bedrock AgentCore cloud browsers",
+      "note": "AgentCore remote browser session usage."
+    },
+    {
+      "id": "q24",
+      "query": "用 Bedrock AgentCore 的 browser tool 打开我们的后台页面并截图，帮我写 python 脚本调起会话",
+      "should_trigger": true,
+      "clause": "AWS Bedrock AgentCore cloud browsers",
+      "note": "AgentCore browser session scripted for screenshots."
+    },
+    {
+      "id": "q25",
+      "query": "write Playwright unit tests for my React LoginForm component in src/components/LoginForm.tsx using Testing Library",
+      "should_trigger": false,
+      "clause": "General website interaction and web automation",
+      "note": "Writing component tests in code, not driving a live browser."
+    },
+    {
+      "id": "q26",
+      "query": "帮我写个 Python requests 脚本调用 api.example.com/v1/items 分页拉取数据，不需要浏览器",
+      "should_trigger": false,
+      "clause": "General website interaction and web automation",
+      "note": "Plain HTTP API client; no browser needed."
+    },
+    {
+      "id": "q27",
+      "query": "review my PR diff for code quality and point out any logic bugs in src/cart.ts",
+      "should_trigger": false,
+      "clause": "Exploratory testing, dogfooding, QA",
+      "note": "Code review of source, not exploratory QA of a running app."
+    },
+    {
+      "id": "q28",
+      "query": "帮我给 utils/date.js 写 jest 单元测试，覆盖边界情况",
+      "should_trigger": false,
+      "clause": "Exploratory testing, dogfooding, QA",
+      "note": "Writing unit tests is not exploratory testing."
+    },
+    {
+      "id": "q29",
+      "query": "我的 Electron 应用打包后 preload.js 里 contextBridge 报错，帮我看下 main.ts 怎么改",
+      "should_trigger": false,
+      "clause": "Electron desktop app automation",
+      "note": "Developing/debugging an Electron app, not automating one."
+    },
+    {
+      "id": "q30",
+      "query": "set up electron-builder to produce a signed Windows installer for my app, config in package.json",
+      "should_trigger": false,
+      "clause": "Electron desktop app automation",
+      "note": "Electron packaging, not desktop automation."
+    },
+    {
+      "id": "q31",
+      "query": "write a Slack bot in Node using Bolt that replies to /standup slash commands and stores answers in Postgres",
+      "should_trigger": false,
+      "clause": "Slack tasks (unreads, send, search)",
+      "note": "Building a Slack app, not performing Slack tasks."
+    },
+    {
+      "id": "q32",
+      "query": "帮我配置 Slack incoming webhook 让 GitHub Actions 失败时往 #ci 发通知，改 .github/workflows/ci.yml",
+      "should_trigger": false,
+      "clause": "Slack tasks (unreads, send, search)",
+      "note": "CI webhook configuration, not browser-driven Slack use."
+    },
+    {
+      "id": "q33",
+      "query": "deploy my Next.js app to Vercel and set the env vars from .env.production, then give me the production URL",
+      "should_trigger": false,
+      "clause": "Vercel Sandbox microVM browser automation",
+      "note": "Ordinary Vercel deployment, not Sandbox browser automation."
+    },
+    {
+      "id": "q34",
+      "query": "帮我写 Terraform 创建 AWS Bedrock 的 knowledge base 和 S3 数据源，放在 infra/bedrock.tf",
+      "should_trigger": false,
+      "clause": "AWS Bedrock AgentCore cloud browsers",
+      "note": "Bedrock infrastructure unrelated to AgentCore browsers."
+    }
+  ],
+  "clauses": [
+    "General website interaction and web automation",
+    "Exploratory testing, dogfooding, QA",
+    "Electron desktop app automation",
+    "Slack tasks (unreads, send, search)",
+    "Vercel Sandbox microVM browser automation",
+    "AWS Bedrock AgentCore cloud browsers"
+  ]
+}

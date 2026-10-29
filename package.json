@@ -1,0 +1,45 @@
+{
+  "name": "skillgauntlet",
+  "version": "1.1.0",
+  "description": "Check an agent skill before you install it: context cost, permission surface, code risk, instruction hijacking, description quality, trigger rate and gain.",
+  "type": "module",
+  "bin": {
+    "skillgauntlet": "./bin/skillgauntlet.js"
+  },
+  "files": [
+    "bin",
+    "lib",
+    "contracts",
+    "README.md",
+    "LICENSE",
+    "LICENSE-DATA"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node ./bin/skillgauntlet.js",
+    "static": "node ./bin/skillgauntlet.js static",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "keywords": [
+    "agent",
+    "skills",
+    "claude-code",
+    "codex",
+    "deepseek",
+    "skill-evaluation",
+    "trigger-rate",
+    "prompt-injection"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SkillGauntlet/SkillGauntlet.git"
+  },
+  "homepage": "https://github.com/SkillGauntlet/SkillGauntlet#readme",
+  "bugs": {
+    "url": "https://github.com/SkillGauntlet/SkillGauntlet/issues"
+  },
+  "license": "Apache-2.0",
+  "dependencies": {}
+}

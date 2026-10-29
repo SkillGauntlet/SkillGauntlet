@@ -1,0 +1,225 @@
+{
+  "skill": "vercel-react-best-practices",
+  "skill_md_sha256": "3286ace648b4d740317b9c1cb7fbd38600eaacc62a8b57ea5e06fd2992b5582e",
+  "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28",
+  "review": "none: AI-drafted. The method tests each skill with two or more independently drafted sets and reports the spread between them instead of reviewing each set by hand.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "帮我写一个 Next.js 的商品详情页 app/products/[id]/page.tsx,要有图片轮播、价格、加入购物车按钮,用 App Router",
+      "should_trigger": true,
+      "clause": "Writing React components or Next.js pages",
+      "note": "Asks to create a new Next.js page from scratch; no data-fetching, review, refactor or bundle focus."
+    },
+    {
+      "id": "q02",
+      "query": "write me a React <DataTable /> component w/ sortable columns and sticky header, typescript pls",
+      "should_trigger": true,
+      "clause": "Writing React components or Next.js pages",
+      "note": "Pure new component authoring request."
+    },
+    {
+      "id": "q03",
+      "query": "新建一个 Navbar 组件,移动端有汉堡菜单,桌面端横向排列,用 tailwind",
+      "should_trigger": true,
+      "clause": "Writing React components or Next.js pages",
+      "note": "Creating a new UI component; the only matching clause is writing components."
+    },
+    {
+      "id": "q04",
+      "query": "need a pricing page for our next.js site, 3 tiers, toggle monthly/yearly. put it in app/pricing/page.tsx",
+      "should_trigger": true,
+      "clause": "Writing React components or Next.js pages",
+      "note": "Building a new Next.js page with a client toggle; clearly page/component creation."
+    },
+    {
+      "id": "q05",
+      "query": "在 server component 里从 postgres 拉用户订单列表,还要拉每个订单的商品详情,帮我写这个取数逻辑",
+      "should_trigger": true,
+      "clause": "Implementing data fetching (client or server)",
+      "note": "Server-side data fetching with nested fetches; the task is implementing fetching."
+    },
+    {
+      "id": "q06",
+      "query": "how do i fetch /api/notifications on the client and keep it fresh every 30s? using swr or whatever is best",
+      "should_trigger": true,
+      "clause": "Implementing data fetching (client or server)",
+      "note": "Client-side fetching with polling/revalidation."
+    },
+    {
+      "id": "q07",
+      "query": "写个 server action 提交评论表单,提交后要重新拉取评论列表",
+      "should_trigger": true,
+      "clause": "Implementing data fetching (client or server)",
+      "note": "Server action plus refetch of data; data-fetching implementation."
+    },
+    {
+      "id": "q08",
+      "query": "my dashboard needs to load user profile, stats and feed from 3 different endpoints in a route handler, pls implement the fetching part",
+      "should_trigger": true,
+      "clause": "Implementing data fetching (client or server)",
+      "note": "Implementing multi-endpoint fetching in a route handler."
+    },
+    {
+      "id": "q09",
+      "query": "帮我看看 components/Feed.tsx 为什么滚动的时候卡顿,有没有性能问题",
+      "should_trigger": true,
+      "clause": "Reviewing code for performance issues",
+      "note": "Asks for a performance review of an existing file."
+    },
+    {
+      "id": "q10",
+      "query": "can you review this PR diff for perf problems? mostly worried about re-renders in the checkout form",
+      "should_trigger": true,
+      "clause": "Reviewing code for performance issues",
+      "note": "Performance-focused code review of re-render behavior."
+    },
+    {
+      "id": "q11",
+      "query": "审一下 app/dashboard/page.tsx 有没有请求瀑布或者不必要的重渲染,只要指出问题不用改",
+      "should_trigger": true,
+      "clause": "Reviewing code for performance issues",
+      "note": "Review-only audit for performance issues; no changes requested."
+    },
+    {
+      "id": "q12",
+      "query": "audit my react app for perf antipatterns, things like useEffect misuse and expensive stuff in render. just list findings",
+      "should_trigger": true,
+      "clause": "Reviewing code for performance issues",
+      "note": "Audit request listing performance findings, not rewriting."
+    },
+    {
+      "id": "q13",
+      "query": "这个 UserList 组件 800 行太乱了,帮我重构一下,拆成几个小组件,hooks 也抽出来",
+      "should_trigger": true,
+      "clause": "Refactoring existing React/Next.js code",
+      "note": "Refactoring a messy existing component into smaller pieces."
+    },
+    {
+      "id": "q14",
+      "query": "refactor pages/ router stuff to the app router, we're on next 14, keep behavior same",
+      "should_trigger": true,
+      "clause": "Refactoring existing React/Next.js code",
+      "note": "Migrating/refactoring existing Next.js code structure."
+    },
+    {
+      "id": "q15",
+      "query": "把 class 组件都改成 function component + hooks,src/legacy 目录下那几个",
+      "should_trigger": true,
+      "clause": "Refactoring existing React/Next.js code",
+      "note": "Refactor legacy class components to hooks."
+    },
+    {
+      "id": "q16",
+      "query": "clean up this component, theres a ton of useEffect that just sync state from props, simplify it pls",
+      "should_trigger": true,
+      "clause": "Refactoring existing React/Next.js code",
+      "note": "Refactoring effect-based derived state in existing code."
+    },
+    {
+      "id": "q17",
+      "query": "我们 next 项目首屏 JS 有 1.2MB,帮我想办法把 bundle 体积降下来",
+      "should_trigger": true,
+      "clause": "Optimizing bundle size or load times",
+      "note": "Reducing bundle size directly."
+    },
+    {
+      "id": "q18",
+      "query": "lighthouse says LCP is 4.5s on our landing page, how do i cut load time? mostly heavy chart libs and analytics scripts",
+      "should_trigger": true,
+      "clause": "Optimizing bundle size or load times",
+      "note": "Load-time optimization via lazy loading and deferring scripts."
+    },
+    {
+      "id": "q19",
+      "query": "lodash 和 moment 好像把包撑得很大,帮我换成按需引入或者更轻的方案",
+      "should_trigger": true,
+      "clause": "Optimizing bundle size or load times",
+      "note": "Trimming bundle via import changes and lighter libs."
+    },
+    {
+      "id": "q20",
+      "query": "how do i code-split the admin panel so regular users dont download it? using next/dynamic maybe",
+      "should_trigger": true,
+      "clause": "Optimizing bundle size or load times",
+      "note": "Code-splitting for smaller initial bundle."
+    },
+    {
+      "id": "q21",
+      "query": "帮我写一个 Vue 3 的登录页组件,用 composition API",
+      "should_trigger": false,
+      "clause": "Writing React components or Next.js pages",
+      "note": "Writing a component, but in Vue; not React/Next.js."
+    },
+    {
+      "id": "q22",
+      "query": "write a plain HTML/CSS landing page with a hero section, no framework",
+      "should_trigger": false,
+      "clause": "Writing React components or Next.js pages",
+      "note": "Page authoring without React/Next.js; frontend design job."
+    },
+    {
+      "id": "q23",
+      "query": "写一下 Express 后端的 /api/orders 接口,连 MySQL 查订单,带分页",
+      "should_trigger": false,
+      "clause": "Implementing data fetching (client or server)",
+      "note": "Backend data querying in Express, not React/Next.js data fetching."
+    },
+    {
+      "id": "q24",
+      "query": "design a Postgres schema for orders and order_items, and give me an index plan",
+      "should_trigger": false,
+      "clause": "Implementing data fetching (client or server)",
+      "note": "Database design; shares the data domain but is not fetching in React."
+    },
+    {
+      "id": "q25",
+      "query": "review this Python Flask code for performance issues, the /search endpoint is slow",
+      "should_trigger": false,
+      "clause": "Reviewing code for performance issues",
+      "note": "Performance review but of Python backend code, not React/Next.js."
+    },
+    {
+      "id": "q26",
+      "query": "帮我 review 一下这个 PR 的代码风格和命名规范,还有有没有安全漏洞",
+      "should_trigger": false,
+      "clause": "Reviewing code for performance issues",
+      "note": "Code review focused on style and security, not performance."
+    },
+    {
+      "id": "q27",
+      "query": "把这个 Django 项目的 views.py 重构一下,拆成多个模块",
+      "should_trigger": false,
+      "clause": "Refactoring existing React/Next.js code",
+      "note": "Refactoring but of Django code, not React/Next.js."
+    },
+    {
+      "id": "q28",
+      "query": "rename the User type to Account across the whole TypeScript monorepo, no react involved, it's all node services",
+      "should_trigger": false,
+      "clause": "Refactoring existing React/Next.js code",
+      "note": "Generic TypeScript refactor in Node services; outside React/Next.js."
+    },
+    {
+      "id": "q29",
+      "query": "我的 webpack 打包 Node CLI 工具太慢了,构建要三分钟,怎么提速",
+      "should_trigger": false,
+      "clause": "Optimizing bundle size or load times",
+      "note": "Build-time speed for a Node CLI, not frontend bundle size or page load."
+    },
+    {
+      "id": "q30",
+      "query": "my python script takes 40s to load a big csv, how do i speed up load time",
+      "should_trigger": false,
+      "clause": "Optimizing bundle size or load times",
+      "note": "Load-time wording but about a Python data script, unrelated to web bundles."
+    }
+  ],
+  "clauses": [
+    "Writing React components or Next.js pages",
+    "Implementing data fetching (client or server)",
+    "Reviewing code for performance issues",
+    "Refactoring existing React/Next.js code",
+    "Optimizing bundle size or load times"
+  ]
+}

@@ -1,0 +1,167 @@
+{
+  "skill": "design-mobile-apps",
+  "skill_md_sha256": "54b4606f4838da36f0eb799e0b8032fc02a3bb0d0c1290fb1002e578755836ac",
+  "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28",
+  "review": "none: AI-drafted. The method tests each skill with two or more independently drafted sets and reports the spread between them instead of reviewing each set by hand.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "用 Sleek 帮我设计一个冥想 app 的首页、引导页和设置页，风格要安静一点，偏莫兰迪色",
+      "should_trigger": true,
+      "clause": "Design mobile app screens with Sleek",
+      "note": "Asks to create new mobile app screens from a brief using Sleek."
+    },
+    {
+      "id": "q02",
+      "query": "use sleek to mock up 3 screens for a dog-walking marketplace app: browse walkers, booking, and chat. dark mode pls",
+      "should_trigger": true,
+      "clause": "Design mobile app screens with Sleek",
+      "note": "Casual English request to generate new screens via Sleek from a brief."
+    },
+    {
+      "id": "q03",
+      "query": "我想做个记账app，先用sleek出一版界面看看效果，要有首页账单列表和添加记录页",
+      "should_trigger": true,
+      "clause": "Design mobile app screens with Sleek",
+      "note": "Chinese request to produce initial screen designs in Sleek for a new app."
+    },
+    {
+      "id": "q04",
+      "query": "sleek design a fitness tracker onboarding flow, then show me a screenshot of the first screen when its done",
+      "should_trigger": true,
+      "clause": "Design mobile app screens with Sleek",
+      "note": "New design generation plus screenshot of the result, the create-chat-screenshot loop."
+    },
+    {
+      "id": "q05",
+      "query": "我在 Sleek 里已经有个旅行app的项目了，帮我把里面的详情页改成大图卡片风格，主色换成橙色",
+      "should_trigger": true,
+      "clause": "Edit Sleek projects",
+      "note": "Modify an existing Sleek project's screen via follow-up chat message."
+    },
+    {
+      "id": "q06",
+      "query": "list my sleek projects and delete the old 'todo-test' one, its just junk from last week",
+      "should_trigger": true,
+      "clause": "Edit Sleek projects",
+      "note": "Project management on existing Sleek projects (list/delete)."
+    },
+    {
+      "id": "q07",
+      "query": "in my existing sleek project, the login screen button is too small and the header is cramped. can u tweak it and re-render",
+      "should_trigger": true,
+      "clause": "Edit Sleek projects",
+      "note": "Iterating on an existing Sleek project's screen with fixes."
+    },
+    {
+      "id": "q08",
+      "query": "把sleek项目里那次没跑完的生成取消掉，然后让它重新改一下底部导航栏，加个“发现”tab",
+      "should_trigger": true,
+      "clause": "Edit Sleek projects",
+      "note": "Cancelling a run and editing an existing project's nav bar."
+    },
+    {
+      "id": "q09",
+      "query": "把我 Sleek 里做好的那个外卖app设计用 React Native (Expo) 实现出来，首页和购物车页先做，放在 src/screens 下",
+      "should_trigger": true,
+      "clause": "Implement Sleek designs in React Native or HTML",
+      "note": "Convert Sleek design into Expo React Native code."
+    },
+    {
+      "id": "q10",
+      "query": "pull the html for the profile screen from my sleek project and turn it into a clean static page, index.html + styles.css",
+      "should_trigger": true,
+      "clause": "Implement Sleek designs in React Native or HTML",
+      "note": "Fetch Sleek screen HTML and implement as an HTML page."
+    },
+    {
+      "id": "q11",
+      "query": "sleek设计稿已经好了，帮我转成rn代码，要能点击跳转，列表要真的能滚动，别只是静态图",
+      "should_trigger": true,
+      "clause": "Implement Sleek designs in React Native or HTML",
+      "note": "Implement Sleek design in React Native with working features."
+    },
+    {
+      "id": "q12",
+      "query": "take the sleek design for my recipe app and build it in react native, then compare screenshots against the original to make sure it matches",
+      "should_trigger": true,
+      "clause": "Implement Sleek designs in React Native or HTML",
+      "note": "Implementation plus acceptance check against Sleek renders."
+    },
+    {
+      "id": "q13",
+      "query": "帮我在 Figma 里设计一个电商 app 的商品详情页，给我出个布局建议就行",
+      "should_trigger": false,
+      "clause": "Design mobile app screens with Sleek",
+      "note": "Mobile screen design but in Figma, not Sleek; different tool."
+    },
+    {
+      "id": "q14",
+      "query": "write a SwiftUI login screen for my iOS app, no mockups needed, just code it from scratch",
+      "should_trigger": false,
+      "clause": "Design mobile app screens with Sleek",
+      "note": "Mobile UI but native SwiftUI coding from scratch with no Sleek design involved."
+    },
+    {
+      "id": "q15",
+      "query": "给我的 landing page 设计一个 logo 和品牌配色方案，用 Midjourney 的提示词",
+      "should_trigger": false,
+      "clause": "Design mobile app screens with Sleek",
+      "note": "Design-related but branding/logo image generation, not app screens."
+    },
+    {
+      "id": "q16",
+      "query": "review the UX of my app's checkout flow and tell me where users might drop off, here's the analytics export funnel.csv",
+      "should_trigger": false,
+      "clause": "Design mobile app screens with Sleek",
+      "note": "UX analysis task, not generating screens in Sleek."
+    },
+    {
+      "id": "q17",
+      "query": "我的 Sleek API key 在 dashboard 里怎么续费升级 Pro？能不能给我讲讲价格",
+      "should_trigger": false,
+      "clause": "Edit Sleek projects",
+      "note": "Billing/pricing question about Sleek account, not editing a project."
+    },
+    {
+      "id": "q18",
+      "query": "edit my Figma project: rename all the frames to match the sprint 12 naming convention and fix the auto-layout on the card component",
+      "should_trigger": false,
+      "clause": "Edit Sleek projects",
+      "note": "Editing a design project but in Figma, not Sleek."
+    },
+    {
+      "id": "q19",
+      "query": "帮我修改我们仓库里 App.tsx 的导航结构，把 stack 换成 bottom tabs，已有的 React Native 项目，没有 Sleek",
+      "should_trigger": false,
+      "clause": "Edit Sleek projects",
+      "note": "Editing an existing codebase's navigation, not a Sleek project."
+    },
+    {
+      "id": "q20",
+      "query": "convert this Figma export (login.fig screens) into React Native components with styled-components",
+      "should_trigger": false,
+      "clause": "Implement Sleek designs in React Native or HTML",
+      "note": "Implements a design in RN but source is Figma, not Sleek."
+    },
+    {
+      "id": "q21",
+      "query": "我的 React Native 项目 build 失败了，Metro 报 Unable to resolve module，帮我看看 package.json 和 metro.config.js",
+      "should_trigger": false,
+      "clause": "Implement Sleek designs in React Native or HTML",
+      "note": "React Native debugging with no Sleek design to implement."
+    },
+    {
+      "id": "q22",
+      "query": "把这个 PSD 切图转成响应式 HTML + Tailwind 页面，文件是 hero.psd",
+      "should_trigger": false,
+      "clause": "Implement Sleek designs in React Native or HTML",
+      "note": "Converts a design to HTML but from PSD, not a Sleek design."
+    }
+  ],
+  "clauses": [
+    "Design mobile app screens with Sleek",
+    "Edit Sleek projects",
+    "Implement Sleek designs in React Native or HTML"
+  ]
+}

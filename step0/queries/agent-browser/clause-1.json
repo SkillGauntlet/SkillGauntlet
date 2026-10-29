@@ -1,0 +1,254 @@
+{
+  "skill": "agent-browser",
+  "skill_md_sha256": "19c4b9f790f8a36cb2c485cb91ad36d6506b60e3cc32df299554ac9c8694247f",
+  "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28",
+  "review": "none: AI-drafted. The method tests each skill with two or more independently drafted sets and reports the spread between them instead of reviewing each set by hand.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "open https://news.ycombinator.com and take a screenshot of the front page, save as hn.png",
+      "should_trigger": true,
+      "clause": "General website interaction and web automation",
+      "note": "Open a site and screenshot"
+    },
+    {
+      "id": "q02",
+      "query": "帮我登录 example.com 的后台,用户名 admin,然后把订单列表页的表格数据抓出来存成 orders.csv",
+      "should_trigger": true,
+      "clause": "General website interaction and web automation",
+      "note": "Login and scrape data"
+    },
+    {
+      "id": "q03",
+      "query": "fill out the signup form on localhost:3000/register with a fake email and click submit, tell me what happens",
+      "should_trigger": true,
+      "clause": "General website interaction and web automation",
+      "note": "Form filling and clicking"
+    },
+    {
+      "id": "q04",
+      "query": "用浏览器自动点一下我们官网的“立即购买”按钮,看看跳转到哪个页面",
+      "should_trigger": true,
+      "clause": "General website interaction and web automation",
+      "note": "Click button and navigate"
+    },
+    {
+      "id": "q05",
+      "query": "can you dogfood our staging app at https://staging.myapp.dev and write up any bugs you find",
+      "should_trigger": true,
+      "clause": "Exploratory testing, dogfooding, QA",
+      "note": "Dogfooding with bug report"
+    },
+    {
+      "id": "q06",
+      "query": "帮我对这个新做的 dashboard 做一轮探索性测试,看看有没有明显的 bug 或者体验问题",
+      "should_trigger": true,
+      "clause": "Exploratory testing, dogfooding, QA",
+      "note": "Exploratory testing in Chinese"
+    },
+    {
+      "id": "q07",
+      "query": "do a QA pass on the checkout flow at localhost:5173, click through everything and note anything broken",
+      "should_trigger": true,
+      "clause": "Exploratory testing, dogfooding, QA",
+      "note": "QA of a flow"
+    },
+    {
+      "id": "q08",
+      "query": "bug hunt 一下我们的 web app,评估一下整体质量,出个报告",
+      "should_trigger": true,
+      "clause": "Exploratory testing, dogfooding, QA",
+      "note": "Bug hunt and quality review"
+    },
+    {
+      "id": "q09",
+      "query": "automate the VS Code desktop app: open the command palette and run 'Toggle Terminal'",
+      "should_trigger": true,
+      "clause": "Electron desktop app automation",
+      "note": "Drive VS Code Electron app"
+    },
+    {
+      "id": "q10",
+      "query": "帮我控制 Discord 桌面客户端,切换到第二个服务器并截个图",
+      "should_trigger": true,
+      "clause": "Electron desktop app automation",
+      "note": "Discord desktop in Chinese"
+    },
+    {
+      "id": "q11",
+      "query": "I want to script the Notion desktop app to create a new page and type a title in it",
+      "should_trigger": true,
+      "clause": "Electron desktop app automation",
+      "note": "Notion Electron app"
+    },
+    {
+      "id": "q12",
+      "query": "用自动化的方式操作 Figma 桌面版,把当前画板的图层列表读出来",
+      "should_trigger": true,
+      "clause": "Electron desktop app automation",
+      "note": "Figma Electron app"
+    },
+    {
+      "id": "q13",
+      "query": "check my slack unreads and summarize whatever's in #eng-alerts",
+      "should_trigger": true,
+      "clause": "Slack tasks (unreads, send, search)",
+      "note": "Slack unreads"
+    },
+    {
+      "id": "q14",
+      "query": "帮我在 Slack 里给 #general 发一条消息:今晚 8 点发布,请大家注意",
+      "should_trigger": true,
+      "clause": "Slack tasks (unreads, send, search)",
+      "note": "Send Slack message"
+    },
+    {
+      "id": "q15",
+      "query": "search slack for conversations mentioning 'invoice 4821' from last week",
+      "should_trigger": true,
+      "clause": "Slack tasks (unreads, send, search)",
+      "note": "Search Slack"
+    },
+    {
+      "id": "q16",
+      "query": "看一下我 Slack 上有哪些未读的 DM,列个清单给我",
+      "should_trigger": true,
+      "clause": "Slack tasks (unreads, send, search)",
+      "note": "Unread DMs in Chinese"
+    },
+    {
+      "id": "q17",
+      "query": "I need to run headless browser automation inside a Vercel Sandbox microVM, how do I set that up and run a page check?",
+      "should_trigger": true,
+      "clause": "Vercel Sandbox microVM browser automation",
+      "note": "Browser in Vercel Sandbox"
+    },
+    {
+      "id": "q18",
+      "query": "在 Vercel Sandbox 里面跑浏览器自动化,打开我部署的页面并截图",
+      "should_trigger": true,
+      "clause": "Vercel Sandbox microVM browser automation",
+      "note": "Chinese sandbox screenshot"
+    },
+    {
+      "id": "q19",
+      "query": "spin up a Vercel sandbox microVM and use a browser CLI in it to test my preview deployment",
+      "should_trigger": true,
+      "clause": "Vercel Sandbox microVM browser automation",
+      "note": "Sandbox testing preview"
+    },
+    {
+      "id": "q20",
+      "query": "我的 Vercel 部署开了保护,怎么让浏览器自动化在沙箱里访问它?",
+      "should_trigger": true,
+      "clause": "Vercel Sandbox microVM browser automation",
+      "note": "Protected deployment access in sandbox"
+    },
+    {
+      "id": "q21",
+      "query": "run a cloud browser session on AWS Bedrock AgentCore and open our admin console in it",
+      "should_trigger": true,
+      "clause": "AWS Bedrock AgentCore cloud browsers",
+      "note": "AgentCore cloud browser"
+    },
+    {
+      "id": "q22",
+      "query": "用 AgentCore 的云端浏览器去访问这个网站并抓取页面标题",
+      "should_trigger": true,
+      "clause": "AWS Bedrock AgentCore cloud browsers",
+      "note": "AgentCore in Chinese"
+    },
+    {
+      "id": "q23",
+      "query": "how do I connect browser automation to Bedrock AgentCore instead of a local Chrome?",
+      "should_trigger": true,
+      "clause": "AWS Bedrock AgentCore cloud browsers",
+      "note": "Connect to AgentCore"
+    },
+    {
+      "id": "q24",
+      "query": "帮我配置 AWS Bedrock AgentCore 浏览器会话,然后在里面点击登录按钮",
+      "should_trigger": true,
+      "clause": "AWS Bedrock AgentCore cloud browsers",
+      "note": "Configure AgentCore session"
+    },
+    {
+      "id": "q25",
+      "query": "写一个 Playwright 的 e2e 测试文件 tests/login.spec.ts,覆盖登录成功和失败两种情况",
+      "should_trigger": false,
+      "clause": "General website interaction and web automation",
+      "note": "Writing test code, not driving a browser; Playwright test authoring"
+    },
+    {
+      "id": "q26",
+      "query": "explain how to use requests and BeautifulSoup to parse an HTML string I pasted",
+      "should_trigger": false,
+      "clause": "General website interaction and web automation",
+      "note": "Parsing static HTML, no browser interaction"
+    },
+    {
+      "id": "q27",
+      "query": "fix the CSS so the submit button on the form in signup.css is centered",
+      "should_trigger": false,
+      "clause": "General website interaction and web automation",
+      "note": "Code edit for form/button vocabulary"
+    },
+    {
+      "id": "q28",
+      "query": "给我的 React 组件 LoginForm.tsx 写单元测试,用 jest 和 testing-library",
+      "should_trigger": false,
+      "clause": "Exploratory testing, dogfooding, QA",
+      "note": "Unit tests, not exploratory QA"
+    },
+    {
+      "id": "q29",
+      "query": "write a QA test plan document template for our release process",
+      "should_trigger": false,
+      "clause": "Exploratory testing, dogfooding, QA",
+      "note": "Document writing, no browsing"
+    },
+    {
+      "id": "q30",
+      "query": "我想开发一个 Electron 应用的主进程,帮我写 main.js 创建一个 BrowserWindow",
+      "should_trigger": false,
+      "clause": "Electron desktop app automation",
+      "note": "Building Electron app, not automating one"
+    },
+    {
+      "id": "q31",
+      "query": "set up a Slack bot with Bolt for Python that replies to mentions, write the code in app.py",
+      "should_trigger": false,
+      "clause": "Slack tasks (unreads, send, search)",
+      "note": "Developing a Slack bot, not using Slack via UI"
+    },
+    {
+      "id": "q32",
+      "query": "写个 GitHub Actions workflow,把我的项目部署到 Vercel",
+      "should_trigger": false,
+      "clause": "Vercel Sandbox microVM browser automation",
+      "note": "Vercel deployment config, not browser in sandbox"
+    },
+    {
+      "id": "q33",
+      "query": "help me write a Terraform config for an AWS Lambda function with an API Gateway trigger",
+      "should_trigger": false,
+      "clause": "AWS Bedrock AgentCore cloud browsers",
+      "note": "AWS infra, unrelated to AgentCore browsers"
+    },
+    {
+      "id": "q34",
+      "query": "用 Bedrock 的 Claude 模型写一个 Python 脚本做文本摘要,调用 invoke_model",
+      "should_trigger": false,
+      "clause": "AWS Bedrock AgentCore cloud browsers",
+      "note": "Bedrock model invocation, not browser"
+    }
+  ],
+  "clauses": [
+    "General website interaction and web automation",
+    "Exploratory testing, dogfooding, QA",
+    "Electron desktop app automation",
+    "Slack tasks (unreads, send, search)",
+    "Vercel Sandbox microVM browser automation",
+    "AWS Bedrock AgentCore cloud browsers"
+  ]
+}

@@ -1,0 +1,128 @@
+{
+  "skill": "design-mobile-apps",
+  "skill_md_sha256": "54b4606f4838da36f0eb799e0b8032fc02a3bb0d0c1290fb1002e578755836ac",
+  "reviewed": false,
+  "review_notes": "Human review: drop queries that copy the description; make sure negatives are near misses rather than unrelated tasks; set reviewed to true when done.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "need a login + signup flow for my habit tracker app, design it in sleek first then we'll build it in expo",
+      "should_trigger": true,
+      "note": "Design request for mobile screens through Sleek, with a follow-on implementation pass in React Native."
+    },
+    {
+      "id": "q02",
+      "query": "sleek project kq8Lm2vTnRa - can you add a settings screen with a dark mode toggle to it",
+      "should_trigger": true,
+      "note": "Edits an existing Sleek project by id, which is the 'edit Sleek projects' capability."
+    },
+    {
+      "id": "q03",
+      "query": "make a coffee checkout screen in sleek, phone size, then export the html for it",
+      "should_trigger": true,
+      "note": "Designs a mobile screen in Sleek and asks for the HTML implementation output."
+    },
+    {
+      "id": "q04",
+      "query": "my SLEEK_API_KEY isnt set up, how do i get one so i can start designing",
+      "should_trigger": true,
+      "note": "Prerequisite API key setup (device flow or key page) for the Sleek skill."
+    },
+    {
+      "id": "q05",
+      "query": "implement the onboarding screens from my sleek design in react native, put them in src/screens/onboarding",
+      "should_trigger": true,
+      "note": "Implementation pass converting an existing Sleek design into React Native code."
+    },
+    {
+      "id": "q06",
+      "query": "用sleek做一个健身app的训练记录页面，先出设计稿",
+      "should_trigger": true,
+      "note": "Chinese request to design a mobile app screen with Sleek before any code."
+    },
+    {
+      "id": "q07",
+      "query": "把sleek项目 kq8Lm2vTnRa 的个人资料页转成react native，放到 app/profile.tsx",
+      "should_trigger": true,
+      "note": "Chinese request to implement a specific Sleek project screen in React Native at a given path."
+    },
+    {
+      "id": "q08",
+      "query": "sleek里那个第三屏购物车，帮我转成html，手机尺寸的",
+      "should_trigger": true,
+      "note": "Chinese request to convert a Sleek screen into phone-sized HTML, with a typo-level casual tone."
+    },
+    {
+      "id": "q09",
+      "query": "用sleek出一套记账app的首页和添加账单弹窗，深色风格，做完截图给我看看",
+      "should_trigger": true,
+      "note": "Multi-screen Sleek design request that asks for a screenshot preview."
+    },
+    {
+      "id": "q10",
+      "query": "sleek 的 api key 没配，怎么弄一个，我想先试试设计",
+      "should_trigger": true,
+      "note": "Chinese prerequisite question about obtaining a Sleek key before designing."
+    },
+    {
+      "id": "q11",
+      "query": "add a bottom tab navigator with 3 tabs (home, search, profile) to my expo app, no design yet just the nav setup",
+      "should_trigger": false,
+      "note": "Same React Native/Expo domain but generic coding with no Sleek design source involved."
+    },
+    {
+      "id": "q12",
+      "query": "build me a responsive marketing landing page in plain html + tailwind for my saas, hero and pricing section",
+      "should_trigger": false,
+      "note": "HTML output but a website landing page, not a mobile app screen or Sleek design."
+    },
+    {
+      "id": "q13",
+      "query": "generate a typescript client from our internal openapi.yaml for the orders service using openapi-generator",
+      "should_trigger": false,
+      "note": "Near miss: reads an OpenAPI spec for a different API; not calling or designing with Sleek's API."
+    },
+    {
+      "id": "q14",
+      "query": "write the App Store listing copy and privacy policy text for my fitness app",
+      "should_trigger": false,
+      "note": "Same app-project domain but a copywriting and legal task, not screen design or implementation."
+    },
+    {
+      "id": "q15",
+      "query": "my react native FlatList is janky on android when scrolling 500 items, how do i fix it",
+      "should_trigger": false,
+      "note": "React Native performance debugging with no design to implement; a sibling coding job."
+    },
+    {
+      "id": "q16",
+      "query": "帮我用figma插件把这个frame导出成react native代码",
+      "should_trigger": false,
+      "note": "[kept: borderline] Figma-to-React-Native export; this skill is tied to Sleek, so Figma is a near miss"
+    },
+    {
+      "id": "q17",
+      "query": "帮我写一个playwright脚本，对后台管理网页做截图回归对比",
+      "should_trigger": false,
+      "note": "Screenshot tooling for web regression testing, not Sleek renders or mobile design."
+    },
+    {
+      "id": "q18",
+      "query": "帮我给这个swiftui登录页加上单元测试",
+      "should_trigger": false,
+      "note": "Native iOS testing of existing code; mobile domain but no design generation or Sleek involvement."
+    },
+    {
+      "id": "q19",
+      "query": "我的expo项目升级到sdk 52后报metro bundler错误，帮我看看",
+      "should_trigger": false,
+      "note": "React Native build/toolchain troubleshooting, a near-miss to implementation but not from a design."
+    },
+    {
+      "id": "q20",
+      "query": "帮我接入stripe做app内订阅，写服务端webhook处理订单状态",
+      "should_trigger": false,
+      "note": "Backend payments integration for a mobile app; same product but a different job."
+    }
+  ]
+}

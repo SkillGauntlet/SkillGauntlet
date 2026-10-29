@@ -1,0 +1,196 @@
+{
+  "skill": "deploy-to-vercel",
+  "skill_md_sha256": "0df550ec39472fa202d752754fddf797b5b7a605cf63aaad06462aea577aa6a7",
+  "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28",
+  "review": "none: AI-drafted. The method tests each skill with two or more independently drafted sets and reports the spread between them instead of reviewing each set by hand.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "deploy my app to vercel please, it's the Next.js project in this folder",
+      "should_trigger": true,
+      "clause": "Deploy my app/website to Vercel",
+      "note": "Direct request to deploy an app to Vercel"
+    },
+    {
+      "id": "q02",
+      "query": "帮我把这个网站部署到 Vercel 上",
+      "should_trigger": true,
+      "clause": "Deploy my app/website to Vercel",
+      "note": "Chinese direct request to deploy a website to Vercel"
+    },
+    {
+      "id": "q03",
+      "query": "can you deploy my portfolio site (Astro) to vercel? never done it before",
+      "should_trigger": true,
+      "clause": "Deploy my app/website to Vercel",
+      "note": "Novice asking to deploy a site to Vercel"
+    },
+    {
+      "id": "q04",
+      "query": "把 my-dashboard 这个 React 应用部署一下,用 vercel",
+      "should_trigger": true,
+      "clause": "Deploy my app/website to Vercel",
+      "note": "Chinese/English mix, deploy a React app via Vercel"
+    },
+    {
+      "id": "q05",
+      "query": "deploy this and give me the link when it's done",
+      "should_trigger": true,
+      "clause": "Deploy and give me the link",
+      "note": "Deploy and return URL"
+    },
+    {
+      "id": "q06",
+      "query": "部署一下然后把链接发我",
+      "should_trigger": true,
+      "clause": "Deploy and give me the link",
+      "note": "Chinese deploy and send link"
+    },
+    {
+      "id": "q07",
+      "query": "i need a shareable url for this vite app, deploy it and send me the link",
+      "should_trigger": true,
+      "clause": "Deploy and give me the link",
+      "note": "Wants a shareable URL via deployment"
+    },
+    {
+      "id": "q08",
+      "query": "部署完给我个能访问的地址,我发给客户看看",
+      "should_trigger": true,
+      "clause": "Deploy and give me the link",
+      "note": "Chinese: deploy and give an accessible address for a client"
+    },
+    {
+      "id": "q09",
+      "query": "ok looks good, push this live",
+      "should_trigger": true,
+      "clause": "Push this live",
+      "note": "Explicit 'push this live'"
+    },
+    {
+      "id": "q10",
+      "query": "好了,直接上线吧",
+      "should_trigger": true,
+      "clause": "Push this live",
+      "note": "Chinese: put it online"
+    },
+    {
+      "id": "q11",
+      "query": "psuh this live so my teammates can see it, the landing page is finished",
+      "should_trigger": true,
+      "clause": "Push this live",
+      "note": "Typo variant of push live"
+    },
+    {
+      "id": "q12",
+      "query": "把这个项目发布上线,现在就要能在公网访问",
+      "should_trigger": true,
+      "clause": "Push this live",
+      "note": "Chinese: publish online publicly"
+    },
+    {
+      "id": "q13",
+      "query": "create a preview deployment for my current branch",
+      "should_trigger": true,
+      "clause": "Create a preview deployment",
+      "note": "Direct preview deployment request"
+    },
+    {
+      "id": "q14",
+      "query": "帮我建一个预览部署,我想先看看效果再决定上不上生产",
+      "should_trigger": true,
+      "clause": "Create a preview deployment",
+      "note": "Chinese preview deployment request"
+    },
+    {
+      "id": "q15",
+      "query": "spin up a preview deploy of the feature/checkout branch so QA can test",
+      "should_trigger": true,
+      "clause": "Create a preview deployment",
+      "note": "Preview deploy for QA"
+    },
+    {
+      "id": "q16",
+      "query": "我想出个 preview 版本给产品经理确认,别动生产环境",
+      "should_trigger": true,
+      "clause": "Create a preview deployment",
+      "note": "Chinese: preview for PM, not production"
+    },
+    {
+      "id": "q17",
+      "query": "write a vercel.json with rewrites for my /api routes to an external backend",
+      "should_trigger": false,
+      "clause": "Deploy my app/website to Vercel",
+      "note": "Vercel config authoring, not a deployment action"
+    },
+    {
+      "id": "q18",
+      "query": "为什么我的 Next.js 项目在 Vercel 上构建报错 'Module not found'?帮我看看日志里的原因",
+      "should_trigger": false,
+      "clause": "Deploy my app/website to Vercel",
+      "note": "Debugging a build error, not deploying"
+    },
+    {
+      "id": "q19",
+      "query": "deploy my app to AWS Elastic Beanstalk, here's the Dockerfile",
+      "should_trigger": false,
+      "clause": "Deploy my app/website to Vercel",
+      "note": "Different deployment platform"
+    },
+    {
+      "id": "q20",
+      "query": "帮我把这个 Express 服务部署到 Netlify",
+      "should_trigger": false,
+      "clause": "Deploy my app/website to Vercel",
+      "note": "Different platform (Netlify)"
+    },
+    {
+      "id": "q21",
+      "query": "run the build locally and give me the link to the dev server",
+      "should_trigger": false,
+      "clause": "Deploy and give me the link",
+      "note": "Local dev server, not a deployment"
+    },
+    {
+      "id": "q22",
+      "query": "给我一个这份 PDF 报告的分享链接,上传到 Google Drive",
+      "should_trigger": false,
+      "clause": "Deploy and give me the link",
+      "note": "Link sharing of a file, not app deployment"
+    },
+    {
+      "id": "q23",
+      "query": "push my changes to the main branch on GitHub",
+      "should_trigger": false,
+      "clause": "Push this live",
+      "note": "Plain git push, not going live"
+    },
+    {
+      "id": "q24",
+      "query": "把这个 npm 包发布到 npm registry 上",
+      "should_trigger": false,
+      "clause": "Push this live",
+      "note": "Publishing a package, a different job"
+    },
+    {
+      "id": "q25",
+      "query": "set up a GitHub Actions workflow that runs tests on every pull request",
+      "should_trigger": false,
+      "clause": "Create a preview deployment",
+      "note": "CI setup, not creating a preview deployment"
+    },
+    {
+      "id": "q26",
+      "query": "帮我配置 Vercel 的环境变量,preview 环境和 production 环境用不同的数据库地址",
+      "should_trigger": false,
+      "clause": "Create a preview deployment",
+      "note": "Configuring env vars per environment, not deploying"
+    }
+  ],
+  "clauses": [
+    "Deploy my app/website to Vercel",
+    "Deploy and give me the link",
+    "Push this live",
+    "Create a preview deployment"
+  ]
+}

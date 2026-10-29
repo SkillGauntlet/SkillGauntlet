@@ -1,0 +1,90 @@
+name: Appeal a result ("my skill was rated wrong")
+description: A published result for a skill looks wrong, and you can point at the batch, the queries and the reason.
+title: "[Appeal] <skill> - <batch>"
+labels: ["appeal"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for checking our work. An appeal is a claim about specific published numbers or specific queries, so this form asks for them. We re-check what you point at; we do not promise a different outcome, and we do not change a result without publishing why.
+
+        Not an appeal? Use the bug template for runner problems, or the request template to ask for a skill to be tested.
+  - type: input
+    id: skill
+    attributes:
+      label: Skill
+      description: Name exactly as it appears in the report, plus its repository.
+      placeholder: "tdd (mattpocock/skills)"
+    validations:
+      required: true
+  - type: input
+    id: batch
+    attributes:
+      label: Batch
+      description: The batch directory under `step0/data/` that holds the result you dispute.
+      placeholder: "2026-10-28_all_haiku"
+    validations:
+      required: true
+  - type: dropdown
+    id: relationship
+    attributes:
+      label: Your relationship to the skill
+      options:
+        - I am the author or a maintainer
+        - I use the skill
+        - Other
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What do you dispute?
+      description: Pick the closest one; details go below.
+      options:
+        - Specific queries are mislabeled (should or should not trigger)
+        - I supply my own question set (and optionally my own run)
+        - A rating or a number (recall, false-trigger rate, grade)
+        - The test setup (host, model, siblings missing, environment)
+        - A static-layer (layer 0) finding
+        - Something else
+    validations:
+      required: true
+  - type: textarea
+    id: queries
+    attributes:
+      label: Query IDs
+      description: |
+        One per line: question-set file and query id, as in `step0/queries/<skill>/`. Required unless you dispute a static finding or the setup as a whole, or only supply your own question set; if so, write "n/a" and say why in the reason.
+      placeholder: |
+        clause-1 q18
+        clause-2 q07
+    validations:
+      required: true
+  - type: textarea
+    id: reason
+    attributes:
+      label: Reason
+      description: What is wrong with each item above, quoting the skill's own description or text where you can. A query is judged against the description as written, not against what the skill is meant to do.
+    validations:
+      required: true
+  - type: textarea
+    id: own_questions
+    attributes:
+      label: Your own question set (optional)
+      description: |
+        JSON in the format of `step0/queries/<skill>/clause-1.json`: a list of queries, each with `id`, `query` and `should_trigger`, and a `clause` if you can name the part of the description it tests. Include questions that should not trigger, too. We run them ourselves under the batch's conditions before showing any number, and show the result beside the independent sets as an "author-supplied set"; it does not replace them.
+      render: json
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence (optional)
+      description: Your own run (attach the `.skillgauntlet/runs/<timestamp>/` directory as a zip; it is shown as reported by you, not as reproduced), a commit of the skill that differs from the one we pinned, or anything else we can check. Do not paste API keys or tokens.
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Before you submit
+      options:
+        - label: I looked at the published records for this batch (`raw.jsonl`, question sets) and the items above are specific.
+          required: true
+        - label: Questions, results or other material I submit in this appeal are a Contribution under [CLA.md](https://github.com/SkillGauntlet/SkillGauntlet/blob/main/CLA.md), and I agree to its terms.
+          required: true

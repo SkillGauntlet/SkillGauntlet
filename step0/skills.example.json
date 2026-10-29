@@ -1,0 +1,14 @@
+{
+  "skills": [
+    {
+      "name": "csv-dedupe",
+      "path": "examples/csv-dedupe"
+    },
+    {
+      "name": "<skill-name>",
+      "repo": "https://github.com/<owner>/<repo>",
+      "ref": "<40-char commit or branch, optional>",
+      "subdir": "<path to the skill directory>"
+    }
+  ]
+}

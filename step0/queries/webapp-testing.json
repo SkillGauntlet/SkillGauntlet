@@ -1,0 +1,134 @@
+{
+  "skill": "webapp-testing",
+  "skill_md_sha256": "8bc27790f6e6dfc2bfa6692326d4518baacf6a31dcc646d963c729adad2f7e34",
+  "reviewed": false,
+  "review_notes": "Human review: drop queries that copy the description; make sure negatives are near misses rather than unrelated tasks; set reviewed to true when done.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "帮我用 playwright 写个脚本，打开 localhost:5173 的登录页，输入账号密码点登录，看看能不能跳到 dashboard",
+      "should_trigger": true,
+      "note": "Local dynamic web app, Playwright automation for verifying frontend login flow; matches core functional-verification use."
+    },
+    {
+      "id": "q02",
+      "query": "the checkout button on localhost:3000/cart doesnt do anything when i click it, can you grab a screenshot and the console errors",
+      "should_trigger": true,
+      "note": "Debugging UI behavior on a running local app with screenshot and browser logs, both explicitly in scope."
+    },
+    {
+      "id": "q03",
+      "query": "frontend在 npm run dev 起的 5173 端口，表单提交后没反应，帮我测一下提交流程",
+      "should_trigger": true,
+      "note": "Dynamic local frontend; requires server lifecycle plus Playwright form-submission testing."
+    },
+    {
+      "id": "q04",
+      "query": "backend 是 cd backend && python server.py 跑在 3000，前端 5173，帮我写个自动化把两个都起起来然后测注册功能",
+      "should_trigger": true,
+      "note": "Multi-server setup matching with_server.py multi-server example, plus end-to-end test of registration."
+    },
+    {
+      "id": "q05",
+      "query": "can you check the browser console on my local dashboard page for any JS errors when it loads",
+      "should_trigger": true,
+      "note": "Viewing browser logs on a local web app, a listed capability of the skill."
+    },
+    {
+      "id": "q06",
+      "query": "这个 docs/index.html 是纯静态页面，帮我用 file:// 打开，找出导航栏里所有链接的选择器然后点一遍",
+      "should_trigger": true,
+      "note": "Static HTML handled via file:// URL with selector discovery, which the decision tree routes to Playwright scripting."
+    },
+    {
+      "id": "q07",
+      "query": "my react app at localhost:8080 renders a blank list sometimes, take a full page screenshot after it finishes loading so i can see what's going on",
+      "should_trigger": true,
+      "note": "Reconnaissance-then-action: waiting for rendered state and capturing a full-page screenshot to debug UI."
+    },
+    {
+      "id": "q08",
+      "query": "写个 playwright 脚本测一下我本地 vue 项目的搜索框，输入关键词后结果列表应该出现，看看有没有",
+      "should_trigger": true,
+      "note": "Verifying frontend search behavior on a local Vue app with Playwright."
+    },
+    {
+      "id": "q09",
+      "query": "start my flask app on port 5000 and run a quick browser check that the /api/items page renders the table",
+      "should_trigger": true,
+      "note": "Requires server lifecycle management plus a browser-based rendering check on a local app."
+    },
+    {
+      "id": "q10",
+      "query": "想看看我本地 admin 后台的侧边栏菜单在窄屏下会不会错位，截几张不同宽度的图给我",
+      "should_trigger": true,
+      "note": "Capturing browser screenshots at multiple viewport sizes to debug layout on a local web app."
+    },
+    {
+      "id": "q11",
+      "query": "Our staging API at https://staging.example.com/v2/users returns 500 on POST, can you hit it with curl and show the response body and headers?",
+      "should_trigger": false,
+      "note": "Near miss: HTTP API testing with curl against a remote host, not browser-based testing of a local web app; API/HTTP tooling domain."
+    },
+    {
+      "id": "q12",
+      "query": "帮我给 src/utils/date.ts 里的 formatDuration 写几个 jest 单元测试，覆盖边界情况",
+      "should_trigger": false,
+      "note": "Near miss: unit testing a pure function with Jest, a different testing job than browser-driven Playwright E2E."
+    },
+    {
+      "id": "q13",
+      "query": "our Cypress e2e suite in cypress/e2e/login.cy.js is flaky, can you figure out why the retries keep failing",
+      "should_trigger": false,
+      "note": "Near miss: E2E flakiness in a competing framework (Cypress), not Playwright; owned by a different testing skill."
+    },
+    {
+      "id": "q14",
+      "query": "帮我把这个 React 组件从 class 改写成 hooks，文件是 components/Header.jsx",
+      "should_trigger": false,
+      "note": "Same frontend domain but a refactoring job with no browser testing, screenshots, or running server involved."
+    },
+    {
+      "id": "q15",
+      "query": "写一个 Playwright 脚本，爬取 https://news.ycombinator.com 前 30 条标题并保存成 csv",
+      "should_trigger": false,
+      "note": "Playwright used for scraping a public external site, not testing a local web app; a web-scraping job rather than app verification."
+    },
+    {
+      "id": "q16",
+      "query": "Set up a GitHub Actions workflow that runs our pytest suite on every push to main",
+      "should_trigger": false,
+      "note": "Near miss: CI pipeline configuration for Python tests, a DevOps job with no browser automation or local app testing."
+    },
+    {
+      "id": "q17",
+      "query": "帮我 review 一下这个 PR 的 diff，主要看 api/auth.py 的权限校验有没有漏洞",
+      "should_trigger": false,
+      "note": "Near miss: static code review of backend security logic, not dynamic testing of a running web application in a browser."
+    },
+    {
+      "id": "q18",
+      "query": "why is my webpack build taking 3 minutes, can you profile the bundle and suggest config changes",
+      "should_trigger": false,
+      "note": "Frontend tooling domain, but build performance optimization is a bundler job unrelated to browser-based testing or debugging."
+    },
+    {
+      "id": "q19",
+      "query": "Write a Selenium script in Python to fill out the signup form on localhost:8000 and check for the welcome message",
+      "should_trigger": true,
+      "note": "[review: flipped to positive] Testing a local web app's signup flow, just without naming Playwright"
+    },
+    {
+      "id": "q20",
+      "query": "帮我把 PostgreSQL 里 orders 表的索引重新设计一下，查询 user_id 很慢",
+      "should_trigger": false,
+      "note": "Same backend project context but a database performance job, unrelated to frontend or browser testing."
+    },
+    {
+      "id": "q21",
+      "query": "写一个 Playwright 脚本，每天定时登录供应商后台下载对账单 PDF",
+      "should_trigger": false,
+      "note": "[review: added, near-miss negative] Browser automation that is not testing; agent-browser territory"
+    }
+  ]
+}

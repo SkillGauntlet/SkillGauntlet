@@ -1,0 +1,258 @@
+{
+  "meta": {
+    "run_id": "20261027-013545",
+    "runner_version": "0.1.0",
+    "host": "claude-code",
+    "claude_version": "2.1.303 (Claude Code)",
+    "model": "haiku",
+    "runs": 3,
+    "platform": "Windows 10 / Python 3.11.9",
+    "started_at": "2026-10-27T01:35:45",
+    "skills": {
+      "tdd": {
+        "source": {
+          "repo": "https://github.com/mattpocock/skills",
+          "commit": "5beb35b040e3de97e54fa9e386d7e42d15c295c2",
+          "subdir": "skills/engineering/tdd"
+        },
+        "skill_md_sha256": "969583080caf842ae86a53501a0091eced13fd89cad65d3aa75c09112318ff33",
+        "query_pack_reviewed": false,
+        "query_pack_file_sha256": "7e62468442dc0cade3c93ddb5d67a51e9ca696692842a1c47d7a660444ba8eca",
+        "query_set_sha256": "e50c0a1fd99cb0a6666d0383d7319165dc3b69c486db4e9153a520bc08c08d5d"
+      }
+    },
+    "model_resolved": "claude-haiku-5-5",
+    "loaded_skills": [
+      "design",
+      "slides",
+      "design-sync",
+      "dataviz",
+      "artifact-diagramming",
+      "artifact-capabilities",
+      "update-config",
+      "verify",
+      "debug",
+      "code-review",
+      "simplify",
+      "batch",
+      "fewer-permission-prompts",
+      "doctor",
+      "loop",
+      "schedule",
+      "claude-api",
+      "run",
+      "run-skill-generator",
+      "plugin-authoring"
+    ],
+    "finished_at": "2026-10-27T01:37:10",
+    "query_hash": "sha256 of canonical JSON [{id, query, should_trigger}] sorted by id",
+    "query_hash_migrated": "2026-10-27: recomputed from queries/tdd.json, verified byte-identical to the file used for this run (query_pack_file_sha256) and query-by-query against raw.jsonl"
+  },
+  "skills": [
+    {
+      "skill": "tdd",
+      "grade": "triggers poorly",
+      "flags": [
+        "rarely triggers",
+        "borderline, add runs",
+        "one question set only"
+      ],
+      "recall": 0.4,
+      "recall_ci95": [
+        0.246,
+        0.577
+      ],
+      "false_positive_rate": 0.0,
+      "fpr_ci95": [
+        0.0,
+        0.114
+      ],
+      "n_pos": 30,
+      "n_neg": 30,
+      "errors": 0,
+      "stolen_by": {},
+      "source": {
+        "repo": "https://github.com/mattpocock/skills",
+        "commit": "5beb35b040e3de97e54fa9e386d7e42d15c295c2",
+        "subdir": "skills/engineering/tdd"
+      },
+      "skill_md_sha256": "969583080caf842ae86a53501a0091eced13fd89cad65d3aa75c09112318ff33",
+      "query_sets": {
+        "legacy": {
+          "query_set_sha256": "e50c0a1fd99cb0a6666d0383d7319165dc3b69c486db4e9153a520bc08c08d5d"
+        }
+      },
+      "by_set": {
+        "legacy": {
+          "recall": 0.4,
+          "recall_ci95": [
+            0.246,
+            0.577
+          ],
+          "false_positive_rate": 0.0,
+          "fpr_ci95": [
+            0.0,
+            0.114
+          ],
+          "n_pos": 30,
+          "n_neg": 30,
+          "grade": "triggers poorly"
+        }
+      },
+      "set_spread": null,
+      "by_language": {
+        "zh": {
+          "recall": 0.4,
+          "recall_ci95": [
+            0.198,
+            0.643
+          ],
+          "false_positive_rate": 0.0,
+          "fpr_ci95": [
+            0.0,
+            0.299
+          ],
+          "n_pos": 15,
+          "n_neg": 9
+        },
+        "en": {
+          "recall": 0.4,
+          "recall_ci95": [
+            0.198,
+            0.643
+          ],
+          "false_positive_rate": 0.0,
+          "fpr_ci95": [
+            0.0,
+            0.155
+          ],
+          "n_pos": 15,
+          "n_neg": 21
+        }
+      },
+      "by_clause": {},
+      "per_query": {
+        "q01": {
+          "query": "我想用TDD来给订单模块加一个退款功能，先别急着写实现，帮我按红-绿-重构的方式来走",
+          "should_trigger": true,
+          "n": 3,
+          "hits": 3
+        },
+        "q02": {
+          "query": "fix the bug where discount codes get applied twice in cart.ts, write a failing test first then fix it",
+          "should_trigger": true,
+          "n": 3,
+          "hits": 0
+        },
+        "q03": {
+          "query": "need integration tests for the payments flow in src/billing/, hit the real sqlite db not mocks pls",
+          "should_trigger": true,
+          "n": 3,
+          "hits": 0
+        },
+        "q04": {
+          "query": "帮我给 user_service.py 里的注册逻辑补一下集成测试，别mock数据库",
+          "should_trigger": true,
+          "n": 3,
+          "hits": 0
+        },
+        "q05": {
+          "query": "red green refactor for the inventory reservation feature in our Go service, start with the first behavior",
+          "should_trigger": true,
+          "n": 3,
+          "hits": 3
+        },
+        "q06": {
+          "query": "我们要做一个优惠券过期的功能，用测试驱动的方式来，一次一个小切片，先定一下要测哪些接口",
+          "should_trigger": true,
+          "n": 3,
+          "hits": 3
+        },
+        "q07": {
+          "query": "the search ranking in src/search/rank.ts returns wrong order when scores tie, can you write a test that reproduces it first and then patch",
+          "should_trigger": true,
+          "n": 3,
+          "hits": 0
+        },
+        "q08": {
+          "query": "给 notification 模块写集成测试，覆盖邮件和短信两条发送链路",
+          "should_trigger": true,
+          "n": 3,
+          "hits": 0
+        },
+        "q09": {
+          "query": "I want to build the CSV export endpoint test-first. Start with the header row behavior, then the escaping.",
+          "should_trigger": true,
+          "n": 3,
+          "hits": 3
+        },
+        "q10": {
+          "query": "新加的 retry 逻辑有个 off-by-one，先写个红的测试把它钉住，再改",
+          "should_trigger": true,
+          "n": 3,
+          "hits": 0
+        },
+        "q11": {
+          "query": "review the diff on feature/cart-totals and tell me if the naming is consistent with GLOSSARY.md",
+          "should_trigger": false,
+          "n": 3,
+          "hits": 0
+        },
+        "q12": {
+          "query": "帮我把 utils/date_helpers.ts 里那几个函数重构一下，拆成小模块，别改行为",
+          "should_trigger": false,
+          "n": 3,
+          "hits": 0
+        },
+        "q13": {
+          "query": "why is our jest suite taking 4 minutes to run? config is in jest.config.js",
+          "should_trigger": false,
+          "n": 3,
+          "hits": 0
+        },
+        "q14": {
+          "query": "set up GitHub Actions to run pytest on every PR for the backend repo",
+          "should_trigger": false,
+          "n": 3,
+          "hits": 0
+        },
+        "q15": {
+          "query": "our staging deploy failed with a 502 after the last merge, can you check the nginx logs",
+          "should_trigger": false,
+          "n": 3,
+          "hits": 0
+        },
+        "q16": {
+          "query": "帮我看看这个 ADR 文档 docs/adr/0007-cache-strategy.md 写得清不清楚，有没有漏掉的决策",
+          "should_trigger": false,
+          "n": 3,
+          "hits": 0
+        },
+        "q17": {
+          "query": "generate a coverage report for the auth module and tell me which branches are untested",
+          "should_trigger": false,
+          "n": 3,
+          "hits": 0
+        },
+        "q18": {
+          "query": "把 legacy_parser.py 的 docstring 全部改成 Google 风格，别动逻辑",
+          "should_trigger": false,
+          "n": 3,
+          "hits": 0
+        },
+        "q19": {
+          "query": "the mock server for our payment provider keeps timing out in the dev container, how do I restart it",
+          "should_trigger": false,
+          "n": 3,
+          "hits": 0
+        },
+        "q20": {
+          "query": "write a Playwright e2e script that logs into our staging site and screenshots the dashboard for the marketing team",
+          "should_trigger": false,
+          "n": 3,
+          "hits": 0
+        }
+      }
+    }
+  ]
+}

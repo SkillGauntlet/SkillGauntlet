@@ -1,0 +1,225 @@
+{
+  "skill": "doc-coauthoring",
+  "skill_md_sha256": "acb9b89b228fb818ffe2f464e40b1cdbf6948b50ceeeb7378f0e5b9d78c996ad",
+  "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28",
+  "review": "none: AI-drafted. The method tests each skill with two or more independently drafted sets and reports the spread between them instead of reviewing each set by hand.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "我们的 CLI 工具还没有 README,帮我一起写一份完整的使用文档,包括安装、配置和常见问题",
+      "should_trigger": true,
+      "clause": "Write documentation",
+      "note": "User wants to author a README/user documentation collaboratively from scratch."
+    },
+    {
+      "id": "q02",
+      "query": "need to write the onboarding docs for new backend hires, covers local setup, repo layout, deploy process. can we start?",
+      "should_trigger": true,
+      "clause": "Write documentation",
+      "note": "Onboarding documentation authoring task."
+    },
+    {
+      "id": "q03",
+      "query": "帮我给 payments-sdk 写一份开发者文档,面向第三方接入方,我先把背景都倒给你",
+      "should_trigger": true,
+      "clause": "Write documentation",
+      "note": "Developer-facing documentation for an SDK, with info-dump offered."
+    },
+    {
+      "id": "q04",
+      "query": "i gotta write an internal wiki page documenting how our release pipeline works, never done one, walk me thru it",
+      "should_trigger": true,
+      "clause": "Write documentation",
+      "note": "Wiki documentation authoring with request for guided process."
+    },
+    {
+      "id": "q05",
+      "query": "我想写一份提案,说服老板给团队买 Datadog 替换现在的自建监控,帮我理一下怎么写",
+      "should_trigger": true,
+      "clause": "Write proposals",
+      "note": "Persuasive proposal to management for a tooling purchase."
+    },
+    {
+      "id": "q06",
+      "query": "help me draft a proposal to migrate our CI from Jenkins to GitHub Actions, audience is the eng leads",
+      "should_trigger": true,
+      "clause": "Write proposals",
+      "note": "Migration proposal for engineering leads."
+    },
+    {
+      "id": "q07",
+      "query": "要给客户写个项目方案书,做数据中台的,下周要交,我们一步步来写吧",
+      "should_trigger": true,
+      "clause": "Write proposals",
+      "note": "Client project proposal written step by step."
+    },
+    {
+      "id": "q08",
+      "query": "writing a proposal for a 4-day work week pilot at our startup, need to make it convincing for the CEO. where do we start",
+      "should_trigger": true,
+      "clause": "Write proposals",
+      "note": "Business proposal for a pilot program aimed at executive."
+    },
+    {
+      "id": "q09",
+      "query": "帮我起草一份技术规格说明书,是关于新的消息队列服务的接口和数据格式",
+      "should_trigger": true,
+      "clause": "Write technical specs",
+      "note": "Technical spec for a message queue service."
+    },
+    {
+      "id": "q10",
+      "query": "need a tech spec for our rate limiter rewrite, saving to docs/rate-limiter-spec.md. I have lots of context to dump",
+      "should_trigger": true,
+      "clause": "Write technical specs",
+      "note": "Technical spec with named output file and context to share."
+    },
+    {
+      "id": "q11",
+      "query": "写个 design doc,关于把单体订单系统拆成微服务,读者是架构组,我们一节一节来",
+      "should_trigger": true,
+      "clause": "Write technical specs",
+      "note": "Design doc/spec for service decomposition, section by section."
+    },
+    {
+      "id": "q12",
+      "query": "can you help me spec out the webhook retry behavior? want a proper RFC-style technical spec w/ edge cases",
+      "should_trigger": true,
+      "clause": "Write technical specs",
+      "note": "RFC-style technical spec for retry behavior."
+    },
+    {
+      "id": "q13",
+      "query": "我们在 Postgres 和 MongoDB 之间纠结了很久,想写一份决策文档把结论和理由记下来,给后面的人看",
+      "should_trigger": true,
+      "clause": "Write decision docs / similar structured content",
+      "note": "Decision doc recording a database choice."
+    },
+    {
+      "id": "q14",
+      "query": "help me write an ADR for why we chose Kafka over RabbitMQ, include the alternatives we rejected",
+      "should_trigger": true,
+      "clause": "Write decision docs / similar structured content",
+      "note": "Architecture decision record with rejected alternatives."
+    },
+    {
+      "id": "q15",
+      "query": "帮我写一份 PRD,产品是团队的会议纪要自动总结功能,要结构化一点",
+      "should_trigger": true,
+      "clause": "Write decision docs / similar structured content",
+      "note": "PRD as similar structured content."
+    },
+    {
+      "id": "q16",
+      "query": "gotta put together a postmortem doc for last week's outage, structured w/ timeline, root cause, action items. help me write it up",
+      "should_trigger": true,
+      "clause": "Write decision docs / similar structured content",
+      "note": "Structured incident postmortem document."
+    },
+    {
+      "id": "q17",
+      "query": "我要写一篇文档,说明我们 monorepo 的目录规范,准备发到团队群里,帮我一起弄",
+      "should_trigger": true,
+      "clause": "Trigger on mentions of writing docs/drafting specs/similar documentation tasks",
+      "note": "Generic mention of writing a doc."
+    },
+    {
+      "id": "q18",
+      "query": "gonna draft a spec for the new search feature, can u help me get started",
+      "should_trigger": true,
+      "clause": "Trigger on mentions of writing docs/drafting specs/similar documentation tasks",
+      "note": "Casual mention of drafting a spec."
+    },
+    {
+      "id": "q19",
+      "query": "帮我 write up 一下上季度的架构演进,整理成一份文档给新同事看",
+      "should_trigger": true,
+      "clause": "Trigger on mentions of writing docs/drafting specs/similar documentation tasks",
+      "note": "'Write up' phrasing for a documentation task."
+    },
+    {
+      "id": "q20",
+      "query": "starting a doc on our caching strategy, my thoughts are all over the place, help me turn it into something readable",
+      "should_trigger": true,
+      "clause": "Trigger on mentions of writing docs/drafting specs/similar documentation tasks",
+      "note": "Starting a doc from scattered thoughts."
+    },
+    {
+      "id": "q21",
+      "query": "给 utils/retry.py 里的函数补上 docstring,按 Google 风格",
+      "should_trigger": false,
+      "clause": "Write documentation",
+      "note": "Inline docstrings in code are a code edit, not co-authoring a document."
+    },
+    {
+      "id": "q22",
+      "query": "translate docs/README.md into Japanese, keep the markdown formatting",
+      "should_trigger": false,
+      "clause": "Write documentation",
+      "note": "Translation of an existing doc, not authoring."
+    },
+    {
+      "id": "q23",
+      "query": "帮我检查 docs/install.md 里有没有错别字和失效链接,直接改",
+      "should_trigger": false,
+      "clause": "Write documentation",
+      "note": "Proofreading/link fixing on an existing doc."
+    },
+    {
+      "id": "q24",
+      "query": "我这份提案 proposal.md 已经写好了,帮我转成 PPT 大纲就行",
+      "should_trigger": false,
+      "clause": "Write proposals",
+      "note": "Format conversion of finished proposal, a presentation task."
+    },
+    {
+      "id": "q25",
+      "query": "review this PR that adds a new proposal-submission form, the validation logic looks off",
+      "should_trigger": false,
+      "clause": "Write proposals",
+      "note": "Code review in a proposal-related domain, not writing a proposal."
+    },
+    {
+      "id": "q26",
+      "query": "根据 openapi-spec.yaml 生成 TypeScript 的 client 代码",
+      "should_trigger": false,
+      "clause": "Write technical specs",
+      "note": "Code generation from an existing spec, not writing a spec."
+    },
+    {
+      "id": "q27",
+      "query": "implement the rate limiter exactly as described in docs/rate-limiter-spec.md, start with the token bucket",
+      "should_trigger": false,
+      "clause": "Write technical specs",
+      "note": "Implementing from a finished spec is coding work."
+    },
+    {
+      "id": "q28",
+      "query": "帮我决定一下用 Redis 还是 Memcached,直接给个推荐就行,不用写文档",
+      "should_trigger": false,
+      "clause": "Write decision docs / similar structured content",
+      "note": "Wants a quick technical recommendation, no document."
+    },
+    {
+      "id": "q29",
+      "query": "summarize the decision in docs/adr-007.md in two sentences for the standup",
+      "should_trigger": false,
+      "clause": "Write decision docs / similar structured content",
+      "note": "Summarizing an existing decision doc, not authoring one."
+    },
+    {
+      "id": "q30",
+      "query": "写一个 Python 脚本,批量把 docs 目录下的 markdown 文件转成 PDF",
+      "should_trigger": false,
+      "clause": "Trigger on mentions of writing docs/drafting specs/similar documentation tasks",
+      "note": "Mentions docs but is a scripting task."
+    }
+  ],
+  "clauses": [
+    "Write documentation",
+    "Write proposals",
+    "Write technical specs",
+    "Write decision docs / similar structured content",
+    "Trigger on mentions of writing docs/drafting specs/similar documentation tasks"
+  ]
+}

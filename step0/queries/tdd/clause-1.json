@@ -1,0 +1,196 @@
+{
+  "skill": "tdd",
+  "skill_md_sha256": "969583080caf842ae86a53501a0091eced13fd89cad65d3aa75c09112318ff33",
+  "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28",
+  "review": "none: AI-drafted. The method tests each skill with two or more independently drafted sets and reports the spread between them instead of reviewing each set by hand.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "I need to add a coupon code feature to the cart. Let's do it test-first, write the failing test before any implementation.",
+      "should_trigger": true,
+      "clause": "Build features test-first",
+      "note": "Explicit request to build a new feature test-first."
+    },
+    {
+      "id": "q02",
+      "query": "帮我用测试驱动的方式实现一个用户注册接口,先写测试再写代码",
+      "should_trigger": true,
+      "clause": "Build features test-first",
+      "note": "Chinese: build a registration endpoint via TDD."
+    },
+    {
+      "id": "q03",
+      "query": "want to add pagination to src/api/orders.ts, tests first pls, one test at a time",
+      "should_trigger": true,
+      "clause": "Build features test-first",
+      "note": "Terse feature request with test-first, incremental."
+    },
+    {
+      "id": "q04",
+      "query": "新增一个导出CSV的功能,我想先写失败的测试,然后再写最小实现让它通过",
+      "should_trigger": true,
+      "clause": "Build features test-first",
+      "note": "Chinese: new CSV export, failing test first then minimal implementation."
+    },
+    {
+      "id": "q05",
+      "query": "login keeps returning 500 when email has uppercase letters. reproduce it with a failing test first, then fix",
+      "should_trigger": true,
+      "clause": "Fix bugs test-first",
+      "note": "Bug fix with a reproducing failing test first."
+    },
+    {
+      "id": "q06",
+      "query": "这个bug先别直接改,先写一个能复现的测试让它红,再修到绿 (utils/date.py 时区问题)",
+      "should_trigger": true,
+      "clause": "Fix bugs test-first",
+      "note": "Chinese: reproduce bug via red test before fixing."
+    },
+    {
+      "id": "q07",
+      "query": "fix the off-by-one in paginate() but do it TDD style so we have a regression test",
+      "should_trigger": true,
+      "clause": "Fix bugs test-first",
+      "note": "Bug fix TDD style with regression test."
+    },
+    {
+      "id": "q08",
+      "query": "购物车总价算错了,用TDD的方法修一下,先加个测试",
+      "should_trigger": true,
+      "clause": "Fix bugs test-first",
+      "note": "Chinese: wrong cart total, fix via TDD."
+    },
+    {
+      "id": "q09",
+      "query": "let's follow red-green-refactor for this new parser module",
+      "should_trigger": true,
+      "clause": "Red-green-refactor mentioned",
+      "note": "Directly names red-green-refactor."
+    },
+    {
+      "id": "q10",
+      "query": "我们按 red-green-refactor 的节奏来写这个 LRU 缓存吧",
+      "should_trigger": true,
+      "clause": "Red-green-refactor mentioned",
+      "note": "Chinese mention of red-green-refactor."
+    },
+    {
+      "id": "q11",
+      "query": "can you walk me through a red green refactor cycle on this FizzBuzz kata in kata/fizz.js?",
+      "should_trigger": true,
+      "clause": "Red-green-refactor mentioned",
+      "note": "Asks to do a red-green-refactor cycle on a kata."
+    },
+    {
+      "id": "q12",
+      "query": "红绿重构循环怎么用在 stack.go 这个小模块上?带我走一遍,边写边跑测试",
+      "should_trigger": true,
+      "clause": "Red-green-refactor mentioned",
+      "note": "Chinese: apply red-green-refactor loop on a module."
+    },
+    {
+      "id": "q13",
+      "query": "write integration tests for the checkout flow covering cart, payment and order creation",
+      "should_trigger": true,
+      "clause": "Wants integration tests",
+      "note": "Direct integration test request."
+    },
+    {
+      "id": "q14",
+      "query": "帮我给订单服务写集成测试,要覆盖下单到扣库存的整个流程",
+      "should_trigger": true,
+      "clause": "Wants integration tests",
+      "note": "Chinese: integration tests for order service."
+    },
+    {
+      "id": "q15",
+      "query": "we have no integration tests for the auth module, can you add some that go through the public API?",
+      "should_trigger": true,
+      "clause": "Wants integration tests",
+      "note": "Add integration tests through public interface."
+    },
+    {
+      "id": "q16",
+      "query": "给 /api/users 这几个接口补一套集成测试,别 mock 内部模块",
+      "should_trigger": true,
+      "clause": "Wants integration tests",
+      "note": "Chinese: integration tests without internal mocks."
+    },
+    {
+      "id": "q17",
+      "query": "Add a dark mode toggle to the settings page. Just implement it, no need for tests.",
+      "should_trigger": false,
+      "clause": "Build features test-first",
+      "note": "Feature building but explicitly not test-first."
+    },
+    {
+      "id": "q18",
+      "query": "帮我实现一个文件上传组件,样式参考 Ant Design 就行",
+      "should_trigger": false,
+      "clause": "Build features test-first",
+      "note": "Plain feature implementation, no test-first intent."
+    },
+    {
+      "id": "q19",
+      "query": "explain the difference between unit tests and mocks vs stubs in jest",
+      "should_trigger": false,
+      "clause": "Build features test-first",
+      "note": "Conceptual testing explanation, not building a feature test-first."
+    },
+    {
+      "id": "q20",
+      "query": "the app crashes on startup with a null pointer in config.ts, find the cause and patch it",
+      "should_trigger": false,
+      "clause": "Fix bugs test-first",
+      "note": "Bug fix without test-first request."
+    },
+    {
+      "id": "q21",
+      "query": "这个测试挂了,帮我看看为什么 CI 里 test_payment.py 报超时",
+      "should_trigger": false,
+      "clause": "Fix bugs test-first",
+      "note": "Debugging a failing CI test, not test-first bug fixing."
+    },
+    {
+      "id": "q22",
+      "query": "refactor the UserService class to split it into smaller modules, keep behavior the same",
+      "should_trigger": false,
+      "clause": "Red-green-refactor mentioned",
+      "note": "Refactoring job, owned by review/refactor, not the TDD loop."
+    },
+    {
+      "id": "q23",
+      "query": "review my PR for the traffic light state machine and tell me what's wrong",
+      "should_trigger": false,
+      "clause": "Red-green-refactor mentioned",
+      "note": "Code review request, sibling skill's job."
+    },
+    {
+      "id": "q24",
+      "query": "set up playwright end-to-end browser tests for the signup page",
+      "should_trigger": false,
+      "clause": "Wants integration tests",
+      "note": "E2E browser tests, different from integration tests."
+    },
+    {
+      "id": "q25",
+      "query": "给这个项目配置 jest 的覆盖率报告和 CI 里的测试流水线",
+      "should_trigger": false,
+      "clause": "Wants integration tests",
+      "note": "Test tooling/CI configuration, not writing integration tests."
+    },
+    {
+      "id": "q26",
+      "query": "我们的接口集成方案怎么设计比较好?要对接第三方支付的 webhook,先出个架构方案",
+      "should_trigger": false,
+      "clause": "Wants integration tests",
+      "note": "Uses 'integration' in the system-integration sense, architecture design, not tests."
+    }
+  ],
+  "clauses": [
+    "Build features test-first",
+    "Fix bugs test-first",
+    "Red-green-refactor mentioned",
+    "Wants integration tests"
+  ]
+}

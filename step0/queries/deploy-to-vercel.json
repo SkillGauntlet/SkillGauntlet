@@ -1,0 +1,128 @@
+{
+  "skill": "deploy-to-vercel",
+  "skill_md_sha256": "0df550ec39472fa202d752754fddf797b5b7a605cf63aaad06462aea577aa6a7",
+  "reviewed": false,
+  "review_notes": "Human review: drop queries that copy the description; make sure negatives are near misses rather than unrelated tasks; set reviewed to true when done.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "帮我把 ./dashboard 这个文件夹部署一下，先不要正式版，给我一个预览链接就行",
+      "should_trigger": true,
+      "note": "Asks for a non-production deploy of a specific folder and wants the URL back, which is the skill's core preview-deploy job."
+    },
+    {
+      "id": "q02",
+      "query": "my next app in ~/projects/shop-ui, can you get it online somewhere I can send to the client today? just need a link",
+      "should_trigger": true,
+      "note": "Casual request to publish a project to a shareable URL, with no mention of the platform name."
+    },
+    {
+      "id": "q03",
+      "query": "vercel link 好像没连上，我这个仓库有 origin，帮我连到 acme 团队然后发一版",
+      "should_trigger": true,
+      "note": "Involves linking a repo to a specific team and then deploying, covering the link-then-deploy flow with team selection."
+    },
+    {
+      "id": "q04",
+      "query": "ship the landing page folder (site/) live-ish, skip waiting for the build, I'll check it later",
+      "should_trigger": true,
+      "note": "Terse request to deploy a directory without waiting on the build, which matches the --no-wait CLI deploy path."
+    },
+    {
+      "id": "q05",
+      "query": "把当前改动推上去，让线上自动出个预览版本，我要发给产品同事看",
+      "should_trigger": true,
+      "note": "Wants a commit-and-push that produces a preview build for review, which is the git-push deploy method."
+    },
+    {
+      "id": "q06",
+      "query": "I have a static export at ~/Downloads/site-export.tgz, can you publish it and tell me the url",
+      "should_trigger": true,
+      "note": "Requests deploying an existing tarball and returning the live URL, a supported input form for the deploy script."
+    },
+    {
+      "id": "q07",
+      "query": "我的 Vue 项目还没在 vercel 上建过，CLI 我已经登录了，帮我 link 一下再部署",
+      "should_trigger": true,
+      "note": "Unlinked project with authenticated CLI; needs linking and then a deploy, a core decision-flow case."
+    },
+    {
+      "id": "q08",
+      "query": "push my changes so the preview builds for branch feat/login-redesign",
+      "should_trigger": true,
+      "note": "Asks to push a feature branch to trigger a preview build, matching the git push preview workflow."
+    },
+    {
+      "id": "q09",
+      "query": "没有 git 的 demo 文件夹，直接用 vercel 发出去，要一个能打开的网址",
+      "should_trigger": true,
+      "note": "Linked or unlinked folder with no git remote; wants a directly openable URL from the CLI deploy."
+    },
+    {
+      "id": "q10",
+      "query": "I need a shareable preview of the docs site in ./docs-app, can you publish it and paste back the URL?",
+      "should_trigger": true,
+      "note": "Requests a shareable preview of a named directory and the resulting URL, a natural phrasing of the preview-deploy intent."
+    },
+    {
+      "id": "q11",
+      "query": "vercel.json 里的 rewrites 写错了，/api/* 没有转发到后端，帮我改一下规则",
+      "should_trigger": false,
+      "note": "[kept: borderline] Editing vercel.json rewrites is configuration, not deployment"
+    },
+    {
+      "id": "q12",
+      "query": "帮我检查一下 next.config.js，output: 'standalone' 这个配置部署到 Vercel 需要吗？",
+      "should_trigger": false,
+      "note": "[review: replaced, near-miss negative] Deployment-related config question; no deploy performed"
+    },
+    {
+      "id": "q13",
+      "query": "Set up a GitHub Actions workflow that runs jest on every pull request for this repo",
+      "should_trigger": false,
+      "note": "CI test automation is a near miss to deployment; it creates a workflow but does not publish anything."
+    },
+    {
+      "id": "q14",
+      "query": "vercel 上那个项目最近一次部署失败了，帮我看看 build 日志里报的是什么错",
+      "should_trigger": false,
+      "note": "[review: replaced, near-miss negative] Reading deployment logs to debug; no deploy performed"
+    },
+    {
+      "id": "q15",
+      "query": "帮我把 Netlify 的 _redirects 文件转换成 Vercel 的 rewrites 写法",
+      "should_trigger": false,
+      "note": "[kept: borderline] Converting Netlify rules to Vercel syntax is a config migration"
+    },
+    {
+      "id": "q16",
+      "query": "Add a .env.example file listing every env var this project reads from process.env",
+      "should_trigger": false,
+      "note": "Documentation of environment variables; related to deploy setup but a standalone file-writing task."
+    },
+    {
+      "id": "q17",
+      "query": "帮我写个 Dockerfile，把这个 Node 服务打成镜像，本地能跑起来就行",
+      "should_trigger": false,
+      "note": "Containerization for a different target; it produces a build artifact but does not deploy to Vercel."
+    },
+    {
+      "id": "q18",
+      "query": "Vercel 本地 build 报 Module not found: react-dom/client，帮我看看 import 路径怎么改",
+      "should_trigger": false,
+      "note": "Mentions the platform but asks for a local import-path fix, which is a code bug rather than a deployment action."
+    },
+    {
+      "id": "q19",
+      "query": "Vercel 上 preview 部署的链接打开要登录，怎么关掉 Deployment Protection？",
+      "should_trigger": false,
+      "note": "[review: replaced, near-miss negative] Changing Vercel project settings, not a deploy action"
+    },
+    {
+      "id": "q20",
+      "query": "这次 deploy 之前先帮我跑一下 npm run build 和 lint，看看本地有没有报错，先别部署",
+      "should_trigger": false,
+      "note": "[review: replaced, near-miss negative] User explicitly says not to deploy yet"
+    }
+  ]
+}

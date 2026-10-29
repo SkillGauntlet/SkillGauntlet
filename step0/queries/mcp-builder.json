@@ -1,0 +1,128 @@
+{
+  "skill": "mcp-builder",
+  "skill_md_sha256": "57231330040e18e033dad8b2fdc0340a6185034c32b42b7d3448f444a6af6cf2",
+  "reviewed": false,
+  "review_notes": "Human review: drop queries that copy the description; make sure negatives are near misses rather than unrelated tasks; set reviewed to true when done.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "帮我用 TypeScript 写一个 MCP server，把我们公司的 Jira API 封装成工具给 claude 用，主要要能查 issue 和创建 issue",
+      "should_trigger": true,
+      "note": "Requests building an MCP server that wraps an external API (Jira) in TypeScript, which is the skill's core job."
+    },
+    {
+      "id": "q02",
+      "query": "need an mcp server for our internal ticketing api (flask backend, bearer token auth). make tools for list/get/update tickets, python pls",
+      "should_trigger": true,
+      "note": "Asks for an MCP server over an internal REST API with auth, in Python. This matches the FastMCP path."
+    },
+    {
+      "id": "q03",
+      "query": "想把 Notion 的数据库接到 agent 里，做一个 mcp server 吧，stdio 本地跑就行",
+      "should_trigger": true,
+      "note": "Asks for a local stdio MCP server integrating an external service (Notion), which the skill covers."
+    },
+    {
+      "id": "q04",
+      "query": "build an MCP server wrapping the Stripe refunds + customers endpoints so the agent can look up charges. remote streamable http would be nice",
+      "should_trigger": true,
+      "note": "Names a remote streamable HTTP transport and specific Stripe endpoints, which is an MCP server build for an external API."
+    },
+    {
+      "id": "q05",
+      "query": "做个 mcp 服务器对接我们的 ERP 接口，要分页，返回结构化数据，错误信息要能指导 agent 下一步",
+      "should_trigger": true,
+      "note": "Explicitly asks for pagination, structured output, and actionable errors, all skill guidelines for MCP tool design."
+    },
+    {
+      "id": "q06",
+      "query": "can you scaffold a typescript mcp server for the open-meteo weather api? tools: current weather, forecast by lat/lon",
+      "should_trigger": true,
+      "note": "Direct request to scaffold a TypeScript MCP server with specific tools for a weather API."
+    },
+    {
+      "id": "q07",
+      "query": "帮我把 internal wiki (confluence) 的搜索和读页面功能做成 MCP 工具，python FastMCP，记得加上 readOnlyHint 注解",
+      "should_trigger": true,
+      "note": "Requests an MCP tool build in FastMCP with tool annotations, both explicitly covered by the skill."
+    },
+    {
+      "id": "q08",
+      "query": "turn our billing REST api (docs in openapi.yaml) into an mcp server, prefix tools with billing_ please",
+      "should_trigger": true,
+      "note": "Converts an existing REST API into an MCP server with naming conventions, matching the skill's workflow."
+    },
+    {
+      "id": "q09",
+      "query": "我们要给销售团队的 Claude 接 HubSpot，写个 MCP server，只读的，先把 contacts 和 deals 查询做好",
+      "should_trigger": true,
+      "note": "Asks for a read-only MCP server for an external CRM, which is an MCP server build for an external service."
+    },
+    {
+      "id": "q10",
+      "query": "make an mcp server for the GitHub REST API — list repos, PRs, issues, with proper annotations and an eval set at the end",
+      "should_trigger": true,
+      "note": "Asks for an MCP server build plus an evaluation set, which covers both the implementation and Phase 4 of the skill."
+    },
+    {
+      "id": "q11",
+      "query": "帮我在 claude_desktop_config.json 里加上一个已经装好的 filesystem mcp server，路径配置一下",
+      "should_trigger": false,
+      "note": "Near miss: configuring an already-built MCP server in a client config is a different job from building a server."
+    },
+    {
+      "id": "q12",
+      "query": "my mcp client keeps dropping the stdio connection after 30s when calling our server. is it the client's timeout handling? look at src/client/connection.ts",
+      "should_trigger": false,
+      "note": "Near miss: debugging client-side connection code, not building or designing a server."
+    },
+    {
+      "id": "q13",
+      "query": "用 FastAPI 写一个 REST 接口给前端调用，返回用户订单列表，不需要 MCP",
+      "should_trigger": false,
+      "note": "Near miss: writes a Python web API for a frontend, the same kind of backend code but for a different purpose and not an MCP server."
+    },
+    {
+      "id": "q14",
+      "query": "generate an openapi 3.1 spec from our express routes in src/routes, the frontend team wants to generate a client from it",
+      "should_trigger": false,
+      "note": "Near miss: produces an OpenAPI spec from existing routes, a different artifact and job from building an MCP server."
+    },
+    {
+      "id": "q15",
+      "query": "帮我写一个 OpenAI function calling 的 tool schema，调用我们库存系统的接口，不用 mcp",
+      "should_trigger": false,
+      "note": "Near miss: writes a function-calling schema for a different agent protocol, and the user explicitly rules out MCP."
+    },
+    {
+      "id": "q16",
+      "query": "explain the difference between the stdio and streamable HTTP transports in the MCP spec, I'm writing a blog post about it",
+      "should_trigger": false,
+      "note": "Near miss: a conceptual explanation of MCP transports for writing, with no server to build."
+    },
+    {
+      "id": "q17",
+      "query": "our slack bot built with bolt js isn't getting message.channels events, can u check the event subscription setup",
+      "should_trigger": false,
+      "note": "Near miss: debugging a Slack bot's event subscriptions in a different framework, not an MCP server."
+    },
+    {
+      "id": "q18",
+      "query": "帮我写个 Python 脚本，用 requests 批量调用 GitHub API 拉所有仓库的 star 数，导出 csv",
+      "should_trigger": false,
+      "note": "Near miss: a one-off API scripting task with no MCP server or tool exposure to an LLM."
+    },
+    {
+      "id": "q19",
+      "query": "our Next.js app's API routes are slow, profile and optimize the /api/search handler",
+      "should_trigger": false,
+      "note": "Near miss: performance work on an existing web API handler, a different job from building an MCP server."
+    },
+    {
+      "id": "q20",
+      "query": "帮我把 claude code 的 hooks 配置改成 PostToolUse 时自动跑 prettier",
+      "should_trigger": false,
+      "note": "Near miss: configures Claude Code hooks, which is a different tool-integration feature and not MCP server development."
+    }
+  ]
+}

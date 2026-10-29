@@ -1,0 +1,225 @@
+{
+  "skill": "webapp-testing",
+  "skill_md_sha256": "8bc27790f6e6dfc2bfa6692326d4518baacf6a31dcc646d963c729adad2f7e34",
+  "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28",
+  "review": "none: AI-drafted. The method tests each skill with two or more independently drafted sets and reports the spread between them instead of reviewing each set by hand.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "写个 playwright 脚本，打开 localhost:5173，点一下登录按钮，填好用户名和密码然后提交",
+      "should_trigger": true,
+      "clause": "Interacting with local web apps via Playwright",
+      "note": "Scripted browser automation of a local app with Playwright; no verification, screenshot or log focus."
+    },
+    {
+      "id": "q02",
+      "query": "my vite dev server is on port 3000 and the api is on 8000, can you write a python script that starts both and then drives the page with playwright to add 3 items to the cart",
+      "should_trigger": true,
+      "clause": "Interacting with local web apps via Playwright",
+      "note": "Multi-server lifecycle plus Playwright driving, matching with_server.py usage."
+    },
+    {
+      "id": "q03",
+      "query": "我有个静态的 index.html 在 ./demo/ 下面，用 playwright 自动把表单里的输入框都填上再点提交",
+      "should_trigger": true,
+      "clause": "Interacting with local web apps via Playwright",
+      "note": "Automating a static local HTML file via file:// with Playwright."
+    },
+    {
+      "id": "q04",
+      "query": "use playwright to go through my local app at localhost:4200 and list every button, link and input on the page w/ their selectors",
+      "should_trigger": true,
+      "clause": "Interacting with local web apps via Playwright",
+      "note": "Element discovery on a local app; interaction/reconnaissance only."
+    },
+    {
+      "id": "q05",
+      "query": "帮我跑一遍本地的结算流程，看看加入购物车 → 下单 → 支付成功页是不是都能正常走通",
+      "should_trigger": true,
+      "clause": "Verifying frontend functionality",
+      "note": "Checking that a local frontend flow works end to end."
+    },
+    {
+      "id": "q06",
+      "query": "can u check that the signup form on localhost:3000 actually shows an error when the email is invalid and that submit works with a valid one",
+      "should_trigger": true,
+      "clause": "Verifying frontend functionality",
+      "note": "Verifying form validation behavior in a running frontend."
+    },
+    {
+      "id": "q07",
+      "query": "我刚改完 Todo 组件，帮我确认一下新增、删除、勾选完成这三个功能在浏览器里还正常",
+      "should_trigger": true,
+      "clause": "Verifying frontend functionality",
+      "note": "Regression-style functional check of UI features after a change."
+    },
+    {
+      "id": "q08",
+      "query": "verify the dark mode toggle in my react app really switches the theme and persists after a page reload. dev server is npm run dev",
+      "should_trigger": true,
+      "clause": "Verifying frontend functionality",
+      "note": "Functional verification of a feature including persistence."
+    },
+    {
+      "id": "q09",
+      "query": "我的下拉菜单点了没反应，localhost:5173 上的，帮我在浏览器里复现一下看看到底哪一步坏了",
+      "should_trigger": true,
+      "clause": "Debugging UI behavior",
+      "note": "Reproducing a broken UI interaction in a live browser."
+    },
+    {
+      "id": "q10",
+      "query": "the modal won't close when i click the X button, only on the settings page. can you open it up and figure out why",
+      "should_trigger": true,
+      "clause": "Debugging UI behavior",
+      "note": "Diagnosing misbehaving UI element by driving the page."
+    },
+    {
+      "id": "q11",
+      "query": "页面上那个按钮明明渲染出来了但是点不了，是不是被别的元素盖住了？帮我在真实页面里查一下",
+      "should_trigger": true,
+      "clause": "Debugging UI behavior",
+      "note": "Investigating overlay/clickability issue on the rendered page."
+    },
+    {
+      "id": "q12",
+      "query": "sidebar collapses weirdly after i resize the window on my local app, pls repro and tell me which element/state is causing it",
+      "should_trigger": true,
+      "clause": "Debugging UI behavior",
+      "note": "Reproducing and diagnosing a UI state bug."
+    },
+    {
+      "id": "q13",
+      "query": "给 localhost:3000 的首页截个全屏图，存到 /tmp/home.png",
+      "should_trigger": true,
+      "clause": "Capturing browser screenshots",
+      "note": "Plain full-page screenshot request."
+    },
+    {
+      "id": "q14",
+      "query": "take screenshots of my dashboard at the login page and after login, save them as login.png and dashboard.png",
+      "should_trigger": true,
+      "clause": "Capturing browser screenshots",
+      "note": "Screenshots at multiple states, purely capture."
+    },
+    {
+      "id": "q15",
+      "query": "帮我把本地 report.html 渲染出来截一张图看看长什么样",
+      "should_trigger": true,
+      "clause": "Capturing browser screenshots",
+      "note": "Screenshot of a local static HTML render."
+    },
+    {
+      "id": "q16",
+      "query": "grab a screenshot of the pricing page on my dev server so i can paste it in the PR description",
+      "should_trigger": true,
+      "clause": "Capturing browser screenshots",
+      "note": "Screenshot for documentation purposes."
+    },
+    {
+      "id": "q17",
+      "query": "打开我本地的应用，把浏览器 console 里的所有输出都抓出来给我看看",
+      "should_trigger": true,
+      "clause": "Viewing browser logs",
+      "note": "Collecting console output from a local app."
+    },
+    {
+      "id": "q18",
+      "query": "load localhost:8080 and print any console.error or warning messages that show up while the page loads",
+      "should_trigger": true,
+      "clause": "Viewing browser logs",
+      "note": "Capturing console errors/warnings during load."
+    },
+    {
+      "id": "q19",
+      "query": "我想看看点击'导出'按钮的时候浏览器控制台有没有报错，帮我记录下来",
+      "should_trigger": true,
+      "clause": "Viewing browser logs",
+      "note": "Recording console messages during a specific action."
+    },
+    {
+      "id": "q20",
+      "query": "run my app and dump the browser console log to console_output.txt while i navigate through the 3 main pages",
+      "should_trigger": true,
+      "clause": "Viewing browser logs",
+      "note": "Saving console logs across navigation."
+    },
+    {
+      "id": "q21",
+      "query": "帮我写一个 Selenium 脚本，自动登录公司的 OA 系统并打卡",
+      "should_trigger": false,
+      "clause": "Interacting with local web apps via Playwright",
+      "note": "Selenium on a remote production system, not local app via Playwright."
+    },
+    {
+      "id": "q22",
+      "query": "write a puppeteer script that scrapes product prices from amazon.com and saves them to csv",
+      "should_trigger": false,
+      "clause": "Interacting with local web apps via Playwright",
+      "note": "Scraping an external site with a different tool; not local app testing."
+    },
+    {
+      "id": "q23",
+      "query": "帮我给 Button 组件写 Jest + React Testing Library 的单元测试",
+      "should_trigger": false,
+      "clause": "Verifying frontend functionality",
+      "note": "Unit tests in a test runner, no real browser Playwright interaction."
+    },
+    {
+      "id": "q24",
+      "query": "set up a GitHub Actions workflow that runs eslint and the vitest suite on every PR",
+      "should_trigger": false,
+      "clause": "Verifying frontend functionality",
+      "note": "CI configuration, a different job from browser verification."
+    },
+    {
+      "id": "q25",
+      "query": "这个 CSS 的 flex 布局为什么子元素不居中？这是代码：.box{display:flex;align-items:center}，帮我看看哪里写错了",
+      "should_trigger": false,
+      "clause": "Debugging UI behavior",
+      "note": "Static code review of CSS, no running app or browser needed."
+    },
+    {
+      "id": "q26",
+      "query": "my React component re-renders 10 times on every keystroke, explain how to fix it with useMemo / useCallback",
+      "should_trigger": false,
+      "clause": "Debugging UI behavior",
+      "note": "Conceptual React performance advice, not live browser debugging."
+    },
+    {
+      "id": "q27",
+      "query": "帮我用 Figma 导出首页设计稿的切图，并压缩成 webp",
+      "should_trigger": false,
+      "clause": "Capturing browser screenshots",
+      "note": "Design asset export, not a browser screenshot."
+    },
+    {
+      "id": "q28",
+      "query": "how do i take a screenshot of my entire desktop on windows 11 with a keyboard shortcut",
+      "should_trigger": false,
+      "clause": "Capturing browser screenshots",
+      "note": "OS-level screenshot, unrelated to browser automation."
+    },
+    {
+      "id": "q29",
+      "query": "帮我看一下服务器上 nginx 的 error.log，最近有很多 502，找找原因",
+      "should_trigger": false,
+      "clause": "Viewing browser logs",
+      "note": "Server-side log analysis rather than browser console logs."
+    },
+    {
+      "id": "q30",
+      "query": "add winston logging to my express backend so requests and errors get written to a rotating log file",
+      "should_trigger": false,
+      "clause": "Viewing browser logs",
+      "note": "Implementing backend logging, not viewing browser logs."
+    }
+  ],
+  "clauses": [
+    "Interacting with local web apps via Playwright",
+    "Verifying frontend functionality",
+    "Debugging UI behavior",
+    "Capturing browser screenshots",
+    "Viewing browser logs"
+  ]
+}

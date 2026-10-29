@@ -1,0 +1,225 @@
+{
+  "skill": "web-design-guidelines",
+  "skill_md_sha256": "17e48da905f83a19c174079b50760a98c069527ba50079239b3c187236627c29",
+  "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28",
+  "review": "none: AI-drafted. The method tests each skill with two or more independently drafted sets and reports the spread between them instead of reviewing each set by hand.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "review my UI in src/components/Navbar.tsx, tell me what's off",
+      "should_trigger": true,
+      "clause": "Review my UI",
+      "note": "Direct request to review UI code in a specific file."
+    },
+    {
+      "id": "q02",
+      "query": "帮我看看 components/ProductCard.vue 这个界面写得有没有问题,按 UI 规范过一遍",
+      "should_trigger": true,
+      "clause": "Review my UI",
+      "note": "Chinese request to review UI component code against interface rules."
+    },
+    {
+      "id": "q03",
+      "query": "can you review the UI code in app/dashboard/*.tsx before I ship it",
+      "should_trigger": true,
+      "clause": "Review my UI",
+      "note": "Pre-ship UI code review over a glob pattern."
+    },
+    {
+      "id": "q04",
+      "query": "review一下我的登录页 UI,文件是 pages/login.jsx",
+      "should_trigger": true,
+      "clause": "Review my UI",
+      "note": "Chinese/English mixed UI review for a named file."
+    },
+    {
+      "id": "q05",
+      "query": "check accessibility on app/components/Modal.tsx pls",
+      "should_trigger": true,
+      "clause": "Check accessibility",
+      "note": "Accessibility check of a specific component file."
+    },
+    {
+      "id": "q06",
+      "query": "帮我检查一下 src/pages/Checkout.tsx 的无障碍问题,比如 aria 标签和键盘操作",
+      "should_trigger": true,
+      "clause": "Check accessibility",
+      "note": "Chinese accessibility check covering aria and keyboard concerns in code."
+    },
+    {
+      "id": "q07",
+      "query": "is my form accessible? look at components/forms/*.tsx for a11y issues",
+      "should_trigger": true,
+      "clause": "Check accessibility",
+      "note": "A11y review of form code via glob."
+    },
+    {
+      "id": "q08",
+      "query": "我这个下拉菜单屏幕阅读器读不出来,帮忙查下 Dropdown.jsx 的 a11y 合规性",
+      "should_trigger": true,
+      "clause": "Check accessibility",
+      "note": "Chinese a11y compliance review of a dropdown file."
+    },
+    {
+      "id": "q09",
+      "query": "audit design of my landing page, index.html and styles/main.css",
+      "should_trigger": true,
+      "clause": "Audit design",
+      "note": "Design audit of named HTML/CSS files."
+    },
+    {
+      "id": "q10",
+      "query": "帮我审计一下 src/components 下面的设计实现,看看间距、字体、颜色有没有不规范的地方",
+      "should_trigger": true,
+      "clause": "Audit design",
+      "note": "Chinese design audit of spacing, typography, color in components."
+    },
+    {
+      "id": "q11",
+      "query": "do a design audit on pricing-section.tsx, i think the typography and layout are inconsistent",
+      "should_trigger": true,
+      "clause": "Audit design",
+      "note": "Design audit focusing on typography/layout in a file."
+    },
+    {
+      "id": "q12",
+      "query": "设计审查一下 app/globals.css 和 layout.tsx,有没有违反界面规范的",
+      "should_trigger": true,
+      "clause": "Audit design",
+      "note": "Chinese design review against interface guidelines."
+    },
+    {
+      "id": "q13",
+      "query": "review ux of the onboarding flow in src/onboarding/*.tsx",
+      "should_trigger": true,
+      "clause": "Review UX",
+      "note": "UX review of onboarding code."
+    },
+    {
+      "id": "q14",
+      "query": "帮我 review 一下 SettingsPage.tsx 的用户体验,有没有交互上的坑,比如 focus 状态、loading 状态",
+      "should_trigger": true,
+      "clause": "Review UX",
+      "note": "Chinese UX review of interaction states in code."
+    },
+    {
+      "id": "q15",
+      "query": "UX review pls: components/SearchBar.tsx, does it handle empty/error states and touch targets properly?",
+      "should_trigger": true,
+      "clause": "Review UX",
+      "note": "UX review covering states and touch targets in a file."
+    },
+    {
+      "id": "q16",
+      "query": "看下 CartDrawer.jsx 的 UX 细节有没有问题,按钮反馈、动画、表单提交体验这些",
+      "should_trigger": true,
+      "clause": "Review UX",
+      "note": "Chinese UX detail review of a component."
+    },
+    {
+      "id": "q17",
+      "query": "check my site against best practices, code is in the web/ folder",
+      "should_trigger": true,
+      "clause": "Check site against best practices",
+      "note": "Direct best-practices check of site code."
+    },
+    {
+      "id": "q18",
+      "query": "帮我对照 web 界面最佳实践检查一下整个 app/ 目录的前端代码",
+      "should_trigger": true,
+      "clause": "Check site against best practices",
+      "note": "Chinese best-practices check over a front-end directory."
+    },
+    {
+      "id": "q19",
+      "query": "does my site follow web interface best practices? files are in src/app/**/*.tsx",
+      "should_trigger": true,
+      "clause": "Check site against best practices",
+      "note": "Best-practices compliance check via glob."
+    },
+    {
+      "id": "q20",
+      "query": "按最佳实践帮我过一遍网站代码 pages/index.tsx,看哪些地方不合规",
+      "should_trigger": true,
+      "clause": "Check site against best practices",
+      "note": "Chinese compliance check against best practices on a page."
+    },
+    {
+      "id": "q21",
+      "query": "build me a new React navbar component with a mobile hamburger menu",
+      "should_trigger": false,
+      "clause": "Review my UI",
+      "note": "Creating new UI, not reviewing existing code; frontend-design sibling territory."
+    },
+    {
+      "id": "q22",
+      "query": "帮我把 Button.tsx 的圆角和配色改成蓝色主题,UI 要好看点",
+      "should_trigger": false,
+      "clause": "Review my UI",
+      "note": "Restyling/implementing UI changes, not a guideline review."
+    },
+    {
+      "id": "q23",
+      "query": "run an axe-core automated scan on my deployed site https://example.com and give me the violations report",
+      "should_trigger": false,
+      "clause": "Check accessibility",
+      "note": "Runtime scanning of a live URL with a tool, not static code review against guidelines; browser/testing skill's job."
+    },
+    {
+      "id": "q24",
+      "query": "给我讲讲 WCAG 2.2 和 2.1 有啥区别,不用看代码",
+      "should_trigger": false,
+      "clause": "Check accessibility",
+      "note": "Conceptual accessibility question with no code to review."
+    },
+    {
+      "id": "q25",
+      "query": "design a color palette and design tokens for my new SaaS brand from scratch",
+      "should_trigger": false,
+      "clause": "Audit design",
+      "note": "Creating a design system, not auditing existing code."
+    },
+    {
+      "id": "q26",
+      "query": "audit my database schema design in schema.prisma for normalization issues",
+      "should_trigger": false,
+      "clause": "Audit design",
+      "note": "Shares 'audit design' wording but is backend data modeling, owned by a different skill."
+    },
+    {
+      "id": "q27",
+      "query": "帮我设计一下用户调研问卷,想了解用户对注册流程的体验",
+      "should_trigger": false,
+      "clause": "Review UX",
+      "note": "UX research planning, not code review."
+    },
+    {
+      "id": "q28",
+      "query": "write Playwright e2e tests for the signup flow to verify the UX works end to end",
+      "should_trigger": false,
+      "clause": "Review UX",
+      "note": "Writing browser tests is webapp-testing territory, not a guidelines review."
+    },
+    {
+      "id": "q29",
+      "query": "我的网站 Lighthouse 性能分数很低,帮我优化 bundle 体积和首屏加载",
+      "should_trigger": false,
+      "clause": "Check site against best practices",
+      "note": "Performance optimization work, not interface guidelines compliance review."
+    },
+    {
+      "id": "q30",
+      "query": "check my React code against Vercel React best practices for re-renders and data fetching in hooks/useCart.ts",
+      "should_trigger": false,
+      "clause": "Check site against best practices",
+      "note": "React performance best practices belong to the sibling vercel-react-best-practices skill, not web interface guidelines."
+    }
+  ],
+  "clauses": [
+    "Review my UI",
+    "Check accessibility",
+    "Audit design",
+    "Review UX",
+    "Check site against best practices"
+  ]
+}

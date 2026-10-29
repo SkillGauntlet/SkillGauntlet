@@ -1,0 +1,62 @@
+name: Bug report
+description: The runner, the CLI or a report misbehaves.
+title: "[Bug] <short description>"
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        For a result you think is wrong, use the appeal template. For a security problem, do not file here; see SECURITY.md.
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: The `version` in the installed package's `package.json`, or the commit if you ran from a clone.
+    validations:
+      required: true
+  - type: dropdown
+    id: runner
+    attributes:
+      label: Which runner?
+      options:
+        - Node CLI (skillgauntlet)
+        - Python runner (step0/trigger_test.py)
+    validations:
+      required: true
+  - type: dropdown
+    id: host
+    attributes:
+      label: Host and backend
+      options:
+        - Claude Code, Anthropic
+        - Claude Code, another backend via ANTHROPIC_BASE_URL
+        - Codex
+        - Not applicable (static layer or report only)
+    validations:
+      required: true
+  - type: input
+    id: platform
+    attributes:
+      label: OS and Node or Python version
+      placeholder: "Windows 11, Node 22.11"
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: Command you ran
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected, and what happened instead
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Output or `meta.json` (optional)
+      description: Read it before you paste. `meta.json` and logs can contain local paths and your username; remove them. Never paste API keys, tokens or the contents of a `.env` file.
+      render: text

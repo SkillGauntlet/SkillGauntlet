@@ -1,0 +1,196 @@
+{
+  "skill": "lark-doc",
+  "skill_md_sha256": "0f1aea17fc21aaeb1cc17270d6de7de97780c3a9f53f98f668ce318f91f1a1f7",
+  "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28",
+  "review": "none: AI-drafted. The method tests each skill with two or more independently drafted sets and reports the spread between them instead of reviewing each set by hand.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "帮我读一下这个飞书文档并总结要点 https://example.feishu.cn/docx/doxcnAbC123xyz",
+      "should_trigger": true,
+      "clause": "读取/创建/编辑飞书文档内容",
+      "note": "Read and summarize a Docx by URL"
+    },
+    {
+      "id": "q02",
+      "query": "create a new feishu doc called 'Q3 weekly report' and write the contents of report.md into it",
+      "should_trigger": true,
+      "clause": "读取/创建/编辑飞书文档内容",
+      "note": "Create doc from local content"
+    },
+    {
+      "id": "q03",
+      "query": "把这篇飞书文档第二节润色一下,语气正式点,token 是 doxcnQwErTy456",
+      "should_trigger": true,
+      "clause": "读取/创建/编辑飞书文档内容",
+      "note": "Edit/polish existing doc"
+    },
+    {
+      "id": "q04",
+      "query": "add a conclusion section at the end of this lark doc: https://acme.larksuite.com/docx/doxcnZZ998 , summarizing the findings above",
+      "should_trigger": true,
+      "clause": "读取/创建/编辑飞书文档内容",
+      "note": "Append/write content into doc"
+    },
+    {
+      "id": "q05",
+      "query": "把 ./arch.png 插到飞书文档 doxcnImg001 的最后",
+      "should_trigger": true,
+      "clause": "插入或下载图片附件素材",
+      "note": "Insert local image at end of doc"
+    },
+    {
+      "id": "q06",
+      "query": "download all the images from this docx to ./assets: https://x.feishu.cn/docx/doxcnPic222",
+      "should_trigger": true,
+      "clause": "插入或下载图片附件素材",
+      "note": "Download images from doc"
+    },
+    {
+      "id": "q07",
+      "query": "这个文档里的附件pdf帮我下载下来,链接 https://x.feishu.cn/wiki/wikcnAtt77",
+      "should_trigger": true,
+      "clause": "插入或下载图片附件素材",
+      "note": "Download attachment from wiki doc"
+    },
+    {
+      "id": "q08",
+      "query": "upload screenshot.jpg into the lark doc doxcnShot55 so it shows up at the bottom",
+      "should_trigger": true,
+      "clause": "插入或下载图片附件素材",
+      "note": "Insert image to doc"
+    },
+    {
+      "id": "q09",
+      "query": "读取这个思维笔记的内容,看看有哪些一级分支 https://x.feishu.cn/mindnotes/bmncnABC",
+      "should_trigger": true,
+      "clause": "操作思维笔记",
+      "note": "Read existing mindnote"
+    },
+    {
+      "id": "q10",
+      "query": "新建一个思维笔记,主题是产品路线图2025,分成研发、市场、运营三个分支",
+      "should_trigger": true,
+      "clause": "操作思维笔记",
+      "note": "Create new mindnote"
+    },
+    {
+      "id": "q11",
+      "query": "update my existing mind note and add a child node 'Risks' under the root",
+      "should_trigger": true,
+      "clause": "操作思维笔记",
+      "note": "Edit existing mindnote"
+    },
+    {
+      "id": "q12",
+      "query": "帮我把思维笔记里的'测试'分支改名成'QA',再加两个子节点",
+      "should_trigger": true,
+      "clause": "操作思维笔记",
+      "note": "Modify mindnote nodes"
+    },
+    {
+      "id": "q13",
+      "query": "https://team.doubao.com/docx/AbCdEf123 这个里面写了啥?",
+      "should_trigger": true,
+      "clause": "用户提供文档 URL/token 时(含 doubao.com /docx/ /wiki/)",
+      "note": "doubao.com docx URL routed by path"
+    },
+    {
+      "id": "q14",
+      "query": "look at https://team.doubao.com/wiki/WikiTok999 and fix the typos in it",
+      "should_trigger": true,
+      "clause": "用户提供文档 URL/token 时(含 doubao.com /docx/ /wiki/)",
+      "note": "doubao wiki URL edit"
+    },
+    {
+      "id": "q15",
+      "query": "这是我们的 wiki 页面 https://abc.feishu.cn/wiki/wikcnHello 帮我加一个目录和更新日期",
+      "should_trigger": true,
+      "clause": "用户提供文档 URL/token 时(含 doubao.com /docx/ /wiki/)",
+      "note": "Wiki URL given, edit"
+    },
+    {
+      "id": "q16",
+      "query": "token: doxcnTok8888, 看下文档字数有多少,顺便看看有没有奇怪字符",
+      "should_trigger": true,
+      "clause": "用户提供文档 URL/token 时(含 doubao.com /docx/ /wiki/)",
+      "note": "Bare token provided, word count"
+    },
+    {
+      "id": "q17",
+      "query": "帮我给这个文档加条评论,@张三 看一下 https://x.feishu.cn/docx/doxcnCm1",
+      "should_trigger": false,
+      "clause": "读取/创建/编辑飞书文档内容",
+      "note": "Standalone comment operations belong to lark-drive"
+    },
+    {
+      "id": "q18",
+      "query": "copy this feishu doc as a backup copy: https://x.feishu.cn/docx/doxcnBak1",
+      "should_trigger": false,
+      "clause": "读取/创建/编辑飞书文档内容",
+      "note": "Doc copy is drive files copy"
+    },
+    {
+      "id": "q19",
+      "query": "把这个飞书文档导出成 PDF 存到本地",
+      "should_trigger": false,
+      "clause": "读取/创建/编辑飞书文档内容",
+      "note": "Export is a lark-drive job"
+    },
+    {
+      "id": "q20",
+      "query": "write a README.md for my repo describing the install steps",
+      "should_trigger": false,
+      "clause": "读取/创建/编辑飞书文档内容",
+      "note": "Local markdown file, no Lark doc"
+    },
+    {
+      "id": "q21",
+      "query": "在多维表格里新增一条记录,状态填'进行中'",
+      "should_trigger": false,
+      "clause": "读取/创建/编辑飞书文档内容",
+      "note": "Base data operations are out of scope"
+    },
+    {
+      "id": "q22",
+      "query": "把电子表格 sheet1 的 A 列求和写到 B1",
+      "should_trigger": false,
+      "clause": "插入或下载图片附件素材",
+      "note": "Spreadsheet cell operations, not doc media"
+    },
+    {
+      "id": "q23",
+      "query": "upload this 2GB zip to my feishu cloud drive folder and set share permission",
+      "should_trigger": false,
+      "clause": "插入或下载图片附件素材",
+      "note": "Drive file upload/permissions belong to lark-drive"
+    },
+    {
+      "id": "q24",
+      "query": "resize all png files in ./images with ImageMagick to 800px wide",
+      "should_trigger": false,
+      "clause": "插入或下载图片附件素材",
+      "note": "Local image processing, no Lark"
+    },
+    {
+      "id": "q25",
+      "query": "帮我画一个 mermaid 流程图描述登录流程,放进 docs/login.md",
+      "should_trigger": false,
+      "clause": "操作思维笔记",
+      "note": "Local mermaid diagram, not mindnote"
+    },
+    {
+      "id": "q26",
+      "query": "打开 https://app.example.com/page/pgcnXyz123 这个妙搭应用,帮我看看页面结构",
+      "should_trigger": false,
+      "clause": "用户提供文档 URL/token 时(含 doubao.com /docx/ /wiki/)",
+      "note": "/page/<token> is a Miaoda app, not a cloud doc"
+    }
+  ],
+  "clauses": [
+    "读取/创建/编辑飞书文档内容",
+    "插入或下载图片附件素材",
+    "操作思维笔记",
+    "用户提供文档 URL/token 时(含 doubao.com /docx/ /wiki/)"
+  ]
+}

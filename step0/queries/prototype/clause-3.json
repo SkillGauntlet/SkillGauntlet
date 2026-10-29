@@ -1,0 +1,124 @@
+{
+  "skill": "prototype",
+  "skill_md_sha256": "f74ae01f4fc454d3a4ef21271920f1706e626271e715dda0559e489f45c792c3",
+  "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28",
+  "review": "none: AI-drafted. The method tests each skill with two or more independently drafted sets and reports the spread between them instead of reviewing each set by hand.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "我设计了一个订单状态机(待支付→已支付→发货→退款),不确定退款中途又取消会不会卡死,能不能做个能点着玩的东西让我验证下这个逻辑对不对",
+      "should_trigger": true,
+      "clause": "Sanity-check a state model or logic",
+      "note": "Asks for an interactive throwaway to test whether an order state machine feels right, including hard edge cases."
+    },
+    {
+      "id": "q02",
+      "query": "not sure my seat-reservation hold/expire/confirm flow in booking/reservation.ts actually makes sense. can you whip up something my PM can click through to poke at the weird cases before i commit to it",
+      "should_trigger": true,
+      "clause": "Sanity-check a state model or logic",
+      "note": "Wants a non-developer-drivable demo to sanity-check a state model before committing."
+    },
+    {
+      "id": "q03",
+      "query": "购物车的优惠券叠加规则我越想越乱,满减+折扣+包邮到底谁先算?先搞个小demo让我拖着试试各种组合,看规则合不合理",
+      "should_trigger": true,
+      "clause": "Sanity-check a state model or logic",
+      "note": "Rule-stacking logic is hard to reason on paper; a throwaway logic demo to try combos."
+    },
+    {
+      "id": "q04",
+      "query": "quick proto of the retry/backoff + circuit breaker states in src/net/breaker.py? i wanna see if the transitions feel right b4 i wire it up, throwaway is fine",
+      "should_trigger": true,
+      "clause": "Sanity-check a state model or logic",
+      "note": "Explicit throwaway prototype to check whether state transitions feel right."
+    },
+    {
+      "id": "q05",
+      "query": "我们的设置页现在太丑了,先别动正式代码,帮我做几个完全不同风格的版本,我想对比着看看长什么样比较好",
+      "should_trigger": true,
+      "clause": "Explore what a UI should look like",
+      "note": "Requests several radically different UI variations for comparison."
+    },
+    {
+      "id": "q06",
+      "query": "not sure how the dashboard in app/dashboard/page.tsx should be laid out. can u mock up like 3-4 totally different takes i can flip between?",
+      "should_trigger": true,
+      "clause": "Explore what a UI should look like",
+      "note": "Wants multiple switchable layout variants of an existing page."
+    },
+    {
+      "id": "q07",
+      "query": "新的登录页想看看有什么设计方向,卡片式、全屏分栏、极简那种都来一版,我看哪个顺眼",
+      "should_trigger": true,
+      "clause": "Explore what a UI should look like",
+      "note": "Exploratory visual directions for a login page, variants to pick from."
+    },
+    {
+      "id": "q08",
+      "query": "i need to figure out what the onboarding flow should look like, wizard vs single page vs checklist. throw together some options in the real app so i can eyeball them",
+      "should_trigger": true,
+      "clause": "Explore what a UI should look like",
+      "note": "Design exploration of UI alternatives inside the app route."
+    },
+    {
+      "id": "q09",
+      "query": "帮我给 orderMachine.ts 写单元测试,覆盖所有状态转换,用 vitest",
+      "should_trigger": false,
+      "clause": "Sanity-check a state model or logic",
+      "note": "Same state machine domain, but writing production tests, not a throwaway prototype."
+    },
+    {
+      "id": "q10",
+      "query": "my reducer in store/cart.ts throws 'cannot read property items of undefined' when i remove the last item, can you fix it",
+      "should_trigger": false,
+      "clause": "Sanity-check a state model or logic",
+      "note": "Bug fix on state logic, not a design question."
+    },
+    {
+      "id": "q11",
+      "query": "把支付状态机从 switch 改成 xstate 实现,行为保持不变",
+      "should_trigger": false,
+      "clause": "Sanity-check a state model or logic",
+      "note": "Production refactor of a state machine, not validation prototype."
+    },
+    {
+      "id": "q12",
+      "query": "review my state diagram in docs/auth-flow.md and tell me if there are any unreachable states",
+      "should_trigger": false,
+      "clause": "Sanity-check a state model or logic",
+      "note": "Static document review rather than building an interactive prototype."
+    },
+    {
+      "id": "q13",
+      "query": "把 Button 组件的圆角改成 8px,hover 颜色换成 #3b82f6",
+      "should_trigger": false,
+      "clause": "Explore what a UI should look like",
+      "note": "A specific UI tweak with known requirements, no exploration needed."
+    },
+    {
+      "id": "q14",
+      "query": "implement this Figma design for the pricing page exactly, here's the spec: 3 columns, 24px gap, toggle for monthly/annual",
+      "should_trigger": false,
+      "clause": "Explore what a UI should look like",
+      "note": "Production implementation of a fixed design, not exploring options."
+    },
+    {
+      "id": "q15",
+      "query": "我的导航栏在手机上溢出了,帮我修一下 Navbar.vue 的响应式布局",
+      "should_trigger": false,
+      "clause": "Explore what a UI should look like",
+      "note": "CSS bug fix on an existing component, not design exploration."
+    },
+    {
+      "id": "q16",
+      "query": "write a short blog post about 5 principles of good dashboard UI design",
+      "should_trigger": false,
+      "clause": "Explore what a UI should look like",
+      "note": "Writing content about UI design, not building UI variants."
+    }
+  ],
+  "clauses": [
+    "Sanity-check a state model or logic",
+    "Explore what a UI should look like"
+  ]
+}

@@ -1,0 +1,55 @@
+name: Request a skill to be tested
+description: Suggest a skill that should be on the list. A request is not a promise to test it.
+title: "[Request] <skill>"
+labels: ["test-request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        We pick skills for the next batch from these requests, but there is no queue and no promised date. Layer 0 (static checks) needs no model calls and you can run it on your own copy yourself; see the README.
+  - type: input
+    id: repo
+    attributes:
+      label: Skill repository
+      description: Public GitHub URL, with the path to the skill directory if the repository holds several.
+      placeholder: "https://github.com/owner/repo/tree/main/skills/my-skill"
+    validations:
+      required: true
+  - type: input
+    id: commit
+    attributes:
+      label: Commit or tag to test (optional)
+      description: Results are pinned to a commit. Leave empty and we will pin the latest default branch.
+  - type: dropdown
+    id: relationship
+    attributes:
+      label: Your relationship to the skill
+      options:
+        - I am the author or a maintainer
+        - I use the skill
+        - Other
+    validations:
+      required: true
+  - type: dropdown
+    id: host
+    attributes:
+      label: Which host do you run it on?
+      description: Layer 1 (trigger rate) is measured on Claude Code only. Codex gets layer 0 and an activation probe, with no trigger rate.
+      options:
+        - Claude Code
+        - Codex
+        - Another host
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why this one?
+      description: Install count, a question you want answered, a doubt about the description. Optional.
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Before you submit
+      options:
+        - label: The skill is publicly readable, and I understand that its source is fetched at test time and executed only as described in SECURITY.md.
+          required: true

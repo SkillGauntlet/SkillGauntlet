@@ -1,0 +1,128 @@
+{
+  "skill": "lark-doc",
+  "skill_md_sha256": "0f1aea17fc21aaeb1cc17270d6de7de97780c3a9f53f98f668ce318f91f1a1f7",
+  "reviewed": false,
+  "review_notes": "Human review: drop queries that copy the description; make sure negatives are near misses rather than unrelated tasks; set reviewed to true when done.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "帮我看下这个文档 https://xxx.feishu.cn/docx/doxcnAbc123 讲了啥，给我个摘要",
+      "should_trigger": true,
+      "note": "Read and summarize a Docx by URL, the core read path (+fetch)."
+    },
+    {
+      "id": "q02",
+      "query": "can u fetch https://www.doubao.com/wiki/wikcnXYZ and give me a tldr",
+      "should_trigger": true,
+      "note": "doubao.com /wiki/ URL routed by path/token to the Wiki read flow."
+    },
+    {
+      "id": "q03",
+      "query": "把周报文档第三节重写得简洁点，语气正式些",
+      "should_trigger": true,
+      "note": "Semantic rewrite of an existing doc section, which the update reference covers."
+    },
+    {
+      "id": "q04",
+      "query": "create a new feishu doc titled 'Q4 迭代复盘' with sections for goals, risks, next steps",
+      "should_trigger": true,
+      "note": "Authoring a doc from scratch, which goes through the create workflow."
+    },
+    {
+      "id": "q05",
+      "query": "在这个文档末尾插入 ./screens/login.png 这张图",
+      "should_trigger": true,
+      "note": "Inserting a local image into a doc, handled by +media-insert."
+    },
+    {
+      "id": "q06",
+      "query": "download the architecture diagram image embedded in https://xxx.feishu.cn/docx/doxcnK9f2 for me",
+      "should_trigger": true,
+      "note": "Downloading an embedded doc image, which is +media-download."
+    },
+    {
+      "id": "q07",
+      "query": "把这份文档回滚到昨天下午的历史版本",
+      "should_trigger": true,
+      "note": "Doc version history revert, handled by +history-revert."
+    },
+    {
+      "id": "q08",
+      "query": "how many words in this wiki page https://xxx.feishu.cn/wiki/wikcnQ7 ?",
+      "should_trigger": true,
+      "note": "Word count and diagnostics come from the +script helper on a Wiki URL."
+    },
+    {
+      "id": "q09",
+      "query": "update the cover image of the product spec doc to ./cover.jpg",
+      "should_trigger": true,
+      "note": "Docx cover update, covered by the resource-cover reference."
+    },
+    {
+      "id": "q10",
+      "query": "读一下这个思维笔记 https://xxx.feishu.cn/mindnote/mnb8x 的内容给我看",
+      "should_trigger": true,
+      "note": "Reading an existing mind note, which is in scope via the mindnote chain."
+    },
+    {
+      "id": "q11",
+      "query": "飞书多维表格里订单表加一个按日期筛选的视图",
+      "should_trigger": false,
+      "note": "Base table view configuration, which the SKILL explicitly excludes."
+    },
+    {
+      "id": "q12",
+      "query": "what's the sum formula for column A in this Feishu spreadsheet",
+      "should_trigger": false,
+      "note": "Spreadsheet cell formulas belong to a sheets skill, not Docx."
+    },
+    {
+      "id": "q13",
+      "query": "download all the pdfs in this drive folder to my laptop",
+      "should_trigger": false,
+      "note": "Drive file-level download, owned by lark-drive rather than doc media download."
+    },
+    {
+      "id": "q14",
+      "query": "给同事开一下这份文件的只读权限",
+      "should_trigger": false,
+      "note": "Drive permission management, owned by lark-drive."
+    },
+    {
+      "id": "q15",
+      "query": "帮我回复文档里 comment id 7312 那条评论，说「已修改」",
+      "should_trigger": false,
+      "note": "[review: confirmed, sibling skill] The lark-doc description routes standalone comment operations to lark-drive, so this is a negative. Caveat: when installed alone, lark-drive is absent and the model may fall back to lark-doc"
+    },
+    {
+      "id": "q16",
+      "query": "lark-cli 切换到另一个 profile，不想用现在这个租户",
+      "should_trigger": false,
+      "note": "Profile and tenant switching is auth/config, handled by lark-shared."
+    },
+    {
+      "id": "q17",
+      "query": "my GitHub Actions lint step keeps failing on main, can you check .github/workflows/ci.yml",
+      "should_trigger": false,
+      "note": "CI workflow debugging, a fair near miss in the same repo ecosystem but a different job."
+    },
+    {
+      "id": "q18",
+      "query": "make a copy of this feishu doc and put it in the archive folder",
+      "should_trigger": false,
+      "note": "[review: confirmed, sibling skill] The lark-doc description routes document copies to lark-drive, so this is a negative. Caveat: when installed alone, lark-drive is absent and the model may fall back to lark-doc"
+    },
+    {
+      "id": "q19",
+      "query": "把这个 Excel 报表上传到飞书云空间",
+      "should_trigger": false,
+      "note": "Uploading a file to Drive is a Drive file operation."
+    },
+    {
+      "id": "q20",
+      "query": "how do I create a self-built app on the Feishu open platform and request the docx scopes",
+      "should_trigger": false,
+      "note": "Developer app setup and scope requests belong to shared auth/config, not doc operations."
+    }
+  ]
+}

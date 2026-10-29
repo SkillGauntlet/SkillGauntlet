@@ -1,0 +1,167 @@
+{
+  "skill": "mcp-builder",
+  "skill_md_sha256": "57231330040e18e033dad8b2fdc0340a6185034c32b42b7d3448f444a6af6cf2",
+  "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28",
+  "review": "none: AI-drafted. The method tests each skill with two or more independently drafted sets and reports the spread between them instead of reviewing each set by hand.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "I want to build an MCP server that wraps the Linear API so Claude can create and search issues. Where do I start?",
+      "should_trigger": true,
+      "clause": "Build MCP server to integrate external API/service",
+      "note": "Generic request to build an MCP server around an external service API."
+    },
+    {
+      "id": "q02",
+      "query": "帮我写一个 MCP server,把公司内部的 Jira 接口暴露成工具给 LLM 用",
+      "should_trigger": true,
+      "clause": "Build MCP server to integrate external API/service",
+      "note": "Chinese request to expose Jira API as MCP tools."
+    },
+    {
+      "id": "q03",
+      "query": "need an mcp server for the Stripe API, with tools like stripe_list_customers and stripe_create_invoice, with pagination",
+      "should_trigger": true,
+      "clause": "Build MCP server to integrate external API/service",
+      "note": "Designing MCP tools for an external payments API."
+    },
+    {
+      "id": "q04",
+      "query": "我想让 Claude 能操作飞书文档,打算做个 MCP 服务来对接飞书开放平台 API,帮我设计一下工具列表和错误处理",
+      "should_trigger": true,
+      "clause": "Build MCP server to integrate external API/service",
+      "note": "Chinese request to design an MCP integration for Feishu API."
+    },
+    {
+      "id": "q05",
+      "query": "write me a FastMCP server in python that wraps the OpenWeather API, put it in weather_server.py",
+      "should_trigger": true,
+      "clause": "Build MCP server in Python with FastMCP",
+      "note": "Explicit FastMCP Python server."
+    },
+    {
+      "id": "q06",
+      "query": "用 FastMCP 写个 MCP 服务,用 pydantic 校验入参,调用 Notion 的接口查询数据库",
+      "should_trigger": true,
+      "clause": "Build MCP server in Python with FastMCP",
+      "note": "Chinese, FastMCP with Pydantic for Notion."
+    },
+    {
+      "id": "q07",
+      "query": "how do i register tools with @mcp.tool in a python mcp server that talks to our internal REST api? starting from scratch",
+      "should_trigger": true,
+      "clause": "Build MCP server in Python with FastMCP",
+      "note": "Python MCP server with @mcp.tool decorator."
+    },
+    {
+      "id": "q08",
+      "query": "我要用 python 做一个 stdio 的 MCP server 来包装 GitHub API,带 readOnlyHint 注解,从空目录开始搭",
+      "should_trigger": true,
+      "clause": "Build MCP server in Python with FastMCP",
+      "note": "Chinese, new Python MCP server with annotations."
+    },
+    {
+      "id": "q09",
+      "query": "scaffold a TypeScript MCP server using the MCP SDK for the Slack API, streamable http, zod schemas",
+      "should_trigger": true,
+      "clause": "Build MCP server in Node/TypeScript with MCP SDK",
+      "note": "TypeScript MCP SDK server for Slack."
+    },
+    {
+      "id": "q10",
+      "query": "用 TypeScript 和 @modelcontextprotocol/sdk 写一个 MCP 服务器,对接我们的订单系统 REST 接口,用 server.registerTool 注册工具",
+      "should_trigger": true,
+      "clause": "Build MCP server in Node/TypeScript with MCP SDK",
+      "note": "Chinese, TS SDK with registerTool."
+    },
+    {
+      "id": "q11",
+      "query": "build a node mcp server for the Airtable API, need package.json, tsconfig and a tool to list records",
+      "should_trigger": true,
+      "clause": "Build MCP server in Node/TypeScript with MCP SDK",
+      "note": "Node/TS project setup for an MCP server."
+    },
+    {
+      "id": "q12",
+      "query": "帮我建一个 node 的 mcp server 项目,封装高德地图 API,返回 structuredContent 和 outputSchema",
+      "should_trigger": true,
+      "clause": "Build MCP server in Node/TypeScript with MCP SDK",
+      "note": "Chinese, Node MCP server with outputSchema."
+    },
+    {
+      "id": "q13",
+      "query": "How do I add an existing MCP server (filesystem) to my Claude Desktop config so I can use it?",
+      "should_trigger": false,
+      "clause": "Build MCP server to integrate external API/service",
+      "note": "Using/configuring an existing MCP server, not building one."
+    },
+    {
+      "id": "q14",
+      "query": "写一个普通的 REST API 封装库,调用 Stripe 的接口,用 requests,不需要 MCP",
+      "should_trigger": false,
+      "clause": "Build MCP server to integrate external API/service",
+      "note": "API wrapper library, not an MCP server."
+    },
+    {
+      "id": "q15",
+      "query": "my MCP client keeps timing out connecting to a third party server, how do i debug the connection in Claude Code?",
+      "should_trigger": false,
+      "clause": "Build MCP server to integrate external API/service",
+      "note": "Debugging an MCP client connection, not building a server."
+    },
+    {
+      "id": "q16",
+      "query": "帮我写一个 Claude Code 的 skill,用来自动生成 commit message",
+      "should_trigger": false,
+      "clause": "Build MCP server to integrate external API/service",
+      "note": "Authoring a skill, a sibling job, not an MCP server."
+    },
+    {
+      "id": "q17",
+      "query": "write a FastAPI app with a /users endpoint and sqlalchemy models in app/main.py",
+      "should_trigger": false,
+      "clause": "Build MCP server in Python with FastMCP",
+      "note": "Python web server, not MCP/FastMCP."
+    },
+    {
+      "id": "q18",
+      "query": "用 pydantic 写个配置校验类,从 .env 读取数据库连接参数",
+      "should_trigger": false,
+      "clause": "Build MCP server in Python with FastMCP",
+      "note": "Pydantic usage without MCP."
+    },
+    {
+      "id": "q19",
+      "query": "我用 Python 的 anthropic SDK 写个脚本,调用 Claude API 做文本分类",
+      "should_trigger": false,
+      "clause": "Build MCP server in Python with FastMCP",
+      "note": "Calling Claude API from Python, not building an MCP server."
+    },
+    {
+      "id": "q20",
+      "query": "set up an express server with typescript and zod validation for a todo REST api",
+      "should_trigger": false,
+      "clause": "Build MCP server in Node/TypeScript with MCP SDK",
+      "note": "Node/TS/zod server without MCP."
+    },
+    {
+      "id": "q21",
+      "query": "我的 tsconfig.json 报错 Cannot find module,帮我看看 node 项目的 paths 配置怎么改",
+      "should_trigger": false,
+      "clause": "Build MCP server in Node/TypeScript with MCP SDK",
+      "note": "General TypeScript config issue, not MCP."
+    },
+    {
+      "id": "q22",
+      "query": "build a Slack bot in node using bolt that replies to mentions with a summary",
+      "should_trigger": false,
+      "clause": "Build MCP server in Node/TypeScript with MCP SDK",
+      "note": "Slack bot integration, not an MCP server."
+    }
+  ],
+  "clauses": [
+    "Build MCP server to integrate external API/service",
+    "Build MCP server in Python with FastMCP",
+    "Build MCP server in Node/TypeScript with MCP SDK"
+  ]
+}

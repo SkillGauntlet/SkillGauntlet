@@ -1,0 +1,37 @@
+{
+  "skill": "diagnosing-bugs",
+  "tasks": [
+    {
+      "id": "t1",
+      "prompt": "buggy.py 里的 div 返回的是乘积，而我们要的是商。找出原因并修好。",
+      "files": {
+        "buggy.py": "def div(a, b):\n    return a * b\n"
+      }
+    },
+    {
+      "id": "t2",
+      "prompt": "这段代码应该返回列表里第二大的数，但输入 [5, 5, 3] 时返回了 5，应该是 3。修一下。",
+      "files": {
+        "second.py": "def second_largest(xs):\n    xs = sorted(xs)\n    return xs[-2]\n"
+      }
+    }
+  ],
+  "contracts": [
+    {
+      "desc": "div now returns the quotient (6/3 == 2)", "descI18n": {"zh": "div 现在返回商（6/3 == 2）", "ja": "div が商を返す（6/3 == 2）"},
+      "type": "command_succeeds",
+      "cmd": "python -c \"from buggy import div; assert div(6,3) == 2, div(6,3)\""
+    },
+    {
+      "desc": "div's source is no longer a multiplication", "descI18n": {"zh": "div 的源码不再是乘法", "ja": "div のソースが掛け算ではなくなった"},
+      "type": "file_contains",
+      "glob": "buggy.py",
+      "regex": "return\\s+a\\s*/\\s*b"
+    },
+    {
+      "desc": "second_largest returns 3 on [5,5,3]", "descI18n": {"zh": "second_largest 在 [5,5,3] 上返回 3", "ja": "second_largest が [5,5,3] で 3 を返す"},
+      "type": "command_succeeds",
+      "cmd": "python -c \"from second import second_largest; assert second_largest([5,5,3]) == 3, second_largest([5,5,3])\""
+    }
+  ]
+}

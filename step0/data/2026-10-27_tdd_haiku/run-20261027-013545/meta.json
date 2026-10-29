@@ -1,0 +1,49 @@
+{
+  "run_id": "20261027-013545",
+  "runner_version": "0.1.0",
+  "host": "claude-code",
+  "claude_version": "2.1.303 (Claude Code)",
+  "model": "haiku",
+  "runs": 3,
+  "platform": "Windows 10 / Python 3.11.9",
+  "started_at": "2026-10-27T01:35:45",
+  "skills": {
+    "tdd": {
+      "source": {
+        "repo": "https://github.com/mattpocock/skills",
+        "commit": "5beb35b040e3de97e54fa9e386d7e42d15c295c2",
+        "subdir": "skills/engineering/tdd"
+      },
+      "skill_md_sha256": "969583080caf842ae86a53501a0091eced13fd89cad65d3aa75c09112318ff33",
+      "query_pack_reviewed": false,
+      "query_pack_file_sha256": "7e62468442dc0cade3c93ddb5d67a51e9ca696692842a1c47d7a660444ba8eca",
+      "query_set_sha256": "e50c0a1fd99cb0a6666d0383d7319165dc3b69c486db4e9153a520bc08c08d5d"
+    }
+  },
+  "model_resolved": "claude-haiku-5-5",
+  "loaded_skills": [
+    "design",
+    "slides",
+    "design-sync",
+    "dataviz",
+    "artifact-diagramming",
+    "artifact-capabilities",
+    "update-config",
+    "verify",
+    "debug",
+    "code-review",
+    "simplify",
+    "batch",
+    "fewer-permission-prompts",
+    "doctor",
+    "loop",
+    "schedule",
+    "claude-api",
+    "run",
+    "run-skill-generator",
+    "plugin-authoring"
+  ],
+  "finished_at": "2026-10-27T01:37:10",
+  "query_hash": "sha256 of canonical JSON [{id, query, should_trigger}] sorted by id",
+  "query_hash_migrated": "2026-10-27: recomputed from queries/tdd.json, verified byte-identical to the file used for this run (query_pack_file_sha256) and query-by-query against raw.jsonl"
+}

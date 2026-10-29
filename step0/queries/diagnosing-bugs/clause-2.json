@@ -1,0 +1,167 @@
+{
+  "skill": "diagnosing-bugs",
+  "skill_md_sha256": "aa87b0ac245c6d1b203c4678eb34dc101af02291448780c55c5e58ccc1619bd7",
+  "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28",
+  "review": "none: AI-drafted. The method tests each skill with two or more independently drafted sets and reports the spread between them instead of reviewing each set by hand.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "帮我 debug 一下 src/utils/dateParse.ts,跨时区的时候解析结果总是差一天,我没头绪",
+      "should_trigger": true,
+      "clause": "User explicitly asks to diagnose or debug",
+      "note": "Explicit 'debug' request in Chinese with a concrete file and a wrong-output symptom."
+    },
+    {
+      "id": "q02",
+      "query": "can you diagnose why my websocket client in client.py silently drops reconnect attempts after the 3rd try? no errors, it just stops",
+      "should_trigger": true,
+      "clause": "User explicitly asks to diagnose or debug",
+      "note": "Uses the word 'diagnose' explicitly and asks for root cause."
+    },
+    {
+      "id": "q03",
+      "query": "诊断一下这个偶发问题:订单服务每隔几百次请求就会重复扣一次库存,我想先搞清楚根因再改",
+      "should_trigger": true,
+      "clause": "User explicitly asks to diagnose or debug",
+      "note": "Explicit diagnose request for an intermittent bug, wanting root cause before any fix."
+    },
+    {
+      "id": "q04",
+      "query": "debug this pls, my useEffect in Cart.jsx keeps firing twice and the total gets doubled. no idea where it comes from",
+      "should_trigger": true,
+      "clause": "User explicitly asks to diagnose or debug",
+      "note": "Casual 'debug this' phrase with a specific component."
+    },
+    {
+      "id": "q05",
+      "query": "npm run build 直接炸了,报 Cannot find module './config.prod',昨天还好好的",
+      "should_trigger": true,
+      "clause": "User reports something broken, throwing, or failing",
+      "note": "Reports a build failure with an error message, no explicit debug wording."
+    },
+    {
+      "id": "q06",
+      "query": "my pytest suite started failing on CI after the merge, test_checkout.py::test_refund throws KeyError: 'currency' but passes locally",
+      "should_trigger": true,
+      "clause": "User reports something broken, throwing, or failing",
+      "note": "Reports a failing test and exception that differs between environments."
+    },
+    {
+      "id": "q07",
+      "query": "登录接口突然全部返回500,日志里只有一行 NullPointerException at AuthFilter.java:88,帮忙看看",
+      "should_trigger": true,
+      "clause": "User reports something broken, throwing, or failing",
+      "note": "Reports an endpoint throwing with a stack trace location."
+    },
+    {
+      "id": "q08",
+      "query": "the dark mode toggle is just broken now, clicking it does nothing and console shows 'Uncaught TypeError: theme is undefined'",
+      "should_trigger": true,
+      "clause": "User reports something broken, throwing, or failing",
+      "note": "Reports broken UI feature with console error."
+    },
+    {
+      "id": "q09",
+      "query": "我们的报表页面加载越来越慢了,上个版本大概2秒,现在要15秒左右,是 report_query.sql 那块吗",
+      "should_trigger": true,
+      "clause": "User reports something slow or a performance regression",
+      "note": "Reports a measured load-time regression between versions."
+    },
+    {
+      "id": "q10",
+      "query": "ci pipeline went from 6 min to 25 min since last week, nothing obvious changed in the workflow file. why",
+      "should_trigger": true,
+      "clause": "User reports something slow or a performance regression",
+      "note": "Reports a pipeline slowdown regression with unknown cause."
+    },
+    {
+      "id": "q11",
+      "query": "这个 Python 脚本处理 10 万行 CSV 要跑快 40 分钟,之前才几分钟,内存也涨得厉害",
+      "should_trigger": true,
+      "clause": "User reports something slow or a performance regression",
+      "note": "Reports a script becoming much slower plus memory growth."
+    },
+    {
+      "id": "q12",
+      "query": "app feels laggy lately, scrolling the feed in FeedList.tsx drops frames badly on my phone, worse than v2.3",
+      "should_trigger": true,
+      "clause": "User reports something slow or a performance regression",
+      "note": "Reports UI jank regression relative to a previous version."
+    },
+    {
+      "id": "q13",
+      "query": "帮我写一个 README 的 debug 章节,介绍怎么在 VS Code 里配置 launch.json 来调试本项目",
+      "should_trigger": false,
+      "clause": "User explicitly asks to diagnose or debug",
+      "note": "Shares 'debug' vocabulary but is a documentation-writing task, not diagnosing a bug."
+    },
+    {
+      "id": "q14",
+      "query": "explain how the Chrome DevTools debugger breakpoints work, what's the difference between step over and step into?",
+      "should_trigger": false,
+      "clause": "User explicitly asks to diagnose or debug",
+      "note": "Conceptual question about debugging tools, no actual bug to diagnose."
+    },
+    {
+      "id": "q15",
+      "query": "给 utils/logger.ts 加一个可配置的 debug 日志级别,支持环境变量 LOG_LEVEL",
+      "should_trigger": false,
+      "clause": "User explicitly asks to diagnose or debug",
+      "note": "Feature work adding a debug log level, not diagnosing a bug."
+    },
+    {
+      "id": "q16",
+      "query": "add unit tests for the parseInvoice function, cover empty input and malformed dates",
+      "should_trigger": false,
+      "clause": "User reports something broken, throwing, or failing",
+      "note": "Test-writing request in the same domain; nothing is reported broken (a TDD-type skill would own it)."
+    },
+    {
+      "id": "q17",
+      "query": "把 UserService 里抛 IllegalStateException 的那段改成自定义异常 UserNotFoundException,顺便更新调用方",
+      "should_trigger": false,
+      "clause": "User reports something broken, throwing, or failing",
+      "note": "Refactor of exception types; mentions throwing but nothing is failing."
+    },
+    {
+      "id": "q18",
+      "query": "what does the error 'ECONNREFUSED' mean in general? just curious, not hitting it right now",
+      "should_trigger": false,
+      "clause": "User reports something broken, throwing, or failing",
+      "note": "General knowledge question about an error code; no actual failure to diagnose."
+    },
+    {
+      "id": "q19",
+      "query": "写个脚本把 failed_jobs.log 里的失败任务按错误类型统计一下,输出成 CSV",
+      "should_trigger": false,
+      "clause": "User reports something broken, throwing, or failing",
+      "note": "Log-processing utility task; failures are just data, not a bug to investigate."
+    },
+    {
+      "id": "q20",
+      "query": "write a benchmark harness comparing quicksort vs mergesort in Rust for 1M element arrays, I want to see the numbers",
+      "should_trigger": false,
+      "clause": "User reports something slow or a performance regression",
+      "note": "Performance-themed but a new benchmark-writing task, not a slowness report."
+    },
+    {
+      "id": "q21",
+      "query": "给我讲讲 B+ 树和 LSM 树在写入性能上的区别,面试要问",
+      "should_trigger": false,
+      "clause": "User reports something slow or a performance regression",
+      "note": "Conceptual performance discussion, no regression in a codebase."
+    },
+    {
+      "id": "q22",
+      "query": "prototype a few different layouts for the dashboard page so I can compare them, throwaway code is fine",
+      "should_trigger": false,
+      "clause": "User reports something slow or a performance regression",
+      "note": "Prototyping request that a sibling prototype skill would own; no slowness reported."
+    }
+  ],
+  "clauses": [
+    "User explicitly asks to diagnose or debug",
+    "User reports something broken, throwing, or failing",
+    "User reports something slow or a performance regression"
+  ]
+}

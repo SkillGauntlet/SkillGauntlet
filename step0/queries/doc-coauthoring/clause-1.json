@@ -1,0 +1,225 @@
+{
+  "skill": "doc-coauthoring",
+  "skill_md_sha256": "acb9b89b228fb818ffe2f464e40b1cdbf6948b50ceeeb7378f0e5b9d78c996ad",
+  "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28",
+  "review": "none: AI-drafted. The method tests each skill with two or more independently drafted sets and reports the spread between them instead of reviewing each set by hand.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "I need to write documentation for our internal deployment pipeline, can you help me put it together from scratch?",
+      "should_trigger": true,
+      "clause": "Write documentation",
+      "note": "Explicit request to write documentation, a substantial writing task."
+    },
+    {
+      "id": "q02",
+      "query": "帮我写一份新员工入职的团队文档,内容我还没整理,想一步步来",
+      "should_trigger": true,
+      "clause": "Write documentation",
+      "note": "Chinese request to write team onboarding documentation with unorganized context."
+    },
+    {
+      "id": "q03",
+      "query": "need to write up docs for our auth module before the release, where do we start",
+      "should_trigger": true,
+      "clause": "Write documentation",
+      "note": "Casual request to write module documentation, start of substantial task."
+    },
+    {
+      "id": "q04",
+      "query": "我们要给内部的数据平台写一套使用文档,你能带着我一起写吗?",
+      "should_trigger": true,
+      "clause": "Write documentation",
+      "note": "Chinese request for collaborative writing of platform usage documentation."
+    },
+    {
+      "id": "q05",
+      "query": "I want to draft a proposal to move our team from Jenkins to GitHub Actions. Help me write it?",
+      "should_trigger": true,
+      "clause": "Write proposals",
+      "note": "Explicit proposal drafting."
+    },
+    {
+      "id": "q06",
+      "query": "我要写一个关于引入代码评审机制的提案,给部门领导看的,帮我理一下",
+      "should_trigger": true,
+      "clause": "Write proposals",
+      "note": "Chinese proposal for leadership, needs structuring."
+    },
+    {
+      "id": "q07",
+      "query": "creating a proposal for hiring 2 more SREs next quarter, i have a bunch of notes to dump",
+      "should_trigger": true,
+      "clause": "Write proposals",
+      "note": "Proposal creation with context dump intent."
+    },
+    {
+      "id": "q08",
+      "query": "帮我起草一份预算申请的方案书,要说服财务部门,我边说背景你边问我",
+      "should_trigger": true,
+      "clause": "Write proposals",
+      "note": "Chinese proposal draft with interactive context gathering."
+    },
+    {
+      "id": "q09",
+      "query": "Let's draft a technical spec for our new rate limiter service. I have lots of context in my head.",
+      "should_trigger": true,
+      "clause": "Write technical specs",
+      "note": "Technical spec drafting from scratch."
+    },
+    {
+      "id": "q10",
+      "query": "帮我写个技术规格文档,是关于消息队列迁移到Kafka的,写到 kafka-migration-spec.md",
+      "should_trigger": true,
+      "clause": "Write technical specs",
+      "note": "Chinese technical spec with filename."
+    },
+    {
+      "id": "q11",
+      "query": "drafting an RFC for the new plugin API, want to go section by section",
+      "should_trigger": true,
+      "clause": "Write technical specs",
+      "note": "RFC/spec drafted section by section."
+    },
+    {
+      "id": "q12",
+      "query": "我需要给支付网关写一份设计文档(design doc),包含架构和接口部分,一起来写吧",
+      "should_trigger": true,
+      "clause": "Write technical specs",
+      "note": "Chinese design doc co-authoring."
+    },
+    {
+      "id": "q13",
+      "query": "help me write a decision doc on whether we should use Postgres or DynamoDB for the orders service",
+      "should_trigger": true,
+      "clause": "Write decision docs / similar structured content",
+      "note": "Decision doc explicitly requested."
+    },
+    {
+      "id": "q14",
+      "query": "写一份决策文档,讨论我们是自建监控还是买Datadog,我有很多讨论记录",
+      "should_trigger": true,
+      "clause": "Write decision docs / similar structured content",
+      "note": "Chinese decision doc with context."
+    },
+    {
+      "id": "q15",
+      "query": "need a PRD for the notifications revamp. not sure what sections it needs tbh",
+      "should_trigger": true,
+      "clause": "Write decision docs / similar structured content",
+      "note": "PRD with unknown structure, similar structured content."
+    },
+    {
+      "id": "q16",
+      "query": "帮我写个PRD,关于会员积分系统改版,先问我问题吧",
+      "should_trigger": true,
+      "clause": "Write decision docs / similar structured content",
+      "note": "Chinese PRD creation, interactive."
+    },
+    {
+      "id": "q17",
+      "query": "I'm about to start writing up a postmortem of last week's outage, it's gonna be a long one",
+      "should_trigger": true,
+      "clause": "Trigger on mentions of writing docs/drafting specs/similar documentation tasks",
+      "note": "Substantial structured write-up, similar documentation task."
+    },
+    {
+      "id": "q18",
+      "query": "想写一篇架构说明文档,发给其他团队看,怎么开始比较好?",
+      "should_trigger": true,
+      "clause": "Trigger on mentions of writing docs/drafting specs/similar documentation tasks",
+      "note": "Chinese vague documentation task start."
+    },
+    {
+      "id": "q19",
+      "query": "can you help me draft a runbook for on-call engineers? thinking of a full write up",
+      "should_trigger": true,
+      "clause": "Trigger on mentions of writing docs/drafting specs/similar documentation tasks",
+      "note": "Runbook drafting as similar documentation task."
+    },
+    {
+      "id": "q20",
+      "query": "我要写一份项目复盘报告,内容挺多的,想有个流程带着我写完",
+      "should_trigger": true,
+      "clause": "Trigger on mentions of writing docs/drafting specs/similar documentation tasks",
+      "note": "Chinese substantial retrospective document with requested process."
+    },
+    {
+      "id": "q21",
+      "query": "Add JSDoc comments to all exported functions in src/utils/date.ts",
+      "should_trigger": false,
+      "clause": "Write documentation",
+      "note": "Inline code comments, not a structured doc co-authoring task."
+    },
+    {
+      "id": "q22",
+      "query": "帮我把 README.md 里的拼写错误改一下",
+      "should_trigger": false,
+      "clause": "Write documentation",
+      "note": "Simple proofreading edit, not authoring."
+    },
+    {
+      "id": "q23",
+      "query": "translate docs/getting-started.md into Japanese",
+      "should_trigger": false,
+      "clause": "Write documentation",
+      "note": "Translation job, not co-authoring."
+    },
+    {
+      "id": "q24",
+      "query": "Summarize this proposal PDF into 5 bullet points for me",
+      "should_trigger": false,
+      "clause": "Write proposals",
+      "note": "Summarizing an existing proposal, not writing one."
+    },
+    {
+      "id": "q25",
+      "query": "帮我看看这个提案里的数字算得对不对,附件是 budget.xlsx",
+      "should_trigger": false,
+      "clause": "Write proposals",
+      "note": "Spreadsheet checking, not authoring a proposal."
+    },
+    {
+      "id": "q26",
+      "query": "Implement the rate limiter described in specs/rate-limiter.md in Go",
+      "should_trigger": false,
+      "clause": "Write technical specs",
+      "note": "Implementing from an existing spec, a coding task."
+    },
+    {
+      "id": "q27",
+      "query": "根据这份技术规格生成对应的 OpenAPI yaml 文件",
+      "should_trigger": false,
+      "clause": "Write technical specs",
+      "note": "Generating an API schema from a spec, not writing a spec."
+    },
+    {
+      "id": "q28",
+      "query": "what's the difference between an ADR and an RFC? just curious",
+      "should_trigger": false,
+      "clause": "Write decision docs / similar structured content",
+      "note": "Conceptual question, not a writing task."
+    },
+    {
+      "id": "q29",
+      "query": "写个 commit message,总结一下这次改动",
+      "should_trigger": false,
+      "clause": "Trigger on mentions of writing docs/drafting specs/similar documentation tasks",
+      "note": "Short text generation, not a substantial doc."
+    },
+    {
+      "id": "q30",
+      "query": "make a slide deck from my quarterly report in report.docx",
+      "should_trigger": false,
+      "clause": "Trigger on mentions of writing docs/drafting specs/similar documentation tasks",
+      "note": "Presentation creation, a sibling skill's job."
+    }
+  ],
+  "clauses": [
+    "Write documentation",
+    "Write proposals",
+    "Write technical specs",
+    "Write decision docs / similar structured content",
+    "Trigger on mentions of writing docs/drafting specs/similar documentation tasks"
+  ]
+}

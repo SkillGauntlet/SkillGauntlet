@@ -1,0 +1,326 @@
+{
+  "meta": {
+    "run_id": "20261027-022624",
+    "runner_version": "0.2.2",
+    "host": "claude-code",
+    "claude_version": "2.1.303 (Claude Code)",
+    "model": "haiku",
+    "runs": 3,
+    "max_explore": 0,
+    "query_hash": "sha256 of canonical JSON [{id, query, should_trigger}] sorted by id",
+    "platform": "Windows 10 / Python 3.11.9",
+    "started_at": "2026-10-27T02:26:24",
+    "skills": {
+      "tdd": {
+        "source": {
+          "repo": "https://github.com/mattpocock/skills",
+          "commit": "5beb35b040e3de97e54fa9e386d7e42d15c295c2",
+          "subdir": "skills/engineering/tdd"
+        },
+        "skill_md_sha256": "969583080caf842ae86a53501a0091eced13fd89cad65d3aa75c09112318ff33",
+        "query_set_sha256": "30722a4353ccccf6e1f8417d820f9810c78a417dfe2459bcc3511de0c64e6219",
+        "query_pack_reviewed": false
+      }
+    },
+    "model_resolved": "claude-haiku-5-5",
+    "loaded_skills": [
+      "design",
+      "slides",
+      "design-sync",
+      "dataviz",
+      "artifact-diagramming",
+      "artifact-capabilities",
+      "update-config",
+      "verify",
+      "debug",
+      "code-review",
+      "simplify",
+      "batch",
+      "fewer-permission-prompts",
+      "doctor",
+      "loop",
+      "schedule",
+      "claude-api",
+      "run",
+      "run-skill-generator",
+      "plugin-authoring"
+    ],
+    "finished_at": "2026-10-27T02:28:01"
+  },
+  "skills": [
+    {
+      "skill": "tdd",
+      "grade": "triggers poorly",
+      "flags": [
+        "rarely triggers",
+        "borderline, add runs",
+        "one question set only"
+      ],
+      "recall": 0.389,
+      "recall_ci95": [
+        0.248,
+        0.551
+      ],
+      "false_positive_rate": 0.0,
+      "fpr_ci95": [
+        0.0,
+        0.114
+      ],
+      "n_pos": 36,
+      "n_neg": 30,
+      "errors": 0,
+      "stolen_by": {},
+      "source": {
+        "repo": "https://github.com/mattpocock/skills",
+        "commit": "5beb35b040e3de97e54fa9e386d7e42d15c295c2",
+        "subdir": "skills/engineering/tdd"
+      },
+      "skill_md_sha256": "969583080caf842ae86a53501a0091eced13fd89cad65d3aa75c09112318ff33",
+      "query_sets": {
+        "legacy": {
+          "query_set_sha256": "30722a4353ccccf6e1f8417d820f9810c78a417dfe2459bcc3511de0c64e6219"
+        }
+      },
+      "by_set": {
+        "legacy": {
+          "recall": 0.389,
+          "recall_ci95": [
+            0.248,
+            0.551
+          ],
+          "false_positive_rate": 0.0,
+          "fpr_ci95": [
+            0.0,
+            0.114
+          ],
+          "n_pos": 36,
+          "n_neg": 30,
+          "grade": "triggers poorly"
+        }
+      },
+      "set_spread": null,
+      "by_language": {
+        "zh": {
+          "recall": 0.333,
+          "recall_ci95": [
+            0.163,
+            0.563
+          ],
+          "false_positive_rate": 0.0,
+          "fpr_ci95": [
+            0.0,
+            0.243
+          ],
+          "n_pos": 18,
+          "n_neg": 12
+        },
+        "en": {
+          "recall": 0.444,
+          "recall_ci95": [
+            0.246,
+            0.663
+          ],
+          "false_positive_rate": 0.0,
+          "fpr_ci95": [
+            0.0,
+            0.176
+          ],
+          "n_pos": 18,
+          "n_neg": 18
+        }
+      },
+      "by_clause": {
+        "Build features test-first": {
+          "recall": 0.667,
+          "recall_ci95": [
+            0.354,
+            0.879
+          ],
+          "false_positive_rate": 0.0,
+          "fpr_ci95": [
+            0.0,
+            0.299
+          ],
+          "n_pos": 9,
+          "n_neg": 9
+        },
+        "Fix bugs test-first": {
+          "recall": 0.0,
+          "recall_ci95": [
+            0.0,
+            0.299
+          ],
+          "false_positive_rate": 0.0,
+          "fpr_ci95": [
+            0.0,
+            0.39
+          ],
+          "n_pos": 9,
+          "n_neg": 6
+        },
+        "Integration tests wanted": {
+          "recall": 0.0,
+          "recall_ci95": [
+            0.0,
+            0.299
+          ],
+          "false_positive_rate": 0.0,
+          "fpr_ci95": [
+            0.0,
+            0.299
+          ],
+          "n_pos": 9,
+          "n_neg": 9
+        },
+        "Red-green-refactor mention": {
+          "recall": 0.889,
+          "recall_ci95": [
+            0.565,
+            0.98
+          ],
+          "false_positive_rate": 0.0,
+          "fpr_ci95": [
+            0.0,
+            0.39
+          ],
+          "n_pos": 9,
+          "n_neg": 6
+        }
+      },
+      "per_query": {
+        "q01": {
+          "query": "I want to add a coupon code feature to our cart service. Let's do it test-first, write the failing test before any implementation.",
+          "should_trigger": true,
+          "n": 3,
+          "hits": 3
+        },
+        "q02": {
+          "query": "帮我用测试驱动的方式写一个分页组件,先写测试再写实现,别一次写完",
+          "should_trigger": true,
+          "n": 3,
+          "hits": 3
+        },
+        "q03": {
+          "query": "need a new rate limiter in limiter.py, tests first pls, one behavior at a time",
+          "should_trigger": true,
+          "n": 3,
+          "hits": 0
+        },
+        "q04": {
+          "query": "登录接口偶尔返回500,先帮我写个能复现的失败测试,然后再修这个bug",
+          "should_trigger": true,
+          "n": 3,
+          "hits": 0
+        },
+        "q05": {
+          "query": "Bug: parse_date('2024-02-30') doesn't raise. Fix it TDD style, regression test first.",
+          "should_trigger": true,
+          "n": 3,
+          "hits": 0
+        },
+        "q06": {
+          "query": "订单总价算错了(折扣叠加的时候),按先红后绿的思路修一下,先让测试挂掉",
+          "should_trigger": true,
+          "n": 3,
+          "hits": 0
+        },
+        "q07": {
+          "query": "can we do red-green-refactor on this string tokenizer? start me off with the first red test",
+          "should_trigger": true,
+          "n": 3,
+          "hits": 3
+        },
+        "q08": {
+          "query": "我想练习 red-green-refactor,拿 FizzBuzz 带我走一遍流程",
+          "should_trigger": true,
+          "n": 3,
+          "hits": 3
+        },
+        "q09": {
+          "query": "walk me thru the red green refactor cycle using the stack class in stack.ts",
+          "should_trigger": true,
+          "n": 3,
+          "hits": 2
+        },
+        "q10": {
+          "query": "给 /api/orders 这几个接口写集成测试,要真的打到数据库,不要mock内部模块",
+          "should_trigger": true,
+          "n": 3,
+          "hits": 0
+        },
+        "q11": {
+          "query": "i need integration tests for the checkout flow, cart -> payment -> order creation, through the public API",
+          "should_trigger": true,
+          "n": 3,
+          "hits": 0
+        },
+        "q12": {
+          "query": "帮我加一套集成测试覆盖用户注册到发邮件的整条链路,测试文件放 tests/integration/",
+          "should_trigger": true,
+          "n": 3,
+          "hits": 0
+        },
+        "q13": {
+          "query": "Add a dark mode toggle to the settings page in SettingsView.tsx. No need for tests right now, just get it working.",
+          "should_trigger": false,
+          "n": 3,
+          "hits": 0
+        },
+        "q14": {
+          "query": "帮我设计一个新的缓存模块,先讨论一下接口应该怎么划分、模块该多深,不用写测试",
+          "should_trigger": false,
+          "n": 3,
+          "hits": 0
+        },
+        "q15": {
+          "query": "Write a Jest unit test file for utils/format.ts covering the existing functions; the code is already written and stable.",
+          "should_trigger": false,
+          "n": 3,
+          "hits": 0
+        },
+        "q16": {
+          "query": "这个 NullPointerException 是怎么来的?帮我看看日志定位一下原因就行,先不用改代码",
+          "should_trigger": false,
+          "n": 3,
+          "hits": 0
+        },
+        "q17": {
+          "query": "quick fix: the footer link on about.html points to the wrong URL, just change it",
+          "should_trigger": false,
+          "n": 3,
+          "hits": 0
+        },
+        "q18": {
+          "query": "我这个分支的代码写完了,帮我 review 一下,顺便重构一下命名和重复代码",
+          "should_trigger": false,
+          "n": 3,
+          "hits": 0
+        },
+        "q19": {
+          "query": "Explain the difference between a mock and a stub in Python's unittest.mock, with a short example.",
+          "should_trigger": false,
+          "n": 3,
+          "hits": 0
+        },
+        "q20": {
+          "query": "Set up GitHub Actions to run our full test suite on every PR and cache node_modules",
+          "should_trigger": false,
+          "n": 3,
+          "hits": 0
+        },
+        "q21": {
+          "query": "帮我对首页做一次压力测试,看看 1000 并发下 p99 延迟是多少,用 k6",
+          "should_trigger": false,
+          "n": 3,
+          "hits": 0
+        },
+        "q22": {
+          "query": "Set up Playwright and write an end-to-end browser test that clicks through the signup form in a real Chrome.",
+          "should_trigger": false,
+          "n": 3,
+          "hits": 0
+        }
+      }
+    }
+  ]
+}

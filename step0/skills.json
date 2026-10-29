@@ -1,0 +1,118 @@
+{
+  "_note": "Step 0 list, picked from the skills.sh all-time leaderboard on 2026-10-26 and de-duplicated by publisher and domain; commits pinned. Skills with disable-model-invocation: true are excluded (manual-only, so trigger tests do not apply); see README.",
+  "_companions_audit": "2026-10-28: read every tested skill's description and those of its same-repo siblings at the pinned commits. Only lark-doc routes work to sibling skills (\"standalone comment operations go to lark-drive\"; metadata requires lark-shared), so it is the only entry with companions. Same repo does not mean same family: no other description names a sibling to hand work to.",
+  "skills": [
+    {
+      "name": "find-skills",
+      "repo": "https://github.com/vercel-labs/skills",
+      "ref": "a80e4c9d12d607631249d4d7d059f835d4b2f13a",
+      "subdir": "skills/find-skills"
+    },
+    {
+      "name": "tdd",
+      "repo": "https://github.com/mattpocock/skills",
+      "ref": "5beb35b040e3de97e54fa9e386d7e42d15c295c2",
+      "subdir": "skills/engineering/tdd"
+    },
+    {
+      "name": "diagnosing-bugs",
+      "repo": "https://github.com/mattpocock/skills",
+      "ref": "5beb35b040e3de97e54fa9e386d7e42d15c295c2",
+      "subdir": "skills/engineering/diagnosing-bugs"
+    },
+    {
+      "name": "prototype",
+      "repo": "https://github.com/mattpocock/skills",
+      "ref": "5beb35b040e3de97e54fa9e386d7e42d15c295c2",
+      "subdir": "skills/engineering/prototype"
+    },
+    {
+      "name": "domain-modeling",
+      "repo": "https://github.com/mattpocock/skills",
+      "ref": "5beb35b040e3de97e54fa9e386d7e42d15c295c2",
+      "subdir": "skills/engineering/domain-modeling"
+    },
+    {
+      "name": "agent-browser",
+      "repo": "https://github.com/vercel-labs/agent-browser",
+      "ref": "04ba5264dade678062c3cdcce0f4f293e748249f",
+      "subdir": "skills/agent-browser"
+    },
+    {
+      "name": "hyperframes",
+      "repo": "https://github.com/heygen-com/hyperframes",
+      "ref": "575f68cf5bc4789e0f2b71c16333f5ef79586156",
+      "subdir": "skills/hyperframes"
+    },
+    {
+      "name": "frontend-design",
+      "repo": "https://github.com/anthropics/skills",
+      "ref": "dbd4588f9e1033efb41dad4bef2f7947c8993d44",
+      "subdir": "skills/frontend-design"
+    },
+    {
+      "name": "webapp-testing",
+      "repo": "https://github.com/anthropics/skills",
+      "ref": "dbd4588f9e1033efb41dad4bef2f7947c8993d44",
+      "subdir": "skills/webapp-testing"
+    },
+    {
+      "name": "mcp-builder",
+      "repo": "https://github.com/anthropics/skills",
+      "ref": "dbd4588f9e1033efb41dad4bef2f7947c8993d44",
+      "subdir": "skills/mcp-builder"
+    },
+    {
+      "name": "doc-coauthoring",
+      "repo": "https://github.com/anthropics/skills",
+      "ref": "dbd4588f9e1033efb41dad4bef2f7947c8993d44",
+      "subdir": "skills/doc-coauthoring"
+    },
+    {
+      "name": "xlsx",
+      "repo": "https://github.com/anthropics/skills",
+      "ref": "dbd4588f9e1033efb41dad4bef2f7947c8993d44",
+      "subdir": "skills/xlsx"
+    },
+    {
+      "name": "skill-creator",
+      "repo": "https://github.com/anthropics/skills",
+      "ref": "dbd4588f9e1033efb41dad4bef2f7947c8993d44",
+      "subdir": "skills/skill-creator"
+    },
+    {
+      "name": "vercel-react-best-practices",
+      "repo": "https://github.com/vercel-labs/agent-skills",
+      "ref": "063bee94c3f4df8453406c830b0a7df0f2860278",
+      "subdir": "skills/react-best-practices"
+    },
+    {
+      "name": "web-design-guidelines",
+      "repo": "https://github.com/vercel-labs/agent-skills",
+      "ref": "063bee94c3f4df8453406c830b0a7df0f2860278",
+      "subdir": "skills/web-design-guidelines"
+    },
+    {
+      "name": "deploy-to-vercel",
+      "repo": "https://github.com/vercel-labs/agent-skills",
+      "ref": "063bee94c3f4df8453406c830b0a7df0f2860278",
+      "subdir": "skills/deploy-to-vercel"
+    },
+    {
+      "name": "design-mobile-apps",
+      "repo": "https://github.com/designed-by-ai/skills",
+      "ref": "03c20aec6dcedb5fabfb03dc37982eb52ef19ed6",
+      "subdir": "skills/design-mobile-apps"
+    },
+    {
+      "name": "lark-doc",
+      "repo": "https://github.com/larksuite/cli",
+      "ref": "017b19a793ad71794a02887ede04757f3d82e10d",
+      "subdir": "skills/lark-doc",
+      "companions": [
+        {"name": "lark-drive", "subdir": "skills/lark-drive"},
+        {"name": "lark-shared", "subdir": "skills/lark-shared"}
+      ]
+    }
+  ]
+}

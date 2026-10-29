@@ -1,0 +1,42 @@
+# Read-only validation: runs the offline tests on pushes and pull requests.
+# It never calls a model, needs no secrets, and only holds read permission on the repository.
+# Do not switch this to pull_request_target: that event runs with the base repository's secrets and
+# write token, which must never meet code from a fork. Merge logic lives in merge.yml.
+name: validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: validate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Runner tests (fake trials, no model calls)
+        run: python -m unittest discover -s tests -v
+
+  node:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Node tests (fake trials, no model calls)
+        run: node --test tests/*.test.mjs

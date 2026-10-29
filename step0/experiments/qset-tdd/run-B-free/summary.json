@@ -1,0 +1,257 @@
+{
+  "meta": {
+    "run_id": "20261027-022446",
+    "runner_version": "0.2.2",
+    "host": "claude-code",
+    "claude_version": "2.1.303 (Claude Code)",
+    "model": "haiku",
+    "runs": 3,
+    "max_explore": 0,
+    "query_hash": "sha256 of canonical JSON [{id, query, should_trigger}] sorted by id",
+    "platform": "Windows 10 / Python 3.11.9",
+    "started_at": "2026-10-27T02:24:46",
+    "skills": {
+      "tdd": {
+        "source": {
+          "repo": "https://github.com/mattpocock/skills",
+          "commit": "5beb35b040e3de97e54fa9e386d7e42d15c295c2",
+          "subdir": "skills/engineering/tdd"
+        },
+        "skill_md_sha256": "969583080caf842ae86a53501a0091eced13fd89cad65d3aa75c09112318ff33",
+        "query_set_sha256": "0da4783ec81035370911883b94d033b933724a705596df5038d263a8c57c0f89",
+        "query_pack_reviewed": false
+      }
+    },
+    "model_resolved": "claude-haiku-5-5",
+    "loaded_skills": [
+      "design",
+      "slides",
+      "design-sync",
+      "dataviz",
+      "artifact-diagramming",
+      "artifact-capabilities",
+      "update-config",
+      "verify",
+      "debug",
+      "code-review",
+      "simplify",
+      "batch",
+      "fewer-permission-prompts",
+      "doctor",
+      "loop",
+      "schedule",
+      "claude-api",
+      "run",
+      "run-skill-generator",
+      "plugin-authoring"
+    ],
+    "finished_at": "2026-10-27T02:26:23"
+  },
+  "skills": [
+    {
+      "skill": "tdd",
+      "grade": "triggers poorly",
+      "flags": [
+        "rarely triggers",
+        "borderline, add runs",
+        "one question set only"
+      ],
+      "recall": 0.433,
+      "recall_ci95": [
+        0.274,
+        0.608
+      ],
+      "false_positive_rate": 0.0,
+      "fpr_ci95": [
+        0.0,
+        0.114
+      ],
+      "n_pos": 30,
+      "n_neg": 30,
+      "errors": 0,
+      "stolen_by": {},
+      "source": {
+        "repo": "https://github.com/mattpocock/skills",
+        "commit": "5beb35b040e3de97e54fa9e386d7e42d15c295c2",
+        "subdir": "skills/engineering/tdd"
+      },
+      "skill_md_sha256": "969583080caf842ae86a53501a0091eced13fd89cad65d3aa75c09112318ff33",
+      "query_sets": {
+        "legacy": {
+          "query_set_sha256": "0da4783ec81035370911883b94d033b933724a705596df5038d263a8c57c0f89"
+        }
+      },
+      "by_set": {
+        "legacy": {
+          "recall": 0.433,
+          "recall_ci95": [
+            0.274,
+            0.608
+          ],
+          "false_positive_rate": 0.0,
+          "fpr_ci95": [
+            0.0,
+            0.114
+          ],
+          "n_pos": 30,
+          "n_neg": 30,
+          "grade": "triggers poorly"
+        }
+      },
+      "set_spread": null,
+      "by_language": {
+        "zh": {
+          "recall": 0.5,
+          "recall_ci95": [
+            0.254,
+            0.746
+          ],
+          "false_positive_rate": 0.0,
+          "fpr_ci95": [
+            0.0,
+            0.243
+          ],
+          "n_pos": 12,
+          "n_neg": 12
+        },
+        "en": {
+          "recall": 0.389,
+          "recall_ci95": [
+            0.203,
+            0.614
+          ],
+          "false_positive_rate": 0.0,
+          "fpr_ci95": [
+            0.0,
+            0.176
+          ],
+          "n_pos": 18,
+          "n_neg": 18
+        }
+      },
+      "by_clause": {},
+      "per_query": {
+        "q01": {
+          "query": "I need to add a coupon code feature to our checkout service. let's do it test-first, red-green style, starting with the percentage discount case",
+          "should_trigger": true,
+          "n": 3,
+          "hits": 1
+        },
+        "q02": {
+          "query": "帮我用 TDD 的方式写一个购物车合并的函数,先写失败的测试再实现",
+          "should_trigger": true,
+          "n": 3,
+          "hits": 3
+        },
+        "q03": {
+          "query": "there's a bug where parseDuration('1h30m') returns 90 instead of 5400. can you write a failing test that reproduces it first and then fix it?",
+          "should_trigger": true,
+          "n": 3,
+          "hits": 0
+        },
+        "q04": {
+          "query": "我想给 orders 模块补集成测试,走真实的 HTTP 接口验证下单流程,别 mock 内部的 service",
+          "should_trigger": true,
+          "n": 3,
+          "hits": 0
+        },
+        "q05": {
+          "query": "lets do red-green-refactor on the new rate limiter. first test: 5th request in a second is allowed, 6th is rejected",
+          "should_trigger": true,
+          "n": 3,
+          "hits": 3
+        },
+        "q06": {
+          "query": "用测试驱动的方式修一下 login 接口,token 过期后还能刷新的 bug,一步一个测试来",
+          "should_trigger": true,
+          "n": 3,
+          "hits": 3
+        },
+        "q07": {
+          "query": "write integration tests for our /api/invoices endpoints in tests/integration/, hit the real db in docker",
+          "should_trigger": true,
+          "n": 3,
+          "hits": 0
+        },
+        "q08": {
+          "query": "i want to build a slugify util using TDD. dont write all the tests up front, one test then impl then next",
+          "should_trigger": true,
+          "n": 3,
+          "hits": 3
+        },
+        "q09": {
+          "query": "我们新写的 UserRepository 单测老是在重构后挂掉,因为 mock 了一堆内部方法,帮我用 TDD 的思路重写这些测试,只测公共接口",
+          "should_trigger": true,
+          "n": 3,
+          "hits": 0
+        },
+        "q10": {
+          "query": "Add a feature flag evaluator. Test first please — propose which seams to test before writing anything.",
+          "should_trigger": true,
+          "n": 3,
+          "hits": 0
+        },
+        "q11": {
+          "query": "can you refactor src/billing/invoice.ts to split that 400-line class into smaller modules? tests already pass, just clean it up",
+          "should_trigger": false,
+          "n": 3,
+          "hits": 0
+        },
+        "q12": {
+          "query": "帮我 review 一下这个 PR 里的测试代码,看看有没有写得不规范的地方",
+          "should_trigger": false,
+          "n": 3,
+          "hits": 0
+        },
+        "q13": {
+          "query": "jest keeps failing in CI with 'Cannot find module' but works locally, here's my jest.config.js. whats wrong?",
+          "should_trigger": false,
+          "n": 3,
+          "hits": 0
+        },
+        "q14": {
+          "query": "这个 pytest 测试跑得特别慢,帮我看看怎么加速,比如并行或者缓存 fixture",
+          "should_trigger": false,
+          "n": 3,
+          "hits": 0
+        },
+        "q15": {
+          "query": "design the module boundaries for our new notification system — how deep should the interface be and what should it expose?",
+          "should_trigger": false,
+          "n": 3,
+          "hits": 0
+        },
+        "q16": {
+          "query": "写一份 README,说明怎么在本地运行项目的测试和查看覆盖率报告",
+          "should_trigger": false,
+          "n": 3,
+          "hits": 0
+        },
+        "q17": {
+          "query": "just implement the CSV export button on the reports page, the code is already specced in the ticket, no need for tests right now",
+          "should_trigger": false,
+          "n": 3,
+          "hits": 0
+        },
+        "q18": {
+          "query": "upgrade vitest from 0.34 to 2.x and fix the config breaking changes in vitest.config.ts",
+          "should_trigger": false,
+          "n": 3,
+          "hits": 0
+        },
+        "q19": {
+          "query": "我的 TypeScript 代码里有个 null 引用报错,堆栈在 cart.ts 第 88 行,帮我定位并直接修掉",
+          "should_trigger": false,
+          "n": 3,
+          "hits": 0
+        },
+        "q20": {
+          "query": "explain the difference between unit tests, integration tests and e2e tests, and when to use each",
+          "should_trigger": false,
+          "n": 3,
+          "hits": 0
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,450 @@
+{
+  "run_id": "20261028-234251",
+  "runner_version": "0.4.2",
+  "host": "claude-code",
+  "claude_version": "2.1.303 (Claude Code)",
+  "model": "deepseek-v4-flash",
+  "runs": 3,
+  "sampling": "adaptive",
+  "trial_dirs": "fixed per worker",
+  "max_explore": 0,
+  "query_hash": "sha256 of canonical JSON [{id, query, should_trigger}] sorted by id",
+  "backend": "api.deepseek.com",
+  "base_url": "https://api.deepseek.com/anthropic",
+  "api_key_source": "none",
+  "platform": "Windows 10 / Python 3.11.9",
+  "started_at": "2026-10-28T23:42:52",
+  "skills": {
+    "find-skills": {
+      "source": {
+        "repo": "https://github.com/vercel-labs/skills",
+        "commit": "a80e4c9d12d607631249d4d7d059f835d4b2f13a",
+        "subdir": "skills/find-skills"
+      },
+      "skill_md_sha256": "c1d9628984991d7ed59ab3a7bf6a4dad3d731ef68c71f409f64a0ca258e8028e",
+      "query_sets": {
+        "clause-1": {
+          "query_set_sha256": "16c69ae3e425d5192df8a36843b928f95462437af554aff77db5f3f88de498c6",
+          "file": "queries\\find-skills\\clause-1.json",
+          "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28"
+        },
+        "clause-2": {
+          "query_set_sha256": "1504955bcb778b321be1c82fd9cb83407706629c17390a4c1a91b048105893d7",
+          "file": "queries\\find-skills\\clause-2.json",
+          "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28"
+        }
+      }
+    },
+    "tdd": {
+      "source": {
+        "repo": "https://github.com/mattpocock/skills",
+        "commit": "5beb35b040e3de97e54fa9e386d7e42d15c295c2",
+        "subdir": "skills/engineering/tdd"
+      },
+      "skill_md_sha256": "969583080caf842ae86a53501a0091eced13fd89cad65d3aa75c09112318ff33",
+      "query_sets": {
+        "clause-1": {
+          "query_set_sha256": "8442fbb03e894934640f09ef6e977a5396d1260a4916529a6b8388c1d6554965",
+          "file": "queries\\tdd\\clause-1.json",
+          "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28"
+        },
+        "clause-2": {
+          "query_set_sha256": "d517fe7ca319c39f5e11483bce728c36c2254ca786a9de013fadd91ccd46c655",
+          "file": "queries\\tdd\\clause-2.json",
+          "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28"
+        }
+      }
+    },
+    "diagnosing-bugs": {
+      "source": {
+        "repo": "https://github.com/mattpocock/skills",
+        "commit": "5beb35b040e3de97e54fa9e386d7e42d15c295c2",
+        "subdir": "skills/engineering/diagnosing-bugs"
+      },
+      "skill_md_sha256": "aa87b0ac245c6d1b203c4678eb34dc101af02291448780c55c5e58ccc1619bd7",
+      "query_sets": {
+        "clause-1": {
+          "query_set_sha256": "80ebce555a32c6896810b3bbf312060ee40d9d5982126ab0784360c5d248b729",
+          "file": "queries\\diagnosing-bugs\\clause-1.json",
+          "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28"
+        },
+        "clause-2": {
+          "query_set_sha256": "819390188c77c527f7b8335ed6e8fc7353b34743dc4dcb6bd6adbe6c4f654cde",
+          "file": "queries\\diagnosing-bugs\\clause-2.json",
+          "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28"
+        }
+      }
+    },
+    "prototype": {
+      "source": {
+        "repo": "https://github.com/mattpocock/skills",
+        "commit": "5beb35b040e3de97e54fa9e386d7e42d15c295c2",
+        "subdir": "skills/engineering/prototype"
+      },
+      "skill_md_sha256": "f74ae01f4fc454d3a4ef21271920f1706e626271e715dda0559e489f45c792c3",
+      "query_sets": {
+        "clause-1": {
+          "query_set_sha256": "45e3312468ec153e29e40b2d0969dd42b22c8197d4578a909c56e56ee96ed859",
+          "file": "queries\\prototype\\clause-1.json",
+          "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28"
+        },
+        "clause-2": {
+          "query_set_sha256": "789a78f412ed144a94e80e56fc7ad107c455831cda594a54cad4011465ed7e9b",
+          "file": "queries\\prototype\\clause-2.json",
+          "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28"
+        }
+      }
+    },
+    "domain-modeling": {
+      "source": {
+        "repo": "https://github.com/mattpocock/skills",
+        "commit": "5beb35b040e3de97e54fa9e386d7e42d15c295c2",
+        "subdir": "skills/engineering/domain-modeling"
+      },
+      "skill_md_sha256": "b62d997256cc073e123d4303da8e9db00db0e28de9739660ca3e55ab76e09cdb",
+      "query_sets": {
+        "clause-1": {
+          "query_set_sha256": "0344ef8ca5ed2e17831aa8447b85e807dfedf2e247757b47f6ba7c1e2d30850d",
+          "file": "queries\\domain-modeling\\clause-1.json",
+          "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28"
+        },
+        "clause-2": {
+          "query_set_sha256": "e43aead45ccf992e6bfd0c0a1d52c85b5b6ecfc5fd4b4f4bdb3dff1c49208637",
+          "file": "queries\\domain-modeling\\clause-2.json",
+          "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28"
+        }
+      }
+    },
+    "agent-browser": {
+      "source": {
+        "repo": "https://github.com/vercel-labs/agent-browser",
+        "commit": "04ba5264dade678062c3cdcce0f4f293e748249f",
+        "subdir": "skills/agent-browser"
+      },
+      "skill_md_sha256": "19c4b9f790f8a36cb2c485cb91ad36d6506b60e3cc32df299554ac9c8694247f",
+      "query_sets": {
+        "clause-1": {
+          "query_set_sha256": "ae133e19ba43fc61d0df4f344794dd9a09774488442f47627c10e32cecf99cdb",
+          "file": "queries\\agent-browser\\clause-1.json",
+          "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28"
+        },
+        "clause-2": {
+          "query_set_sha256": "8ba0a5f5a409050eb323bb0321e634003dd5ba0ae698b321299fffbfec5385d8",
+          "file": "queries\\agent-browser\\clause-2.json",
+          "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28"
+        }
+      }
+    },
+    "hyperframes": {
+      "source": {
+        "repo": "https://github.com/heygen-com/hyperframes",
+        "commit": "575f68cf5bc4789e0f2b71c16333f5ef79586156",
+        "subdir": "skills/hyperframes"
+      },
+      "skill_md_sha256": "180ce4eea5f33f1617105c92e2690a5a2320abf624c263186ec0cb1a78a919ef",
+      "query_sets": {
+        "clause-1": {
+          "query_set_sha256": "aef443a0e59a68787f2d880c641f6f354f87f5e143ad24a135fa7df66a49b3fe",
+          "file": "queries\\hyperframes\\clause-1.json",
+          "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28"
+        },
+        "clause-2": {
+          "query_set_sha256": "dd0b2c2c19e9bad00f0f05ec46b67194a9cd8cfab3e36fbed27f631e6c2e5f20",
+          "file": "queries\\hyperframes\\clause-2.json",
+          "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28"
+        }
+      }
+    },
+    "frontend-design": {
+      "source": {
+        "repo": "https://github.com/anthropics/skills",
+        "commit": "dbd4588f9e1033efb41dad4bef2f7947c8993d44",
+        "subdir": "skills/frontend-design"
+      },
+      "skill_md_sha256": "b8009ae690dfa69edc7f08bb8715f32db8817112cfa4388741dbaf876c237df8",
+      "query_sets": {
+        "clause-1": {
+          "query_set_sha256": "976d1717012766f574db8de50f85aba70958bde86892e1451fc055273a8bc8bb",
+          "file": "queries\\frontend-design\\clause-1.json",
+          "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28"
+        },
+        "clause-2": {
+          "query_set_sha256": "ac65434835a16c7504723a05be03090eecd66ded1acb726991d58e4c0b967d50",
+          "file": "queries\\frontend-design\\clause-2.json",
+          "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28"
+        }
+      }
+    },
+    "webapp-testing": {
+      "source": {
+        "repo": "https://github.com/anthropics/skills",
+        "commit": "dbd4588f9e1033efb41dad4bef2f7947c8993d44",
+        "subdir": "skills/webapp-testing"
+      },
+      "skill_md_sha256": "8bc27790f6e6dfc2bfa6692326d4518baacf6a31dcc646d963c729adad2f7e34",
+      "query_sets": {
+        "clause-1": {
+          "query_set_sha256": "d01379044d4e340958d7c2ffa8b890d529f514e83b60b15f7b2e7843d583b841",
+          "file": "queries\\webapp-testing\\clause-1.json",
+          "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28"
+        },
+        "clause-2": {
+          "query_set_sha256": "b71e8b6a92bbac3a197703cfc1be703a385c899c7e457970d7507c72fb771372",
+          "file": "queries\\webapp-testing\\clause-2.json",
+          "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28"
+        }
+      }
+    },
+    "mcp-builder": {
+      "source": {
+        "repo": "https://github.com/anthropics/skills",
+        "commit": "dbd4588f9e1033efb41dad4bef2f7947c8993d44",
+        "subdir": "skills/mcp-builder"
+      },
+      "skill_md_sha256": "57231330040e18e033dad8b2fdc0340a6185034c32b42b7d3448f444a6af6cf2",
+      "query_sets": {
+        "clause-1": {
+          "query_set_sha256": "b30ff1c49764ae9ed4b651ab7c45232a44cb7b24187ca6a826e0c062ed473ea5",
+          "file": "queries\\mcp-builder\\clause-1.json",
+          "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28"
+        },
+        "clause-2": {
+          "query_set_sha256": "ca54a957faf5ed7c68a17a68c94f3a4f84b12c9f0ec0ebf040a76a85e7498ae5",
+          "file": "queries\\mcp-builder\\clause-2.json",
+          "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28"
+        }
+      }
+    },
+    "doc-coauthoring": {
+      "source": {
+        "repo": "https://github.com/anthropics/skills",
+        "commit": "dbd4588f9e1033efb41dad4bef2f7947c8993d44",
+        "subdir": "skills/doc-coauthoring"
+      },
+      "skill_md_sha256": "acb9b89b228fb818ffe2f464e40b1cdbf6948b50ceeeb7378f0e5b9d78c996ad",
+      "query_sets": {
+        "clause-1": {
+          "query_set_sha256": "9cbea47cf4856825cbe018bbb53d3707a89f4aeaddc9e0055437fb019a7248bf",
+          "file": "queries\\doc-coauthoring\\clause-1.json",
+          "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28"
+        },
+        "clause-2": {
+          "query_set_sha256": "e2da63f8f61924b0498da0db9c89186b247dd2d4973e0a80f7cdc9c147e37fab",
+          "file": "queries\\doc-coauthoring\\clause-2.json",
+          "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28"
+        }
+      }
+    },
+    "xlsx": {
+      "source": {
+        "repo": "https://github.com/anthropics/skills",
+        "commit": "dbd4588f9e1033efb41dad4bef2f7947c8993d44",
+        "subdir": "skills/xlsx"
+      },
+      "skill_md_sha256": "111e06521941d60feea6c160d9f67a0b9b95a383d3db0b4c95e65937eb12fb5a",
+      "query_sets": {
+        "clause-1": {
+          "query_set_sha256": "5de1e43e0c36496ab68aec675d2bac81e06f2da5d34516b078312676283cabf9",
+          "file": "queries\\xlsx\\clause-1.json",
+          "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28"
+        },
+        "clause-2": {
+          "query_set_sha256": "396f6c5ed03ac411690dc54e0576955c47af9b87e38bded853ab8c99c70f3b08",
+          "file": "queries\\xlsx\\clause-2.json",
+          "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28"
+        }
+      }
+    },
+    "skill-creator": {
+      "source": {
+        "repo": "https://github.com/anthropics/skills",
+        "commit": "dbd4588f9e1033efb41dad4bef2f7947c8993d44",
+        "subdir": "skills/skill-creator"
+      },
+      "skill_md_sha256": "e030e7685e26283b4a76f5202aa3ae8516fb41dde799be5ae8ea6393ec009fe9",
+      "query_sets": {
+        "clause-1": {
+          "query_set_sha256": "dbea5fd03b379f06879d16276e777d7e12e1bf615be674cb927b48fbf09c629c",
+          "file": "queries\\skill-creator\\clause-1.json",
+          "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28"
+        },
+        "clause-2": {
+          "query_set_sha256": "28637434fadc9d6041cb0dcd90e1c85a97c18dca5f6fdbb54643a718d9fc55d4",
+          "file": "queries\\skill-creator\\clause-2.json",
+          "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28"
+        }
+      }
+    },
+    "vercel-react-best-practices": {
+      "source": {
+        "repo": "https://github.com/vercel-labs/agent-skills",
+        "commit": "063bee94c3f4df8453406c830b0a7df0f2860278",
+        "subdir": "skills/react-best-practices"
+      },
+      "skill_md_sha256": "3286ace648b4d740317b9c1cb7fbd38600eaacc62a8b57ea5e06fd2992b5582e",
+      "query_sets": {
+        "clause-1": {
+          "query_set_sha256": "6037f81cd67e052a4d14c7eac9cafe992fc0376aecd45b09a4ef221b6d5d9c94",
+          "file": "queries\\vercel-react-best-practices\\clause-1.json",
+          "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28"
+        },
+        "clause-2": {
+          "query_set_sha256": "09edbad803ca758167407a49fb3010f7576093c029594e783976bf337b64a5bb",
+          "file": "queries\\vercel-react-best-practices\\clause-2.json",
+          "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28"
+        }
+      }
+    },
+    "web-design-guidelines": {
+      "source": {
+        "repo": "https://github.com/vercel-labs/agent-skills",
+        "commit": "063bee94c3f4df8453406c830b0a7df0f2860278",
+        "subdir": "skills/web-design-guidelines"
+      },
+      "skill_md_sha256": "17e48da905f83a19c174079b50760a98c069527ba50079239b3c187236627c29",
+      "query_sets": {
+        "clause-1": {
+          "query_set_sha256": "f4414433fb6ce26903b03977bc74150c94d5c38040d26e2eb908e117b1b920ab",
+          "file": "queries\\web-design-guidelines\\clause-1.json",
+          "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28"
+        },
+        "clause-2": {
+          "query_set_sha256": "f4438c02bed81ea292dbb16d0357af4e19dcc8e0b0bb8feb1dcce98768be273d",
+          "file": "queries\\web-design-guidelines\\clause-2.json",
+          "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28"
+        }
+      }
+    },
+    "deploy-to-vercel": {
+      "source": {
+        "repo": "https://github.com/vercel-labs/agent-skills",
+        "commit": "063bee94c3f4df8453406c830b0a7df0f2860278",
+        "subdir": "skills/deploy-to-vercel"
+      },
+      "skill_md_sha256": "0df550ec39472fa202d752754fddf797b5b7a605cf63aaad06462aea577aa6a7",
+      "query_sets": {
+        "clause-1": {
+          "query_set_sha256": "a03a65b806f90ee98c060787e19f4b28b7824397ef0ed093fdafa96828b087df",
+          "file": "queries\\deploy-to-vercel\\clause-1.json",
+          "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28"
+        },
+        "clause-2": {
+          "query_set_sha256": "f6320b61f6b06179eb56044aadc33b45bfe6b70faa83a03eed62cce41f4bd0c2",
+          "file": "queries\\deploy-to-vercel\\clause-2.json",
+          "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28"
+        }
+      }
+    },
+    "design-mobile-apps": {
+      "source": {
+        "repo": "https://github.com/designed-by-ai/skills",
+        "commit": "03c20aec6dcedb5fabfb03dc37982eb52ef19ed6",
+        "subdir": "skills/design-mobile-apps"
+      },
+      "skill_md_sha256": "54b4606f4838da36f0eb799e0b8032fc02a3bb0d0c1290fb1002e578755836ac",
+      "query_sets": {
+        "clause-1": {
+          "query_set_sha256": "bcadbb072d4584fe4b76bb3f2021d7d576c11b40526871eb1ea55205831cbe3e",
+          "file": "queries\\design-mobile-apps\\clause-1.json",
+          "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28"
+        },
+        "clause-2": {
+          "query_set_sha256": "b010deb449de8043409f6ad9d03f8612d927b1e5d1e33035c21114346ba00abc",
+          "file": "queries\\design-mobile-apps\\clause-2.json",
+          "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28"
+        }
+      }
+    },
+    "lark-doc": {
+      "source": {
+        "repo": "https://github.com/larksuite/cli",
+        "commit": "017b19a793ad71794a02887ede04757f3d82e10d",
+        "subdir": "skills/lark-doc"
+      },
+      "skill_md_sha256": "0f1aea17fc21aaeb1cc17270d6de7de97780c3a9f53f98f668ce318f91f1a1f7",
+      "query_sets": {
+        "clause-1": {
+          "query_set_sha256": "796a43c188473c52fed1b8e3edb34872e49d55ed5c9f02308ea9160becd6991d",
+          "file": "queries\\lark-doc\\clause-1.json",
+          "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28"
+        },
+        "clause-2": {
+          "query_set_sha256": "02fdb41236ee0527ec38677a7337c287ab5d5e1b033fc7b1dcb8bdfa6e02abed",
+          "file": "queries\\lark-doc\\clause-2.json",
+          "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28"
+        }
+      },
+      "companions": {
+        "lark-drive": {
+          "source": {
+            "repo": "https://github.com/larksuite/cli",
+            "commit": "017b19a793ad71794a02887ede04757f3d82e10d",
+            "subdir": "skills/lark-drive"
+          },
+          "skill_md_sha256": "b140cd55b62be7f001384fb47627dc269ef08db3b943d0eb8c6aa4ef1bc9b685"
+        },
+        "lark-shared": {
+          "source": {
+            "repo": "https://github.com/larksuite/cli",
+            "commit": "017b19a793ad71794a02887ede04757f3d82e10d",
+            "subdir": "skills/lark-shared"
+          },
+          "skill_md_sha256": "9fa68bb1f3ce564602c6df6c303ea4d2759de02442772f332fe5041d65720a1f"
+        }
+      }
+    }
+  },
+  "model_resolved": "deepseek-v4-flash",
+  "loaded_skills": [
+    "deep-research",
+    "design",
+    "design-sync",
+    "dataviz",
+    "update-config",
+    "verify",
+    "debug",
+    "code-review",
+    "simplify",
+    "batch",
+    "fewer-permission-prompts",
+    "doctor",
+    "loop",
+    "claude-api",
+    "workflow-authoring",
+    "run",
+    "run-skill-generator",
+    "plugin-authoring"
+  ],
+  "tools": [
+    "Bash",
+    "CronCreate",
+    "CronDelete",
+    "CronList",
+    "DesignSync",
+    "Edit",
+    "EnterWorktree",
+    "ExitWorktree",
+    "Glob",
+    "Grep",
+    "ListAgents",
+    "Monitor",
+    "NotebookEdit",
+    "PowerShell",
+    "PushNotification",
+    "Read",
+    "ReportFindings",
+    "ScheduleWakeup",
+    "SendMessage",
+    "Skill",
+    "Task",
+    "TaskStop",
+    "WebFetch",
+    "WebSearch",
+    "Workflow",
+    "Write"
+  ],
+  "stopped_at": "2026-10-29T00:13:56",
+  "stopped_reason": "API Error: 402 Insufficient Balance (request_id: 1cd7df76-4a77-4ba9-91e5-7cf0ad01f3e3)",
+  "interrupted_at": "2026-10-29T00:17:22",
+  "finished_at": "2026-10-29T00:27:09"
+}

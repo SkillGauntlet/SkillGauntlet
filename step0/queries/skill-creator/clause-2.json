@@ -1,0 +1,225 @@
+{
+  "skill": "skill-creator",
+  "skill_md_sha256": "e030e7685e26283b4a76f5202aa3ae8516fb41dde799be5ae8ea6393ec009fe9",
+  "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28",
+  "review": "none: AI-drafted. The method tests each skill with two or more independently drafted sets and reports the spread between them instead of reviewing each set by hand.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "我想做一个新的 skill，用来把每周的 git commit 自动整理成周报，你帮我从头搭一个吧",
+      "should_trigger": true,
+      "clause": "Create skill from scratch",
+      "note": "Explicitly asks to build a brand-new skill from nothing."
+    },
+    {
+      "id": "q02",
+      "query": "turn what we just did into a skill — the whole flow of pulling the csv, cleaning columns and exporting to xlsx. start a new one called csv-cleaner",
+      "should_trigger": true,
+      "clause": "Create skill from scratch",
+      "note": "Capture a workflow as a new skill; creation of a new skill directory."
+    },
+    {
+      "id": "q03",
+      "query": "帮我写个 SKILL.md，功能是审查 PR 里的 SQL 迁移文件有没有风险，还没有任何现成文件",
+      "should_trigger": true,
+      "clause": "Create skill from scratch",
+      "note": "Writing a new SKILL.md with no existing material."
+    },
+    {
+      "id": "q04",
+      "query": "i wanna make a skill for generating changelogs from conventional commits. can u interview me and then draft it?",
+      "should_trigger": true,
+      "clause": "Create skill from scratch",
+      "note": "New skill creation including intent capture interview."
+    },
+    {
+      "id": "q05",
+      "query": "我的 pdf-fill skill 老是漏掉表单里的复选框，帮我改一下 skills/pdf-fill/SKILL.md 让它处理这种情况",
+      "should_trigger": true,
+      "clause": "Edit/improve existing skill",
+      "note": "Modify an existing skill's instructions to fix a flaw."
+    },
+    {
+      "id": "q06",
+      "query": "can you tighten up my deploy-helper skill? SKILL.md is like 700 lines and the model keeps ignoring the bottom half, split into references/",
+      "should_trigger": true,
+      "clause": "Edit/improve existing skill",
+      "note": "Restructure and improve an existing skill using progressive disclosure."
+    },
+    {
+      "id": "q07",
+      "query": "上次用户反馈说 changelog skill 输出格式太啰嗦，根据反馈把它重写一版，别太多 MUST 那种硬规则",
+      "should_trigger": true,
+      "clause": "Edit/improve existing skill",
+      "note": "Iterate on an existing skill based on user feedback."
+    },
+    {
+      "id": "q08",
+      "query": "update my code-review skill so it also checks for missing tests, keep the rest as is",
+      "should_trigger": true,
+      "clause": "Edit/improve existing skill",
+      "note": "Targeted edit of an existing skill."
+    },
+    {
+      "id": "q09",
+      "query": "我写好了 resume-parser 这个 skill，帮我造 3 个测试 prompt 跑一下，看看带 skill 和不带 skill 输出差多少",
+      "should_trigger": true,
+      "clause": "Run evals to test a skill",
+      "note": "Create test prompts and run with-skill vs baseline evals."
+    },
+    {
+      "id": "q10",
+      "query": "run the evals for my sql-lint skill and open the viewer so i can leave feedback on each output",
+      "should_trigger": true,
+      "clause": "Run evals to test a skill",
+      "note": "Run eval cases and launch the review viewer."
+    },
+    {
+      "id": "q11",
+      "query": "帮我给 evals/evals.json 里的用例加断言，然后对 xlsx-report 这个 skill 跑一轮评测并打分",
+      "should_trigger": true,
+      "clause": "Run evals to test a skill",
+      "note": "Add assertions and grade an eval run."
+    },
+    {
+      "id": "q12",
+      "query": "test my new skill on a few realistic prompts and compare against the old version before i ship it",
+      "should_trigger": true,
+      "clause": "Run evals to test a skill",
+      "note": "Eval run comparing against old skill snapshot."
+    },
+    {
+      "id": "q13",
+      "query": "把 iteration-2 的结果聚合成 benchmark，我要看 pass rate 的均值和标准差，还有 token 和耗时对比",
+      "should_trigger": true,
+      "clause": "Benchmark with variance analysis",
+      "note": "Aggregate benchmark with mean ± stddev."
+    },
+    {
+      "id": "q14",
+      "query": "each eval ran 3 times for my skill, which assertions are flaky or non-discriminating? do an analyst pass on the benchmark.json",
+      "should_trigger": true,
+      "clause": "Benchmark with variance analysis",
+      "note": "Analyze variance and flaky assertions in benchmark data."
+    },
+    {
+      "id": "q15",
+      "query": "对比 with_skill 和 baseline 的稳定性，多跑几次看方差，别只看一次结果",
+      "should_trigger": true,
+      "clause": "Benchmark with variance analysis",
+      "note": "Repeated runs for variance of skill performance."
+    },
+    {
+      "id": "q16",
+      "query": "benchmark my skill's performance — need pass_rate delta vs without_skill plus time/token tradeoff in a table",
+      "should_trigger": true,
+      "clause": "Benchmark with variance analysis",
+      "note": "Quantitative benchmark with deltas."
+    },
+    {
+      "id": "q17",
+      "query": "我这个 skill 老是不被触发，帮我优化一下 description，让它触发更准",
+      "should_trigger": true,
+      "clause": "Optimize skill description for triggering",
+      "note": "Improve description for triggering accuracy."
+    },
+    {
+      "id": "q18",
+      "query": "run the description optimizer on my pdf-tools skill, it undertriggers when people just say 'merge these pdfs'",
+      "should_trigger": true,
+      "clause": "Optimize skill description for triggering",
+      "note": "Run description improvement loop for undertriggering."
+    },
+    {
+      "id": "q19",
+      "query": "帮我造一批 should-trigger 和 should-not-trigger 的查询，测一下 frontmatter 里 description 的触发率",
+      "should_trigger": true,
+      "clause": "Optimize skill description for triggering",
+      "note": "Trigger eval set to tune description."
+    },
+    {
+      "id": "q20",
+      "query": "my skill's description is too vague, claude never picks it. make it pushier and test whether it fires on the right prompts",
+      "should_trigger": true,
+      "clause": "Optimize skill description for triggering",
+      "note": "Rewrite description and verify triggering."
+    },
+    {
+      "id": "q21",
+      "query": "帮我写一个 Python 脚本，批量把 skills 目录下每个 SKILL.md 的 frontmatter 里的 name 字段转成小写",
+      "should_trigger": false,
+      "clause": "Edit/improve existing skill",
+      "note": "Generic file-processing script, not improving a skill's behavior."
+    },
+    {
+      "id": "q22",
+      "query": "how do i install a skill from github into ~/.claude/skills? just need the command",
+      "should_trigger": false,
+      "clause": "Create skill from scratch",
+      "note": "Installing an existing skill, not creating one; skill-finder/installer territory."
+    },
+    {
+      "id": "q23",
+      "query": "帮我写个 slash command，输入 /deploy 就跑 npm run build 然后 rsync 到服务器",
+      "should_trigger": false,
+      "clause": "Create skill from scratch",
+      "note": "Slash command/script, not a skill."
+    },
+    {
+      "id": "q24",
+      "query": "write unit tests for my parse_config function in utils.py using pytest",
+      "should_trigger": false,
+      "clause": "Run evals to test a skill",
+      "note": "Ordinary code testing, not skill evaluation."
+    },
+    {
+      "id": "q25",
+      "query": "帮我给我们的 RAG 检索接口跑个评测，算 recall@10 和 MRR，数据在 eval/qrels.tsv",
+      "should_trigger": false,
+      "clause": "Run evals to test a skill",
+      "note": "Evaluating a retrieval system, not a skill."
+    },
+    {
+      "id": "q26",
+      "query": "benchmark my sorting function against numpy.sort across array sizes, give me mean and stddev of runtime",
+      "should_trigger": false,
+      "clause": "Benchmark with variance analysis",
+      "note": "Code performance benchmarking, not skill benchmarking."
+    },
+    {
+      "id": "q27",
+      "query": "我们 A/B 测试的转化率数据在 ab.csv，帮我算一下置信区间和方差，看显著不显著",
+      "should_trigger": false,
+      "clause": "Benchmark with variance analysis",
+      "note": "Statistical analysis of unrelated data."
+    },
+    {
+      "id": "q28",
+      "query": "optimize the meta description and title tag on my landing page index.html for SEO",
+      "should_trigger": false,
+      "clause": "Optimize skill description for triggering",
+      "note": "SEO description, not a skill's description."
+    },
+    {
+      "id": "q29",
+      "query": "帮我优化这段 prompt，让 GPT 更稳定地输出 JSON，不用管什么 skill",
+      "should_trigger": false,
+      "clause": "Optimize skill description for triggering",
+      "note": "General prompt engineering, not skill triggering."
+    },
+    {
+      "id": "q30",
+      "query": "review my pull request diff and suggest improvements to the error handling in src/api/client.ts",
+      "should_trigger": false,
+      "clause": "Edit/improve existing skill",
+      "note": "Code review of ordinary source, not editing a skill."
+    }
+  ],
+  "clauses": [
+    "Create skill from scratch",
+    "Edit/improve existing skill",
+    "Run evals to test a skill",
+    "Benchmark with variance analysis",
+    "Optimize skill description for triggering"
+  ]
+}

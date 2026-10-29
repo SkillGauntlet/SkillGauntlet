@@ -1,0 +1,196 @@
+{
+  "skill": "find-skills",
+  "skill_md_sha256": "c1d9628984991d7ed59ab3a7bf6a4dad3d731ef68c71f409f64a0ca258e8028e",
+  "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28",
+  "review": "none: AI-drafted. The method tests each skill with two or more independently drafted sets and reports the spread between them instead of reviewing each set by hand.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "how do I set up automated e2e tests for my Next.js app? feels like someone must have made a skill for this",
+      "should_trigger": true,
+      "clause": "How-do-I-do-X question",
+      "note": "Common task phrased as 'how do I do X' where an installable skill likely exists."
+    },
+    {
+      "id": "q02",
+      "query": "怎么才能自动生成 changelog?每次发版手写太烦了",
+      "should_trigger": true,
+      "clause": "How-do-I-do-X question",
+      "note": "Chinese 'how do I' for a common task (changelog) with likely existing skill."
+    },
+    {
+      "id": "q03",
+      "query": "how do i get better at reviewing PRs with you, is there a standard workflow for that",
+      "should_trigger": true,
+      "clause": "How-do-I-do-X question",
+      "note": "How-to question about a common workflow that may exist as a skill."
+    },
+    {
+      "id": "q04",
+      "query": "docker 镜像体积太大了,有什么现成的办法能帮我优化吗?",
+      "should_trigger": true,
+      "clause": "How-do-I-do-X question",
+      "note": "Chinese how-to on a common DevOps task; a skill might exist."
+    },
+    {
+      "id": "q05",
+      "query": "find a skill for writing playwright tests",
+      "should_trigger": true,
+      "clause": "Explicit find-a-skill request",
+      "note": "Direct 'find a skill for X' request."
+    },
+    {
+      "id": "q06",
+      "query": "有没有现成的 skill 可以帮我做 README 生成?",
+      "should_trigger": true,
+      "clause": "Explicit find-a-skill request",
+      "note": "Chinese 'is there a skill for X'."
+    },
+    {
+      "id": "q07",
+      "query": "is there a skill that can help w/ kubernetes manifests?",
+      "should_trigger": true,
+      "clause": "Explicit find-a-skill request",
+      "note": "Casual 'is there a skill that can' phrasing."
+    },
+    {
+      "id": "q08",
+      "query": "帮我搜一下 skills.sh 上有没有做无障碍检查 accessibility 的技能",
+      "should_trigger": true,
+      "clause": "Explicit find-a-skill request",
+      "note": "Asks to search the skills registry for a domain."
+    },
+    {
+      "id": "q09",
+      "query": "I want to extend what you can do. what add-ons or skills can I install?",
+      "should_trigger": true,
+      "clause": "Interest in extending capabilities",
+      "note": "General interest in extending agent capabilities."
+    },
+    {
+      "id": "q10",
+      "query": "能不能让你变得更强?我想给你装点扩展能力",
+      "should_trigger": true,
+      "clause": "Interest in extending capabilities",
+      "note": "Chinese expression of wanting to extend capabilities."
+    },
+    {
+      "id": "q11",
+      "query": "what's the best way to give you new abilities for frontend design work",
+      "should_trigger": true,
+      "clause": "Interest in extending capabilities",
+      "note": "Wants to add capabilities in a domain."
+    },
+    {
+      "id": "q12",
+      "query": "我想扩展一下 agent 的能力,有什么推荐的包吗",
+      "should_trigger": true,
+      "clause": "Interest in extending capabilities",
+      "note": "Chinese ask for packages to extend agent."
+    },
+    {
+      "id": "q13",
+      "query": "any templates or ready-made workflows for CI/CD pipelines I can plug in? searching for tools",
+      "should_trigger": true,
+      "clause": "Looking for installable functionality/tools/templates",
+      "note": "Searching for tools/templates/workflows."
+    },
+    {
+      "id": "q14",
+      "query": "我想找一些做 UI 设计系统的模板和工作流工具",
+      "should_trigger": true,
+      "clause": "Looking for installable functionality/tools/templates",
+      "note": "Chinese search for templates/workflows in design domain."
+    },
+    {
+      "id": "q15",
+      "query": "i wish i had help with deployment stuff, like vercel release automation. anything out there?",
+      "should_trigger": true,
+      "clause": "Looking for installable functionality/tools/templates",
+      "note": "Wishes for help in a specific domain (deployment)."
+    },
+    {
+      "id": "q16",
+      "query": "测试这块我一直想有个专门的帮手,有没有能装上的东西",
+      "should_trigger": true,
+      "clause": "Looking for installable functionality/tools/templates",
+      "note": "Chinese wish for domain help via installable thing."
+    },
+    {
+      "id": "q17",
+      "query": "how do I fix this TypeError in src/utils/parse.ts line 42? undefined is not a function",
+      "should_trigger": false,
+      "clause": "How-do-I-do-X question",
+      "note": "Specific debugging of the user's code, not a discovery of skills."
+    },
+    {
+      "id": "q18",
+      "query": "怎么在 Python 里把列表去重并保持顺序?",
+      "should_trigger": false,
+      "clause": "How-do-I-do-X question",
+      "note": "Simple language how-to answered directly; no skill needed."
+    },
+    {
+      "id": "q19",
+      "query": "how do I write a git commit message for this diff? just write it for me",
+      "should_trigger": false,
+      "clause": "How-do-I-do-X question",
+      "note": "Direct task for the agent, not skill discovery."
+    },
+    {
+      "id": "q20",
+      "query": "帮我写一个 Playwright 测试,测试登录页面 login.spec.ts",
+      "should_trigger": false,
+      "clause": "Explicit find-a-skill request",
+      "note": "Shares Playwright vocabulary but asks to write the test directly."
+    },
+    {
+      "id": "q21",
+      "query": "list the skills I already have installed and show their descriptions",
+      "should_trigger": false,
+      "clause": "Explicit find-a-skill request",
+      "note": "Inspecting installed skills, not finding new ones."
+    },
+    {
+      "id": "q22",
+      "query": "帮我写一个新的 skill,用来自动格式化 markdown 文件",
+      "should_trigger": false,
+      "clause": "Explicit find-a-skill request",
+      "note": "Creating a skill is a different job (skill authoring)."
+    },
+    {
+      "id": "q23",
+      "query": "can you add a new MCP server config to my claude settings.json so you can access my postgres db",
+      "should_trigger": false,
+      "clause": "Interest in extending capabilities",
+      "note": "Configuring an MCP server is extension setup, not skill discovery."
+    },
+    {
+      "id": "q24",
+      "query": "npm install lodash 然后帮我把 utils.js 里的 debounce 换成 lodash 的",
+      "should_trigger": false,
+      "clause": "Looking for installable functionality/tools/templates",
+      "note": "Installing a library and refactoring; not agent skills."
+    },
+    {
+      "id": "q25",
+      "query": "generate a Dockerfile template for my Node 20 express app",
+      "should_trigger": false,
+      "clause": "Looking for installable functionality/tools/templates",
+      "note": "Asks for a template to be produced directly, not searched for."
+    },
+    {
+      "id": "q26",
+      "query": "帮我 review 一下这个 PR 的改动,重点看有没有安全问题",
+      "should_trigger": false,
+      "clause": "Looking for installable functionality/tools/templates",
+      "note": "Direct PR review task in a domain the skill lists, but not discovery."
+    }
+  ],
+  "clauses": [
+    "How-do-I-do-X question",
+    "Explicit find-a-skill request",
+    "Interest in extending capabilities",
+    "Looking for installable functionality/tools/templates"
+  ]
+}

@@ -1,0 +1,196 @@
+{
+  "skill": "lark-doc",
+  "skill_md_sha256": "0f1aea17fc21aaeb1cc17270d6de7de97780c3a9f53f98f668ce318f91f1a1f7",
+  "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28",
+  "review": "none: AI-drafted. The method tests each skill with two or more independently drafted sets and reports the spread between them instead of reviewing each set by hand.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "帮我把飞书文档里“Q3 复盘”那一节读出来,总结成五条要点",
+      "should_trigger": true,
+      "clause": "读取/创建/编辑飞书文档内容",
+      "note": "Reading and summarizing Feishu doc content, no URL given and no media or mindnote involved."
+    },
+    {
+      "id": "q02",
+      "query": "create a new lark doc called 'Onboarding Checklist' with three sections: accounts, tools, first-week tasks",
+      "should_trigger": true,
+      "clause": "读取/创建/编辑飞书文档内容",
+      "note": "Creating a new Lark doc from scratch, which is the create workflow."
+    },
+    {
+      "id": "q03",
+      "query": "把我们飞书文档里第二段润色一下,语气正式点,顺便补一个风险提示小节",
+      "should_trigger": true,
+      "clause": "读取/创建/编辑飞书文档内容",
+      "note": "Editing/rewriting existing doc content, which is the +update path."
+    },
+    {
+      "id": "q04",
+      "query": "edit my Lark docx so the changelog table header says 'Version' instead of 'Ver', and fix the typo in the intro",
+      "should_trigger": true,
+      "clause": "读取/创建/编辑飞书文档内容",
+      "note": "Plain content editing of a docx; no URL, media or mindnote."
+    },
+    {
+      "id": "q05",
+      "query": "把本地的 arch-diagram.png 插到飞书文档最后面",
+      "should_trigger": true,
+      "clause": "插入或下载图片附件素材",
+      "note": "Inserting a local image at the end of a doc via media-insert."
+    },
+    {
+      "id": "q06",
+      "query": "download all the images and attachments from that Lark doc to ./assets",
+      "should_trigger": true,
+      "clause": "插入或下载图片附件素材",
+      "note": "Downloading doc media via media-download."
+    },
+    {
+      "id": "q07",
+      "query": "文档里那张截图我想先预览一下,看看是不是旧版界面的图",
+      "should_trigger": true,
+      "clause": "插入或下载图片附件素材",
+      "note": "Previewing a doc image, which is media-preview."
+    },
+    {
+      "id": "q08",
+      "query": "把飞书文档的封面图换成 banner_v2.jpg,旧的那个删掉也行",
+      "should_trigger": true,
+      "clause": "插入或下载图片附件素材",
+      "note": "Updating or deleting the docx cover resource; the cover is an image asset, not text content."
+    },
+    {
+      "id": "q09",
+      "query": "我飞书里有个思维笔记,帮我在“用户增长”分支下加三个子节点",
+      "should_trigger": true,
+      "clause": "操作思维笔记",
+      "note": "Editing an existing mindnote."
+    },
+    {
+      "id": "q10",
+      "query": "read my Lark mindnote on the Q4 roadmap and list the top-level branches",
+      "should_trigger": true,
+      "clause": "操作思维笔记",
+      "note": "Reading an existing mindnote via the mindnotes chain."
+    },
+    {
+      "id": "q11",
+      "query": "新建一个思维笔记,主题是产品发布流程,分成准备、测试、上线、复盘四块",
+      "should_trigger": true,
+      "clause": "操作思维笔记",
+      "note": "Creating a new mindnote (whiteboard route)."
+    },
+    {
+      "id": "q12",
+      "query": "mindnote里把'Design'那个分支挪到'Engineering'下面,然后改个名叫 'Design Ops'",
+      "should_trigger": true,
+      "clause": "操作思维笔记",
+      "note": "Restructuring and renaming nodes in a mindnote."
+    },
+    {
+      "id": "q13",
+      "query": "https://example.feishu.cn/docx/doxcnAbC123xyz 这个里面写了啥?",
+      "should_trigger": true,
+      "clause": "用户提供文档 URL/token 时(含 doubao.com /docx/ /wiki/)",
+      "note": "A bare docx URL with a vague question; routing is driven by the URL path."
+    },
+    {
+      "id": "q14",
+      "query": "look at https://www.doubao.com/docx/Xk29sLmQpR and tell me what the action items are",
+      "should_trigger": true,
+      "clause": "用户提供文档 URL/token 时(含 doubao.com /docx/ /wiki/)",
+      "note": "doubao.com /docx/ link, which the skill explicitly covers."
+    },
+    {
+      "id": "q15",
+      "query": "这个 wiki 链接 https://xxx.feishu.cn/wiki/wikcnQ9fT7 帮我看下有没有错别字",
+      "should_trigger": true,
+      "clause": "用户提供文档 URL/token 时(含 doubao.com /docx/ /wiki/)",
+      "note": "Wiki URL supplied; the skill routes on the URL path."
+    },
+    {
+      "id": "q16",
+      "query": "token is doxcnZ8k3Pq1, pull it and tell me how many words it has",
+      "should_trigger": true,
+      "clause": "用户提供文档 URL/token 时(含 doubao.com /docx/ /wiki/)",
+      "note": "A raw doc token given directly; word count falls under the script helper."
+    },
+    {
+      "id": "q17",
+      "query": "帮我给飞书文档 https://x.feishu.cn/docx/abc 的第三条评论回复一下,说已修复",
+      "should_trigger": false,
+      "clause": "读取/创建/编辑飞书文档内容",
+      "note": "Standalone comment replies belong to lark-drive, even though a doc URL is present."
+    },
+    {
+      "id": "q18",
+      "query": "make a copy of our Lark design doc and save it as 'Design v2 (draft)'",
+      "should_trigger": false,
+      "clause": "读取/创建/编辑飞书文档内容",
+      "note": "Copying a doc is a drive files copy job for lark-drive, not rebuilding the content."
+    },
+    {
+      "id": "q19",
+      "query": "在飞书多维表格里把状态列为“进行中”的记录都读出来,统计一下数量",
+      "should_trigger": false,
+      "clause": "读取/创建/编辑飞书文档内容",
+      "note": "Reading Base/bitable records is outside this skill and belongs to a Base skill."
+    },
+    {
+      "id": "q20",
+      "query": "write a README.md for my repo with install and usage sections",
+      "should_trigger": false,
+      "clause": "读取/创建/编辑飞书文档内容",
+      "note": "Creating a local Markdown file, not a Feishu doc."
+    },
+    {
+      "id": "q21",
+      "query": "把云空间里的 report.pdf 上传到飞书网盘的“财务”文件夹",
+      "should_trigger": false,
+      "clause": "插入或下载图片附件素材",
+      "note": "Uploading a file to cloud drive is lark-drive file management, not inserting doc media."
+    },
+    {
+      "id": "q22",
+      "query": "compress all the PNGs in ./screenshots and convert them to webp",
+      "should_trigger": false,
+      "clause": "插入或下载图片附件素材",
+      "note": "Local image processing with no Lark doc involved."
+    },
+    {
+      "id": "q23",
+      "query": "给飞书多维表格的附件字段上传一张图片",
+      "should_trigger": false,
+      "clause": "插入或下载图片附件素材",
+      "note": "Attachment field inside a Base is Base data, outside this skill."
+    },
+    {
+      "id": "q24",
+      "query": "用 Python 画一个思维导图的 PNG,节点是项目里的各个模块",
+      "should_trigger": false,
+      "clause": "操作思维笔记",
+      "note": "Generating a local mind-map image with code, not a Lark mindnote."
+    },
+    {
+      "id": "q25",
+      "query": "export my Obsidian vault notes to a markdown outline I can paste into XMind",
+      "should_trigger": false,
+      "clause": "操作思维笔记",
+      "note": "Local notes and XMind formatting; no Lark mindnote involved."
+    },
+    {
+      "id": "q26",
+      "query": "这个妙搭应用链接 https://xxx.feishu.cn/page/abc123 帮我看下页面里有什么",
+      "should_trigger": false,
+      "clause": "用户提供文档 URL/token 时(含 doubao.com /docx/ /wiki/)",
+      "note": "A /page/<token> link is a Miaoda app, not a Feishu cloud doc, so the skill excludes it despite the feishu domain."
+    }
+  ],
+  "clauses": [
+    "读取/创建/编辑飞书文档内容",
+    "插入或下载图片附件素材",
+    "操作思维笔记",
+    "用户提供文档 URL/token 时(含 doubao.com /docx/ /wiki/)"
+  ]
+}

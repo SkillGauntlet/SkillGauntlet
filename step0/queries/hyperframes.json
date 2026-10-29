@@ -1,0 +1,128 @@
+{
+  "skill": "hyperframes",
+  "skill_md_sha256": "180ce4eea5f33f1617105c92e2690a5a2320abf624c263186ec0cb1a78a919ef",
+  "reviewed": false,
+  "review_notes": "Human review: drop queries that copy the description; make sure negatives are near misses rather than unrelated tasks; set reviewed to true when done.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "帮我做个30秒的产品发布片，用 D:/test/promo/index.html 那个工程，节奏快点，最后出个 mp4",
+      "should_trigger": true,
+      "note": "Launch film built in an existing HyperFrames project and rendered to video, which the skill's launch-film type covers."
+    },
+    {
+      "id": "q02",
+      "query": "the title card at 0:02 in intro.html clips on the left edge, fix it then re-render",
+      "should_trigger": true,
+      "note": "Editing a title card in an HTML-based video composition and re-rendering it, which is the skill's edit-and-render loop."
+    },
+    {
+      "id": "q03",
+      "query": "做一个讲 RAG 原理的一分钟解说动画，要带字幕，文件放 ./explainer-rag",
+      "should_trigger": true,
+      "note": "Explainer video with captions, a named video type the skill's file-type table routes to its explainer reference."
+    },
+    {
+      "id": "q04",
+      "query": "vertical 9:16 clip for tiktok about our new cold brew, captions burned in, 15s pls",
+      "should_trigger": true,
+      "note": "Vertical social clip with captions, matching the skill's vertical-clip and caption guidance."
+    },
+    {
+      "id": "q05",
+      "query": "把 sales_q3.csv 的季度营收做成动态柱状图视频，柱子依次长出来",
+      "should_trigger": true,
+      "note": "Animated chart video from data, which falls under the skill's chart/numbers video type."
+    },
+    {
+      "id": "q06",
+      "query": "animate the route lines on a map of our 4 warehouses shanghai to rotterdam, output 1080p",
+      "should_trigger": true,
+      "note": "Animated map video with motion on route lines, which the skill's map/place film guidance covers."
+    },
+    {
+      "id": "q07",
+      "query": "给 song.mp3 做个音乐MV，歌词卡点进出，画面用 HTML 动效",
+      "should_trigger": true,
+      "note": "Music video with lyric-synced HTML motion, a named video type in the skill."
+    },
+    {
+      "id": "q08",
+      "query": "add lower-third name/title overlays on interview.mp4 for the 3 guests",
+      "should_trigger": true,
+      "note": "Overlay cards over a talking-head clip, which the skill's overlays reference addresses."
+    },
+    {
+      "id": "q09",
+      "query": "给 timeline 里的 scene3 加一段 kinetic type 字幕动画，然后渲染成 mp4",
+      "should_trigger": true,
+      "note": "Adds kinetic type to an existing scene and renders, touching the skill's kinetic-type and render steps."
+    },
+    {
+      "id": "q10",
+      "query": "make an animated explainer of how DNS resolution works, no voiceover, 1920x1080",
+      "should_trigger": true,
+      "note": "New explainer video at the default 1920x1080 with no voiceover, a standard video-making request for this skill."
+    },
+    {
+      "id": "q11",
+      "query": "把 src/Intro.tsx 这个 Remotion 组件转成 HyperFrames 能跑的格式",
+      "should_trigger": false,
+      "note": "[kept: borderline] Remotion conversion belongs to the sibling remotion-to-hyperframes, but this skill's description says \"Read first to ... any video\", so triggering may be legitimate"
+    },
+    {
+      "id": "q12",
+      "query": "Turn this 12-slide outline in notes.md into a pitch deck pptx for investors",
+      "should_trigger": false,
+      "note": "Near miss: slide decks are owned by the sibling /slideshow skill, not video rendering."
+    },
+    {
+      "id": "q13",
+      "query": "把 Figma 里 landing hero 那一帧导出成 SVG 放到 public 文件夹",
+      "should_trigger": false,
+      "note": "Near miss: Figma export is owned by the sibling /figma skill and produces a static SVG, not a video."
+    },
+    {
+      "id": "q14",
+      "query": "ffmpeg compress raw_take2.mov to 720p h264 under 50MB, keep audio as is",
+      "should_trigger": false,
+      "note": "Near miss: plain transcoding with ffmpeg, a different job from authoring an HTML-rendered video."
+    },
+    {
+      "id": "q15",
+      "query": "帮我用 CSS transition 把登录页按钮的 hover 效果写好，别用视频",
+      "should_trigger": false,
+      "note": "Near miss: web UI micro-animation in CSS, explicitly not a video and not a HyperFrames render."
+    },
+    {
+      "id": "q16",
+      "query": "Record my screen while I click through the checkout flow and save a webm",
+      "should_trigger": false,
+      "note": "Near miss: a plain browser/screen recording, which the skill says to skip when a plain recording is asked for."
+    },
+    {
+      "id": "q17",
+      "query": "把这个 hyperframes skill 升级到最新版，并更新 CLI 的固定版本",
+      "should_trigger": false,
+      "note": "[kept: borderline] Upgrading the CLI belongs to the sibling hyperframes-cli; triggering may be legitimate"
+    },
+    {
+      "id": "q18",
+      "query": "Use whisper to transcribe lecture.mp4 into an srt file, just text, no visuals",
+      "should_trigger": false,
+      "note": "Near miss: speech-to-text transcription produces an SRT file only, not captioned video design."
+    },
+    {
+      "id": "q19",
+      "query": "Write a Manim script that animates the quadratic formula derivation",
+      "should_trigger": false,
+      "note": "Near miss: the user names a different animation framework (Manim), and the skill applies only when another framework is not requested."
+    },
+    {
+      "id": "q20",
+      "query": "用 matplotlib 画季度营收柱状图，输出一张 png 给报告用",
+      "should_trigger": false,
+      "note": "Near miss: a static chart image via matplotlib, the same data domain but not a video."
+    }
+  ]
+}

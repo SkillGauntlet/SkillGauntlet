@@ -1,0 +1,225 @@
+{
+  "skill": "xlsx",
+  "skill_md_sha256": "111e06521941d60feea6c160d9f67a0b9b95a383d3db0b4c95e65937eb12fb5a",
+  "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28",
+  "review": "none: AI-drafted. The method tests each skill with two or more independently drafted sets and reports the spread between them instead of reviewing each set by hand.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "open budget_2025.xlsx and add a column that computes the monthly variance vs plan, then bold the header row",
+      "should_trigger": true,
+      "clause": "Open/edit/fix existing spreadsheet file",
+      "note": "Editing an existing xlsx by adding a formula column and formatting."
+    },
+    {
+      "id": "q02",
+      "query": "我的 sales_report.xlsx 里 D 列的求和公式报 #REF! 了,帮我修好",
+      "should_trigger": true,
+      "clause": "Open/edit/fix existing spreadsheet file",
+      "note": "Fixing broken formulas in an existing workbook."
+    },
+    {
+      "id": "q03",
+      "query": "在 inventory.xlsm 的 Summary 表后面加一个柱状图,按仓库统计库存数量,别把宏弄丢了",
+      "should_trigger": true,
+      "clause": "Open/edit/fix existing spreadsheet file",
+      "note": "Adding a chart to an existing macro-enabled workbook, keeping VBA."
+    },
+    {
+      "id": "q04",
+      "query": "pls read through forecast_model.xlsx and change the growth assumption in the inputs tab to 8%, make sure everything still recalcs w/o errors",
+      "should_trigger": true,
+      "clause": "Open/edit/fix existing spreadsheet file",
+      "note": "Modifying input cells in an existing model and verifying recalculation."
+    },
+    {
+      "id": "q05",
+      "query": "帮我从零做一个2025年家庭月度预算表,要有收入、支出分类、每月结余自动计算,导出成xlsx",
+      "should_trigger": true,
+      "clause": "Create new spreadsheet from scratch or data sources",
+      "note": "Creating a new workbook from scratch with formulas."
+    },
+    {
+      "id": "q06",
+      "query": "make me a new excel workbook for tracking freelance invoices - client, amount, due date, paid status, with a total outstanding cell at the bottom",
+      "should_trigger": true,
+      "clause": "Create new spreadsheet from scratch or data sources",
+      "note": "New tracker workbook from scratch."
+    },
+    {
+      "id": "q07",
+      "query": "把这段 JSON 接口返回的订单数据整理成一个 orders_summary.xlsx,按月份分 sheet,每个 sheet 底部加合计",
+      "should_trigger": true,
+      "clause": "Create new spreadsheet from scratch or data sources",
+      "note": "Building a spreadsheet from another data source (JSON) with per-sheet totals."
+    },
+    {
+      "id": "q08",
+      "query": "build a 3-statement DCF model skeleton in excel for a SaaS company, blue inputs, black formulas, 5 yr projection",
+      "should_trigger": true,
+      "clause": "Create new spreadsheet from scratch or data sources",
+      "note": "Creating a new financial model workbook."
+    },
+    {
+      "id": "q09",
+      "query": "把 customers.csv 转成 xlsx,表头加粗并冻结首行",
+      "should_trigger": true,
+      "clause": "Convert between tabular file formats",
+      "note": "CSV to xlsx conversion with light formatting."
+    },
+    {
+      "id": "q10",
+      "query": "convert report_q3.xlsx to csv, one file per sheet pls",
+      "should_trigger": true,
+      "clause": "Convert between tabular file formats",
+      "note": "xlsx to csv conversion per sheet."
+    },
+    {
+      "id": "q11",
+      "query": "我有个 data.tsv,想变成 Excel 文件,日期列要保持成日期格式不要变成数字",
+      "should_trigger": true,
+      "clause": "Convert between tabular file formats",
+      "note": "TSV to xlsx conversion preserving date types."
+    },
+    {
+      "id": "q12",
+      "query": "turn old_ledger.xlsm into a plain .xlsx without the macros, keep all the sheets",
+      "should_trigger": true,
+      "clause": "Convert between tabular file formats",
+      "note": "Converting xlsm to xlsx."
+    },
+    {
+      "id": "q13",
+      "query": "the xlsx in my downloads, can you sum up the revenue column and put the total at the bottom",
+      "should_trigger": true,
+      "clause": "Spreadsheet referenced by name/path casually",
+      "note": "Casual reference to a spreadsheet in Downloads with an edit request."
+    },
+    {
+      "id": "q14",
+      "query": "桌面上那个叫“考勤.xlsx”的表,帮我算一下每个人的迟到次数,加在最后一列",
+      "should_trigger": true,
+      "clause": "Spreadsheet referenced by name/path casually",
+      "note": "Casual Chinese reference to a desktop file, asking to add computed column."
+    },
+    {
+      "id": "q15",
+      "query": "that excel file Sarah sent me yesterday (its in D:\\work\\tmp), make the dates look like YYYY-MM-DD and sort by date",
+      "should_trigger": true,
+      "clause": "Spreadsheet referenced by name/path casually",
+      "note": "Vague reference to a file with a path, wanting changes made."
+    },
+    {
+      "id": "q16",
+      "query": "我下载文件夹里最新那个csv,帮我按部门做个汇总表出来",
+      "should_trigger": true,
+      "clause": "Spreadsheet referenced by name/path casually",
+      "note": "Casual reference to the latest csv in downloads, asking for a summary table."
+    },
+    {
+      "id": "q17",
+      "query": "this export.csv is a mess - header is on row 4, there are blank rows and some junk footer lines. clean it up into a proper xlsx",
+      "should_trigger": true,
+      "clause": "Clean/restructure messy tabular data into spreadsheet",
+      "note": "Misplaced headers and junk rows cleaned into a proper spreadsheet."
+    },
+    {
+      "id": "q18",
+      "query": "这个 raw_dump.txt 是制表符分隔的,有些行列数对不上,还有重复表头混在中间,帮我整理成规整的 Excel 表",
+      "should_trigger": true,
+      "clause": "Clean/restructure messy tabular data into spreadsheet",
+      "note": "Malformed rows and repeated headers restructured into an Excel file."
+    },
+    {
+      "id": "q19",
+      "query": "messy_contacts.xlsx has names and phones all jammed in column A separated by random stuff, split into proper columns and dedupe, save as new clean xlsx",
+      "should_trigger": true,
+      "clause": "Clean/restructure messy tabular data into spreadsheet",
+      "note": "Restructuring jumbled data into proper columns in a spreadsheet."
+    },
+    {
+      "id": "q20",
+      "query": "我从系统里导出的销售明细,合并单元格一堆,空行乱七八糟,帮我拍平成一张标准的明细表(xlsx)",
+      "should_trigger": true,
+      "clause": "Clean/restructure messy tabular data into spreadsheet",
+      "note": "Flattening merged cells and blank rows into a standard spreadsheet."
+    },
+    {
+      "id": "q21",
+      "query": "write a Python script that reads sales.xlsx and prints the top 10 customers; I only need the script, not a modified file",
+      "should_trigger": false,
+      "clause": "Open/edit/fix existing spreadsheet file",
+      "note": "Deliverable is a standalone Python script, not a spreadsheet."
+    },
+    {
+      "id": "q22",
+      "query": "把 budget_2025.xlsx 里的数据分析一下,写成一份 Word 报告,包含趋势结论",
+      "should_trigger": false,
+      "clause": "Open/edit/fix existing spreadsheet file",
+      "note": "Spreadsheet is input but the deliverable is a Word document."
+    },
+    {
+      "id": "q23",
+      "query": "我想用 Excel 做数据透视表,能给我讲讲原理和怎么手动操作吗?不用动我的文件",
+      "should_trigger": false,
+      "clause": "Create new spreadsheet from scratch or data sources",
+      "note": "Conceptual explanation request; no spreadsheet file produced."
+    },
+    {
+      "id": "q24",
+      "query": "write a script that pulls rows from our Google Sheet via the Sheets API and appends a new row every hour",
+      "should_trigger": false,
+      "clause": "Create new spreadsheet from scratch or data sources",
+      "note": "Google Sheets API integration is explicitly excluded."
+    },
+    {
+      "id": "q25",
+      "query": "把 customers.csv 导入到 PostgreSQL 的 customers 表里,写个导入脚本和建表语句",
+      "should_trigger": false,
+      "clause": "Convert between tabular file formats",
+      "note": "Database pipeline rather than a spreadsheet file deliverable."
+    },
+    {
+      "id": "q26",
+      "query": "convert this csv into an HTML table report I can embed on my website, with sortable columns",
+      "should_trigger": false,
+      "clause": "Convert between tabular file formats",
+      "note": "Deliverable is an HTML report, not a spreadsheet."
+    },
+    {
+      "id": "q27",
+      "query": "the docx in my downloads folder, fix the table formatting and make the headings consistent",
+      "should_trigger": false,
+      "clause": "Spreadsheet referenced by name/path casually",
+      "note": "Casual file reference but it is a Word document, not a spreadsheet."
+    },
+    {
+      "id": "q28",
+      "query": "桌面上的 PDF 发票里有一张表格,帮我把内容读出来贴给我看一下就行",
+      "should_trigger": false,
+      "clause": "Spreadsheet referenced by name/path casually",
+      "note": "Casual file reference but a PDF, and no spreadsheet deliverable."
+    },
+    {
+      "id": "q29",
+      "query": "clean up the messy variable names and dead code in my data_cleaning.py script",
+      "should_trigger": false,
+      "clause": "Clean/restructure messy tabular data into spreadsheet",
+      "note": "Cleaning is about code, not tabular data into a spreadsheet."
+    },
+    {
+      "id": "q30",
+      "query": "我们数据库里的用户表有重复记录,写一段SQL帮我去重并加唯一索引",
+      "should_trigger": false,
+      "clause": "Clean/restructure messy tabular data into spreadsheet",
+      "note": "Deduplicating in a database via SQL; a database task, not a spreadsheet deliverable."
+    }
+  ],
+  "clauses": [
+    "Open/edit/fix existing spreadsheet file",
+    "Create new spreadsheet from scratch or data sources",
+    "Convert between tabular file formats",
+    "Spreadsheet referenced by name/path casually",
+    "Clean/restructure messy tabular data into spreadsheet"
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "skill": "prototype",
+  "skill_md_sha256": "f74ae01f4fc454d3a4ef21271920f1706e626271e715dda0559e489f45c792c3",
+  "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28",
+  "review": "none: AI-drafted. The method tests each skill with two or more independently drafted sets and reports the spread between them instead of reviewing each set by hand.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "我设计了一个订单状态机（待支付→已支付→发货→退款），不确定退款中再取消这种边界情况合不合理，帮我做个能点着玩的小demo验证一下",
+      "should_trigger": true,
+      "clause": "Sanity-check a state model or logic",
+      "note": "Asks for a throwaway interactive demo to check whether an order state machine feels right, including tricky edge cases."
+    },
+    {
+      "id": "q02",
+      "query": "can you throw together something I can click through to see if my subscription lifecycle (trial -> active -> past_due -> canceled) makes sense? my PM isn't technical so it should just open in a browser",
+      "should_trigger": true,
+      "clause": "Sanity-check a state model or logic",
+      "note": "Non-developer-drivable single-file logic demo for a state model, matching the logic branch."
+    },
+    {
+      "id": "q03",
+      "query": "购物车的优惠券叠加规则我老觉得哪里不对，写个临时的小东西把各种组合都跑一遍，让我直观看看逻辑对不对",
+      "should_trigger": true,
+      "clause": "Sanity-check a state model or logic",
+      "note": "Wants a throwaway tool to push coupon-stacking logic through combinations to see if it feels right."
+    },
+    {
+      "id": "q04",
+      "query": "quick proto pls: i want to poke at the retry/backoff state logic in src/queue/worker.ts before i commit to it. does the model even hold up when a job fails mid-retry? dont need tests just something to play with",
+      "should_trigger": true,
+      "clause": "Sanity-check a state model or logic",
+      "note": "Throwaway exploration of a backend state model's soundness; explicitly no tests, just play."
+    },
+    {
+      "id": "q05",
+      "query": "我们的设置页现在很丑，帮我出几个完全不同风格的设计方案，在同一个页面上能切换着对比看看",
+      "should_trigger": true,
+      "clause": "Explore what a UI should look like",
+      "note": "Wants several radically different UI variations switchable on one page."
+    },
+    {
+      "id": "q06",
+      "query": "not sure what the dashboard should look like. can you mock up like 3 different layouts in app/dashboard/page.tsx so i can flip between them and pick one",
+      "should_trigger": true,
+      "clause": "Explore what a UI should look like",
+      "note": "Multiple switchable layout variations on one route, to decide appearance."
+    },
+    {
+      "id": "q07",
+      "query": "想看看用户资料卡片到底长什么样好，随便做几版不一样的出来我挑挑，不用太精致",
+      "should_trigger": true,
+      "clause": "Explore what a UI should look like",
+      "note": "Casual request for several throwaway visual variants of a component to choose from."
+    },
+    {
+      "id": "q08",
+      "query": "i need to figure out how the onboarding flow should look, give me a few wildly different takes i can toggle between with a url param, nothing production ready",
+      "should_trigger": true,
+      "clause": "Explore what a UI should look like",
+      "note": "Explicit exploratory UI variants with toggling; throwaway nature stated."
+    },
+    {
+      "id": "q09",
+      "query": "帮我给 orderMachine.ts 里的状态转换写单元测试，覆盖所有合法和非法的迁移",
+      "should_trigger": false,
+      "clause": "Sanity-check a state model or logic",
+      "note": "Same state-machine domain but the job is writing production unit tests, not a throwaway prototype."
+    },
+    {
+      "id": "q10",
+      "query": "review my reducer in store/cartReducer.ts and tell me if there are any bugs in the transition logic",
+      "should_trigger": false,
+      "clause": "Sanity-check a state model or logic",
+      "note": "Code review of existing logic; not building an interactive prototype."
+    },
+    {
+      "id": "q11",
+      "query": "把 XState 的状态图画成 mermaid 文档，放到 docs/ 里面",
+      "should_trigger": false,
+      "clause": "Sanity-check a state model or logic",
+      "note": "Documentation of a state model, not validating it via a prototype."
+    },
+    {
+      "id": "q12",
+      "query": "refactor the subscription state handling in billing.py to use an enum instead of string literals",
+      "should_trigger": false,
+      "clause": "Sanity-check a state model or logic",
+      "note": "Production refactor sharing the state-model vocabulary; not a design-question prototype."
+    },
+    {
+      "id": "q13",
+      "query": "the state machine in checkout keeps ending up in a weird state in production, help me debug why the 'paid' event fires twice",
+      "should_trigger": false,
+      "clause": "Sanity-check a state model or logic",
+      "note": "Debugging a real bug, which a diagnosing-bugs style skill would own."
+    },
+    {
+      "id": "q14",
+      "query": "把登录页按照我们 Figma 设计稿实现出来，用 Tailwind，颜色和间距要和设计稿一致",
+      "should_trigger": false,
+      "clause": "Explore what a UI should look like",
+      "note": "Implementing a finalized design is production UI work, not exploring options."
+    },
+    {
+      "id": "q15",
+      "query": "fix the button alignment on the pricing page, it's overflowing on mobile in components/PricingCard.tsx",
+      "should_trigger": false,
+      "clause": "Explore what a UI should look like",
+      "note": "A concrete CSS bug fix in an existing UI, not design exploration."
+    },
+    {
+      "id": "q16",
+      "query": "给 Header 组件加上暗色模式支持，要接入现有的 theme provider",
+      "should_trigger": false,
+      "clause": "Explore what a UI should look like",
+      "note": "Production feature work on a UI component with a decided design."
+    },
+    {
+      "id": "q17",
+      "query": "what are good color palettes for a fintech brand? just give me a few hex suggestions in text",
+      "should_trigger": false,
+      "clause": "Explore what a UI should look like",
+      "note": "Design advice in plain text; no prototype with switchable UI variants is wanted."
+    }
+  ],
+  "clauses": [
+    "Sanity-check a state model or logic",
+    "Explore what a UI should look like"
+  ]
+}

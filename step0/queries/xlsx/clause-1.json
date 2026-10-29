@@ -1,0 +1,225 @@
+{
+  "skill": "xlsx",
+  "skill_md_sha256": "111e06521941d60feea6c160d9f67a0b9b95a383d3db0b4c95e65937eb12fb5a",
+  "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28",
+  "review": "none: AI-drafted. The method tests each skill with two or more independently drafted sets and reports the spread between them instead of reviewing each set by hand.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "open sales_2025.xlsx and add a column that computes profit margin = (revenue-cost)/revenue, then bold the header row",
+      "should_trigger": true,
+      "clause": "Open/edit/fix existing spreadsheet file",
+      "note": "Edit existing xlsx adding formula column and formatting"
+    },
+    {
+      "id": "q02",
+      "query": "帮我把 budget.xlsx 里 Summary 表的 B10 合计公式修一下,现在显示 #REF!",
+      "should_trigger": true,
+      "clause": "Open/edit/fix existing spreadsheet file",
+      "note": "Fix broken formula in existing xlsx"
+    },
+    {
+      "id": "q03",
+      "query": "read inventory.xlsm and give me a bar chart of stock by warehouse inside the workbook, keep the macros pls",
+      "should_trigger": true,
+      "clause": "Open/edit/fix existing spreadsheet file",
+      "note": "Chart in existing xlsm with macros preserved"
+    },
+    {
+      "id": "q04",
+      "query": "把 D:\\data\\员工考勤.xlsx 的日期列统一格式成 yyyy-mm-dd,表头加粗加底色",
+      "should_trigger": true,
+      "clause": "Open/edit/fix existing spreadsheet file",
+      "note": "Format existing xlsx by path"
+    },
+    {
+      "id": "q05",
+      "query": "build me a monthly budget spreadsheet from scratch with income, expenses, and a savings rate formula, save as budget_2026.xlsx",
+      "should_trigger": true,
+      "clause": "Create new spreadsheet from scratch or data sources",
+      "note": "Create new xlsx from scratch"
+    },
+    {
+      "id": "q06",
+      "query": "帮我做一个项目排期表 xlsx,列有任务、负责人、开始日期、结束日期、状态,带一行示例数据",
+      "should_trigger": true,
+      "clause": "Create new spreadsheet from scratch or data sources",
+      "note": "New template workbook in Chinese"
+    },
+    {
+      "id": "q07",
+      "query": "take the numbers in this JSON api_dump.json and turn them into an excel file with one sheet per region",
+      "should_trigger": true,
+      "clause": "Create new spreadsheet from scratch or data sources",
+      "note": "Create xlsx from other data source"
+    },
+    {
+      "id": "q08",
+      "query": "用这三个 csv 的数据生成一个汇总的 Excel 报表,每个 csv 一个 sheet,最后加一个合计页",
+      "should_trigger": true,
+      "clause": "Create new spreadsheet from scratch or data sources",
+      "note": "Build xlsx from multiple CSVs"
+    },
+    {
+      "id": "q09",
+      "query": "convert customers.csv to xlsx please",
+      "should_trigger": true,
+      "clause": "Convert between tabular file formats",
+      "note": "csv to xlsx"
+    },
+    {
+      "id": "q10",
+      "query": "把 report.xlsx 导出成 tsv,只要第一个 sheet",
+      "should_trigger": true,
+      "clause": "Convert between tabular file formats",
+      "note": "xlsx to tsv"
+    },
+    {
+      "id": "q11",
+      "query": "turn orders.xlsx into a csv with utf-8 encoding, one file per sheet",
+      "should_trigger": true,
+      "clause": "Convert between tabular file formats",
+      "note": "xlsx to multiple csv"
+    },
+    {
+      "id": "q12",
+      "query": "tsv 转成 xlsx,文件是 genes_list.tsv,第一行当表头冻结",
+      "should_trigger": true,
+      "clause": "Convert between tabular file formats",
+      "note": "tsv to xlsx with freeze pane"
+    },
+    {
+      "id": "q13",
+      "query": "the xlsx in my downloads, can you sum up the totals column and put it at the bottom?",
+      "should_trigger": true,
+      "clause": "Spreadsheet referenced by name/path casually",
+      "note": "Casual reference to file, add total"
+    },
+    {
+      "id": "q14",
+      "query": "我桌面上那个报价单表格,帮我把税率那列改成 13% 然后重新算总价",
+      "should_trigger": true,
+      "clause": "Spreadsheet referenced by name/path casually",
+      "note": "Casual Chinese reference, recompute"
+    },
+    {
+      "id": "q15",
+      "query": "that excel file called Q3 forecast on my desktop - add a new tab w/ a pivot-like summary by product",
+      "should_trigger": true,
+      "clause": "Spreadsheet referenced by name/path casually",
+      "note": "Casual reference, add summary tab"
+    },
+    {
+      "id": "q16",
+      "query": "下载文件夹里最新那个 xlsx,把重复行删掉再按金额从大到小排",
+      "should_trigger": true,
+      "clause": "Spreadsheet referenced by name/path casually",
+      "note": "Casual reference, dedupe and sort"
+    },
+    {
+      "id": "q17",
+      "query": "this export.csv is a mess: header is on row 4, some rows have extra commas, junk footer lines. clean it up into a proper xlsx",
+      "should_trigger": true,
+      "clause": "Clean/restructure messy tabular data into spreadsheet",
+      "note": "Messy CSV to clean xlsx"
+    },
+    {
+      "id": "q18",
+      "query": "raw_data.csv 里有很多乱码行、空行,表头位置也不对,帮我整理成规范的 Excel 表",
+      "should_trigger": true,
+      "clause": "Clean/restructure messy tabular data into spreadsheet",
+      "note": "Chinese messy csv cleanup"
+    },
+    {
+      "id": "q19",
+      "query": "I pasted scraped stuff into scrape.tsv, columns are shifted and some cells have html junk. restructure it into a clean spreadsheet",
+      "should_trigger": true,
+      "clause": "Clean/restructure messy tabular data into spreadsheet",
+      "note": "Messy tsv restructure"
+    },
+    {
+      "id": "q20",
+      "query": "老系统导出的 data.xls 格式很乱,合并单元格一堆,拆开整理成一张干净的 xlsx",
+      "should_trigger": true,
+      "clause": "Clean/restructure messy tabular data into spreadsheet",
+      "note": "Messy export to clean xlsx"
+    },
+    {
+      "id": "q21",
+      "query": "write a Word report summarizing the numbers in sales_2025.xlsx with a few paragraphs of analysis",
+      "should_trigger": false,
+      "clause": "Open/edit/fix existing spreadsheet file",
+      "note": "Deliverable is a Word doc"
+    },
+    {
+      "id": "q22",
+      "query": "写一个 Python 脚本,读取 sales.xlsx 并打印每个月的平均值,脚本我要自己以后跑",
+      "should_trigger": false,
+      "clause": "Open/edit/fix existing spreadsheet file",
+      "note": "Deliverable is a standalone script"
+    },
+    {
+      "id": "q23",
+      "query": "use the Google Sheets API to append a row to my sheet with ID 1AbC...",
+      "should_trigger": false,
+      "clause": "Open/edit/fix existing spreadsheet file",
+      "note": "Google Sheets API integration excluded"
+    },
+    {
+      "id": "q24",
+      "query": "做一个 HTML 页面展示销售数据的图表,数据在 sales.xlsx 里",
+      "should_trigger": false,
+      "clause": "Create new spreadsheet from scratch or data sources",
+      "note": "HTML deliverable"
+    },
+    {
+      "id": "q25",
+      "query": "design a Postgres schema and ETL pipeline to load our monthly budget data into a warehouse",
+      "should_trigger": false,
+      "clause": "Create new spreadsheet from scratch or data sources",
+      "note": "Database pipeline"
+    },
+    {
+      "id": "q26",
+      "query": "把 customers.csv 导入 MySQL 数据库,建表并写入数据",
+      "should_trigger": false,
+      "clause": "Convert between tabular file formats",
+      "note": "Database import, not file conversion"
+    },
+    {
+      "id": "q27",
+      "query": "convert this PDF contract to a Word docx",
+      "should_trigger": false,
+      "clause": "Convert between tabular file formats",
+      "note": "Non-tabular conversion, Word output"
+    },
+    {
+      "id": "q28",
+      "query": "explain how VLOOKUP differs from INDEX MATCH in Excel, no file involved",
+      "should_trigger": false,
+      "clause": "Spreadsheet referenced by name/path casually",
+      "note": "Conceptual question, no file"
+    },
+    {
+      "id": "q29",
+      "query": "写个 pandas 脚本清洗 raw_data.csv 里的异常行,输出 clean_data.py 就行",
+      "should_trigger": false,
+      "clause": "Clean/restructure messy tabular data into spreadsheet",
+      "note": "Deliverable is a Python script"
+    },
+    {
+      "id": "q30",
+      "query": "clean up the messy rows in my Postgres users table with a SQL migration",
+      "should_trigger": false,
+      "clause": "Clean/restructure messy tabular data into spreadsheet",
+      "note": "Database cleaning, not spreadsheet file"
+    }
+  ],
+  "clauses": [
+    "Open/edit/fix existing spreadsheet file",
+    "Create new spreadsheet from scratch or data sources",
+    "Convert between tabular file formats",
+    "Spreadsheet referenced by name/path casually",
+    "Clean/restructure messy tabular data into spreadsheet"
+  ]
+}

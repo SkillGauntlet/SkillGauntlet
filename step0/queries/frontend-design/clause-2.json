@@ -1,0 +1,225 @@
+{
+  "skill": "frontend-design",
+  "skill_md_sha256": "b8009ae690dfa69edc7f08bb8715f32db8817112cfa4388741dbaf876c237df8",
+  "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28",
+  "review": "none: AI-drafted. The method tests each skill with two or more independently drafted sets and reports the spread between them instead of reviewing each set by hand.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "帮我从零做一个独立咖啡烘焙工坊的官网落地页,要有自己的视觉风格,别做成普通模板那种,先出 index.html",
+      "should_trigger": true,
+      "clause": "Building new UI with distinctive visual design",
+      "note": "Build a brand-new landing page with a distinctive look; no redesign, typography-only or anti-template framing."
+    },
+    {
+      "id": "q02",
+      "query": "build me a landing page for a small vinyl record shop in Lisbon, something with real character and a strong look, single html file is fine",
+      "should_trigger": true,
+      "clause": "Building new UI with distinctive visual design",
+      "note": "New page from scratch with emphasis on strong visual character."
+    },
+    {
+      "id": "q03",
+      "query": "做个给8到11岁女孩用的拼豆手工小程序首页,界面要有设计感,要贴合小朋友的世界,用 React 写",
+      "should_trigger": true,
+      "clause": "Building new UI with distinctive visual design",
+      "note": "New UI for a specific audience, design driven by subject matter."
+    },
+    {
+      "id": "q04",
+      "query": "need a dashboard for a marine biology lab tracking whale tagging data. new project, want it to look designed not like another admin panel. vue is ok",
+      "should_trigger": true,
+      "clause": "Building new UI with distinctive visual design",
+      "note": "Greenfield dashboard with distinctive design intent."
+    },
+    {
+      "id": "q05",
+      "query": "现在这个 pricing.html 太丑了,帮我整个重新设计一下视觉,结构可以大改,内容不变",
+      "should_trigger": true,
+      "clause": "Reshaping/redesigning an existing UI",
+      "note": "Redesign of an existing page, visual overhaul."
+    },
+    {
+      "id": "q06",
+      "query": "revamp the look of our settings page in src/pages/Settings.tsx, it feels dated. keep the features, change how it looks and is laid out",
+      "should_trigger": true,
+      "clause": "Reshaping/redesigning an existing UI",
+      "note": "Reshaping an existing page's visual and layout."
+    },
+    {
+      "id": "q07",
+      "query": "我们的 landing 首页 hero 区域想整体翻新,现在是左文右图的老样子,帮我重做成更有记忆点的版本",
+      "should_trigger": true,
+      "clause": "Reshaping/redesigning an existing UI",
+      "note": "Rework of an existing hero section."
+    },
+    {
+      "id": "q08",
+      "query": "can you give the old admin login screen a full visual refresh? current css is in login.css, nothing is sacred",
+      "should_trigger": true,
+      "clause": "Reshaping/redesigning an existing UI",
+      "note": "Visual refresh of an existing screen."
+    },
+    {
+      "id": "q09",
+      "query": "我在做一个独立游戏的宣传站,还没想好整体什么调性,你帮我定一个视觉方向,配色和氛围先给方案",
+      "should_trigger": true,
+      "clause": "Aesthetic direction and visual identity choices",
+      "note": "Asks for aesthetic direction and mood, palette plan."
+    },
+    {
+      "id": "q10",
+      "query": "what visual direction would suit a funeral-planning startup? don't want it to feel morbid or corporate. give me a palette and mood before any code",
+      "should_trigger": true,
+      "clause": "Aesthetic direction and visual identity choices",
+      "note": "Direction/palette proposal before building."
+    },
+    {
+      "id": "q11",
+      "query": "帮我给这个手作皮具品牌的网站定视觉识别,是偏复古工匠风还是现代极简?说说你的判断并给出色板",
+      "should_trigger": true,
+      "clause": "Aesthetic direction and visual identity choices",
+      "note": "Identity choice and a judgment call among directions."
+    },
+    {
+      "id": "q12",
+      "query": "i need a design concept for a climbing gym site, like what should it feel like, colors, overall vibe. just the plan for now",
+      "should_trigger": true,
+      "clause": "Aesthetic direction and visual identity choices",
+      "note": "Overall concept/vibe plan only."
+    },
+    {
+      "id": "q13",
+      "query": "这个博客的字体选啥好?正文是长文章,标题想有点个性,帮我挑两个字体搭配并定字号层级",
+      "should_trigger": true,
+      "clause": "Typography selection and type treatment",
+      "note": "Font pairing and type scale for a blog."
+    },
+    {
+      "id": "q14",
+      "query": "pick typefaces for my poetry magazine site. body text is long-form serif-ish, headings should feel like part of the design. also fix line length",
+      "should_trigger": true,
+      "clause": "Typography selection and type treatment",
+      "note": "Typeface selection, headline treatment, line length."
+    },
+    {
+      "id": "q15",
+      "query": "标题字想做成页面的主视觉,字重、字距、宽度这些帮我调出气势,文件是 hero.css",
+      "should_trigger": true,
+      "clause": "Typography selection and type treatment",
+      "note": "Type treatment as the visual element."
+    },
+    {
+      "id": "q16",
+      "query": "my type scale feels random, h1 h2 h3 p all kinda same. can u set up a proper scale and weights in tokens.css",
+      "should_trigger": true,
+      "clause": "Typography selection and type treatment",
+      "note": "Type scale and weights."
+    },
+    {
+      "id": "q17",
+      "query": "我让AI生成的页面总是米色背景加衬线大标题加陶土色点缀,一眼就看出是AI做的,帮我避开这种套路重新选配色和风格",
+      "should_trigger": true,
+      "clause": "Avoiding templated/default-looking design choices",
+      "note": "Explicit avoidance of AI-default cream/serif/terracotta look."
+    },
+    {
+      "id": "q18",
+      "query": "everything i generate ends up as identical rounded cards with soft grey shadows and a gradient blob. how do i make this look less like a template? app is in components/Features.jsx",
+      "should_trigger": true,
+      "clause": "Avoiding templated/default-looking design choices",
+      "note": "Escape the SaaS-card kit defaults."
+    },
+    {
+      "id": "q19",
+      "query": "别再给我每个标题上面加一行大写小标签,还有 01 02 03 编号,这些一看就是模板味,帮我把 About 区块改得更像人设计的",
+      "should_trigger": true,
+      "clause": "Avoiding templated/default-looking design choices",
+      "note": "Remove template chrome like eyebrow labels and numbering."
+    },
+    {
+      "id": "q20",
+      "query": "review my page for generic AI design tells (near-black bg + acid green accent, arrows on every button, fade-up on every section) and swap them for deliberate choices",
+      "should_trigger": true,
+      "clause": "Avoiding templated/default-looking design choices",
+      "note": "Audit and replace generic default tells."
+    },
+    {
+      "id": "q21",
+      "query": "用 Express 写一个用户注册登录的后端接口,带 JWT 和密码哈希",
+      "should_trigger": false,
+      "clause": "Building new UI with distinctive visual design",
+      "note": "Building something new but backend, no UI design."
+    },
+    {
+      "id": "q22",
+      "query": "write a React component for a sortable data table with pagination, just functional, I'll style it later with our company design system",
+      "should_trigger": false,
+      "clause": "Building new UI with distinctive visual design",
+      "note": "UI building but purely functional, no distinctive visual design."
+    },
+    {
+      "id": "q23",
+      "query": "把 Vue 2 项目的 Options API 组件全部迁移到 Vue 3 的 Composition API,UI 看起来保持完全一样",
+      "should_trigger": false,
+      "clause": "Reshaping/redesigning an existing UI",
+      "note": "Refactor of existing UI code with no visual change."
+    },
+    {
+      "id": "q24",
+      "query": "refactor the checkout form in Checkout.tsx to use react-hook-form, behavior and look should stay exactly the same",
+      "should_trigger": false,
+      "clause": "Reshaping/redesigning an existing UI",
+      "note": "Existing UI but code refactor, not redesign."
+    },
+    {
+      "id": "q25",
+      "query": "帮我给公司起个品牌名字和 slogan,要有记忆点,做餐饮连锁的",
+      "should_trigger": false,
+      "clause": "Aesthetic direction and visual identity choices",
+      "note": "Brand naming/copy, not visual identity."
+    },
+    {
+      "id": "q26",
+      "query": "design a logo for my bakery as an SVG, simple wheat icon, export at 512px",
+      "should_trigger": false,
+      "clause": "Aesthetic direction and visual identity choices",
+      "note": "Logo/illustration asset creation, not UI aesthetic direction."
+    },
+    {
+      "id": "q27",
+      "query": "PDF 导出的时候中文显示成方块,字体没嵌入,帮我排查一下 pdf 生成代码",
+      "should_trigger": false,
+      "clause": "Typography selection and type treatment",
+      "note": "Font rendering bug, not typography design choice."
+    },
+    {
+      "id": "q28",
+      "query": "how do I self-host Google Fonts with font-display swap to fix my Lighthouse CLS score?",
+      "should_trigger": false,
+      "clause": "Typography selection and type treatment",
+      "note": "Font loading performance, not selecting or treating type."
+    },
+    {
+      "id": "q29",
+      "query": "把 Tailwind 配置里的颜色 token 整理一下,重复的合并,命名统一成 semantic 风格,不改任何视觉效果",
+      "should_trigger": false,
+      "clause": "Avoiding templated/default-looking design choices",
+      "note": "Token cleanup refactor, no aesthetic change."
+    },
+    {
+      "id": "q30",
+      "query": "write unit tests for my landing page's signup form validation, there are templates in /tests/templates I want you to follow",
+      "should_trigger": false,
+      "clause": "Avoiding templated/default-looking design choices",
+      "note": "Shares 'template' vocabulary but is testing work."
+    }
+  ],
+  "clauses": [
+    "Building new UI with distinctive visual design",
+    "Reshaping/redesigning an existing UI",
+    "Aesthetic direction and visual identity choices",
+    "Typography selection and type treatment",
+    "Avoiding templated/default-looking design choices"
+  ]
+}

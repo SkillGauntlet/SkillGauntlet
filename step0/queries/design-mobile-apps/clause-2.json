@@ -1,0 +1,167 @@
+{
+  "skill": "design-mobile-apps",
+  "skill_md_sha256": "54b4606f4838da36f0eb799e0b8032fc02a3bb0d0c1290fb1002e578755836ac",
+  "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28",
+  "review": "none: AI-drafted. The method tests each skill with two or more independently drafted sets and reports the spread between them instead of reviewing each set by hand.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "帮我用 Sleek 设计一个健身打卡 app 的首页和训练详情页，风格要清爽一点，深色模式优先",
+      "should_trigger": true,
+      "clause": "Design mobile app screens with Sleek",
+      "note": "Asks to create new mobile app screens from a brief using Sleek."
+    },
+    {
+      "id": "q02",
+      "query": "use sleek to mock up onboarding screens for a meditation app, 3 screens, calm purple/blue vibe. show me screenshots when done",
+      "should_trigger": true,
+      "clause": "Design mobile app screens with Sleek",
+      "note": "New screen design generation plus screenshots, no existing project or code."
+    },
+    {
+      "id": "q03",
+      "query": "我想做个记账app，先用sleek出一套登录、账单列表、添加账单的界面稿看看效果",
+      "should_trigger": true,
+      "clause": "Design mobile app screens with Sleek",
+      "note": "Chinese brief for fresh screens designed in Sleek."
+    },
+    {
+      "id": "q04",
+      "query": "can you sleek-design a food delivery app home screen? reference something like doordash but cleaner, need it by the end of the call",
+      "should_trigger": true,
+      "clause": "Design mobile app screens with Sleek",
+      "note": "Design from brief with a reference style direction; casual phrasing."
+    },
+    {
+      "id": "q05",
+      "query": "我 sleek 里那个旅行app的项目，把详情页的主按钮改成圆角胶囊的橙色，再加一个收藏图标",
+      "should_trigger": true,
+      "clause": "Edit Sleek projects",
+      "note": "Modifying specific screen of an existing Sleek project via chat."
+    },
+    {
+      "id": "q06",
+      "query": "in my existing sleek project (id V1StGXR8Z5j) change the tab bar to 4 tabs and drop the settings screen",
+      "should_trigger": true,
+      "clause": "Edit Sleek projects",
+      "note": "Edits an existing project by id: tab bar and removing a screen."
+    },
+    {
+      "id": "q07",
+      "query": "sleek项目里的设置页太挤了，帮我调下间距，字号大一点，然后把旧的测试项目删掉",
+      "should_trigger": true,
+      "clause": "Edit Sleek projects",
+      "note": "Iterating on an existing project's screen and deleting an old project."
+    },
+    {
+      "id": "q08",
+      "query": "my sleek run seems stuck on the checkout screen revision, cancel it and retry with 'make the pay button sticky at bottom'",
+      "should_trigger": true,
+      "clause": "Edit Sleek projects",
+      "note": "Cancelling an active run and re-sending an edit to an existing project."
+    },
+    {
+      "id": "q09",
+      "query": "把 sleek 上做好的那个天气app设计用 React Native (expo) 实现出来，放到 src/screens 下面",
+      "should_trigger": true,
+      "clause": "Implement Sleek designs in React Native or HTML",
+      "note": "Convert an existing Sleek design into Expo/RN code."
+    },
+    {
+      "id": "q10",
+      "query": "pull the latest version of my sleek design and turn the home screen into plain html+css, single file index.html is fine",
+      "should_trigger": true,
+      "clause": "Implement Sleek designs in React Native or HTML",
+      "note": "Fetch Sleek HTML and produce HTML output."
+    },
+    {
+      "id": "q11",
+      "query": "sleek 里的登录页设计已经好了，帮我在 RN 里还原，按钮要能点、表单要有校验，别只是静态的",
+      "should_trigger": true,
+      "clause": "Implement Sleek designs in React Native or HTML",
+      "note": "Implement with working features and fidelity from a Sleek design."
+    },
+    {
+      "id": "q12",
+      "query": "implement this sleek project as an expo app, then compare your render vs the sleek screenshot and fix any spacing diffs",
+      "should_trigger": true,
+      "clause": "Implement Sleek designs in React Native or HTML",
+      "note": "Implementation with acceptance check against the Sleek render."
+    },
+    {
+      "id": "q13",
+      "query": "帮我用 Figma 设计一个电商app的商品详情页，要有组件库和 auto layout",
+      "should_trigger": false,
+      "clause": "Design mobile app screens with Sleek",
+      "note": "Mobile screen design but in Figma, a different tool."
+    },
+    {
+      "id": "q14",
+      "query": "design a landing page for my SaaS in Tailwind, desktop first, hero + pricing + footer",
+      "should_trigger": false,
+      "clause": "Design mobile app screens with Sleek",
+      "note": "Web landing page design, not mobile app screens and not Sleek; a frontend-design skill would own it."
+    },
+    {
+      "id": "q15",
+      "query": "给我写一份移动端记账app的产品需求文档，包含用户故事和页面清单",
+      "should_trigger": false,
+      "clause": "Design mobile app screens with Sleek",
+      "note": "Product requirements writing, not visual screen design."
+    },
+    {
+      "id": "q16",
+      "query": "我的 Sketch 项目里按钮颜色想统一改成品牌蓝，有什么批量办法吗",
+      "should_trigger": false,
+      "clause": "Edit Sleek projects",
+      "note": "Editing a design project but in Sketch, not Sleek."
+    },
+    {
+      "id": "q17",
+      "query": "edit my Notion project board: rename the 'Sleek redesign' column to 'Done' and move three cards over",
+      "should_trigger": false,
+      "clause": "Edit Sleek projects",
+      "note": "Mentions Sleek only as a card name; it is a Notion board edit."
+    },
+    {
+      "id": "q18",
+      "query": "my sleek api key got leaked in a commit, how do I scrub it from git history and rotate secrets in the repo?",
+      "should_trigger": false,
+      "clause": "Edit Sleek projects",
+      "note": "Git history and secret hygiene task, not editing a Sleek project."
+    },
+    {
+      "id": "q19",
+      "query": "把这个 Figma 导出的设计稿转成 React Native 代码，文件在 design/export.fig",
+      "should_trigger": false,
+      "clause": "Implement Sleek designs in React Native or HTML",
+      "note": "Implementing RN from a Figma file, not a Sleek design."
+    },
+    {
+      "id": "q20",
+      "query": "my React Native app crashes on android when FlatList renders 500 items, fix the perf in src/screens/Feed.tsx",
+      "should_trigger": false,
+      "clause": "Implement Sleek designs in React Native or HTML",
+      "note": "RN debugging/performance work with no Sleek design involved."
+    },
+    {
+      "id": "q21",
+      "query": "convert this bootstrap html page to a Next.js app router page with server components",
+      "should_trigger": false,
+      "clause": "Implement Sleek designs in React Native or HTML",
+      "note": "HTML to Next.js migration, no Sleek design and not RN/HTML output."
+    },
+    {
+      "id": "q22",
+      "query": "写个 Flutter 的底部导航栏组件，有四个tab，选中态带动画",
+      "should_trigger": false,
+      "clause": "Implement Sleek designs in React Native or HTML",
+      "note": "Native UI implementation in Flutter with no Sleek source design."
+    }
+  ],
+  "clauses": [
+    "Design mobile app screens with Sleek",
+    "Edit Sleek projects",
+    "Implement Sleek designs in React Native or HTML"
+  ]
+}

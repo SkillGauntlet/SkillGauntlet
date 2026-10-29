@@ -1,0 +1,196 @@
+{
+  "skill": "deploy-to-vercel",
+  "skill_md_sha256": "0df550ec39472fa202d752754fddf797b5b7a605cf63aaad06462aea577aa6a7",
+  "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28",
+  "review": "none: AI-drafted. The method tests each skill with two or more independently drafted sets and reports the spread between them instead of reviewing each set by hand.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "帮我把这个 Next.js 项目部署到 Vercel 上,代码在当前目录",
+      "should_trigger": true,
+      "clause": "Deploy my app/website to Vercel",
+      "note": "Explicit request to deploy a Next.js app to Vercel."
+    },
+    {
+      "id": "q02",
+      "query": "deploy my portfolio site to vercel, its just static html in ./public",
+      "should_trigger": true,
+      "clause": "Deploy my app/website to Vercel",
+      "note": "Casual English request to deploy a static website to Vercel."
+    },
+    {
+      "id": "q03",
+      "query": "我写了个 Vite + React 的小工具,想放到 vercel 上,你帮我部署一下",
+      "should_trigger": true,
+      "clause": "Deploy my app/website to Vercel",
+      "note": "Chinese request to deploy a Vite app to Vercel."
+    },
+    {
+      "id": "q04",
+      "query": "can u deploy this astro blog to vercel? never used it before",
+      "should_trigger": true,
+      "clause": "Deploy my app/website to Vercel",
+      "note": "Beginner asks to deploy an Astro site to Vercel."
+    },
+    {
+      "id": "q05",
+      "query": "部署一下,完事把链接发我",
+      "should_trigger": true,
+      "clause": "Deploy and give me the link",
+      "note": "Deploy and return the URL, no platform named."
+    },
+    {
+      "id": "q06",
+      "query": "deploy this and send me the link so I can show my cofounder",
+      "should_trigger": true,
+      "clause": "Deploy and give me the link",
+      "note": "Deploy and return a shareable link."
+    },
+    {
+      "id": "q07",
+      "query": "帮我部署这个 demo,要一个能直接打开的网址给客户看",
+      "should_trigger": true,
+      "clause": "Deploy and give me the link",
+      "note": "Wants a deployed URL to show a client."
+    },
+    {
+      "id": "q08",
+      "query": "ship it and gimme the url pls",
+      "should_trigger": true,
+      "clause": "Deploy and give me the link",
+      "note": "Terse request to deploy and return the URL."
+    },
+    {
+      "id": "q09",
+      "query": "ok looks good, push this live",
+      "should_trigger": true,
+      "clause": "Push this live",
+      "note": "Direct 'push live' phrasing."
+    },
+    {
+      "id": "q10",
+      "query": "把这个站点上线吧,我想让别人能访问",
+      "should_trigger": true,
+      "clause": "Push this live",
+      "note": "Chinese request to put the site online."
+    },
+    {
+      "id": "q11",
+      "query": "pls make this site live, the landing page in /web is done",
+      "should_trigger": true,
+      "clause": "Push this live",
+      "note": "Make the finished landing page live."
+    },
+    {
+      "id": "q12",
+      "query": "项目搞完了,直接上线",
+      "should_trigger": true,
+      "clause": "Push this live",
+      "note": "Terse Chinese request to go live."
+    },
+    {
+      "id": "q13",
+      "query": "create a preview deployment for this branch so QA can look at it",
+      "should_trigger": true,
+      "clause": "Create a preview deployment",
+      "note": "Explicit preview deployment for QA."
+    },
+    {
+      "id": "q14",
+      "query": "帮我建一个预览部署,先别动正式环境",
+      "should_trigger": true,
+      "clause": "Create a preview deployment",
+      "note": "Preview deployment, avoid production."
+    },
+    {
+      "id": "q15",
+      "query": "need a preview deploy of my feature branch w/o touching prod",
+      "should_trigger": true,
+      "clause": "Create a preview deployment",
+      "note": "Preview deploy of a feature branch."
+    },
+    {
+      "id": "q16",
+      "query": "给这个 PR 生成一个预览链接部署,我想在手机上看看效果",
+      "should_trigger": true,
+      "clause": "Create a preview deployment",
+      "note": "Preview deployment to view on phone."
+    },
+    {
+      "id": "q17",
+      "query": "帮我把这个项目部署到 Netlify",
+      "should_trigger": false,
+      "clause": "Deploy my app/website to Vercel",
+      "note": "Different hosting platform; not Vercel."
+    },
+    {
+      "id": "q18",
+      "query": "write a vercel.json with rewrites for my SPA routes and a custom 404",
+      "should_trigger": false,
+      "clause": "Deploy my app/website to Vercel",
+      "note": "Vercel config authoring, not a deployment."
+    },
+    {
+      "id": "q19",
+      "query": "我的 Vercel 部署构建失败了,报错 Module not found: 'sharp',帮我看看怎么修",
+      "should_trigger": false,
+      "clause": "Deploy my app/website to Vercel",
+      "note": "Debugging a failed build, not performing a deploy."
+    },
+    {
+      "id": "q20",
+      "query": "how do I set up a Dockerfile and deploy this express app to AWS ECS?",
+      "should_trigger": false,
+      "clause": "Deploy and give me the link",
+      "note": "Deployment to AWS, a different job."
+    },
+    {
+      "id": "q21",
+      "query": "给我一个这个文档的分享链接,发到飞书上",
+      "should_trigger": false,
+      "clause": "Deploy and give me the link",
+      "note": "Share link request, not deploying an app."
+    },
+    {
+      "id": "q22",
+      "query": "git push my changes to origin/main, commit message 'fix typo'",
+      "should_trigger": false,
+      "clause": "Push this live",
+      "note": "Plain git push, not a live deployment."
+    },
+    {
+      "id": "q23",
+      "query": "把这个 npm 包发布到 npm registry,版本号升到 1.2.0",
+      "should_trigger": false,
+      "clause": "Push this live",
+      "note": "Publishing a package, not deploying a site."
+    },
+    {
+      "id": "q24",
+      "query": "set up a GitHub Actions workflow that runs tests on every pull request",
+      "should_trigger": false,
+      "clause": "Create a preview deployment",
+      "note": "CI setup, not a preview deployment."
+    },
+    {
+      "id": "q25",
+      "query": "帮我在本地起个预览服务,npm run dev 看看效果",
+      "should_trigger": false,
+      "clause": "Create a preview deployment",
+      "note": "Local dev preview, no deployment."
+    },
+    {
+      "id": "q26",
+      "query": "roll back production on vercel to the previous deployment, last release broke checkout",
+      "should_trigger": false,
+      "clause": "Create a preview deployment",
+      "note": "Rollback of production, not creating a preview."
+    }
+  ],
+  "clauses": [
+    "Deploy my app/website to Vercel",
+    "Deploy and give me the link",
+    "Push this live",
+    "Create a preview deployment"
+  ]
+}

@@ -1,0 +1,128 @@
+{
+  "skill": "xlsx",
+  "skill_md_sha256": "111e06521941d60feea6c160d9f67a0b9b95a383d3db0b4c95e65937eb12fb5a",
+  "reviewed": false,
+  "review_notes": "Human review: drop queries that copy the description; make sure negatives are near misses rather than unrelated tasks; set reviewed to true when done.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "can you fix the formulas in q3_budget.xlsx? the totals row in col F is showing #REF and idk where it broke",
+      "should_trigger": true,
+      "note": "Editing an existing .xlsx with broken formulas; the spreadsheet is the primary input and the deliverable."
+    },
+    {
+      "id": "q02",
+      "query": "帮我把downloads里那个sales_2026.xlsx的日期列统一一下，有的是文本有的是真日期，全部改成YYYY-MM-DD",
+      "should_trigger": true,
+      "note": "Cleaning a named spreadsheet file found in a casual path reference; the deliverable is an edited xlsx."
+    },
+    {
+      "id": "q03",
+      "query": "expenses.tsv is a mess, first 3 rows are junk and header is on row 4. clean it up and save as a proper excel file",
+      "should_trigger": true,
+      "note": "Restructuring messy tabular data (misplaced header, junk rows) into a proper spreadsheet, which the description explicitly covers."
+    },
+    {
+      "id": "q04",
+      "query": "把这个 orders.csv 转成 xlsx，金额那列加千分位，保留两位小数，表头加粗",
+      "should_trigger": true,
+      "note": "Converts CSV to xlsx with formatting; a conversion plus formatting task on a spreadsheet deliverable."
+    },
+    {
+      "id": "q05",
+      "query": "make me a new workbook from scratch to track inventory. sheet 'Stock' with SKU, Qty, Reorder Point cols, and a 'Summary' sheet that counts how many items are below reorder point",
+      "should_trigger": true,
+      "note": "Creating a new spreadsheet from scratch with specified tabs, columns, and a formula-driven summary."
+    },
+    {
+      "id": "q06",
+      "query": "给 Q4_forecast.xlsm 的 Assumptions 表加一个增长率输入格，黄色底色，其他公式别动",
+      "should_trigger": true,
+      "note": "Editing a macro-enabled .xlsm while respecting existing formulas; a direct spreadsheet edit request."
+    },
+    {
+      "id": "q07",
+      "query": "budget_v2.xlsm has macros in it, need to add a new column to the Inputs sheet without breaking them",
+      "should_trigger": true,
+      "note": "Editing a .xlsm where macro preservation matters; still an in-place spreadsheet edit."
+    },
+    {
+      "id": "q08",
+      "query": "sales_data.xlsx 里有个 sheet 叫 Sales Data，帮我用 SUMIFS 按地区汇总，结果放到新 tab 'Region Summary' 里",
+      "should_trigger": true,
+      "note": "Adds a formula-based summary tab to an existing workbook with exact tab name and sheet with a space in it."
+    },
+    {
+      "id": "q09",
+      "query": "pull the customer list out of crm_export.xlsx and make a monthly summary with a line chart on a new sheet",
+      "should_trigger": true,
+      "note": "Analysis and charting on a spreadsheet file, with the output being a workbook with a chart."
+    },
+    {
+      "id": "q10",
+      "query": "帮我把 leads.tsv 里重复的行去掉，然后导出成 xlsx 放到桌面",
+      "should_trigger": true,
+      "note": "De-duplicating a TSV and converting to xlsx; tabular cleanup where the deliverable is a spreadsheet."
+    },
+    {
+      "id": "q11",
+      "query": "write a word doc memo summarizing the Q3 numbers from sales_q3.xlsx, prose with one small table, for the board",
+      "should_trigger": false,
+      "note": "Reads a spreadsheet but the primary deliverable is a Word document, which the description excludes."
+    },
+    {
+      "id": "q12",
+      "query": "write a standalone python script that reads server_logs.csv, computes the median response time per endpoint and prints it. I'll run it from cron",
+      "should_trigger": false,
+      "note": "Primary deliverable is a standalone Python script, which the description excludes even though tabular data is involved."
+    },
+    {
+      "id": "q13",
+      "query": "use the google sheets api from my node app to append a row to spreadsheet ID 1aBcD9xYz each time an order comes in",
+      "should_trigger": false,
+      "note": "Google Sheets API integration is explicitly excluded; no local .xlsx file is being produced or edited."
+    },
+    {
+      "id": "q14",
+      "query": "generate a pdf invoice for each customer from orders.json, one page per invoice with our logo",
+      "should_trigger": false,
+      "note": "Produces a PDF from structured data; a different document type, not a spreadsheet deliverable."
+    },
+    {
+      "id": "q15",
+      "query": "what's the actual difference between a pivot table and SUMIF in excel? when would you pick one over the other",
+      "should_trigger": false,
+      "note": "Conceptual Excel question with no file to open, read, or produce; a near miss in the same domain."
+    },
+    {
+      "id": "q16",
+      "query": "帮我做一个 HTML 报告页面，展示 sales.csv 的月度趋势，要能鼠标悬停看数值，单文件就行",
+      "should_trigger": false,
+      "note": "HTML report is the explicit deliverable, so the description says not to trigger."
+    },
+    {
+      "id": "q17",
+      "query": "设计一个 postgres 表结构存订单数据，再写个 ETL 脚本每天把 csv 导进去，做好去重和报错日志",
+      "should_trigger": false,
+      "note": "Database schema and pipeline work is excluded, even though CSV data is involved."
+    },
+    {
+      "id": "q18",
+      "query": "写一个 jupyter notebook 分析 experiment_results.csv，做 t 检验并画出箱线图，结论写在 markdown cell 里",
+      "should_trigger": false,
+      "note": "The deliverable is a Jupyter notebook for analysis, not a spreadsheet file, so it's a near miss."
+    },
+    {
+      "id": "q19",
+      "query": "我的 deck.pptx 第 7 页的图表数据过时了，帮我更新成最新的数字并保持原来的样式",
+      "should_trigger": false,
+      "note": "Edits a PowerPoint file; a different Office format and deliverable, not a spreadsheet."
+    },
+    {
+      "id": "q20",
+      "query": "写个 python 脚本，每小时从 API 拉取库存数据，用 pandas 处理后存进 sqlite 数据库 inventory.db",
+      "should_trigger": false,
+      "note": "Scheduled data pipeline writing to a database; the description excludes database pipelines."
+    }
+  ]
+}

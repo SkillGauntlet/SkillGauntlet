@@ -1,0 +1,167 @@
+{
+  "skill": "domain-modeling",
+  "skill_md_sha256": "b62d997256cc073e123d4303da8e9db00db0e28de9739660ca3e55ab76e09cdb",
+  "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28",
+  "review": "none: AI-drafted. The method tests each skill with two or more independently drafted sets and reports the spread between them instead of reviewing each set by hand.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "我们代码里 'account' 到底指 Customer 还是 User？感觉大家用得很乱，帮我理一下该叫什么",
+      "should_trigger": true,
+      "clause": "Discussing codebase terminology",
+      "note": "User asks to disambiguate an overloaded term in the codebase, which is sharpening fuzzy language."
+    },
+    {
+      "id": "q02",
+      "query": "in our repo 'order' and 'booking' seem to be used interchangeably, are they the same thing? i want to pick one canonical word before we keep building",
+      "should_trigger": true,
+      "clause": "Discussing codebase terminology",
+      "note": "Discussion about picking a canonical domain term, no file edit requested."
+    },
+    {
+      "id": "q03",
+      "query": "我说的“取消”其实是部分取消，但你看看代码是不是只支持整单取消？帮我对一下术语和实现是否一致",
+      "should_trigger": true,
+      "clause": "Discussing codebase terminology",
+      "note": "Challenging a term against code and probing edge-case meaning of 'cancellation'."
+    },
+    {
+      "id": "q04",
+      "query": "what should we call a customer who has an expired subscription but still has data? 'lapsed' 'inactive' 'churned'? lets figure out the right term and test it w/ some edge cases",
+      "should_trigger": true,
+      "clause": "Discussing codebase terminology",
+      "note": "Naming a domain concept and stress-testing with scenarios."
+    },
+    {
+      "id": "q05",
+      "query": "把 'Shipment' 这个词的定义加到 GLOSSARY.md 里，就是一次发货包含多个包裹那种",
+      "should_trigger": true,
+      "clause": "Writing or editing GLOSSARY.md",
+      "note": "Direct request to add a term to GLOSSARY.md."
+    },
+    {
+      "id": "q06",
+      "query": "update GLOSSARY.md, we decided 'Tenant' replaces 'Organization' everywhere. fix the entry pls",
+      "should_trigger": true,
+      "clause": "Writing or editing GLOSSARY.md",
+      "note": "Editing an existing glossary entry after a terminology resolution."
+    },
+    {
+      "id": "q07",
+      "query": "项目根目录还没有 GLOSSARY.md，你根据我们刚定下来的 Invoice / Receipt 区别新建一个",
+      "should_trigger": true,
+      "clause": "Writing or editing GLOSSARY.md",
+      "note": "Creating GLOSSARY.md lazily when the first term is resolved."
+    },
+    {
+      "id": "q08",
+      "query": "src/billing/GLOSSARY.md 里 'Refund' 的写法太像实现细节了，帮我改成纯业务定义",
+      "should_trigger": true,
+      "clause": "Writing or editing GLOSSARY.md",
+      "note": "Editing a context-specific glossary to remove implementation details."
+    },
+    {
+      "id": "q09",
+      "query": "我们决定写操作用 Postgres 而不是 DynamoDB，权衡过了，帮我在 docs/adr 里记一条 ADR",
+      "should_trigger": true,
+      "clause": "Recording or editing an ADR",
+      "note": "Explicit request to record an ADR for a real trade-off decision."
+    },
+    {
+      "id": "q10",
+      "query": "write up an adr for why we went event-sourced for orders. hard to undo and new ppl keep asking why",
+      "should_trigger": true,
+      "clause": "Recording or editing an ADR",
+      "note": "Records a hard-to-reverse, surprising, trade-off decision as an ADR."
+    },
+    {
+      "id": "q11",
+      "query": "docs/adr/0002-postgres-for-write-model.md 要改一下，后来我们加了读副本，状态也应该改成 superseded 之类的",
+      "should_trigger": true,
+      "clause": "Recording or editing an ADR",
+      "note": "Editing an existing numbered ADR file."
+    },
+    {
+      "id": "q12",
+      "query": "can you amend adr 0001, the alternatives section is missing the CRUD option we rejected",
+      "should_trigger": true,
+      "clause": "Recording or editing an ADR",
+      "note": "Editing an ADR's content to add rejected alternatives."
+    },
+    {
+      "id": "q13",
+      "query": "帮我看一下 GLOSSARY.md 里 'Customer' 是怎么定义的，然后按这个词给 UserService 的变量命名",
+      "should_trigger": false,
+      "clause": "Discussing codebase terminology",
+      "note": "Merely reading the glossary for vocabulary, which the skill explicitly excludes."
+    },
+    {
+      "id": "q14",
+      "query": "rename the variable `acct` to `customerAccount` across src/ordering, use find and replace",
+      "should_trigger": false,
+      "clause": "Discussing codebase terminology",
+      "note": "Mechanical rename refactor, not a discussion to sharpen the domain model."
+    },
+    {
+      "id": "q15",
+      "query": "这个报错里的 'idempotency key' 是什么意思？给我解释一下概念",
+      "should_trigger": false,
+      "clause": "Discussing codebase terminology",
+      "note": "General technical concept explanation, not the project's domain language."
+    },
+    {
+      "id": "q16",
+      "query": "translate the comments in src/billing/invoice.ts from Chinese to English, keep the terms as they are",
+      "should_trigger": false,
+      "clause": "Discussing codebase terminology",
+      "note": "Translation task that shares terminology vocabulary but is a different job."
+    },
+    {
+      "id": "q17",
+      "query": "帮我写个 README 的术语表章节，面向外部用户解释产品里的几个功能名词",
+      "should_trigger": false,
+      "clause": "Writing or editing GLOSSARY.md",
+      "note": "User-facing README documentation, not the domain GLOSSARY.md."
+    },
+    {
+      "id": "q18",
+      "query": "write a technical spec for the refund flow including API endpoints and DB schema",
+      "should_trigger": false,
+      "clause": "Writing or editing GLOSSARY.md",
+      "note": "Implementation spec, which the glossary must not contain."
+    },
+    {
+      "id": "q19",
+      "query": "CHANGELOG.md 加一条 v2.3 的更新说明，写下修了哪些 bug",
+      "should_trigger": false,
+      "clause": "Writing or editing GLOSSARY.md",
+      "note": "Another markdown doc edit with no glossary content."
+    },
+    {
+      "id": "q20",
+      "query": "我们该用 Postgres 还是 DynamoDB 做写模型？帮我对比一下性能和成本再给个建议",
+      "should_trigger": false,
+      "clause": "Recording or editing an ADR",
+      "note": "Technology evaluation before a decision is made, not recording an ADR."
+    },
+    {
+      "id": "q21",
+      "query": "add a docstring to the OrderRepository class explaining why we chose optimistic locking",
+      "should_trigger": false,
+      "clause": "Recording or editing an ADR",
+      "note": "Code comment about a decision, not an ADR document."
+    },
+    {
+      "id": "q22",
+      "query": "docs/adr 目录下的文件帮我统一格式化一下，只改 markdown 标题层级和空行，内容别动",
+      "should_trigger": false,
+      "clause": "Recording or editing an ADR",
+      "note": "Pure formatting of ADR files without recording or editing a decision."
+    }
+  ],
+  "clauses": [
+    "Discussing codebase terminology",
+    "Writing or editing GLOSSARY.md",
+    "Recording or editing an ADR"
+  ]
+}

@@ -1,0 +1,128 @@
+{
+  "skill": "frontend-design",
+  "skill_md_sha256": "b8009ae690dfa69edc7f08bb8715f32db8817112cfa4388741dbaf876c237df8",
+  "reviewed": false,
+  "review_notes": "Human review: drop queries that copy the description; make sure negatives are near misses rather than unrelated tasks; set reviewed to true when done.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "need a landing page for my ceramic studio, src/pages/index.tsx, something that doesn't look like every other shopify theme. warm but not beige pls",
+      "should_trigger": true,
+      "note": "Asks for a distinctive visual direction for a new page for a specific subject, with explicit rejection of templated looks."
+    },
+    {
+      "id": "q02",
+      "query": "重新设计一下 dashboard 的视觉，现在太像 bootstrap 模板了，给个有个性的字体和配色方案 — 是给社区农场做的管理后台",
+      "should_trigger": true,
+      "note": "Reshapes an existing UI's look (type and palette) away from a generic template, grounded in the farm-community subject."
+    },
+    {
+      "id": "q03",
+      "query": "the hero on our climbing gym site (index.html) looks generic, can you make it actually feel like a gym? pick type and palette",
+      "should_trigger": true,
+      "note": "Requests a more characteristic hero tied to the subject matter, plus typeface and palette choices."
+    },
+    {
+      "id": "q04",
+      "query": "帮我给一个做手工皮具的小品牌做产品详情页，styles/product.css，不要那种卡片堆叠的感觉",
+      "should_trigger": true,
+      "note": "New product page design with a request to avoid the SaaS card-grid default, Chinese phrasing."
+    },
+    {
+      "id": "q05",
+      "query": "Redo the typography for the docs site in /site, pick two fonts that suit a community museum of typewriters",
+      "should_trigger": true,
+      "note": "Typography-focused redesign with font selection tied to the museum subject."
+    },
+    {
+      "id": "q06",
+      "query": "给我的独立音乐厂牌官网做个首页视觉方向，先出个设计方案再写代码，关键词：磨损、录音室、老磁带",
+      "should_trigger": true,
+      "note": "Asks for a design plan and visual direction from mood keywords before building, matching the plan-first workflow."
+    },
+    {
+      "id": "q07",
+      "query": "our fintech onboarding flow looks like every other saas card grid, rework the look for a credit union app, components in web/src/onboarding",
+      "should_trigger": true,
+      "note": "Reworks the visual identity of an existing flow that reads as a templated card kit, for a specific audience."
+    },
+    {
+      "id": "q08",
+      "query": "make the 404 page for our botanical garden site less boring, give it a real point of view, not just a centered error and a button",
+      "should_trigger": true,
+      "note": "Asks for an opinionated, subject-specific design treatment for an empty/failure state."
+    },
+    {
+      "id": "q09",
+      "query": "帮我设计一个面向 8-11 岁孩子的数学游戏开始页 (game/start.html)，要有个性，颜色和字体你定",
+      "should_trigger": true,
+      "note": "Open-ended aesthetic choices for a start screen aimed at a specific age group, requiring audience-driven palette and type."
+    },
+    {
+      "id": "q10",
+      "query": "Restyle the menu page for our mom-and-pop ramen shop, menu.html, they want it to feel like a hand-printed izakaya flyer, not a template",
+      "should_trigger": true,
+      "note": "Restyling toward a specific handmade vernacular with an explicit anti-template requirement."
+    },
+    {
+      "id": "q11",
+      "query": "my tailwind build is failing with 'Cannot find module tailwindcss/plugin' after upgrading to v4, fix the postcss config",
+      "should_trigger": false,
+      "note": "Near miss: build tooling and config failure in the same frontend stack, but no visual design decisions involved."
+    },
+    {
+      "id": "q12",
+      "query": "the jest snapshot test for ProfileCard keeps failing after I changed the avatar prop, how do I update it",
+      "should_trigger": false,
+      "note": "Near miss: component testing workflow, a different job from designing the component's look."
+    },
+    {
+      "id": "q13",
+      "query": "why does my flex container overflow on iOS Safari only? minimal repro in components/Toolbar.jsx",
+      "should_trigger": false,
+      "note": "Near miss: cross-browser layout bug diagnosis, not a request for aesthetic direction or redesign."
+    },
+    {
+      "id": "q14",
+      "query": "把 Next.js 首页的 bundle 体积降下来，LCP 太慢了，用 next/dynamic 拆一下",
+      "should_trigger": false,
+      "note": "Near miss: frontend performance optimization, which is a different job from visual design."
+    },
+    {
+      "id": "q15",
+      "query": "写一个 React hook useDebounce，放在 src/hooks/useDebounce.ts，带单元测试",
+      "should_trigger": false,
+      "note": "Near miss: general code implementation with tests, no design or styling content."
+    },
+    {
+      "id": "q16",
+      "query": "Our REST endpoint /api/orders returns 500, can you look at controllers/orders.go for the nil pointer?",
+      "should_trigger": false,
+      "note": "Near miss: backend debugging in the same product, owned by a backend or debugging skill rather than design."
+    },
+    {
+      "id": "q17",
+      "query": "Run an axe accessibility scan on the checkout page and list the WCAG violations with selectors",
+      "should_trigger": false,
+      "note": "Near miss: accessibility auditing and reporting, a verification job rather than designing the visual system."
+    },
+    {
+      "id": "q18",
+      "query": "Set up GitHub Actions to run Playwright e2e tests on every PR for the web app",
+      "should_trigger": false,
+      "note": "Near miss: CI pipeline configuration for the frontend, a deploy or CI job rather than design."
+    },
+    {
+      "id": "q19",
+      "query": "Migrate our styled-components to CSS modules across src/components, keep the existing look pixel-identical",
+      "should_trigger": false,
+      "note": "Near miss: styling refactor that explicitly forbids any visual change, so no design decisions are made."
+    },
+    {
+      "id": "q20",
+      "query": "帮我写一份用户注册流程的文案表（i18n），中英文对照，放到 locales/ 下面的 json 文件里",
+      "should_trigger": false,
+      "note": "Near miss: localization and string management, a copy-catalog job rather than visual design."
+    }
+  ]
+}

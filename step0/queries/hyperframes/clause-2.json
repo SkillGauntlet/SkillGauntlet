@@ -1,0 +1,225 @@
+{
+  "skill": "hyperframes",
+  "skill_md_sha256": "180ce4eea5f33f1617105c92e2690a5a2320abf624c263186ec0cb1a78a919ef",
+  "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28",
+  "review": "none: AI-drafted. The method tests each skill with two or more independently drafted sets and reports the spread between them instead of reviewing each set by hand.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "帮我从零做一个30秒的视频，介绍我们的新咖啡品牌，用HTML生成，1920x1080就行",
+      "should_trigger": true,
+      "clause": "Make a new video",
+      "note": "Create a brand-new video from scratch with HyperFrames; no specific kind emphasised."
+    },
+    {
+      "id": "q02",
+      "query": "start a new hyperframes project in ./demo and make me a short video about our team offsite",
+      "should_trigger": true,
+      "clause": "Make a new video",
+      "note": "Explicit new project init and new video creation."
+    },
+    {
+      "id": "q03",
+      "query": "我想做个视频，主题是公司2025年度回顾，你先给我几个方案看看",
+      "should_trigger": true,
+      "clause": "Make a new video",
+      "note": "Loose new-video request; skill covers storyline proposals for a new film."
+    },
+    {
+      "id": "q04",
+      "query": "can u make a video from this website? https://acme-tools.io  need it to look like their brand",
+      "should_trigger": true,
+      "clause": "Make a new video",
+      "note": "New video with a website as the subject (capture flow)."
+    },
+    {
+      "id": "q05",
+      "query": "打开我之前那个 hyperframes 项目，把第二个场景的标题改成“春季发布”，其他不动",
+      "should_trigger": true,
+      "clause": "Edit an existing video",
+      "note": "Edit copy in an existing project scene."
+    },
+    {
+      "id": "q06",
+      "query": "in compositions/intro.html the logo shows up too late, make the scene 2s shorter and shift everything after it",
+      "should_trigger": true,
+      "clause": "Edit an existing video",
+      "note": "Retiming an existing composition."
+    },
+    {
+      "id": "q07",
+      "query": "我在预览里改了几处颜色，你接着帮我把结尾那段的背景音乐换成 assets/calm.mp3",
+      "should_trigger": true,
+      "clause": "Edit an existing video",
+      "note": "Continue editing after user's own changes; swap audio in existing project."
+    },
+    {
+      "id": "q08",
+      "query": "swap the product screenshot in scene 3 of my hyperframes video, new one is assets/v2-dashboard.png",
+      "should_trigger": true,
+      "clause": "Edit an existing video",
+      "note": "Replace media in an existing project."
+    },
+    {
+      "id": "q09",
+      "query": "让这个HTML里的logo从左边滑进来，然后轻轻弹一下停住，用gsap时间轴做",
+      "should_trigger": true,
+      "clause": "Animate video content",
+      "note": "Timeline animation of an element inside a video composition."
+    },
+    {
+      "id": "q10",
+      "query": "add a punch-in zoom on the headline at 4s and an ease-out on the subtitle fade, in the hyperframes comp",
+      "should_trigger": true,
+      "clause": "Animate video content",
+      "note": "Motion work: punch-in and easing."
+    },
+    {
+      "id": "q11",
+      "query": "场景之间加个转场，最好是那种墨水扩散的效果，看看 registry 里有没有现成的",
+      "should_trigger": true,
+      "clause": "Animate video content",
+      "note": "Transition animation, registry search for effect."
+    },
+    {
+      "id": "q12",
+      "query": "animate the numbers counting up from 0 to 12,400 over 3 seconds in my video scene, no Math.random pls",
+      "should_trigger": true,
+      "clause": "Animate video content",
+      "note": "Animating a counter within the video, deterministic timeline."
+    },
+    {
+      "id": "q13",
+      "query": "预览我看过了没问题，直接渲染成 mp4 吧",
+      "should_trigger": true,
+      "clause": "Render video to file",
+      "note": "Approved preview, asks for the file."
+    },
+    {
+      "id": "q14",
+      "query": "render the final video to out/final.mp4, I'm done reviewing, no more questions",
+      "should_trigger": true,
+      "clause": "Render video to file",
+      "note": "Explicit render request with no-stops."
+    },
+    {
+      "id": "q15",
+      "query": "npx hyperframes render 报错了，说 check 没过，帮我修好然后导出视频",
+      "should_trigger": true,
+      "clause": "Render video to file",
+      "note": "Fix check failures to produce rendered output."
+    },
+    {
+      "id": "q16",
+      "query": "export my hyperframes project as a file i can upload, same 1080p 30fps",
+      "should_trigger": true,
+      "clause": "Render video to file",
+      "note": "Export deliverable file."
+    },
+    {
+      "id": "q17",
+      "query": "做一个新品发布的宣传片，大概40秒，要有音乐和音效，发布会风格",
+      "should_trigger": true,
+      "clause": "Specific video kinds (launch film, explainer, music video, chart, vertical clip, title card, caption, overlay)",
+      "note": "Launch film kind."
+    },
+    {
+      "id": "q18",
+      "query": "make a 9:16 vertical clip for tiktok from my 3 product shots, punchy",
+      "should_trigger": true,
+      "clause": "Specific video kinds (launch film, explainer, music video, chart, vertical clip, title card, caption, overlay)",
+      "note": "Vertical social clip."
+    },
+    {
+      "id": "q19",
+      "query": "给这段访谈口播视频加上逐字字幕，字幕放底部，黄色高亮当前词",
+      "should_trigger": true,
+      "clause": "Specific video kinds (launch film, explainer, music video, chart, vertical clip, title card, caption, overlay)",
+      "note": "Captions over talking head."
+    },
+    {
+      "id": "q20",
+      "query": "build an animated bar chart race video from data/sales.csv, 2019-2024",
+      "should_trigger": true,
+      "clause": "Specific video kinds (launch film, explainer, music video, chart, vertical clip, title card, caption, overlay)",
+      "note": "Chart video kind."
+    },
+    {
+      "id": "q21",
+      "query": "帮我做一套 PPT 幻灯片，10页，讲季度复盘，要能导出 pptx",
+      "should_trigger": false,
+      "clause": "Make a new video",
+      "note": "Decks belong to the slideshow skill, not a video."
+    },
+    {
+      "id": "q22",
+      "query": "write me a python script that generates a video from images using ffmpeg, no html stuff",
+      "should_trigger": false,
+      "clause": "Make a new video",
+      "note": "Explicit different framework/pipeline (ffmpeg), not HyperFrames."
+    },
+    {
+      "id": "q23",
+      "query": "我有个 Remotion 项目，帮我把 src/Root.tsx 里的 Sequence 时长改成 90 帧",
+      "should_trigger": false,
+      "clause": "Edit an existing video",
+      "note": "Edit of a Remotion project, not HyperFrames."
+    },
+    {
+      "id": "q24",
+      "query": "trim the first 10 seconds off interview.mp4 and export it, just a plain cut",
+      "should_trigger": false,
+      "clause": "Edit an existing video",
+      "note": "Plain media file trimming, not an HTML composition."
+    },
+    {
+      "id": "q25",
+      "query": "我网页上的按钮要做个 hover 动画，用 CSS transition 就行，别的不用",
+      "should_trigger": false,
+      "clause": "Animate video content",
+      "note": "Web UI animation, not video content."
+    },
+    {
+      "id": "q26",
+      "query": "make a Lottie animation of a loading spinner I can drop into my React app",
+      "should_trigger": false,
+      "clause": "Animate video content",
+      "note": "Animation for an app, not a rendered video."
+    },
+    {
+      "id": "q27",
+      "query": "把这个 React 页面渲染成静态 HTML 部署到服务器，SSR 怎么配？",
+      "should_trigger": false,
+      "clause": "Render video to file",
+      "note": "Rendering in the web SSR sense, not video."
+    },
+    {
+      "id": "q28",
+      "query": "screen record my browser while I use the app, save it as a gif",
+      "should_trigger": false,
+      "clause": "Render video to file",
+      "note": "Plain browser recording is explicitly not this skill."
+    },
+    {
+      "id": "q29",
+      "query": "帮我做一个交互式的折线图，放在 dashboard 网页里，用 echarts",
+      "should_trigger": false,
+      "clause": "Specific video kinds (launch film, explainer, music video, chart, vertical clip, title card, caption, overlay)",
+      "note": "Interactive web chart, not a chart video."
+    },
+    {
+      "id": "q30",
+      "query": "generate an SRT subtitle file from podcast.wav using whisper, just the text file",
+      "should_trigger": false,
+      "clause": "Specific video kinds (launch film, explainer, music video, chart, vertical clip, title card, caption, overlay)",
+      "note": "Transcription to subtitle file, not building captions in a video."
+    }
+  ],
+  "clauses": [
+    "Make a new video",
+    "Edit an existing video",
+    "Animate video content",
+    "Render video to file",
+    "Specific video kinds (launch film, explainer, music video, chart, vertical clip, title card, caption, overlay)"
+  ]
+}

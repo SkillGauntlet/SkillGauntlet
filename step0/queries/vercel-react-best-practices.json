@@ -1,0 +1,146 @@
+{
+  "skill": "vercel-react-best-practices",
+  "skill_md_sha256": "3286ace648b4d740317b9c1cb7fbd38600eaacc62a8b57ea5e06fd2992b5582e",
+  "reviewed": false,
+  "review_notes": "Human review: drop queries that copy the description; make sure negatives are near misses rather than unrelated tasks; set reviewed to true when done.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "这个 Next.js 页面里 useEffect 拉数据拉了三个接口，是串行的，帮我改成并行，文件是 app/dashboard/page.tsx",
+      "should_trigger": true,
+      "note": "Asks to fix a request waterfall in a Next.js page, which maps to async-parallel and server/client data-fetching rules."
+    },
+    {
+      "id": "q02",
+      "query": "review一下我刚提交的 ProductList.jsx，感觉列表一滚动就卡，看看有没有重渲染的问题",
+      "should_trigger": true,
+      "note": "Casual terse review request about scroll jank and unnecessary re-renders in a React component; falls under re-render optimization."
+    },
+    {
+      "id": "q03",
+      "query": "our bundle is 2.1MB and the lodash import in utils/format.ts looks like the culprit, can you clean that up",
+      "should_trigger": true,
+      "note": "Bundle size optimization via import restructuring, matching bundle-barrel-imports and related rules."
+    },
+    {
+      "id": "q04",
+      "query": "给 Header 组件加个 memo 或者把 onClick 处理函数抽出去，它每次父组件更新都跟着重渲染",
+      "should_trigger": true,
+      "note": "Explicit request to optimize component re-renders with memoization and stable callbacks."
+    },
+    {
+      "id": "q05",
+      "query": "the checkout page server component fetches user, cart, and shipping sequentially before rendering, pls restructure so they run in parallel",
+      "should_trigger": true,
+      "note": "Server-side fetch parallelization in a Next.js RSC, a direct match for the server-parallel-fetching guidance."
+    },
+    {
+      "id": "q06",
+      "query": "我的 Chart 组件每次 render 都在组件里面定义了一个 Tooltip 子组件，导致图表闪烁，帮我修一下",
+      "should_trigger": true,
+      "note": "Identifies nested component definition causing remounts and flicker, which the rerender-no-inline-components rule covers."
+    },
+    {
+      "id": "q07",
+      "query": "The search input in SearchBox.tsx fires a fetch on every keystroke and the results flash. Refactor to dedupe requests and debounce the UI update.",
+      "should_trigger": true,
+      "note": "Client-side fetch deduplication and deferred updates in React, matching client-swr-dedup and rerender-use-deferred-value."
+    },
+    {
+      "id": "q08",
+      "query": "首页 hero 区域的图片和字体加载太慢了，LCP 很差，看看能不能预加载或者用 next/font 优化",
+      "should_trigger": true,
+      "note": "Performance improvement for Next.js load times involving font and resource preloading, within the skill's rendering and bundle scope."
+    },
+    {
+      "id": "q09",
+      "query": "把 src/components/Modal.tsx 里的 useEffect 依赖数组清理一下，现在 eslint 报一堆 exhaustive-deps 警告",
+      "should_trigger": true,
+      "note": "Refactoring effect dependencies to primitive values, which falls under rerender-dependencies guidance for React code."
+    },
+    {
+      "id": "q10",
+      "query": "the admin table has 5000 rows and scrolling is janky, anything I can do with content-visibility or virtualizing it",
+      "should_trigger": true,
+      "note": "Long-list rendering performance in React, aligned with rendering-content-visibility."
+    },
+    {
+      "id": "q11",
+      "query": "帮我在 Next.js 里给 api/orders/route.ts 加个鉴权，现在任何人都能调这个接口，用 NextAuth 的 session 校验",
+      "should_trigger": true,
+      "note": "[review: flipped to positive] Literal reading of the description: \"writing, reviewing, or refactoring React/Next.js code\""
+    },
+    {
+      "id": "q12",
+      "query": "Write a Jest test for the formatCurrency helper in lib/money.ts covering negative numbers and rounding edge cases",
+      "should_trigger": false,
+      "note": "Near miss: testing a utility in the same codebase, but the job is writing unit tests, not optimizing performance."
+    },
+    {
+      "id": "q13",
+      "query": "我想把 React 项目从 CRA 迁移到 Vite，帮我列一下需要改的配置和依赖",
+      "should_trigger": false,
+      "note": "[kept: borderline] CRA-to-Vite migration is mostly build config, not writing React code; a literal reading may still trigger"
+    },
+    {
+      "id": "q14",
+      "query": "Design the Prisma schema for a multi-tenant SaaS with orgs, members, and invites, Postgres backend",
+      "should_trigger": false,
+      "note": "Near miss: database modeling for a web app, not React or Next.js performance guidance."
+    },
+    {
+      "id": "q15",
+      "query": "这个 Button 组件的 props 类型定义不对，帮我用 TypeScript 重写一下，支持 variant 和 size 的联合类型",
+      "should_trigger": true,
+      "note": "[review: flipped to positive] Literal reading of the description: \"writing, reviewing, or refactoring React/Next.js code\""
+    },
+    {
+      "id": "q16",
+      "query": "Add a dark mode toggle to the settings page, it should persist to localStorage and respect prefers-color-scheme",
+      "should_trigger": true,
+      "note": "[review: flipped to positive] Literal reading of the description: \"writing, reviewing, or refactoring React/Next.js code\""
+    },
+    {
+      "id": "q17",
+      "query": "帮我写一个 GitHub Actions 工作流，每次 PR 合并到 main 之后自动部署到 Vercel",
+      "should_trigger": false,
+      "note": "Near miss: CI/CD configuration tied to Vercel, owned by a deployment or DevOps skill rather than React performance."
+    },
+    {
+      "id": "q18",
+      "query": "Our Next.js app shows a 500 on /api/export when the CSV is over 10MB, grep the logs and figure out the stack trace",
+      "should_trigger": false,
+      "note": "[kept: borderline] Debugging a 500 in a Next.js API route; debugging rather than writing/reviewing/refactoring"
+    },
+    {
+      "id": "q19",
+      "query": "给 Vue 3 的 TodoList 组件写个 Storybook story，展示空状态和加载状态",
+      "should_trigger": false,
+      "note": "Near miss: frontend component documentation in a different framework, outside React/Next.js scope."
+    },
+    {
+      "id": "q20",
+      "query": "Set up Playwright e2e tests for the login flow in our Next.js app, headless chromium, run in CI",
+      "should_trigger": false,
+      "note": "Near miss: end-to-end test authoring in a Next.js project, a testing job owned by a different skill."
+    },
+    {
+      "id": "q21",
+      "query": "帮我给 Svelte 写的 TodoList 组件加上拖拽排序",
+      "should_trigger": false,
+      "note": "[review: added, near-miss negative] Non-React frontend framework"
+    },
+    {
+      "id": "q22",
+      "query": "Our Express API's /users endpoint is slow, add a Redis cache in front of the Postgres query",
+      "should_trigger": false,
+      "note": "[review: added, near-miss negative] Backend performance work; no React/Next.js involved"
+    },
+    {
+      "id": "q23",
+      "query": "给 Angular 的 OrdersComponent 加分页，用 RxJS 管理请求",
+      "should_trigger": false,
+      "note": "[review: added, near-miss negative] Non-React frontend framework"
+    }
+  ]
+}

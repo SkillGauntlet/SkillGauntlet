@@ -1,0 +1,147 @@
+{
+  "run_id": "20261028-225156",
+  "runner_version": "0.4.2",
+  "host": "claude-code",
+  "claude_version": "2.1.303 (Claude Code)",
+  "model": "haiku",
+  "runs": 3,
+  "sampling": "adaptive",
+  "trial_dirs": "fixed per worker",
+  "max_explore": 0,
+  "query_hash": "sha256 of canonical JSON [{id, query, should_trigger}] sorted by id",
+  "backend": "anthropic",
+  "base_url": "https://api.anthropic.com",
+  "api_key_source": "none",
+  "platform": "Windows 10 / Python 3.11.9",
+  "started_at": "2026-10-28T22:51:56",
+  "skills": {
+    "diagnosing-bugs": {
+      "source": {
+        "repo": "https://github.com/mattpocock/skills",
+        "commit": "5beb35b040e3de97e54fa9e386d7e42d15c295c2",
+        "subdir": "skills/engineering/diagnosing-bugs"
+      },
+      "skill_md_sha256": "aa87b0ac245c6d1b203c4678eb34dc101af02291448780c55c5e58ccc1619bd7",
+      "query_sets": {
+        "clause-3": {
+          "query_set_sha256": "4fb714404dbb398a1095dd0ec97a04e9e20dc4d078cae1421a944ce9596672a0",
+          "file": "queries\\diagnosing-bugs\\clause-3.json",
+          "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28"
+        }
+      }
+    },
+    "prototype": {
+      "source": {
+        "repo": "https://github.com/mattpocock/skills",
+        "commit": "5beb35b040e3de97e54fa9e386d7e42d15c295c2",
+        "subdir": "skills/engineering/prototype"
+      },
+      "skill_md_sha256": "f74ae01f4fc454d3a4ef21271920f1706e626271e715dda0559e489f45c792c3",
+      "query_sets": {
+        "clause-3": {
+          "query_set_sha256": "e8d6d459a40ecb2ab3e4b2a6a70c96f8e8d45c65c0e768751568cd40cd495403",
+          "file": "queries\\prototype\\clause-3.json",
+          "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28"
+        }
+      }
+    },
+    "design-mobile-apps": {
+      "source": {
+        "repo": "https://github.com/designed-by-ai/skills",
+        "commit": "03c20aec6dcedb5fabfb03dc37982eb52ef19ed6",
+        "subdir": "skills/design-mobile-apps"
+      },
+      "skill_md_sha256": "54b4606f4838da36f0eb799e0b8032fc02a3bb0d0c1290fb1002e578755836ac",
+      "query_sets": {
+        "clause-3": {
+          "query_set_sha256": "332f37248a6825ef6f2de0ffb5afd6cb4ea083d9ad80ca341fd9c1fd1c36211f",
+          "file": "queries\\design-mobile-apps\\clause-3.json",
+          "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28"
+        }
+      }
+    },
+    "lark-doc": {
+      "source": {
+        "repo": "https://github.com/larksuite/cli",
+        "commit": "017b19a793ad71794a02887ede04757f3d82e10d",
+        "subdir": "skills/lark-doc"
+      },
+      "skill_md_sha256": "0f1aea17fc21aaeb1cc17270d6de7de97780c3a9f53f98f668ce318f91f1a1f7",
+      "query_sets": {
+        "clause-3": {
+          "query_set_sha256": "e309b1cbe619d1aff06ec449417771c68590423a7e71785b0de6c15e16abcfe0",
+          "file": "queries\\lark-doc\\clause-3.json",
+          "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28"
+        }
+      },
+      "companions": {
+        "lark-drive": {
+          "source": {
+            "repo": "https://github.com/larksuite/cli",
+            "commit": "017b19a793ad71794a02887ede04757f3d82e10d",
+            "subdir": "skills/lark-drive"
+          },
+          "skill_md_sha256": "b140cd55b62be7f001384fb47627dc269ef08db3b943d0eb8c6aa4ef1bc9b685"
+        },
+        "lark-shared": {
+          "source": {
+            "repo": "https://github.com/larksuite/cli",
+            "commit": "017b19a793ad71794a02887ede04757f3d82e10d",
+            "subdir": "skills/lark-shared"
+          },
+          "skill_md_sha256": "9fa68bb1f3ce564602c6df6c303ea4d2759de02442772f332fe5041d65720a1f"
+        }
+      }
+    }
+  },
+  "model_resolved": "claude-haiku-5-5",
+  "loaded_skills": [
+    "design",
+    "design-sync",
+    "dataviz",
+    "update-config",
+    "verify",
+    "debug",
+    "code-review",
+    "simplify",
+    "batch",
+    "fewer-permission-prompts",
+    "doctor",
+    "loop",
+    "schedule",
+    "claude-api",
+    "run",
+    "run-skill-generator",
+    "plugin-authoring"
+  ],
+  "tools": [
+    "Bash",
+    "CronCreate",
+    "CronDelete",
+    "CronList",
+    "DesignSync",
+    "Edit",
+    "EnterWorktree",
+    "ExitWorktree",
+    "Glob",
+    "Grep",
+    "ListAgents",
+    "Monitor",
+    "NotebookEdit",
+    "PowerShell",
+    "PushNotification",
+    "Read",
+    "RemoteTrigger",
+    "ReportFindings",
+    "ScheduleWakeup",
+    "SendMessage",
+    "Skill",
+    "Task",
+    "TaskStop",
+    "ToolSearch",
+    "WebFetch",
+    "WebSearch",
+    "Write"
+  ],
+  "finished_at": "2026-10-28T22:59:33"
+}

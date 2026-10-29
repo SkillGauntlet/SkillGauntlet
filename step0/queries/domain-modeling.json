@@ -1,0 +1,134 @@
+{
+  "skill": "domain-modeling",
+  "skill_md_sha256": "b62d997256cc073e123d4303da8e9db00db0e28de9739660ca3e55ab76e09cdb",
+  "reviewed": false,
+  "review_notes": "Human review: drop queries that copy the description; make sure negatives are near misses rather than unrelated tasks; set reviewed to true when done.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "我们项目的 GLOSSARY.md 里 'order' 的定义和代码里实际用法对不上，帮我看看 src/orders 下面到底哪些地方把它当成了已取消的概念",
+      "should_trigger": true,
+      "note": "Checks a term against GLOSSARY.md and cross-references code usage, matching the 'Challenge against the glossary' and 'Cross-reference with code' behaviors."
+    },
+    {
+      "id": "q02",
+      "query": "这块业务里 'account' 太模糊了，我一会儿说客户一会儿说用户，你帮我理一下到底该用哪个规范术语，然后更新一下词汇表",
+      "should_trigger": true,
+      "note": "Sharpens overloaded language into a canonical term and updates the glossary inline."
+    },
+    {
+      "id": "q03",
+      "query": "新建个 GLOSSARY.md 吧，目前只确定了 Shipment 和 Parcel 的区别：一个 Shipment 可以包含多个 Parcel",
+      "should_trigger": true,
+      "note": "Creates GLOSSARY.md lazily when the first term is resolved."
+    },
+    {
+      "id": "q04",
+      "query": "我们决定订单库用 Postgres 而不是 Mongo，理由是要强事务、还有团队熟，帮我写个 ADR 记下来，文件放 docs/adr 下面",
+      "should_trigger": true,
+      "note": "Records a real trade-off decision as an ADR in the project's adr format."
+    },
+    {
+      "id": "q05",
+      "query": "Let's stress-test the refund flow: if a customer partially refunds a Payment that was split across two cards, does the Refund belong to the Payment or to each Charge? Push me on the boundary.",
+      "should_trigger": true,
+      "note": "Invents edge-case scenarios to force precision about domain concept boundaries."
+    },
+    {
+      "id": "q06",
+      "query": "Our code calls it 'Subscription' in billing but 'Plan' in the onboarding module. Which one is canonical and should I rename in the glossary?",
+      "should_trigger": true,
+      "note": "Resolves conflicting vocabulary across contexts and updates glossary terms."
+    },
+    {
+      "id": "q07",
+      "query": "should we write an ADR for switching our CI from Jenkins to GitHub Actions? it's just a config swap, easy to revert",
+      "should_trigger": true,
+      "note": "Tests the ADR-offering criteria: the decision is easy to reverse, so the answer should be to skip the ADR."
+    },
+    {
+      "id": "q08",
+      "query": "The `docs/adr/0002-postgres-for-write-model.md` says we chose Postgres but the migration files suggest we're on MySQL now. Can you double check what's actually in the repo?",
+      "should_trigger": true,
+      "note": "Cross-references an existing ADR against the code to surface contradictions."
+    },
+    {
+      "id": "q09",
+      "query": "我们 GLOSSARY-MAP.md 里 ordering 上下文的 GLOSSARY.md 缺了几个术语，帮我把 ordering 和 billing 两边的术语统一一下",
+      "should_trigger": true,
+      "note": "Works within the multi-context layout, editing context-specific glossaries and aligning terms."
+    },
+    {
+      "id": "q10",
+      "query": "这个 ADR 的状态字段我们要不要加个 superseded？顺便把 0001 那份改成引用新的 0005",
+      "should_trigger": true,
+      "note": "Edits an existing ADR and its cross-references, which falls under recording and editing ADRs."
+    },
+    {
+      "id": "q11",
+      "query": "帮我把 src/ordering/cart.ts 里 addItem 函数加个库存检查，顺便写个单元测试",
+      "should_trigger": false,
+      "note": "Near miss: feature implementation in the ordering domain, not domain-model work. No glossary or ADR involvement."
+    },
+    {
+      "id": "q12",
+      "query": "订单列表页查询有点慢，帮我看看 OrderRepository 的 findByUser 有没有 N+1 问题",
+      "should_trigger": false,
+      "note": "Near miss: performance debugging of a domain repository. Owned by a code-review or debugging skill, not domain modeling."
+    },
+    {
+      "id": "q13",
+      "query": "Can you explain what the Saga pattern is and show me a minimal example in TypeScript?",
+      "should_trigger": false,
+      "note": "Near miss: general pattern education with no request to change the model, glossary, or ADRs."
+    },
+    {
+      "id": "q14",
+      "query": "我们的 GLOSSARY.md 里的 Order 表述写得太长了，帮我把它压缩到一段话，格式不要动",
+      "should_trigger": true,
+      "note": "[review: flipped to positive] The description explicitly says \"writing or editing a GLOSSARY.md\""
+    },
+    {
+      "id": "q15",
+      "query": "Write a Dockerfile for this Node service that uses a multi-stage build and runs as a non-root user.",
+      "should_trigger": false,
+      "note": "Near miss in the same repo: infrastructure work owned by a DevOps skill, unrelated to the domain model."
+    },
+    {
+      "id": "q16",
+      "query": "帮我把 billing 模块的 Invoice 类型迁移到 zod schema，保留现有字段名",
+      "should_trigger": false,
+      "note": "Near miss: a refactor of a type definition that touches a domain concept but has no terminology or decision-recording goal."
+    },
+    {
+      "id": "q17",
+      "query": "这个 PR 的 diff 太大了，帮我拆成三个小 PR，按模块分开",
+      "should_trigger": false,
+      "note": "Near miss: version-control and PR-splitting work, owned by a git or review skill."
+    },
+    {
+      "id": "q18",
+      "query": "Our billing service throws a 500 when the currency code is lowercase. Find the root cause and fix it.",
+      "should_trigger": false,
+      "note": "Near miss: a bug fix in a domain-adjacent module, but it is debugging rather than modeling the domain."
+    },
+    {
+      "id": "q19",
+      "query": "帮我写一个 README，介绍怎么在本地跑起这个项目，包括环境变量和 docker compose 的用法",
+      "should_trigger": false,
+      "note": "Near miss: documentation for setup, owned by a docs-writing skill, not the glossary or ADR files."
+    },
+    {
+      "id": "q20",
+      "query": "Run the test suite for the ordering module and summarize which tests fail and why.",
+      "should_trigger": false,
+      "note": "Near miss: test execution and failure triage, which a testing skill would own."
+    },
+    {
+      "id": "q21",
+      "query": "画一张 ordering 模块的类图（mermaid），放到 docs/architecture.md 里",
+      "should_trigger": false,
+      "note": "[review: added, near-miss negative] Architecture docs, but no glossary or ADR involved"
+    }
+  ]
+}

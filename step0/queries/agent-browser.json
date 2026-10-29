@@ -1,0 +1,128 @@
+{
+  "skill": "agent-browser",
+  "skill_md_sha256": "19c4b9f790f8a36cb2c485cb91ad36d6506b60e3cc32df299554ac9c8694247f",
+  "reviewed": false,
+  "review_notes": "Human review: drop queries that copy the description; make sure negatives are near misses rather than unrelated tasks; set reviewed to true when done.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "打开 https://shop.example.com/login 帮我登录，账号密码在项目根目录的 .env 里，登完截个首页的图给我",
+      "should_trigger": true,
+      "note": "Login flow plus screenshot on a live website, matching the login and screenshot triggers."
+    },
+    {
+      "id": "q02",
+      "query": "帮我去豆瓣 top250 页面把电影名和评分抓下来存成 csv",
+      "should_trigger": true,
+      "note": "Scraping structured data from a live web page into a file."
+    },
+    {
+      "id": "q03",
+      "query": "后台新建订单那个表单帮我填一下，测试数据随便编，提交看看有没有报错",
+      "should_trigger": true,
+      "note": "Filling and submitting a web form to check behavior in a running app."
+    },
+    {
+      "id": "q04",
+      "query": "测一下 localhost:3000 的注册流程，有什么问题直接列出来",
+      "should_trigger": true,
+      "note": "Exploratory QA of a running web app, which the skill covers for testing and bug hunts."
+    },
+    {
+      "id": "q05",
+      "query": "用浏览器把 Slack 里 #eng-alerts 频道的未读消息看一下，总结成几条",
+      "should_trigger": true,
+      "note": "Checking Slack unreads, which the skill explicitly covers via its Slack and Electron paths."
+    },
+    {
+      "id": "q06",
+      "query": "open staging.myapp.io and click through the onboarding flow, tell me if anything breaks",
+      "should_trigger": true,
+      "note": "Clicking through a live site to find breakage, a QA and dogfooding request."
+    },
+    {
+      "id": "q07",
+      "query": "can you screenshot the pricing page at localhost:5173 at mobile width, i want to see the layout",
+      "should_trigger": true,
+      "note": "Screenshot of a page at a specific viewport in a running dev server."
+    },
+    {
+      "id": "q08",
+      "query": "scrape product names and prices from https://books.example.com/category/fiction into a json file",
+      "should_trigger": true,
+      "note": "Data extraction from a web page into JSON."
+    },
+    {
+      "id": "q09",
+      "query": "log into our Stripe dashboard in test mode and export last week's failed payments as a CSV",
+      "should_trigger": true,
+      "note": "Logging into a web dashboard and extracting data, a login and data extraction task."
+    },
+    {
+      "id": "q10",
+      "query": "Send a message to #release-notes in our Slack saying the 2.3 deploy is done",
+      "should_trigger": true,
+      "note": "Sending a Slack message, which the skill explicitly lists as a trigger."
+    },
+    {
+      "id": "q11",
+      "query": "帮我修一下 src/components/Cart.tsx 里的 useEffect 依赖数组，现在每次渲染都重新请求接口",
+      "should_trigger": false,
+      "note": "Code fix in a React component with no browser interaction. Near miss on frontend work, but not browser automation."
+    },
+    {
+      "id": "q12",
+      "query": "把 data/report.html 这个本地文件里的表格转成 CSV，不用开浏览器",
+      "should_trigger": false,
+      "note": "Parses a local HTML file without live browsing. Near miss on HTML and tables, but the browser is explicitly not needed."
+    },
+    {
+      "id": "q13",
+      "query": "解释一下 Playwright 和 Puppeteer 的区别，我们项目该选哪个，不用动代码",
+      "should_trigger": false,
+      "note": "[review: replaced, near-miss negative] Tooling-choice question in the browser-automation domain; no browser needed"
+    },
+    {
+      "id": "q14",
+      "query": "帮我写一个 CSS 选择器，选中表格里第二列所有带 .error 类的单元格",
+      "should_trigger": false,
+      "note": "[review: replaced, near-miss negative] Writing a selector without opening any page"
+    },
+    {
+      "id": "q15",
+      "query": "给 src/api/client.ts 的 fetch 封装加上超时和重试",
+      "should_trigger": false,
+      "note": "[review: replaced, near-miss negative] HTTP request code; no browser involved"
+    },
+    {
+      "id": "q16",
+      "query": "Write a Playwright spec for the checkout flow in tests/e2e/checkout.spec.ts, don't run it yet",
+      "should_trigger": false,
+      "note": "[kept: borderline] Writes a Playwright spec but explicitly does not run it; the description includes \"testing web apps\", so triggering may be legitimate"
+    },
+    {
+      "id": "q17",
+      "query": "Our GitHub Actions deploy job fails with EACCES on the cache step, can you read .github/workflows/deploy.yml and fix it",
+      "should_trigger": false,
+      "note": "CI workflow debugging from a YAML file. Near miss on deployment, but no browser work."
+    },
+    {
+      "id": "q18",
+      "query": "Convert the 12 SVG icons exported from Figma in assets/icons/ into React components with typed props",
+      "should_trigger": false,
+      "note": "Asset conversion of local files. Near miss on Figma, but no Figma app or desktop automation."
+    },
+    {
+      "id": "q19",
+      "query": "Profile memory growth in our Node API with clinic.js and tell me the top allocators",
+      "should_trigger": false,
+      "note": "Backend performance profiling. Near miss on performance testing, but not browser automation."
+    },
+    {
+      "id": "q20",
+      "query": "我们的 Electron 应用打包后白屏，帮我看看 main.js 里 loadURL 的路径是不是写错了",
+      "should_trigger": false,
+      "note": "[review: replaced, near-miss negative] Mentions Electron, but only reading code to debug; no app automation needed"
+    }
+  ]
+}

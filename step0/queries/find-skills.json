@@ -1,0 +1,128 @@
+{
+  "skill": "find-skills",
+  "skill_md_sha256": "c1d9628984991d7ed59ab3a7bf6a4dad3d731ef68c71f409f64a0ca258e8028e",
+  "reviewed": false,
+  "review_notes": "Human review: drop queries that copy the description; make sure negatives are near misses rather than unrelated tasks; set reviewed to true when done.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "有没有现成的 skill 可以帮我做 React 性能优化？我的 dashboard 页面加载特别慢",
+      "should_trigger": true,
+      "note": "Chinese, asks for an existing installable skill for a specific domain (React performance) with project context; matches 'find a skill for X' intent"
+    },
+    {
+      "id": "q02",
+      "query": "how do i make sure my CI pipeline deploys to k8s without downtime",
+      "should_trigger": true,
+      "note": "Terse English 'how do I do X' where X (zero-downtime k8s deploys in CI) is a common task likely covered by a DevOps skill"
+    },
+    {
+      "id": "q03",
+      "query": "is there a skill for writing playwright e2e tests? my login flow in tests/auth.spec.ts keeps flaking",
+      "should_trigger": true,
+      "note": "[kept: copies trigger phrase] \"is there a skill for\" matches the description's trigger phrase, but real users ask this way; kept as a control"
+    },
+    {
+      "id": "q04",
+      "query": "有没有能帮我生成 changelog 的工具或者 skill？每次发版都要手写很烦",
+      "should_trigger": true,
+      "note": "Chinese, looking for a workflow/documentation skill to extend capabilities for changelog generation"
+    },
+    {
+      "id": "q05",
+      "query": "can u help w/ PR reviews? our team never reviews consistently, is there something installable for that",
+      "should_trigger": true,
+      "note": "Terse with typos, asks whether an installable capability exists for PR review (code quality category)"
+    },
+    {
+      "id": "q06",
+      "query": "我想找个 skill 能帮我做 Tailwind 组件的无障碍（a11y）检查，你知道有没有",
+      "should_trigger": true,
+      "note": "Chinese, expresses interest in a specialized accessibility capability with a named stack, asking for a skill recommendation"
+    },
+    {
+      "id": "q07",
+      "query": "wish there was a helper for writing dockerfiles for our monorepo, anything like that out there",
+      "should_trigger": true,
+      "note": "Expresses wish for domain help (Docker) and asks if a skill exists; matches the 'wish I had help with' trigger"
+    },
+    {
+      "id": "q08",
+      "query": "能不能扩展一下你的能力，让你能直接操作我们的 Supabase 数据库做 migration？",
+      "should_trigger": true,
+      "note": "Chinese, explicitly asks to extend agent capabilities for a specialized task (Supabase migrations)"
+    },
+    {
+      "id": "q09",
+      "query": "find skill for git commit message formatting pls",
+      "should_trigger": true,
+      "note": "Terse 'find a skill for X' phrasing targeting a productivity/git workflow skill"
+    },
+    {
+      "id": "q10",
+      "query": "这个 Next.js 项目的 API 文档怎么自动生成？有没有现成的 skill",
+      "should_trigger": true,
+      "note": "Chinese, 'how do I do X' plus 'is there a skill' for documentation generation in a named framework"
+    },
+    {
+      "id": "q11",
+      "query": "python 里怎么把 dict 按 value 排序？",
+      "should_trigger": false,
+      "note": "[review: replaced, near-miss negative] \"How do I X\" phrasing (Chinese) where X is a one-liner; tests over-triggering of a broad description"
+    },
+    {
+      "id": "q12",
+      "query": "how do I undo my last git commit but keep the changes?",
+      "should_trigger": false,
+      "note": "[review: replaced, near-miss negative] \"How do I\" phrasing for a common operation; no skill needed"
+    },
+    {
+      "id": "q13",
+      "query": "帮我写一个新的 skill，用来按我们团队的规范生成 commit message",
+      "should_trigger": false,
+      "note": "[review: replaced, near-miss negative] Creating a skill belongs to the sibling skill-creator"
+    },
+    {
+      "id": "q14",
+      "query": "把 lodash 装到这个项目里，然后把 utils 里手写的 debounce 换成 lodash 的",
+      "should_trigger": false,
+      "note": "[review: replaced, near-miss negative] Installs an npm package, not a skill"
+    },
+    {
+      "id": "q15",
+      "query": "我 ~/.claude/skills 下面那个 pdf 技能的 SKILL.md 描述写得不好，帮我改一下让它更容易被触发",
+      "should_trigger": false,
+      "note": "[review: replaced, near-miss negative] Editing an installed skill belongs to skill-creator"
+    },
+    {
+      "id": "q16",
+      "query": "can you rename the variable `tmp` to `retryCount` across src/net/client.ts?",
+      "should_trigger": false,
+      "note": "[review: replaced, near-miss negative] \"Can you X\" phrasing where X is an ordinary edit"
+    },
+    {
+      "id": "q17",
+      "query": "what's the difference between a skill and an MCP server in Claude Code?",
+      "should_trigger": false,
+      "note": "[review: replaced, near-miss negative] Conceptual question about the ecosystem, not looking for an installable capability"
+    },
+    {
+      "id": "q18",
+      "query": "how do I make this flexbox row wrap on small screens? the file is styles/header.css",
+      "should_trigger": false,
+      "note": "[review: replaced, near-miss negative] \"How do I\" phrasing for an ordinary frontend question"
+    },
+    {
+      "id": "q19",
+      "query": "帮我在 .claude/settings.json 里加一条权限，允许 npm test 不用确认",
+      "should_trigger": false,
+      "note": "[review: replaced, near-miss negative] Changing agent configuration, not installing a skill"
+    },
+    {
+      "id": "q20",
+      "query": "怎么用 pytest 只跑上次失败的用例？",
+      "should_trigger": false,
+      "note": "[review: replaced, near-miss negative] \"How do I\" phrasing (Chinese) where the answer is a single CLI flag"
+    }
+  ]
+}

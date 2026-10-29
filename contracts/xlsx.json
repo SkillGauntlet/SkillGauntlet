@@ -1,0 +1,33 @@
+{
+  "skill": "xlsx",
+  "tasks": [
+    {
+      "id": "t1",
+      "prompt": "把 people.csv 转成 xlsx，保留表头，放在同一个目录下。",
+      "files": {
+        "people.csv": "name,age\nAlice,30\nBob,25\nCara,41\n"
+      }
+    },
+    {
+      "id": "t2",
+      "prompt": "在 sales.csv 里加一列 total，等于 price 乘 qty，然后存成 xlsx。",
+      "files": {
+        "sales.csv": "item,price,qty\npen,2,10\ncup,5,3\n"
+      }
+    }
+  ],
+  "contracts": [
+    {
+      "desc": "an .xlsx file was produced", "descI18n": {"zh": "产出了 .xlsx 文件", "ja": ".xlsx ファイルが生成された"},
+      "type": "files_added_matching",
+      "glob": "**/*.xlsx"
+    },
+    {
+      "desc": "the output is a real xlsx (the zip container holds a worksheet)", "descI18n": {"zh": "产出的确实是 xlsx（zip 容器里有工作表）", "ja": "出力は本物の xlsx（zip コンテナ内にワークシートがある）"},
+      "type": "file_contains",
+      "glob": "**/*.xlsx",
+      "encoding": "latin1",
+      "regex": "xl/worksheets/sheet[0-9]*\\.xml"
+    }
+  ]
+}

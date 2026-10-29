@@ -1,0 +1,174 @@
+{
+  "skill": "diagnosing-bugs",
+  "skill_md_sha256": "aa87b0ac245c6d1b203c4678eb34dc101af02291448780c55c5e58ccc1619bd7",
+  "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28",
+  "review": "none: AI-drafted. The method tests each skill with two or more independently drafted sets and reports the spread between them instead of reviewing each set by hand.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "diagnose why the nightly export job keeps producing duplicate rows",
+      "should_trigger": true,
+      "clause": "User explicitly asks to diagnose or debug",
+      "note": "Uses the word 'diagnose' directly for a hard data bug."
+    },
+    {
+      "id": "q02",
+      "query": "帮我debug一下这个问题,用户列表分页到第3页就会重复显示第2页的数据",
+      "should_trigger": true,
+      "clause": "User explicitly asks to diagnose or debug",
+      "note": "Chinese explicit 'debug' request for a pagination bug."
+    },
+    {
+      "id": "q03",
+      "query": "debug this: my websocket client reconnects fine locally but silently drops messages after ~30s on staging",
+      "should_trigger": true,
+      "clause": "User explicitly asks to diagnose or debug",
+      "note": "Explicit 'debug this' with a hard intermittent environment-specific bug."
+    },
+    {
+      "id": "q04",
+      "query": "帮我诊断一下为什么 order_service 里的库存扣减偶尔会变成负数",
+      "should_trigger": true,
+      "clause": "User explicitly asks to diagnose or debug",
+      "note": "Chinese 'diagnose' request for a nondeterministic race-like bug."
+    },
+    {
+      "id": "q05",
+      "query": "the checkout page is broken, clicking Pay does nothing since yesterday's deploy",
+      "should_trigger": true,
+      "clause": "User reports something broken, throwing, or failing",
+      "note": "Reports a broken feature without using the word debug."
+    },
+    {
+      "id": "q06",
+      "query": "跑 pytest 一直报 KeyError: 'user_id',tests/test_auth.py 里三个用例全挂了",
+      "should_trigger": true,
+      "clause": "User reports something broken, throwing, or failing",
+      "note": "Chinese report of throwing/failing tests with a concrete error."
+    },
+    {
+      "id": "q07",
+      "query": "my CI build is failing on main with 'ECONNRESET' during npm install, started randomly this morning",
+      "should_trigger": true,
+      "clause": "User reports something broken, throwing, or failing",
+      "note": "Reports a failing build with an error, flaky cause unknown."
+    },
+    {
+      "id": "q08",
+      "query": "上传图片的接口 /api/upload 现在返回 500,日志里只有一句 Unhandled exception,不知道哪里炸了",
+      "should_trigger": true,
+      "clause": "User reports something broken, throwing, or failing",
+      "note": "Chinese report of an endpoint throwing 500 errors."
+    },
+    {
+      "id": "q09",
+      "query": "the dashboard got way slower after we upgraded to React 19, initial load went from 1s to like 6s",
+      "should_trigger": true,
+      "clause": "User reports something broken, throwing, or failing",
+      "note": "Placeholder replaced below; see performance clause."
+    },
+    {
+      "id": "q10",
+      "query": "这个 SQL 查询以前 200ms,现在要跑 8 秒,是上周加了索引之后才变慢的",
+      "should_trigger": true,
+      "clause": "User reports something slow or a performance regression",
+      "note": "Chinese report of a query performance regression after a change."
+    },
+    {
+      "id": "q11",
+      "query": "our API p95 latency doubled since the last release, no idea why. can you figure out what regressed?",
+      "should_trigger": true,
+      "clause": "User reports something slow or a performance regression",
+      "note": "Latency regression after a release, asking to find the cause."
+    },
+    {
+      "id": "q12",
+      "query": "build_index.py 越跑越慢,处理10万条要20分钟,之前才3分钟",
+      "should_trigger": true,
+      "clause": "User reports something slow or a performance regression",
+      "note": "Chinese report of a script that became much slower."
+    },
+    {
+      "id": "q13",
+      "query": "app is super laggy when scrolling the feed list on android, used to be smooth, whats going on",
+      "should_trigger": true,
+      "clause": "User reports something slow or a performance regression",
+      "note": "Casual report of UI slowness/regression."
+    },
+    {
+      "id": "q14",
+      "query": "write a debug logging helper that prefixes messages with the module name and timestamp",
+      "should_trigger": false,
+      "clause": "User explicitly asks to diagnose or debug",
+      "note": "Shares 'debug' vocabulary but is a feature-building task, not diagnosing a bug."
+    },
+    {
+      "id": "q15",
+      "query": "解释一下 Python 里 pdb 和 ipdb 的区别,以及常用命令",
+      "should_trigger": false,
+      "clause": "User explicitly asks to diagnose or debug",
+      "note": "Conceptual question about debugger tools, no bug to diagnose."
+    },
+    {
+      "id": "q16",
+      "query": "diagnose my sourdough starter, it's not rising",
+      "should_trigger": false,
+      "clause": "User explicitly asks to diagnose or debug",
+      "note": "Uses 'diagnose' but not a software bug."
+    },
+    {
+      "id": "q17",
+      "query": "add a global error boundary to the React app so exceptions show a friendly fallback page",
+      "should_trigger": false,
+      "clause": "User reports something broken, throwing, or failing",
+      "note": "About exceptions but is a feature implementation, not a reported failure."
+    },
+    {
+      "id": "q18",
+      "query": "把 utils/date.ts 里的 try/catch 重构成统一的错误处理函数,不改行为",
+      "should_trigger": false,
+      "clause": "User reports something broken, throwing, or failing",
+      "note": "Error-handling vocabulary but a refactor with no failure to diagnose."
+    },
+    {
+      "id": "q19",
+      "query": "write a unit test for the parseConfig function covering missing and invalid fields",
+      "should_trigger": false,
+      "clause": "User reports something broken, throwing, or failing",
+      "note": "Test-writing task, nothing is reported broken."
+    },
+    {
+      "id": "q20",
+      "query": "what's the difference between a failing test and a flaky test? explain briefly for our onboarding doc",
+      "should_trigger": false,
+      "clause": "User reports something broken, throwing, or failing",
+      "note": "Conceptual explanation, not a live failure."
+    },
+    {
+      "id": "q21",
+      "query": "给 README 加一段说明,介绍我们的性能基准测试怎么运行",
+      "should_trigger": false,
+      "clause": "User reports something slow or a performance regression",
+      "note": "Performance-related docs task, no regression to investigate."
+    },
+    {
+      "id": "q22",
+      "query": "write a benchmark script comparing quicksort and mergesort on 1M random integers",
+      "should_trigger": false,
+      "clause": "User reports something slow or a performance regression",
+      "note": "Benchmark authoring for a new comparison, not a regression report."
+    },
+    {
+      "id": "q23",
+      "query": "怎么给 Postgres 表设计索引才能支持按时间范围和用户ID的查询?新建表,还没上线",
+      "should_trigger": false,
+      "clause": "User reports something slow or a performance regression",
+      "note": "Design-time schema advice for a new table; nothing is slow yet."
+    }
+  ],
+  "clauses": [
+    "User explicitly asks to diagnose or debug",
+    "User reports something broken, throwing, or failing",
+    "User reports something slow or a performance regression"
+  ]
+}

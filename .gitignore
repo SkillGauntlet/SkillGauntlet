@@ -1,0 +1,21 @@
+# Internal product design doc (business and anti-cheat strategy); never in the public repo
+*设计文档*.md
+_private/
+
+# Clones of skills under test: licenses vary (some are proprietary) and must not be redistributed
+.cache/
+
+# Run artifacts
+step0/results/
+.skillgauntlet/
+node_modules/
+*.log
+__pycache__/
+*.pyc
+
+# Never commit credentials, wherever they are written
+.env
+.env.*
+*.key
+*_key.txt
+secrets.json

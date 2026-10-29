@@ -1,0 +1,225 @@
+{
+  "skill": "vercel-react-best-practices",
+  "skill_md_sha256": "3286ace648b4d740317b9c1cb7fbd38600eaacc62a8b57ea5e06fd2992b5582e",
+  "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28",
+  "review": "none: AI-drafted. The method tests each skill with two or more independently drafted sets and reports the spread between them instead of reviewing each set by hand.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "帮我写一个 Next.js 的商品列表页 app/products/page.tsx,带分页和筛选,用 server component",
+      "should_trigger": true,
+      "clause": "Writing React components or Next.js pages",
+      "note": "Asks to create a new Next.js page from scratch."
+    },
+    {
+      "id": "q02",
+      "query": "write me a React <CommentThread /> component that renders nested replies and a reply box, TypeScript",
+      "should_trigger": true,
+      "clause": "Writing React components or Next.js pages",
+      "note": "New React component authoring."
+    },
+    {
+      "id": "q03",
+      "query": "新建一个 dashboard 页面,里面有几个图表卡片组件,用 Next.js app router 写",
+      "should_trigger": true,
+      "clause": "Writing React components or Next.js pages",
+      "note": "Create new Next.js page and components in Chinese."
+    },
+    {
+      "id": "q04",
+      "query": "need a new /settings route in my next app with a profile form component, can you scaffold it",
+      "should_trigger": true,
+      "clause": "Writing React components or Next.js pages",
+      "note": "Scaffolding a new Next.js route and component."
+    },
+    {
+      "id": "q05",
+      "query": "我这个页面先 await 拿用户,再 await 拿订单,再拿推荐,好慢,帮我把 getServerSideProps 里的请求改好",
+      "should_trigger": true,
+      "clause": "Implementing data fetching (client or server)",
+      "note": "Sequential server-side fetches; data fetching waterfall."
+    },
+    {
+      "id": "q06",
+      "query": "how should I fetch the notifications list on the client in React so multiple components don't fire duplicate requests?",
+      "should_trigger": true,
+      "clause": "Implementing data fetching (client or server)",
+      "note": "Client data fetching with dedup."
+    },
+    {
+      "id": "q07",
+      "query": "写个 server action 提交订单,再在 RSC 里并行取商品和库存数据",
+      "should_trigger": true,
+      "clause": "Implementing data fetching (client or server)",
+      "note": "Implement server-side fetching in RSC."
+    },
+    {
+      "id": "q08",
+      "query": "implement data loading for my Next.js blog: fetch posts and author info in page.tsx, want it fast with streaming",
+      "should_trigger": true,
+      "clause": "Implementing data fetching (client or server)",
+      "note": "Implementing fetching with streaming focus."
+    },
+    {
+      "id": "q09",
+      "query": "帮我 review 一下 components/Table.tsx,看看有没有性能问题,感觉输入的时候卡",
+      "should_trigger": true,
+      "clause": "Reviewing code for performance issues",
+      "note": "Perf review of a React component."
+    },
+    {
+      "id": "q10",
+      "query": "can u look over my Next.js app/feed/page.tsx for perf problems? it feels sluggish",
+      "should_trigger": true,
+      "clause": "Reviewing code for performance issues",
+      "note": "Perf review of Next.js page."
+    },
+    {
+      "id": "q11",
+      "query": "code review 这个 PR 里的 React hooks,重点看多余的 re-render 和 useEffect 用法",
+      "should_trigger": true,
+      "clause": "Reviewing code for performance issues",
+      "note": "Review focusing on re-renders."
+    },
+    {
+      "id": "q12",
+      "query": "audit my React app for performance anti-patterns, start with src/components/",
+      "should_trigger": true,
+      "clause": "Reviewing code for performance issues",
+      "note": "Performance audit request."
+    },
+    {
+      "id": "q13",
+      "query": "把 UserList.jsx 重构一下,现在每次父组件更新都整个重渲染,组件里还嵌套定义了子组件",
+      "should_trigger": true,
+      "clause": "Refactoring existing React/Next.js code",
+      "note": "Refactor to fix re-render issues."
+    },
+    {
+      "id": "q14",
+      "query": "refactor this class-heavy Next.js pages router code to be cleaner and faster, files in pages/ and components/",
+      "should_trigger": true,
+      "clause": "Refactoring existing React/Next.js code",
+      "note": "Refactor existing Next.js code with performance."
+    },
+    {
+      "id": "q15",
+      "query": "重构下 hooks/useSearch.ts,useEffect 里在同步 derived state,想改成更合理的写法",
+      "should_trigger": true,
+      "clause": "Refactoring existing React/Next.js code",
+      "note": "Refactor effect-derived state."
+    },
+    {
+      "id": "q16",
+      "query": "clean up my React form component, it has like 6 useState and effects that depend on objects, refactor pls",
+      "should_trigger": true,
+      "clause": "Refactoring existing React/Next.js code",
+      "note": "Refactor state/effect dependency problems."
+    },
+    {
+      "id": "q17",
+      "query": "我们 Next.js 项目首屏 JS 太大了,lucide-react 和 lodash 都是整包引入,帮忙优化 bundle",
+      "should_trigger": true,
+      "clause": "Optimizing bundle size or load times",
+      "note": "Bundle size with barrel imports."
+    },
+    {
+      "id": "q18",
+      "query": "how do I lazy load a heavy chart component in Next.js so initial load time drops?",
+      "should_trigger": true,
+      "clause": "Optimizing bundle size or load times",
+      "note": "Dynamic imports for load time."
+    },
+    {
+      "id": "q19",
+      "query": "页面加载太慢,Google Analytics 和 Sentry 能不能延后到 hydration 之后再加载?",
+      "should_trigger": true,
+      "clause": "Optimizing bundle size or load times",
+      "note": "Defer third-party scripts."
+    },
+    {
+      "id": "q20",
+      "query": "my next build shows a 900kb first-load bundle for /home, help me cut it down",
+      "should_trigger": true,
+      "clause": "Optimizing bundle size or load times",
+      "note": "Reduce first-load bundle."
+    },
+    {
+      "id": "q21",
+      "query": "帮我写一个 Express 接口 /api/orders,用 Postgres 查订单并分页,不涉及前端",
+      "should_trigger": false,
+      "clause": "Writing React components or Next.js pages",
+      "note": "Backend Express work, no React/Next.js."
+    },
+    {
+      "id": "q22",
+      "query": "write a Vue 3 component for a modal dialog with transitions using the composition API",
+      "should_trigger": false,
+      "clause": "Writing React components or Next.js pages",
+      "note": "Vue, not React."
+    },
+    {
+      "id": "q23",
+      "query": "给我的 React 按钮组件设计一套视觉风格,配色和圆角、阴影怎么搭比较好看",
+      "should_trigger": false,
+      "clause": "Writing React components or Next.js pages",
+      "note": "Visual design task, a frontend-design skill's domain."
+    },
+    {
+      "id": "q24",
+      "query": "帮我写 SQL 优化,orders 表 join users 表查询很慢,需要加什么索引",
+      "should_trigger": false,
+      "clause": "Implementing data fetching (client or server)",
+      "note": "Database query tuning, not React data fetching."
+    },
+    {
+      "id": "q25",
+      "query": "write a Python script that scrapes product prices from a site with requests and BeautifulSoup",
+      "should_trigger": false,
+      "clause": "Implementing data fetching (client or server)",
+      "note": "Python scraping, unrelated to React fetching."
+    },
+    {
+      "id": "q26",
+      "query": "review my Go service's goroutine usage for performance and race conditions",
+      "should_trigger": false,
+      "clause": "Reviewing code for performance issues",
+      "note": "Performance review of Go code, not React."
+    },
+    {
+      "id": "q27",
+      "query": "帮我 review 这段 Python pandas 代码,内存占用太高了",
+      "should_trigger": false,
+      "clause": "Reviewing code for performance issues",
+      "note": "Python performance, not React/Next.js."
+    },
+    {
+      "id": "q28",
+      "query": "refactor my Django views into class-based views and split the models file",
+      "should_trigger": false,
+      "clause": "Refactoring existing React/Next.js code",
+      "note": "Refactoring non-React code."
+    },
+    {
+      "id": "q29",
+      "query": "我的 Webpack 配置要升级到 Vite,帮我迁移 vite.config.ts,项目是纯 TypeScript 库没有 React",
+      "should_trigger": false,
+      "clause": "Optimizing bundle size or load times",
+      "note": "Build tool migration for a non-React library."
+    },
+    {
+      "id": "q30",
+      "query": "写一下 Next.js 项目的 Dockerfile 和 GitHub Actions 部署流程,部署到自己的服务器上",
+      "should_trigger": false,
+      "clause": "Optimizing bundle size or load times",
+      "note": "Deployment/CI task, not performance optimization of code."
+    }
+  ],
+  "clauses": [
+    "Writing React components or Next.js pages",
+    "Implementing data fetching (client or server)",
+    "Reviewing code for performance issues",
+    "Refactoring existing React/Next.js code",
+    "Optimizing bundle size or load times"
+  ]
+}

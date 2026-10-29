@@ -1,0 +1,225 @@
+{
+  "skill": "hyperframes",
+  "skill_md_sha256": "180ce4eea5f33f1617105c92e2690a5a2320abf624c263186ec0cb1a78a919ef",
+  "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28",
+  "review": "none: AI-drafted. The method tests each skill with two or more independently drafted sets and reports the spread between them instead of reviewing each set by hand.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "帮我做一个 30 秒的新品发布短片,用 HyperFrames,1920x1080,要有产品截图和背景音乐",
+      "should_trigger": true,
+      "clause": "Make a new video",
+      "note": "Creating a new launch film from scratch with HyperFrames"
+    },
+    {
+      "id": "q02",
+      "query": "make me a 20s video from this landing page, hyperframes init a new project and build the scenes",
+      "should_trigger": true,
+      "clause": "Make a new video",
+      "note": "New video project creation from a website"
+    },
+    {
+      "id": "q03",
+      "query": "用 HTML 渲染视频的方式做一个公司介绍视频,新建项目吧",
+      "should_trigger": true,
+      "clause": "Make a new video",
+      "note": "New video via HTML-to-video, no tool named explicitly"
+    },
+    {
+      "id": "q04",
+      "query": "i need a short promo clip for our app, start from scratch w/ hyperframes pls",
+      "should_trigger": true,
+      "clause": "Make a new video",
+      "note": "Casual request for a new promo video"
+    },
+    {
+      "id": "q05",
+      "query": "compositions/intro.html 里的标题再晚 0.5 秒出现,另外把 index.html 的总时长改成 24 秒",
+      "should_trigger": true,
+      "clause": "Edit an existing video",
+      "note": "Editing timing in an existing HyperFrames project"
+    },
+    {
+      "id": "q06",
+      "query": "swap the logo in my hyperframes project for assets/logo-new.svg and change the brand color to #ff5a1f",
+      "should_trigger": true,
+      "clause": "Edit an existing video",
+      "note": "Editing assets and variables in an existing project"
+    },
+    {
+      "id": "q07",
+      "query": "第二个场景太长了,砍掉最后两秒,然后检查一下有没有 lint 报错",
+      "should_trigger": true,
+      "clause": "Edit an existing video",
+      "note": "Trimming a scene in an existing HyperFrames video"
+    },
+    {
+      "id": "q08",
+      "query": "the person edited my video in the studio, pls continue from where they left off and add one more scene at the end",
+      "should_trigger": true,
+      "clause": "Edit an existing video",
+      "note": "Continuing after user edits in the preview"
+    },
+    {
+      "id": "q09",
+      "query": "给这个标题加一个逐字弹出的动画,用 GSAP timeline 做,别用 CSS transition",
+      "should_trigger": true,
+      "clause": "Animate video content",
+      "note": "Animating a title in a HyperFrames composition"
+    },
+    {
+      "id": "q10",
+      "query": "animate the bars in my chart scene so they grow in one by one w/ a stagger, then hold for 2s",
+      "should_trigger": true,
+      "clause": "Animate video content",
+      "note": "Chart animation in a video scene"
+    },
+    {
+      "id": "q11",
+      "query": "场景之间加个转场,从左边推进过来,要在 timeline 上精确到帧",
+      "should_trigger": true,
+      "clause": "Animate video content",
+      "note": "Scene transition animation on a seekable timeline"
+    },
+    {
+      "id": "q12",
+      "query": "make the logo punch in with a little overshoot at 3s and fade the subtitle after it",
+      "should_trigger": true,
+      "clause": "Animate video content",
+      "note": "Motion design within the video"
+    },
+    {
+      "id": "q13",
+      "query": "预览没问题了,帮我渲染成 mp4 导出吧",
+      "should_trigger": true,
+      "clause": "Render video to file",
+      "note": "Final render request after approval"
+    },
+    {
+      "id": "q14",
+      "query": "render the final video now, i approved the preview. output to out/launch.mp4",
+      "should_trigger": true,
+      "clause": "Render video to file",
+      "note": "Explicit render with output path"
+    },
+    {
+      "id": "q15",
+      "query": "我要导出视频文件,直接跑渲染,不用再问我了",
+      "should_trigger": true,
+      "clause": "Render video to file",
+      "note": "Render in no-stops mode"
+    },
+    {
+      "id": "q16",
+      "query": "npx hyperframes render keeps giving a different frame at 4s, can u make the render deterministic?",
+      "should_trigger": true,
+      "clause": "Render video to file",
+      "note": "Render determinism issue in HyperFrames"
+    },
+    {
+      "id": "q17",
+      "query": "做一个竖屏 9:16 的抖音短视频,展示三个产品功能,带字幕",
+      "should_trigger": true,
+      "clause": "Specific video kinds (launch film, explainer, music video, chart, vertical clip, title card, caption, overlay)",
+      "note": "Vertical social clip with captions"
+    },
+    {
+      "id": "q18",
+      "query": "make a music video for my track assets/song.mp3, lyrics should pop in sync w/ the beat",
+      "should_trigger": true,
+      "clause": "Specific video kinds (launch film, explainer, music video, chart, vertical clip, title card, caption, overlay)",
+      "note": "Music video with lyric animation"
+    },
+    {
+      "id": "q19",
+      "query": "做个数据可视化视频,把 sales.csv 里的季度营收做成动态柱状图",
+      "should_trigger": true,
+      "clause": "Specific video kinds (launch film, explainer, music video, chart, vertical clip, title card, caption, overlay)",
+      "note": "Data chart video"
+    },
+    {
+      "id": "q20",
+      "query": "add lower-third overlays and word-by-word captions on top of my talking-head footage interview.mp4",
+      "should_trigger": true,
+      "clause": "Specific video kinds (launch film, explainer, music video, chart, vertical clip, title card, caption, overlay)",
+      "note": "Captions and overlays over a talking head"
+    },
+    {
+      "id": "q21",
+      "query": "帮我做一个 PPT 演示文稿,10 页,介绍我们的季度业绩",
+      "should_trigger": false,
+      "clause": "Make a new video",
+      "note": "Slide deck belongs to the slideshow skill, not video"
+    },
+    {
+      "id": "q22",
+      "query": "write a Remotion project that renders a 10s intro video from React components",
+      "should_trigger": false,
+      "clause": "Make a new video",
+      "note": "Remotion is another framework; the skill is not wanted unless converting"
+    },
+    {
+      "id": "q23",
+      "query": "用 ffmpeg 把 input.mov 转成 h264 的 mp4,压缩到 20MB 以内",
+      "should_trigger": false,
+      "clause": "Render video to file",
+      "note": "Plain transcoding, not HyperFrames rendering"
+    },
+    {
+      "id": "q24",
+      "query": "screen record my browser while I click through the app and save it as demo.mp4 with playwright",
+      "should_trigger": false,
+      "clause": "Render video to file",
+      "note": "Plain browser recording, which the skill says not to use for"
+    },
+    {
+      "id": "q25",
+      "query": "把 src/components/Hero.tsx 里的按钮 hover 动画改成弹性缓动,用 framer-motion",
+      "should_trigger": false,
+      "clause": "Animate video content",
+      "note": "Web UI animation, not video"
+    },
+    {
+      "id": "q26",
+      "query": "add a CSS keyframe fade-in to the navbar in styles/main.css",
+      "should_trigger": false,
+      "clause": "Animate video content",
+      "note": "Ordinary website animation, no video"
+    },
+    {
+      "id": "q27",
+      "query": "帮我剪辑 vlog.mp4,去掉静音片段并合并成一个文件,用 Premiere 的工作流",
+      "should_trigger": false,
+      "clause": "Edit an existing video",
+      "note": "Editing a conventional video file in an NLE, not HyperFrames"
+    },
+    {
+      "id": "q28",
+      "query": "transcribe interview.mp4 into an SRT subtitle file with whisper",
+      "should_trigger": false,
+      "clause": "Specific video kinds (launch film, explainer, music video, chart, vertical clip, title card, caption, overlay)",
+      "note": "Transcription only, no HyperFrames caption composition"
+    },
+    {
+      "id": "q29",
+      "query": "用 matplotlib 画一张季度营收的柱状图,保存成 png",
+      "should_trigger": false,
+      "clause": "Specific video kinds (launch film, explainer, music video, chart, vertical clip, title card, caption, overlay)",
+      "note": "Static chart, not a video"
+    },
+    {
+      "id": "q30",
+      "query": "design a logo and title card as a static PNG in Figma for our launch",
+      "should_trigger": false,
+      "clause": "Specific video kinds (launch film, explainer, music video, chart, vertical clip, title card, caption, overlay)",
+      "note": "Static design in Figma, owned by the figma skill"
+    }
+  ],
+  "clauses": [
+    "Make a new video",
+    "Edit an existing video",
+    "Animate video content",
+    "Render video to file",
+    "Specific video kinds (launch film, explainer, music video, chart, vertical clip, title card, caption, overlay)"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "skill": "tdd",
+  "tasks": [
+    {
+      "id": "t1",
+      "prompt": "给 calc.py 加一个 divide(a, b)，除数为 0 时抛 ValueError。别把现有 add 弄坏。",
+      "files": {
+        "calc.py": "def add(a, b):\n    return a + b\n"
+      },
+      "contracts": [
+        { "desc": "a test file was added", "descI18n": {"zh": "新增了测试文件", "ja": "テストファイルが追加された"}, "type": "files_added_matching", "glob": "**/*test*.py" },
+        { "desc": "tests pass (pytest exits non-zero when there are none)", "descI18n": {"zh": "测试能跑通（无测试则 pytest 返回非零）", "ja": "テストが通る（テストがなければ pytest は非ゼロで終了）"}, "type": "command_succeeds", "cmd": "python -m pytest -q" },
+        { "desc": "divide was actually added", "descI18n": {"zh": "divide 真的被加进去了", "ja": "divide が実際に追加された"}, "type": "file_contains", "glob": "calc.py", "regex": "def\\s+divide" }
+      ]
+    },
+    {
+      "id": "t2",
+      "prompt": "calc.py 里的 multiply 对负数返回了错误的符号，修一下。",
+      "files": {
+        "calc.py": "def multiply(a, b):\n    return abs(a * b)\n"
+      },
+      "contracts": [
+        { "desc": "a test file was added", "descI18n": {"zh": "新增了测试文件", "ja": "テストファイルが追加された"}, "type": "files_added_matching", "glob": "**/*test*.py" },
+        { "desc": "tests pass (pytest exits non-zero when there are none)", "descI18n": {"zh": "测试能跑通（无测试则 pytest 返回非零）", "ja": "テストが通る（テストがなければ pytest は非ゼロで終了）"}, "type": "command_succeeds", "cmd": "python -m pytest -q" },
+        {
+          "desc": "multiply returns a negative value on negatives (-2 * 3 == -6)", "descI18n": {"zh": "multiply 在负数上返回负值（-2 * 3 == -6）", "ja": "multiply が負数に対して負の値を返す（-2 * 3 == -6）"},
+          "type": "command_succeeds",
+          "cmd": "python -c \"from calc import multiply; assert multiply(-2,3) == -6, multiply(-2,3)\""
+        }
+      ]
+    }
+  ]
+}

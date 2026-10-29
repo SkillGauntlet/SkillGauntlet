@@ -1,0 +1,128 @@
+{
+  "skill": "diagnosing-bugs",
+  "skill_md_sha256": "aa87b0ac245c6d1b203c4678eb34dc101af02291448780c55c5e58ccc1619bd7",
+  "reviewed": false,
+  "review_notes": "Human review: drop queries that copy the description; make sure negatives are near misses rather than unrelated tasks; set reviewed to true when done.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "这个接口一调用就报 500，日志里是 NullReferenceException，帮我 debug 一下 orders/service.ts 里的 createOrder",
+      "should_trigger": true,
+      "note": "Reports a broken/throwing behavior with a concrete symptom and file; the user is asking for debugging, which is the skill's core trigger."
+    },
+    {
+      "id": "q02",
+      "query": "diagnose why the nightly export job in ./jobs/export.py hangs after about 40 rows, no error logged",
+      "should_trigger": true,
+      "note": "Uses the explicit 'diagnose' keyword and describes a hang (failing behavior) with a specific file and reproduction hint."
+    },
+    {
+      "id": "q03",
+      "query": "dashboard 首页加载从 1.2 秒变成了 6 秒多，上周还是正常的，帮忙查一下是哪次改动引起的",
+      "should_trigger": true,
+      "note": "Performance regression reported as 'slow' with a timeline; the skill covers perf regressions and bisection."
+    },
+    {
+      "id": "q04",
+      "query": "登录之后偶尔会被踢出去，大概十次里有一两次，不知道什么原因，帮我 debug",
+      "should_trigger": true,
+      "note": "Intermittent, non-deterministic failure with the 'debug' keyword; the skill's non-deterministic bug path applies."
+    },
+    {
+      "id": "q05",
+      "query": "pytest tests/test_parser.py 里 test_nested_brackets 挂了，报 IndexError，帮我看看哪里出的问题",
+      "should_trigger": true,
+      "note": "A failing test reported as broken/failing with exact test name and error; a clear debugging request."
+    },
+    {
+      "id": "q06",
+      "query": "upload 之后图片在移动端显示成全黑，桌面端正常，这个 bug 怎么回事",
+      "should_trigger": true,
+      "note": "Reports something broken with an environment-specific symptom; needs building a repro and narrowing the cause."
+    },
+    {
+      "id": "q07",
+      "query": "我们的 webhook 收到 Stripe 的回调后有时候会重复扣款，线上日志在 logs/webhook-2026-10-25.log",
+      "should_trigger": true,
+      "note": "Reports a serious malfunction in production with a log artifact; the skill's redaction and loop-building apply."
+    },
+    {
+      "id": "q08",
+      "query": "build 的时候 vite 报 'Cannot find module ./utils/date' 但是文件明明存在，debug 一下",
+      "should_trigger": true,
+      "note": "Build failure described as broken, with explicit 'debug' request; reproducible loop is the right approach."
+    },
+    {
+      "id": "q09",
+      "query": "The checkout summary total is off by one cent when I apply two coupons, it worked last sprint. Can you diagnose it?",
+      "should_trigger": true,
+      "note": "English request with explicit 'diagnose' keyword and a regression ('worked last sprint') on a concrete behavior."
+    },
+    {
+      "id": "q10",
+      "query": "CI 里 e2e 这个用例每隔几次就超时失败，本地跑没事，帮忙查下为什么 flaky",
+      "should_trigger": true,
+      "note": "Flaky test failure reported as failing; non-deterministic bug needing a higher repro rate."
+    },
+    {
+      "id": "q11",
+      "query": "帮我把 src/utils/format.ts 里的 formatCurrency 加上千分位分隔符，顺便补两个单元测试",
+      "should_trigger": false,
+      "note": "Feature/enhancement in the same file area, not a bug report or diagnosis; belongs to a feature-implementation skill."
+    },
+    {
+      "id": "q12",
+      "query": "Write a changelog entry for the v2.3 release based on the commits since v2.2 in this repo",
+      "should_trigger": false,
+      "note": "Same repo, but documentation/release-notes work, not bug diagnosis."
+    },
+    {
+      "id": "q13",
+      "query": "把 api/routes.js 里的 Express 路由全部迁移到 Fastify，保持接口行为不变",
+      "should_trigger": false,
+      "note": "Refactoring/migration task; no broken behavior reported, so it's a different job than debugging."
+    },
+    {
+      "id": "q14",
+      "query": "Review this PR diff for security issues before I merge: feature/oauth-refresh",
+      "should_trigger": false,
+      "note": "Code review of a diff, a sibling review skill's job, even though it touches auth code."
+    },
+    {
+      "id": "q15",
+      "query": "给 user 表加一个 last_login_at 字段，写对应的 migration 文件",
+      "should_trigger": false,
+      "note": "Schema change request in the database domain; no failure or regression is reported."
+    },
+    {
+      "id": "q16",
+      "query": "帮我写一个 GitHub Actions 工作流，每次 push 到 main 自动跑 lint 和 typecheck",
+      "should_trigger": false,
+      "note": "CI configuration authoring; no bug or failing pipeline is described, just a new setup."
+    },
+    {
+      "id": "q17",
+      "query": "Profile the cold-start time of our Go CLI and give me a breakdown of where startup time goes, no need to fix anything",
+      "should_trigger": false,
+      "note": "[kept: borderline] Profiling cold-start time; the description includes \"performance regressions\", but this is not a regression and no fix is requested"
+    },
+    {
+      "id": "q18",
+      "query": "src/net/client.ts 里的 retry 逻辑写得有点乱，帮我重构得更易读，行为不变",
+      "should_trigger": false,
+      "note": "[review: replaced, near-miss negative] Refactoring the same code area; nothing is broken"
+    },
+    {
+      "id": "q19",
+      "query": "Add retry-with-backoff to the HTTP client in src/net/client.ts so transient 503s are retried up to 3 times",
+      "should_trigger": false,
+      "note": "Requests a new feature (resilience behavior) rather than investigating a reported bug."
+    },
+    {
+      "id": "q20",
+      "query": "explain why JavaScript's 0.1 + 0.2 !== 0.3, I just want to understand it, nothing is broken in my code",
+      "should_trigger": false,
+      "note": "[review: replaced, near-miss negative] Looks like a bug, but the user says nothing is broken"
+    }
+  ]
+}

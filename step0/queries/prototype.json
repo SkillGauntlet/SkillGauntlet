@@ -1,0 +1,128 @@
+{
+  "skill": "prototype",
+  "skill_md_sha256": "f74ae01f4fc454d3a4ef21271920f1706e626271e715dda0559e489f45c792c3",
+  "reviewed": false,
+  "review_notes": "Human review: drop queries that copy the description; make sure negatives are near misses rather than unrelated tasks; set reviewed to true when done.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "can you throw together a quick prototype to see if my order state machine (draft->paid->shipped->refunded) makes sense? src/orders/stateMachine.ts",
+      "should_trigger": true,
+      "note": "Asks to sanity-check a state model with a quick throwaway prototype, the logic branch"
+    },
+    {
+      "id": "q02",
+      "query": "这个购物车的状态流转逻辑我感觉有点乱，能不能做个小demo让我点点看对不对，src/cart/state.ts",
+      "should_trigger": true,
+      "note": "Wants a clickable demo to check whether cart state logic feels right, the logic branch"
+    },
+    {
+      "id": "q03",
+      "query": "I'm not sure what the settings page should look like. Can you mock up a few totally different layouts I can flip between? pages/settings",
+      "should_trigger": true,
+      "note": "Explores what a UI should look like with several radically different variations, the UI branch"
+    },
+    {
+      "id": "q04",
+      "query": "帮我搞几个首页的界面方案出来对比一下，风格差异大一点，就放在 app/home 下面，随便写写别太讲究",
+      "should_trigger": true,
+      "note": "Wants multiple contrasting UI options for a page, casual tone, the UI branch"
+    },
+    {
+      "id": "q05",
+      "query": "quick sanity check: does this retry/backoff state model in lib/uploader.py handle the offline->resume case? hand me something I can double click",
+      "should_trigger": true,
+      "note": "Checks a state model's edge case and wants a double-clickable HTML artifact, the logic branch"
+    },
+    {
+      "id": "q06",
+      "query": "想看看这个表单向导在移动端应该是什么样子，给我弄几种不同的布局切换着看",
+      "should_trigger": true,
+      "note": "Asks what a UI should look like by comparing several layout variants, the UI branch"
+    },
+    {
+      "id": "q07",
+      "query": "can we prototype the onboarding flow's state logic? stuck between 'skipped' and 'completed' states, want a clickable html I can share with the PM",
+      "should_trigger": true,
+      "note": "Logic question about state semantics with a shareable single-file demo for a non-developer"
+    },
+    {
+      "id": "q08",
+      "query": "这个通知中心的交互我拿不准，能不能出几版视觉方案，用 URL 参数切换那种",
+      "should_trigger": true,
+      "note": "Wants several UI variations switchable via URL param to decide the look, the UI branch"
+    },
+    {
+      "id": "q09",
+      "query": "Build me a throwaway page under the existing /lab route with 4 radically different dashboard layouts so I can compare them",
+      "should_trigger": true,
+      "note": "Explicit request for multiple radically different UI variants on a route, the UI branch"
+    },
+    {
+      "id": "q10",
+      "query": "这个权限状态机 (guest/member/admin) 我总觉得有漏洞，做个能推着走各种情况的演示页给我看看",
+      "should_trigger": true,
+      "note": "Wants a walkthrough demo that pushes a permission state machine through hard cases, the logic branch"
+    },
+    {
+      "id": "q11",
+      "query": "write unit tests for src/orders/stateMachine.ts covering every transition, use vitest",
+      "should_trigger": false,
+      "note": "Same state machine, but the job is production test coverage, which a testing skill owns"
+    },
+    {
+      "id": "q12",
+      "query": "把 src/cart/state.ts 里的状态判断重构成 reducer 形式，保持行为不变",
+      "should_trigger": false,
+      "note": "Same module, but a behavior-preserving refactor of production code, not exploring a design question"
+    },
+    {
+      "id": "q13",
+      "query": "the settings page is returning 500 on save, can you find the bug in app/settings/route.ts",
+      "should_trigger": false,
+      "note": "Same page, but a debugging job; no design question or variants needed"
+    },
+    {
+      "id": "q14",
+      "query": "帮我把 Button 组件加上 dark mode 的样式变量，用 tailwind 的 dark: 前缀",
+      "should_trigger": false,
+      "note": "Implements a finalized styling change in production UI rather than exploring what it should look like"
+    },
+    {
+      "id": "q15",
+      "query": "write a Mermaid state diagram for the order lifecycle for our README",
+      "should_trigger": false,
+      "note": "Documents the existing lifecycle; a documentation task, not a check of whether the model is right"
+    },
+    {
+      "id": "q16",
+      "query": "这个订单状态机的数据库 schema 怎么设计比较好，orders 表要不要加 status_history 表",
+      "should_trigger": false,
+      "note": "Persistence schema design is a different job from checking the state logic"
+    },
+    {
+      "id": "q17",
+      "query": "set up a GitHub Actions workflow that runs the cart state tests on every PR",
+      "should_trigger": false,
+      "note": "CI configuration near the cart logic; a build/CI task owned by another skill"
+    },
+    {
+      "id": "q18",
+      "query": "帮我把 /dashboard 页面的首屏加载速度优化一下，看看是不是图片没做懒加载",
+      "should_trigger": false,
+      "note": "Same page, but a performance optimization of production code, not a design exploration"
+    },
+    {
+      "id": "q19",
+      "query": "review my PR #142 changes to the upload retry logic and leave comments",
+      "should_trigger": false,
+      "note": "Reviewing existing retry logic in a PR is code review, not prototyping a state model"
+    },
+    {
+      "id": "q20",
+      "query": "给 uploader 模块写个 Storybook story，把现有的 Modal 组件的各种 props 状态都覆盖一下",
+      "should_trigger": false,
+      "note": "Documents a finished component's states in Storybook; not a UI variation exploration"
+    }
+  ]
+}

@@ -1,0 +1,128 @@
+{
+  "skill": "web-design-guidelines",
+  "skill_md_sha256": "17e48da905f83a19c174079b50760a98c069527ba50079239b3c187236627c29",
+  "reviewed": false,
+  "review_notes": "Human review: drop queries that copy the description; make sure negatives are near misses rather than unrelated tasks; set reviewed to true when done.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "review my UI in components/Checkout.tsx, look for accessibility problems",
+      "should_trigger": true,
+      "note": "Direct 'review my UI' phrasing plus 'accessibility' with a specific file, matching the skill's core use case"
+    },
+    {
+      "id": "q02",
+      "query": "帮我审计一下 src/pages/landing 这个目录的设计，看看有没有不符合规范的地方",
+      "should_trigger": true,
+      "note": "Chinese request to 'audit design' over a directory, matches the skill's audit-design trigger and file-pattern argument"
+    },
+    {
+      "id": "q03",
+      "query": "can u check my site against best practices? its the Next app in ./app, mostly the header and nav",
+      "should_trigger": true,
+      "note": "[kept: copies trigger phrase] \"check my site against best practices\" matches the description's trigger phrase; kept as a control"
+    },
+    {
+      "id": "q04",
+      "query": "检查一下 Login.vue 的无障碍问题，尤其是表单标签和焦点管理",
+      "should_trigger": true,
+      "note": "Chinese 'check accessibility' request with a named file and specific concerns"
+    },
+    {
+      "id": "q05",
+      "query": "review UX of the onboarding flow in pages/onboarding/*.tsx pls",
+      "should_trigger": true,
+      "note": "Uses the 'review UX' trigger phrase with a glob pattern argument, terse style"
+    },
+    {
+      "id": "q06",
+      "query": "我的 dashboard.html 页面 UI 帮我看看有没有问题 review 一下",
+      "should_trigger": true,
+      "note": "Chinese mixed with English 'review' and 'UI', explicit request to review a UI file"
+    },
+    {
+      "id": "q07",
+      "query": "the modal in src/components/Modal.jsx feels janky on mobile, can you review the markup and css for accessibility issues like focus trapping and aria labels",
+      "should_trigger": true,
+      "note": "Descriptive request asking for an accessibility review of a specific component, with context about the problem"
+    },
+    {
+      "id": "q08",
+      "query": "帮我 review 一下 settings 页面的交互体验，文件在 app/settings/page.tsx",
+      "should_trigger": true,
+      "note": "Chinese request to review interaction experience (UX) for a named page file"
+    },
+    {
+      "id": "q09",
+      "query": "audit design on the marketing pages under site/src/pages, compare against the usual web ui rules",
+      "should_trigger": true,
+      "note": "Uses the 'audit design' trigger with a directory pattern, phrased as a request against standard UI rules"
+    },
+    {
+      "id": "q10",
+      "query": "signup.html 和 contact.html 这两个表单页，帮我挑挑看有哪些地方不符合常见的 UI/UX 规范",
+      "should_trigger": true,
+      "note": "[review: rewritten] The original copied the description's trigger phrase; rewritten as a natural request"
+    },
+    {
+      "id": "q11",
+      "query": "帮我修复 Checkout.tsx 里那个按钮的 hover 样式，颜色对比度好像不够",
+      "should_trigger": false,
+      "note": "[kept: borderline] Fixing contrast directly rather than reviewing; the description includes \"check accessibility\""
+    },
+    {
+      "id": "q12",
+      "query": "Write a Playwright end-to-end test that logs into the app and checks the dashboard loads",
+      "should_trigger": false,
+      "note": "Near miss: testing work in the same web project but a different job (writing tests, not reviewing UI against guidelines)"
+    },
+    {
+      "id": "q13",
+      "query": "把 utils/formatDate.ts 里的日期格式函数改成支持时区参数",
+      "should_trigger": false,
+      "note": "Same codebase but a pure refactor/feature task with no UI or guideline review involved"
+    },
+    {
+      "id": "q14",
+      "query": "Run Lighthouse on https://myshop.example.com and give me the performance score breakdown",
+      "should_trigger": false,
+      "note": "Near miss: auditing a live site, but for performance metrics via a different tool, not reviewing UI code against guidelines"
+    },
+    {
+      "id": "q15",
+      "query": "帮我把 Button 组件从 React class 改写成函数式组件和 hooks",
+      "should_trigger": false,
+      "note": "Near miss: a component refactor in the same UI codebase; it is a code transformation job, not a guidelines review"
+    },
+    {
+      "id": "q16",
+      "query": "Set up a GitHub Actions workflow that builds the Next.js app and deploys it to Vercel on push to main",
+      "should_trigger": false,
+      "note": "Near miss: deployment/CI configuration on a web project, owned by a DevOps skill rather than a UI review"
+    },
+    {
+      "id": "q17",
+      "query": "帮我写一个 CSS 变量的主题切换方案，支持暗色模式",
+      "should_trigger": false,
+      "note": "Near miss: building a theming feature, a creation task rather than an audit of existing UI"
+    },
+    {
+      "id": "q18",
+      "query": "Translate the strings in src/locales/en.json into Japanese and keep the placeholder variables intact",
+      "should_trigger": false,
+      "note": "Near miss: i18n localization work on UI files, a translation job not a review"
+    },
+    {
+      "id": "q19",
+      "query": "用 Jest 给 cart.ts 的 calculateTotal 函数补几个单元测试",
+      "should_trigger": false,
+      "note": "Near miss: unit test writing for business logic in the frontend, a testing job rather than a UI review"
+    },
+    {
+      "id": "q20",
+      "query": "Why is my React component re-rendering on every keystroke? here's the file ProfileForm.tsx",
+      "should_trigger": false,
+      "note": "Near miss: a React performance debugging question on a UI file, owned by a debugging or performance skill, not guideline compliance"
+    }
+  ]
+}

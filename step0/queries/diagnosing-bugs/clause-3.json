@@ -1,0 +1,167 @@
+{
+  "skill": "diagnosing-bugs",
+  "skill_md_sha256": "aa87b0ac245c6d1b203c4678eb34dc101af02291448780c55c5e58ccc1619bd7",
+  "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28",
+  "review": "none: AI-drafted. The method tests each skill with two or more independently drafted sets and reports the spread between them instead of reviewing each set by hand.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "can you debug this? my websocket reconnect logic in src/net/socket.ts sometimes leaves two connections open and I can't figure out why",
+      "should_trigger": true,
+      "clause": "User explicitly asks to diagnose or debug",
+      "note": "Explicit 'debug this' request about an intermittent bug with no error or slowness reported."
+    },
+    {
+      "id": "q02",
+      "query": "帮我diagnose一下 orders 表里偶尔出现重复订单号的问题,不知道是哪一步产生的",
+      "should_trigger": true,
+      "clause": "User explicitly asks to diagnose or debug",
+      "note": "Explicit 'diagnose' request in Chinese about an intermittent data anomaly, not a crash or slowness."
+    },
+    {
+      "id": "q03",
+      "query": "diagnose why the cart total differs between the web and mobile clients for the same items",
+      "should_trigger": true,
+      "clause": "User explicitly asks to diagnose or debug",
+      "note": "Uses 'diagnose' explicitly; the symptom is inconsistent output rather than a failure or slowness."
+    },
+    {
+      "id": "q04",
+      "query": "帮我debug一下这个函数,parse_invoice() 返回的税额跟财务给的数对不上",
+      "should_trigger": true,
+      "clause": "User explicitly asks to diagnose or debug",
+      "note": "Chinese 'debug' request for a wrong-value result without any exception or performance angle."
+    },
+    {
+      "id": "q05",
+      "query": "ugh the build is failing again, npm run build dies with 'Cannot find module ./locale/zh' after I pulled main",
+      "should_trigger": true,
+      "clause": "User reports something broken, throwing, or failing",
+      "note": "Reports a failing build with a concrete error and no explicit diagnose/debug wording."
+    },
+    {
+      "id": "q06",
+      "query": "登录接口突然全部返回500了,日志里是 NullPointerException at AuthService.java:88,刚才还好好的",
+      "should_trigger": true,
+      "clause": "User reports something broken, throwing, or failing",
+      "note": "Chinese report of an endpoint throwing an exception."
+    },
+    {
+      "id": "q07",
+      "query": "my jest tests in utils/date.test.js started failing on CI but pass locally?? timezone stuff maybe",
+      "should_trigger": true,
+      "clause": "User reports something broken, throwing, or failing",
+      "note": "Reports failing tests that behave differently on CI, a failure report with no slowness."
+    },
+    {
+      "id": "q08",
+      "query": "上传图片的按钮点了没反应,控制台报 Uncaught TypeError: Cannot read properties of undefined (reading 'files')",
+      "should_trigger": true,
+      "clause": "User reports something broken, throwing, or failing",
+      "note": "Chinese report of a broken UI feature with a console error."
+    },
+    {
+      "id": "q09",
+      "query": "the dashboard page takes like 15 seconds to load since last week's release, it used to be instant",
+      "should_trigger": true,
+      "clause": "User reports something slow or a performance regression",
+      "note": "Reports a load-time regression after a release."
+    },
+    {
+      "id": "q10",
+      "query": "我的 pandas 脚本 process_logs.py 以前跑一分钟,现在要跑二十多分钟,什么都没改啊",
+      "should_trigger": true,
+      "clause": "User reports something slow or a performance regression",
+      "note": "Chinese report of a script that became much slower with no code changes."
+    },
+    {
+      "id": "q11",
+      "query": "memory keeps climbing and API p99 latency went from 200ms to 3s after we bumped express to v5",
+      "should_trigger": true,
+      "clause": "User reports something slow or a performance regression",
+      "note": "Latency regression after a dependency upgrade."
+    },
+    {
+      "id": "q12",
+      "query": "这个 SQL 查询 users_report.sql 现在慢得要命,加了几万行数据之后就卡住了",
+      "should_trigger": true,
+      "clause": "User reports something slow or a performance regression",
+      "note": "Chinese report of a query that became slow as data grew."
+    },
+    {
+      "id": "q13",
+      "query": "write a debounce helper in utils/debounce.ts with a unit test",
+      "should_trigger": false,
+      "clause": "User explicitly asks to diagnose or debug",
+      "note": "Feature writing request; no diagnosis or debugging needed."
+    },
+    {
+      "id": "q14",
+      "query": "怎么用 VS Code 配置 launch.json 来调试 Node 程序?只是想了解配置方法",
+      "should_trigger": false,
+      "clause": "User explicitly asks to diagnose or debug",
+      "note": "Generic how-to about debugger setup, not diagnosing a specific bug."
+    },
+    {
+      "id": "q15",
+      "query": "explain what a race condition is and give me a short example in Go",
+      "should_trigger": false,
+      "clause": "User explicitly asks to diagnose or debug",
+      "note": "Conceptual explanation, no concrete bug to diagnose."
+    },
+    {
+      "id": "q16",
+      "query": "add try/catch and a proper error page for when the payment API throws, in checkout.tsx",
+      "should_trigger": false,
+      "clause": "User reports something broken, throwing, or failing",
+      "note": "Planned error-handling feature, not a report of a broken thing to investigate."
+    },
+    {
+      "id": "q17",
+      "query": "把 README 里 'failing tests' 那一节改写得更清楚一点,顺便修一下错别字",
+      "should_trigger": false,
+      "clause": "User reports something broken, throwing, or failing",
+      "note": "Documentation edit that merely mentions failing tests."
+    },
+    {
+      "id": "q18",
+      "query": "review my PR diff for obvious bugs and style issues before I merge, branch feature/export-csv",
+      "should_trigger": false,
+      "clause": "User reports something broken, throwing, or failing",
+      "note": "Code review task, owned by a review skill, with no reported failure."
+    },
+    {
+      "id": "q19",
+      "query": "rename the exception class AuthError to AuthenticationError across the repo",
+      "should_trigger": false,
+      "clause": "User reports something broken, throwing, or failing",
+      "note": "Mechanical refactor that shares error vocabulary but nothing is broken."
+    },
+    {
+      "id": "q20",
+      "query": "给我解释一下什么是 N+1 查询,以及一般怎么避免",
+      "should_trigger": false,
+      "clause": "User reports something slow or a performance regression",
+      "note": "Conceptual performance explanation without a concrete slow thing."
+    },
+    {
+      "id": "q21",
+      "query": "set up a k6 load test script for our /api/search endpoint with 100 virtual users",
+      "should_trigger": false,
+      "clause": "User reports something slow or a performance regression",
+      "note": "Writing a benchmark or load test, not investigating a reported regression."
+    },
+    {
+      "id": "q22",
+      "query": "把 Dockerfile 的构建优化一下,用多阶段构建把镜像体积减小,现在也没什么问题就是想更小",
+      "should_trigger": false,
+      "clause": "User reports something slow or a performance regression",
+      "note": "Proactive optimization with no reported slowness or regression."
+    }
+  ],
+  "clauses": [
+    "User explicitly asks to diagnose or debug",
+    "User reports something broken, throwing, or failing",
+    "User reports something slow or a performance regression"
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "skill": "prototype",
+  "skill_md_sha256": "f74ae01f4fc454d3a4ef21271920f1706e626271e715dda0559e489f45c792c3",
+  "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28",
+  "review": "none: AI-drafted. The method tests each skill with two or more independently drafted sets and reports the spread between them instead of reviewing each set by hand.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "I've got an order lifecycle (pending → paid → shipped → refunded) in orders/state.ts and I'm not sure the transitions make sense. can you mock something up so I can click through weird cases like refund after partial ship?",
+      "should_trigger": true,
+      "clause": "Sanity-check a state model or logic",
+      "note": "Asks for a throwaway interactive check of whether a state machine feels right."
+    },
+    {
+      "id": "q02",
+      "query": "我设计了一个订阅状态机(试用、激活、暂停、过期、宽限期),感觉哪里不对劲,想做个能点来点去的小demo验证一下逻辑对不对",
+      "should_trigger": true,
+      "clause": "Sanity-check a state model or logic",
+      "note": "Chinese request to sanity-check a subscription state model with a clickable demo."
+    },
+    {
+      "id": "q03",
+      "query": "before I implement the cart discount stacking rules, can we quickly prototype them so my PM (non-dev) can try combos and tell me if the behavior feels right?",
+      "should_trigger": true,
+      "clause": "Sanity-check a state model or logic",
+      "note": "Logic feel-check that a non-developer can drive, before real implementation."
+    },
+    {
+      "id": "q04",
+      "query": "帮我随手搭个一次性的东西,把审批流的状态流转跑一遍,看看有没有死状态或者绕不出去的情况,不用写正式代码",
+      "should_trigger": true,
+      "clause": "Sanity-check a state model or logic",
+      "note": "Throwaway exploration of approval-flow state transitions to find dead states."
+    },
+    {
+      "id": "q05",
+      "query": "not sure what the settings page in app/settings/page.tsx should look like. can you throw together a few totally different layouts I can flip between?",
+      "should_trigger": true,
+      "clause": "Explore what a UI should look like",
+      "note": "Asks for several different UI variations to choose between."
+    },
+    {
+      "id": "q06",
+      "query": "dashboard 首页我还没想好长什么样,先做几个风格差别很大的版本让我对比一下看看哪个顺眼",
+      "should_trigger": true,
+      "clause": "Explore what a UI should look like",
+      "note": "Chinese request for multiple radically different dashboard designs to compare."
+    },
+    {
+      "id": "q07",
+      "query": "prototype 3 or 4 different takes on the onboarding flow screen, I wanna toggle between them in the browser and pick one",
+      "should_trigger": true,
+      "clause": "Explore what a UI should look like",
+      "note": "Explicit request for switchable UI variants of one screen."
+    },
+    {
+      "id": "q08",
+      "query": "想看看商品详情页能怎么排版,先弄几种不同方案出来试试手感,反正是临时的,不用上线",
+      "should_trigger": true,
+      "clause": "Explore what a UI should look like",
+      "note": "Throwaway exploration of product detail page layouts in Chinese."
+    },
+    {
+      "id": "q09",
+      "query": "write unit tests for the order state machine in orders/state.ts covering all transitions",
+      "should_trigger": false,
+      "clause": "Sanity-check a state model or logic",
+      "note": "Same state machine domain but asks for production tests, not a throwaway prototype."
+    },
+    {
+      "id": "q10",
+      "query": "把 subscription 状态机重构成 XState,保留现有行为,直接改进 src/billing/ 里的正式代码",
+      "should_trigger": false,
+      "clause": "Sanity-check a state model or logic",
+      "note": "Real refactor of production code, not a design-question prototype."
+    },
+    {
+      "id": "q11",
+      "query": "there's a bug where refunded orders can go back to 'paid' in the state reducer, can you find and fix it?",
+      "should_trigger": false,
+      "clause": "Sanity-check a state model or logic",
+      "note": "Debugging a concrete bug in existing logic, not validating a model."
+    },
+    {
+      "id": "q12",
+      "query": "解释一下这个状态机的 transition 表是怎么工作的,每个状态代表什么",
+      "should_trigger": false,
+      "clause": "Sanity-check a state model or logic",
+      "note": "Code explanation request, no prototype wanted."
+    },
+    {
+      "id": "q13",
+      "query": "implement the settings page from this Figma spec, pixel perfect, with proper tests and accessibility",
+      "should_trigger": false,
+      "clause": "Explore what a UI should look like",
+      "note": "Production implementation of a finalized design, not exploration."
+    },
+    {
+      "id": "q14",
+      "query": "把按钮的圆角从 4px 改成 8px,顺便把 Button.tsx 里的主色换成 #3366ff",
+      "should_trigger": false,
+      "clause": "Explore what a UI should look like",
+      "note": "Small concrete styling edit, no design exploration."
+    },
+    {
+      "id": "q15",
+      "query": "review my dashboard component for accessibility issues and performance problems",
+      "should_trigger": false,
+      "clause": "Explore what a UI should look like",
+      "note": "Code review of existing UI, not generating variations."
+    },
+    {
+      "id": "q16",
+      "query": "can you set up Storybook for our component library and add stories for the existing buttons and inputs?",
+      "should_trigger": false,
+      "clause": "Explore what a UI should look like",
+      "note": "Tooling setup for components; shares UI vocabulary but is not a throwaway design exploration."
+    },
+    {
+      "id": "q17",
+      "query": "write a design doc comparing three architectures for our event queue, with pros and cons",
+      "should_trigger": false,
+      "clause": "Sanity-check a state model or logic",
+      "note": "Design question answered by a written doc, not a throwaway interactive prototype."
+    }
+  ],
+  "clauses": [
+    "Sanity-check a state model or logic",
+    "Explore what a UI should look like"
+  ]
+}

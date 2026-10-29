@@ -1,0 +1,196 @@
+{
+  "skill": "tdd",
+  "skill_md_sha256": "969583080caf842ae86a53501a0091eced13fd89cad65d3aa75c09112318ff33",
+  "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28",
+  "review": "none: AI-drafted. The method tests each skill with two or more independently drafted sets and reports the spread between them instead of reviewing each set by hand.",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "I'm adding a coupon code feature to src/cart/checkout.ts. Let's do it test-first, write the failing test before any implementation.",
+      "should_trigger": true,
+      "clause": "Build features test-first",
+      "note": "Explicit request to build a new feature by writing the test first."
+    },
+    {
+      "id": "q02",
+      "query": "帮我用TDD的方式给用户模块加一个“修改手机号”的功能,先写测试再写实现",
+      "should_trigger": true,
+      "clause": "Build features test-first",
+      "note": "Chinese request to build a new feature using TDD, test before implementation."
+    },
+    {
+      "id": "q03",
+      "query": "need a rate limiter middleware for our express app, tests first pls, one behavior at a time",
+      "should_trigger": true,
+      "clause": "Build features test-first",
+      "note": "Casual request for a new feature developed test-first in vertical slices."
+    },
+    {
+      "id": "q04",
+      "query": "我想实现一个购物车折扣计算的模块,从测试开始驱动开发,别一上来就写实现",
+      "should_trigger": true,
+      "clause": "Build features test-first",
+      "note": "Chinese request to drive a new module from tests, not implementation."
+    },
+    {
+      "id": "q05",
+      "query": "users report parseDate() returns Invalid Date for '2024-02-30'. write a failing test that reproduces it first, then fix it",
+      "should_trigger": true,
+      "clause": "Fix bugs test-first",
+      "note": "Bug fix where a reproducing failing test is written before the fix."
+    },
+    {
+      "id": "q06",
+      "query": "这个bug先别直接改,先写个能复现的失败测试,再改 order_service.py 里的金额舍入问题",
+      "should_trigger": true,
+      "clause": "Fix bugs test-first",
+      "note": "Chinese request to reproduce a bug with a failing test before fixing."
+    },
+    {
+      "id": "q07",
+      "query": "login crashes when email has uppercase letters. fix it TDD style - repro test then patch",
+      "should_trigger": true,
+      "clause": "Fix bugs test-first",
+      "note": "Bug fix explicitly done test-first."
+    },
+    {
+      "id": "q08",
+      "query": "修复 utils/pagination.js 最后一页多出一条数据的问题,用测试先锁住这个bug再修",
+      "should_trigger": true,
+      "clause": "Fix bugs test-first",
+      "note": "Chinese bug fix by pinning the bug with a test first."
+    },
+    {
+      "id": "q09",
+      "query": "can we do red-green-refactor on this new StringFormatter class?",
+      "should_trigger": true,
+      "clause": "Red-green-refactor mentioned",
+      "note": "Explicitly names the red-green-refactor cycle."
+    },
+    {
+      "id": "q10",
+      "query": "带我走一遍 red-green-refactor 的流程,拿 fizzbuzz 当例子,用 Jest",
+      "should_trigger": true,
+      "clause": "Red-green-refactor mentioned",
+      "note": "Chinese request to walk through red-green-refactor."
+    },
+    {
+      "id": "q11",
+      "query": "我们团队要求 red green refactor,你先从最简单的 case 开始红灯吧,写 slugify 函数",
+      "should_trigger": true,
+      "clause": "Red-green-refactor mentioned",
+      "note": "Chinese, mentions red/green loop discipline for a small function."
+    },
+    {
+      "id": "q12",
+      "query": "do the red-green-refactor thing for a LRU cache in cache.go, start with the first failing test",
+      "should_trigger": true,
+      "clause": "Red-green-refactor mentioned",
+      "note": "English request invoking red-green-refactor on a concrete file."
+    },
+    {
+      "id": "q13",
+      "query": "I need integration tests for the /orders API that hit a real test database, can you set that up?",
+      "should_trigger": true,
+      "clause": "Wants integration tests",
+      "note": "Directly asks for integration tests against real components."
+    },
+    {
+      "id": "q14",
+      "query": "给支付服务写集成测试,覆盖下单到回调的完整流程,别 mock 内部模块",
+      "should_trigger": true,
+      "clause": "Wants integration tests",
+      "note": "Chinese request for integration tests across the full flow."
+    },
+    {
+      "id": "q15",
+      "query": "add integration tests for auth flow (signup -> login -> refresh token) in tests/integration/",
+      "should_trigger": true,
+      "clause": "Wants integration tests",
+      "note": "Concrete integration test request across multiple steps."
+    },
+    {
+      "id": "q16",
+      "query": "我们的 API 只有单测,帮我补一套集成测试,通过公开接口验证行为",
+      "should_trigger": true,
+      "clause": "Wants integration tests",
+      "note": "Chinese request to add integration tests through public interfaces."
+    },
+    {
+      "id": "q17",
+      "query": "add a dark mode toggle to the settings page, here's the design from figma",
+      "should_trigger": false,
+      "clause": "Build features test-first",
+      "note": "Feature build with no test-first request; plain implementation job."
+    },
+    {
+      "id": "q18",
+      "query": "帮我写一个新的导出CSV功能,直接实现就行,测试以后再说",
+      "should_trigger": false,
+      "clause": "Build features test-first",
+      "note": "Builds a feature but explicitly declines test-first."
+    },
+    {
+      "id": "q19",
+      "query": "review my PR for the new search feature and tell me if the code is clean",
+      "should_trigger": false,
+      "clause": "Build features test-first",
+      "note": "Code review is a sibling skill's job, not test-first building."
+    },
+    {
+      "id": "q20",
+      "query": "the app crashes on startup with a NullPointerException in Config.java, here's the stack trace, find the cause",
+      "should_trigger": false,
+      "clause": "Fix bugs test-first",
+      "note": "Debugging/diagnosis job without test-first; belongs to a diagnosing-bugs skill."
+    },
+    {
+      "id": "q21",
+      "query": "这个接口偶尔超时,帮我排查一下是哪里慢,看看日志和性能",
+      "should_trigger": false,
+      "clause": "Fix bugs test-first",
+      "note": "Performance diagnosis, not a test-first bug fix."
+    },
+    {
+      "id": "q22",
+      "query": "refactor user_service.py to split it into smaller functions, tests already pass",
+      "should_trigger": false,
+      "clause": "Red-green-refactor mentioned",
+      "note": "Pure refactoring request; refactor belongs to review stage, no red-green loop."
+    },
+    {
+      "id": "q23",
+      "query": "解释一下什么是 red-green-refactor,以及它的历史由来,不用写代码",
+      "should_trigger": false,
+      "clause": "Red-green-refactor mentioned",
+      "note": "Conceptual/history question only; no TDD work to perform."
+    },
+    {
+      "id": "q24",
+      "query": "set up Playwright end-to-end browser tests for the checkout page",
+      "should_trigger": false,
+      "clause": "Wants integration tests",
+      "note": "End-to-end browser testing is a different job from integration tests."
+    },
+    {
+      "id": "q25",
+      "query": "我的 jest 测试跑得很慢,帮我优化 CI 里的测试执行时间",
+      "should_trigger": false,
+      "clause": "Wants integration tests",
+      "note": "Test-suite performance tuning, not writing integration tests."
+    },
+    {
+      "id": "q26",
+      "query": "write a quick prototype of a markdown parser so I can play with the idea, throwaway code is fine",
+      "should_trigger": false,
+      "clause": "Wants integration tests",
+      "note": "Throwaway prototyping, a different skill's job; shares test-adjacent domain only loosely."
+    }
+  ],
+  "clauses": [
+    "Build features test-first",
+    "Fix bugs test-first",
+    "Red-green-refactor mentioned",
+    "Wants integration tests"
+  ]
+}

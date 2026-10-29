@@ -1,0 +1,37 @@
+{
+  "skill": "csv-dedupe",
+  "reviewed": true,
+  "review_notes": "Example pack, only for self-testing the runner",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "orders_2024.csv 里好多重复行，帮我去个重",
+      "should_trigger": true
+    },
+    {
+      "id": "q02",
+      "query": "can you dedupe customers.csv? some people show up 3 times",
+      "should_trigger": true
+    },
+    {
+      "id": "q03",
+      "query": "我导出的 users.csv 有一堆一模一样的记录，清理一下",
+      "should_trigger": true
+    },
+    {
+      "id": "q04",
+      "query": "convert sales.csv to an excel file with a header row frozen",
+      "should_trigger": false
+    },
+    {
+      "id": "q05",
+      "query": "帮我把 report.csv 按日期列排个序",
+      "should_trigger": false
+    },
+    {
+      "id": "q06",
+      "query": "write a python function that checks whether a list has duplicate elements",
+      "should_trigger": false
+    }
+  ]
+}

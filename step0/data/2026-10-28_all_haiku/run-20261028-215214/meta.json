@@ -1,0 +1,107 @@
+{
+  "run_id": "20261028-215214",
+  "runner_version": "0.4.2",
+  "host": "claude-code",
+  "claude_version": "2.1.303 (Claude Code)",
+  "model": "haiku",
+  "runs": 3,
+  "sampling": "adaptive",
+  "trial_dirs": "fixed per worker",
+  "max_explore": 0,
+  "query_hash": "sha256 of canonical JSON [{id, query, should_trigger}] sorted by id",
+  "backend": "anthropic",
+  "base_url": "https://api.anthropic.com",
+  "api_key_source": "none",
+  "platform": "Windows 10 / Python 3.11.9",
+  "started_at": "2026-10-28T21:52:14",
+  "skills": {
+    "lark-doc": {
+      "source": {
+        "repo": "https://github.com/larksuite/cli",
+        "commit": "017b19a793ad71794a02887ede04757f3d82e10d",
+        "subdir": "skills/lark-doc"
+      },
+      "skill_md_sha256": "0f1aea17fc21aaeb1cc17270d6de7de97780c3a9f53f98f668ce318f91f1a1f7",
+      "query_sets": {
+        "clause-1": {
+          "query_set_sha256": "796a43c188473c52fed1b8e3edb34872e49d55ed5c9f02308ea9160becd6991d",
+          "file": "queries\\lark-doc\\clause-1.json",
+          "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28"
+        },
+        "clause-2": {
+          "query_set_sha256": "02fdb41236ee0527ec38677a7337c287ab5d5e1b033fc7b1dcb8bdfa6e02abed",
+          "file": "queries\\lark-doc\\clause-2.json",
+          "drafted_by": "trigger_test.py draft (model: sonnet), 2026-10-28"
+        }
+      },
+      "companions": {
+        "lark-drive": {
+          "source": {
+            "repo": "https://github.com/larksuite/cli",
+            "commit": "017b19a793ad71794a02887ede04757f3d82e10d",
+            "subdir": "skills/lark-drive"
+          },
+          "skill_md_sha256": "b140cd55b62be7f001384fb47627dc269ef08db3b943d0eb8c6aa4ef1bc9b685"
+        },
+        "lark-shared": {
+          "source": {
+            "repo": "https://github.com/larksuite/cli",
+            "commit": "017b19a793ad71794a02887ede04757f3d82e10d",
+            "subdir": "skills/lark-shared"
+          },
+          "skill_md_sha256": "9fa68bb1f3ce564602c6df6c303ea4d2759de02442772f332fe5041d65720a1f"
+        }
+      }
+    }
+  },
+  "model_resolved": "claude-haiku-5-5",
+  "loaded_skills": [
+    "design",
+    "design-sync",
+    "dataviz",
+    "update-config",
+    "verify",
+    "debug",
+    "code-review",
+    "simplify",
+    "batch",
+    "fewer-permission-prompts",
+    "doctor",
+    "loop",
+    "schedule",
+    "claude-api",
+    "run",
+    "run-skill-generator",
+    "plugin-authoring"
+  ],
+  "tools": [
+    "Bash",
+    "CronCreate",
+    "CronDelete",
+    "CronList",
+    "DesignSync",
+    "Edit",
+    "EnterWorktree",
+    "ExitWorktree",
+    "Glob",
+    "Grep",
+    "ListAgents",
+    "Monitor",
+    "NotebookEdit",
+    "PowerShell",
+    "PushNotification",
+    "Read",
+    "RemoteTrigger",
+    "ReportFindings",
+    "ScheduleWakeup",
+    "SendMessage",
+    "Skill",
+    "Task",
+    "TaskStop",
+    "ToolSearch",
+    "WebFetch",
+    "WebSearch",
+    "Write"
+  ],
+  "finished_at": "2026-10-28T21:55:49"
+}
