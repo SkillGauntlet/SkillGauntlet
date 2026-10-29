@@ -1,0 +1,121 @@
+# Merges a community submission pull request by itself when it is safe to, and says why when it is not.
+#
+# THREAT MODEL. The pull request comes from a fork, so everything about it is hostile until proven otherwise:
+#  * Its own CI result proves nothing. A fork runs ITS copy of submission.yml and can make it say "passed".
+#    This workflow therefore uses the submission-check run only as a trigger (and as the maintainer's
+#    approval of a first-time contributor's run); it never reads that run's output or artifacts.
+#  * No code from the pull request is checked out, installed or run. The checkout below is the default
+#    branch. The four submission files are downloaded through the GitHub API as bytes, parsed by the
+#    validator on the default branch, and deleted. Do not add pull_request_target or a checkout of the
+#    pull request's ref here.
+#  * Two jobs. `inspect` reads untrusted bytes and fetches the skill repo, and holds a READ-only token.
+#    `apply` holds the write token, runs no pull-request-derived input except validated numbers and strings
+#    from decision.json, and only comments, labels, merges and dispatches the Pages build.
+#  * Merge conditions, all of them (lib/automerge.js): exactly one new directory under submissions/ with
+#    exactly the four allowed files, all added, regular files (no symlink or submodule), within the size
+#    caps; the full validation passes (schema, SKILL.md hash at the pinned commit, recomputed arithmetic,
+#    secret and path scrub); the license/cla status is success; the account is old enough and has no recent
+#    refusal (maintainers exempt) and is under the daily limit. The merge request carries the head SHA that
+#    was checked, so GitHub itself refuses it if the branch moved in between.
+#  * Anything else: a comment says why, the pull request is labelled needs-review, and it waits for a human.
+#  * Not claimed: the checks cannot show that the trials were really run. A merged submission is a
+#    "community single sample", never more.
+name: automerge
+
+on:
+  workflow_run:
+    workflows: ["submission-check"]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      pr:
+        description: "Pull request number to re-check (for example after the contributor signed the CLA)"
+        required: true
+
+permissions: {}
+
+# one at a time, so the per-account daily count is exact
+concurrency:
+  group: automerge
+  cancel-in-progress: false
+
+jobs:
+  inspect:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.event == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+      statuses: read
+    outputs:
+      have: ${{ steps.find.outputs.have }}
+    steps:
+      - name: Default branch (trusted scripts)
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+      - name: Find the pull request
+        id: find
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          DISPATCH_PR: ${{ github.event.inputs.pr }}
+          RUN_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          set -euo pipefail
+          expect=""
+          if [ -n "$DISPATCH_PR" ]; then
+            pr="$DISPATCH_PR"
+          else
+            case "$RUN_SHA" in *[!0-9a-f]*|'') echo "bad sha"; exit 1;; esac
+            pr="$(gh api --paginate "repos/$REPO/pulls?state=open&per_page=100" --jq ".[] | select(.head.sha == \"$RUN_SHA\") | .number" | head -n1)"
+            expect="$RUN_SHA"
+          fi
+          case "$pr" in ''|*[!0-9]*) echo "no open pull request for this run"; echo "have=false" >> "$GITHUB_OUTPUT"; exit 0;; esac
+          echo "have=true" >> "$GITHUB_OUTPUT"
+          echo "pr=$pr" >> "$GITHUB_ENV"
+          echo "expect=$expect" >> "$GITHUB_ENV"
+      - name: Inspect (reads the pull request as data, decides, changes nothing)
+        if: steps.find.outputs.have == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          if [ -n "$expect" ]; then node scripts/automerge.mjs inspect --repo "$REPO" --pr "$pr" --expect-sha "$expect" --out out
+          else node scripts/automerge.mjs inspect --repo "$REPO" --pr "$pr" --out out; fi
+      - name: Hand the decision to the apply job
+        if: steps.find.outputs.have == 'true'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: decision
+          path: out/decision.json
+          retention-days: 3
+
+  apply:
+    needs: inspect
+    if: needs.inspect.outputs.have == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write        # squash-merge
+      pull-requests: write   # comment, label, merge
+      actions: write         # dispatch the Pages build (GITHUB_TOKEN commits start no push workflows)
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: decision
+          path: decision
+      - name: Apply the decision
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: node scripts/automerge.mjs apply --repo "$REPO" --decision decision/decision.json

@@ -1,0 +1,59 @@
+# Publishes the leaderboard to GitHub Pages. Nothing is committed: the page is built from step0/data/ and
+# submissions/ on main and deployed as an artifact, so no bot needs to push to or open pull requests against
+# a protected branch.
+#
+# Triggers: a push to main that touches the data, a manual run, and a dispatch from automerge.yml (commits made
+# with GITHUB_TOKEN start no push workflows, so after an automatic merge it asks for this build explicitly).
+# It calls no model, holds no secret, and builds only what is on main.
+name: pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "submissions/**"
+      - "step0/data/**"
+      - "scripts/build-pages.mjs"
+      - "scripts/build-leaderboard.mjs"
+      - "lib/submission.js"
+      - "lib/schema.js"
+      - "schemas/**"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+      - run: node scripts/build-pages.mjs --out _site
+      - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4

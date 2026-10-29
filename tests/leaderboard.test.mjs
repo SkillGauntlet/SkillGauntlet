@@ -111,8 +111,8 @@ test('maintainer entries come from the generated JSON, one per skill and model',
   assert.equal(new Set(entries.map((e) => `${e.skill}|${e.model}`)).size, entries.length);
 });
 
-test('the committed LEADERBOARD.md has a row for every maintainer entry', () => {
-  const page = fs.readFileSync(path.join(ROOT, 'LEADERBOARD.md'), 'utf8');
+test('the built page has a row for every maintainer entry', () => {
+  const page = build(ROOT);
   const rows = page.split(/\r?\n/).filter((l) => l.startsWith('| ['));
   assert.ok(rows.length >= maintainerEntries(ROOT).length);
 });

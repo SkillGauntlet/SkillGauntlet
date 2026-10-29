@@ -19,3 +19,5 @@ __pycache__/
 *.key
 *_key.txt
 secrets.json
+# local preview from `npm run leaderboard`; the published page is built by pages.yml
+LEADERBOARD.md
