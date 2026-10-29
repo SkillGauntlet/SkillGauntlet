@@ -1,0 +1,69 @@
+{
+  "schema": "skillgauntlet/run/1",
+  "runId": "20261030-014010",
+  "runnerVersion": "1.1.1",
+  "skill": "ruflo",
+  "host": "codewhale",
+  "backend": "codewhale:api.deepseek.com",
+  "model": "deepseek-flash",
+  "runs": 1,
+  "maxExplore": 0,
+  "depth": {
+    "id": "quick",
+    "perClause": 2,
+    "negatives": 10
+  },
+  "querySets": [
+    {
+      "id": "main",
+      "source": "cache",
+      "file": "queries-2x10.json",
+      "queries": 20,
+      "clauses": 5,
+      "sha256": "c6c4774cd636b721",
+      "negativesQuality": {
+        "total": 10,
+        "weak": 0
+      }
+    }
+  ],
+  "skillFingerprint": "94d94e224e457f87",
+  "platform": "win32 10.0.26300 / Node v24.19.0",
+  "startedAt": "2026-10-29T16:40:10.065Z",
+  "finishedAt": "2026-10-29T16:45:39.568Z",
+  "trials": 20,
+  "interrupted": false,
+  "submission": {
+    "schema": "skillgauntlet/submission/1",
+    "contributor": "pilafbigking",
+    "skill": {
+      "name": "ruflo",
+      "repo": "https://github.com/ruvnet/ruflo",
+      "commit": "7f6fb3345b7f4ea1d7acc4905ea88bad29136066",
+      "subdir": "",
+      "skillMdSha256": "e706dd7d057ebb4e456bdfc312d38fe07bf2419476d246164801571d4cd481da"
+    },
+    "host": {
+      "id": "codewhale",
+      "version": null
+    },
+    "model": {
+      "requested": "deepseek-flash",
+      "resolved": null
+    },
+    "queryPack": {
+      "id": "main",
+      "sha256": "c6c4774cd636b7217ef9c6b52bf7c2a3c66e2239e672fa9f584b33e9f11147d3",
+      "queries": 20
+    },
+    "environment": {
+      "id": "6f2ca0101a71",
+      "platform": "win32 10.0.26300 / Node v24.19.0",
+      "hostVersion": null,
+      "backend": "codewhale:api.deepseek.com",
+      "loadedSkills": [],
+      "toolCount": 0
+    },
+    "submittedAt": "2026-10-29T16:46:38Z"
+  }
+}
