@@ -11,7 +11,7 @@ import { installedSkills } from '../lib/installed.js';
 import { probeActivation } from '../lib/codex.js';
 import { fingerprint, cacheFileFor, readCachedQueries, writeCachedQueries } from '../lib/queries.js';
 import { openRun, querySetHash } from '../lib/runs.js';
-import { DEPTHS, estimate } from '../lib/depth.js';
+import { DEPTHS, minutesFor } from '../lib/depth.js';
 import { ask, choose, select, confirm, say, closeUi, hasTerminal, setBack, Back } from '../lib/ui.js';
 import { hostModels } from '../lib/models.js';
 import { browseDir } from '../lib/browse.js';
@@ -42,6 +42,19 @@ function writeOut(skillDir, name, md, sc) {
   fs.writeFileSync(path.join(out, `${name}.md`), md);
   fs.writeFileSync(path.join(out, `${name}.scorecard.json`), `${JSON.stringify(sc, null, 2)}\n`);
   return out;
+}
+
+let approvedFollowing = false; // the user said not to ask again for the remaining skills
+
+async function approveTrials({ q, runs, n }) {
+  if (approvedFollowing) return true;
+  const pick = await choose(t('trialsQ', { q, runs, n, minutes: minutesFor(n) }), [
+    { label: t('trialsGo'), value: 'go' },
+    { label: t('trialsAll'), value: 'all' },
+    { label: t('trialsSkip'), value: 'skip' },
+  ], 1);
+  if (pick === 'all') approvedFollowing = true;
+  return pick !== 'skip';
 }
 
 const hostChecked = new Set();
@@ -86,6 +99,12 @@ async function runTriggerLayer({ skillDir, skillName, depth, model, host = 'clau
 
   const trials = [];
   for (const q of qs.queries) for (let i = 0; i < depth.runs; i += 1) trials.push({ q, i });
+
+  // The number of trials is only known now that the questions exist, so this is where the user agrees to it.
+  if (!(await approveTrials({ q: qs.queries.length, runs: depth.runs, n: trials.length }))) {
+    say(`  ${t('trialsDeclined')}`);
+    return null;
+  }
 
   // Opened before the first trial: an interrupted run keeps its conditions and every finished record,
   // which is what makes a later recompute or comparison possible without paying again.
@@ -387,13 +406,7 @@ async function interactive() {
       S.model = model;
       say(`\n${t('backendLine', { backend: backend(), model })}`);
 
-      const est = estimate(depthId, 3);
-      say(`\n${t('estimate', {
-        skills: targets.length,
-        trials: est.trials,
-        minutes: est.minutes,
-        totalMinutes: est.minutes * targets.length,
-      })}`);
+      say(`\n${t('draftFirst')}`);
     } else if (host === 'codewhale') {
       say(`\n${t('codewhaleNote')}`);
       const depthId = await choose(t('depthQ'), [
@@ -406,8 +419,7 @@ async function interactive() {
         say(`\n${t('needDeepseekKey')}`);
         return END;
       }
-      const est = estimate(depthId, 3);
-      say(`\n${t('codewhaleEstimate', { skills: targets.length, trials: est.trials * targets.length })}`);
+      say(`\n${t('draftFirst')}`);
     } else if (host === 'codebuddy') {
       say(`\n${t('codebuddyNote')}`);
       const depthId = await choose(t('depthQ'), [
@@ -420,8 +432,7 @@ async function interactive() {
         say(`\n${t('needDeepseekKey')}`);
         return END;
       }
-      const est = estimate(depthId, 3);
-      say(`\n${t('codebuddyEstimate', { skills: targets.length, trials: est.trials * targets.length })}`);
+      say(`\n${t('draftFirst')}`);
     } else {
       say(`\n${t('codexNote')}`);
       S.model = await pickModel(hostModels('codex', resolveBin('codex')));

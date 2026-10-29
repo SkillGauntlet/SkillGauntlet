@@ -54,7 +54,7 @@ test('the not-signed-in message exists in every language and names /login', () =
 
 test('no estimate or hint promises "no cash"', () => {
   for (const [lang, table] of Object.entries(messageTables())) {
-    for (const key of ['codebuddyEstimate', 'provClaudeHint', 'provDeepseekHint', 'codewhaleEstimate']) {
+    for (const key of ['draftFirst', 'trialsQ', 'provClaudeHint', 'provDeepseekHint']) {
       assert.doesNotMatch(String(table[key]), /no cash|不花现金|无现金|現金不要|現金はかから|cents|几分钱|数セント/, `${lang}.${key}`);
     }
   }
@@ -100,4 +100,11 @@ test('model lists are read from the host and any failure gives an empty list', a
   assert.deepEqual(hostModels('codex', 'codex', () => json), ['a']);
   assert.deepEqual(hostModels('codex', 'codex', () => { throw new Error('x'); }), []);
   assert.deepEqual(hostModels('codewhale', 'codewhale', () => json), []);
+});
+
+test('the quick tier asks for enough negatives that its result can be graded', async () => {
+  const { DEPTHS, minutesFor } = await import('../lib/depth.js');
+  assert.ok(DEPTHS.quick.negatives * DEPTHS.quick.runs >= 10);
+  assert.equal(minutesFor(24), 1);
+  assert.equal(minutesFor(300), 10);
 });
