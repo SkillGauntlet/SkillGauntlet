@@ -1,0 +1,130 @@
+{
+  "trials": 18,
+  "recall": 1,
+  "fpr": 0.2,
+  "noToolRate": 0,
+  "questions": [
+    {
+      "query": "turn this book into skills: books/poor-charlies-almanack.epub — i want the mental models as something my agent can actually call",
+      "shouldTrigger": true,
+      "hits": 1,
+      "n": 1
+    },
+    {
+      "query": "帮我把《影响力》拆成 skill,书在 D:\\read\\influence.pdf,想让 agent 真能用上里面的方法",
+      "shouldTrigger": true,
+      "hits": 1,
+      "n": 1
+    },
+    {
+      "query": "蒸馏一本书:吴军《见识》,txt 在 D:\\read\\jianshi.txt,出几个能用的 skill",
+      "shouldTrigger": true,
+      "hits": 1,
+      "n": 1
+    },
+    {
+      "query": "can you distill Naval's Almanack into a handful of skills? epub is at ~/dl/naval.epub",
+      "shouldTrigger": true,
+      "hits": 1,
+      "n": 1
+    },
+    {
+      "query": "这个 B 站视频的转写稿帮我蒸馏成 skill,srt 在 downloads/bv1xx.srt",
+      "shouldTrigger": true,
+      "hits": 1,
+      "n": 1
+    },
+    {
+      "query": "got a 3 hour podcast transcript in ./pod/ep12.txt — turn it into skills my agent can invoke",
+      "shouldTrigger": true,
+      "hits": 1,
+      "n": 1
+    },
+    {
+      "query": "从这份 40 页的访谈转写里把可复用的方法论抽成原子能力,agent 要能直接调用",
+      "shouldTrigger": true,
+      "hits": 1,
+      "n": 1
+    },
+    {
+      "query": "pull the frameworks and decision rules out of this 600-page course handout into separate atomic skills",
+      "shouldTrigger": true,
+      "hits": 1,
+      "n": 1
+    },
+    {
+      "query": "把《原则》这本书的读后感写一下,1500 字,我想发公众号",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "帮我拆一下《人类简史》这本书的章节骨架,每章给我两百字摘要",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "把这本书的 PDF 切块灌进向量库,我后面要拿来问答",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "蒸馏一下这篇公众号长文的三个要点,简单说说就行",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "把《毛选》里教员的说话风格做成一个角色,模仿他的语气回我消息",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "把这个 B 站视频的英文字幕翻成中文 srt,时间轴别乱",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "这一期播客帮我把 shownotes 和时间戳整理出来",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "我这个 skill 老是该触发的时候不触发,帮我改改 description",
+      "shouldTrigger": false,
+      "hits": 1,
+      "n": 1
+    },
+    {
+      "query": "从这份访谈里把嘉宾提到的人名、公司、书单列个表",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "把这些 skill 装到 ~/.claude/skills,确保 agent 能调用",
+      "shouldTrigger": false,
+      "hits": 1,
+      "n": 1
+    }
+  ],
+  "failedTrials": 0,
+  "incomplete": 0,
+  "model": "deepseek-flash",
+  "backend": "codewhale:api.deepseek.com",
+  "host": "codewhale",
+  "runs": 1,
+  "recallCi": [
+    0.6755843804891231,
+    1
+  ],
+  "fprCi": [
+    0.056680947980693314,
+    0.5098431532792765
+  ]
+}
