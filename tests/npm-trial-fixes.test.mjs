@@ -109,17 +109,24 @@ test('the quick tier asks for enough negatives that its result can be graded', a
   assert.equal(minutesFor(300), 10);
 });
 
-test('searchHost finds an exact name before a release-style name and ignores unrelated variants', async () => {
+test('searchHost finds the exact name first and ignores unrelated variants', async () => {
   const { searchHost, installCommand, installHost } = await import('../lib/findhost.js');
+  const win = process.platform === 'win32';
+  const exact = win ? 'codewhale.exe' : 'codewhale';
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'sg-find-'));
-  const dl = path.join(dir, 'codewhale-win');
-  fs.mkdirSync(dl);
-  fs.writeFileSync(path.join(dl, 'codewhale-windows-x64.exe'), 'x');
   fs.writeFileSync(path.join(dir, 'codewhale-notes.txt'), 'x');
-  fs.writeFileSync(path.join(dir, 'codewhale-code.cmd'), 'x'); // a different tool sharing the prefix
-  assert.deepEqual(searchHost('codewhale', [dir]).map((f) => path.basename(f)), ['codewhale-windows-x64.exe']);
-  fs.writeFileSync(path.join(dir, 'codewhale.exe'), 'x');
-  assert.equal(path.basename(searchHost('codewhale', [dir])[0]), 'codewhale.exe');
+  fs.writeFileSync(path.join(dir, win ? 'codewhale-code.cmd' : 'codewhale-code'), 'x'); // a different tool sharing the prefix
+  if (win) {
+    // a Windows release asset keeps its platform suffix and is found one folder down, without renaming
+    const dl = path.join(dir, 'codewhale-win');
+    fs.mkdirSync(dl);
+    fs.writeFileSync(path.join(dl, 'codewhale-windows-x64.exe'), 'x');
+    assert.deepEqual(searchHost('codewhale', [dir]).map((f) => path.basename(f)), ['codewhale-windows-x64.exe']);
+  } else {
+    assert.deepEqual(searchHost('codewhale', [dir]), []);
+  }
+  fs.writeFileSync(path.join(dir, exact), 'x');
+  assert.equal(path.basename(searchHost('codewhale', [dir])[0]), exact);
   assert.equal(installCommand('codewhale'), 'npm install -g codewhale --allow-scripts=codewhale');
   assert.match(installCommand('codebuddy'), /^npm install -g @tencent-ai\/codebuddy-code$/);
   const ran = [];
