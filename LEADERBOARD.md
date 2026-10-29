@@ -4,7 +4,7 @@
 
 **These are automated test results.** The questions were drafted by AI and not reviewed by hand. A row describes how one skill triggered on the host and model named in its table, at the pinned SKILL.md; it is not an overall judgement of the skill. Disagree with a result? Open an appeal (see "Appeals" in [CONTRIBUTING.md](CONTRIBUTING.md)).
 
-18 skills, 36 rows: 36 from the maintainer's batches in `step0/data/`, 0 community submissions. Want a row filled in or confirmed? See "Submit your results" in the [README](README.md).
+20 skills, 38 rows: 36 from the maintainer's batches in `step0/data/`, 2 community submissions. Want a row filled in or confirmed? See "Submit your results" in the [README](README.md).
 
 ## How to read it
 
@@ -13,8 +13,6 @@
 - **Data quality**: *maintainer run* is the project's own run. *community single sample* is one submission, shown as received after format and hash checks. *confirmed* means two independent submissions (different GitHub accounts), or a maintainer run plus one community submission, landed on the same grade. *conflicting* means submissions for the same skill version, host and model gave different grades; all are shown, none is deleted.
 - **What a tag cannot mean.** The runner cannot prevent forgery, and CI checks only format, hashes and arithmetic. "Independent" means different accounts, nothing stronger, and several accounts can belong to one person. Treat *confirmed* as "more than one submission agrees", not as proof.
 - A row is for one pinned commit of the skill. A new commit starts a new row, so to confirm a row, test the commit its Skill link points to.
-
-No community submissions yet. The first one will appear here after it is merged.
 
 ## Claude Code
 
@@ -56,3 +54,15 @@ No community submissions yet. The first one will appear here after it is merged.
 | [webapp-testing](https://github.com/anthropics/skills/tree/dbd4588f9e1033efb41dad4bef2f7947c8993d44/skills/webapp-testing) | deepseek-v4-flash | triggers poorly | 38% (24–53%) | 0% (0–16%) | 40 / 20 | maintainer run | 1 | 2026-10-28 | [batch report](step0/data/2026-10-28_all_deepseek/BATCH.md) | maintainer |
 | [xlsx](https://github.com/anthropics/skills/tree/dbd4588f9e1033efb41dad4bef2f7947c8993d44/skills/xlsx) | claude-haiku-5-5 | triggers fair | 57% (41–71%) | 0% (0–16%) | 40 / 20 | maintainer run | 1 | 2026-10-28 | [batch report](step0/data/2026-10-28_all_haiku/BATCH.md) | maintainer |
 | [xlsx](https://github.com/anthropics/skills/tree/dbd4588f9e1033efb41dad4bef2f7947c8993d44/skills/xlsx) | deepseek-v4-flash | triggers poorly | 35% (22–51%) | 0% (0–16%) | 40 / 20 | maintainer run | 1 | 2026-10-28 | [batch report](step0/data/2026-10-28_all_deepseek/BATCH.md) | maintainer |
+
+## CodeBuddy
+
+| Skill | Model | Grade | Recall (95% CI) | False positives (95% CI) | Questions (pos / neg) | Data quality | Submissions | Last tested | Data | Credit |
+|---|---|---|---|---|---|---|---|---|---|---|
+| [ui-ux-pro-max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/tree/28b3b8dee8c976df4fa3e94aed4e092ad43fcb03/.claude/skills/ui-ux-pro-max) | custom-local:deepseek-flash | insufficient data | 20% (8–42%) | 0% (0–49%) | 20 / 4 | community single sample | 1 | 2026-10-29 | [raw data](submissions/ui-ux-pro-max/codebuddy-custom-local-deepseek-flash/20261029T153202Z-pilafbigking/) | [pilafbigking](https://github.com/pilafbigking) |
+
+## Codewhale
+
+| Skill | Model | Grade | Recall (95% CI) | False positives (95% CI) | Questions (pos / neg) | Data quality | Submissions | Last tested | Data | Credit |
+|---|---|---|---|---|---|---|---|---|---|---|
+| [ruflo](https://github.com/ruvnet/ruflo/tree/7f6fb3345b7f4ea1d7acc4905ea88bad29136066) | deepseek-flash | triggers well | 100% (72–100%) | 0% (0–28%) | 10 / 10 | community single sample | 1 | 2026-10-29 | [raw data](submissions/ruflo/codewhale-deepseek-flash/20261029T164010Z-pilafbigking/) | [pilafbigking](https://github.com/pilafbigking) |

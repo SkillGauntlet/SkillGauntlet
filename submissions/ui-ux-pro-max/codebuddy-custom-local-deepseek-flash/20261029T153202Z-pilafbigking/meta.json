@@ -34,7 +34,7 @@
   "trials": 24,
   "interrupted": false,
   "modelResolved": "custom-local:deepseek-flash",
-  "apiKeySource": "copilot.tencent.com",
+  "apiKeySource": "other",
   "loadedSkills": [],
   "tools": [
     "A2ACancelTask",
