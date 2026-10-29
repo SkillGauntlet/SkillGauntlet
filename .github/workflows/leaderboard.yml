@@ -4,9 +4,9 @@
 # file; no model call, no secret beyond the job token. The page is rebuilt from step0/data/ and
 # submissions/ only, so a pull request cannot make it say anything the data does not.
 #
-# main requires the license/cla check, which a bot commit does not have, so this push may be refused. When
-# it is, the job says so in its summary and the page is rebuilt by hand: `npm run leaderboard`, commit,
-# open a pull request (a maintainer can also push with the admin bypass).
+# main requires the license/cla check, so the bot does not push there. It pushes the page to the branch
+# bot/leaderboard and opens (or updates) one pull request for a maintainer to merge. This needs
+# "Allow GitHub Actions to create and approve pull requests" in the repository's Actions settings.
 name: leaderboard
 
 on:
@@ -23,6 +23,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 concurrency:
   group: leaderboard
@@ -37,7 +38,9 @@ jobs:
         with:
           node-version: 22
       - run: node scripts/build-leaderboard.mjs
-      - name: Commit the page if it changed
+      - name: Open or update the leaderboard pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           if git diff --quiet -- LEADERBOARD.md; then
             echo "LEADERBOARD.md is up to date."
@@ -45,13 +48,13 @@ jobs:
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c bot/leaderboard
           git add LEADERBOARD.md
           git commit -q -m "Regenerate LEADERBOARD.md"
-          if ! git push; then
-            {
-              echo "### LEADERBOARD.md is out of date and the bot could not push it"
-              echo
-              echo "Branch protection refused the push. Run \`npm run leaderboard\` on a branch, commit LEADERBOARD.md and open a pull request."
-            } >> "$GITHUB_STEP_SUMMARY"
-            exit 1
+          git push -f origin bot/leaderboard
+          if [ -n "$(gh pr list --head bot/leaderboard --state open --json number --jq '.[].number')" ]; then
+            echo "Updated the open leaderboard pull request." >> "$GITHUB_STEP_SUMMARY"
+          else
+            gh pr create --base main --head bot/leaderboard --title "Regenerate LEADERBOARD.md" --body "Rebuilt by the leaderboard workflow from \`step0/data/\` and \`submissions/\` on main (${GITHUB_SHA}). Generated file only; merge to publish."
+            echo "Opened a leaderboard pull request." >> "$GITHUB_STEP_SUMMARY"
           fi
