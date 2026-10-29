@@ -14,6 +14,7 @@ import { openRun, querySetHash } from '../lib/runs.js';
 import { DEPTHS, estimate } from '../lib/depth.js';
 import { ask, choose, select, confirm, say, closeUi, hasTerminal } from '../lib/ui.js';
 import { browseDir } from '../lib/browse.js';
+import { withTicker } from '../lib/ticker.js';
 import { setLang, detectLang, errorText, t } from '../lib/i18n.js';
 import { resolveBin, backend, backendFor, isDeepseekModel, HOSTS, checkModel, draftQueries, draftQuality, runTrial, requireHost, pingHost } from '../lib/trial.js';
 import { runGain } from '../lib/gain.js';
@@ -41,14 +42,14 @@ function writeOut(skillDir, name, md, sc) {
 }
 
 const hostChecked = new Set();
+const waitText = (label) => ({ label, elapsed: t('waitElapsed'), abortHint: t('waitAbort') });
 const HOST_LABEL = { 'claude-code': 'Claude Code', codebuddy: 'CodeBuddy', codewhale: 'Codewhale' };
 
 async function runTriggerLayer({ skillDir, skillName, depth, model, host = 'claude-code' }) {
   requireHost(host);
   const bin = resolveBin(HOSTS[host].bin);
   if (!hostChecked.has(host)) {
-    say(`  ${t('hostPing', { host: HOST_LABEL[host] || host })}`);
-    pingHost(host, { bin, model });
+    withTicker(waitText(t('hostPing', { host: HOST_LABEL[host] || host })), () => pingHost(host, { bin, model }));
     hostChecked.add(host);
   }
   const cacheFile = cacheFileFor(skillDir, depth);
@@ -59,8 +60,7 @@ async function runTriggerLayer({ skillDir, skillName, depth, model, host = 'clau
   if (qs) {
     say(`  ${t('queriesReused', { n: qs.queries.length, file: path.basename(cacheFile) })}`);
   } else {
-    say(`  ${t('drafting')}`);
-    qs = draftQueries({ bin, skillDir, skillName, model, perClause: depth.perClause, negatives: depth.negatives, host });
+    qs = withTicker(waitText(t('drafting')), () => draftQueries({ bin, skillDir, skillName, model, perClause: depth.perClause, negatives: depth.negatives, host }));
     say(`  ${t('drafted', { q: qs.queries.length, c: qs.clauses.length })}`);
     writeCachedQueries(cacheFile, {
       schema: 'skillgauntlet/queries/1',

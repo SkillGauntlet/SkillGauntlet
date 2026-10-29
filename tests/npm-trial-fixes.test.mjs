@@ -79,3 +79,13 @@ test('browseDir walks folders with a scripted selection and can hand over to typ
   assert.equal(await browseDir(script([go('✎ Type a path…')]), root), null);
   fs.rmSync(root, { recursive: true, force: true });
 });
+
+test('the wait bar draws its label and counts seconds, and the wrapper is a no-op without a terminal', async () => {
+  const { TICKER_SCRIPT, withTicker } = await import('../lib/ticker.js');
+  const { spawnSync } = await import('node:child_process');
+  const r = spawnSync(process.execPath, ['-e', TICKER_SCRIPT, 'drafting', '{s} s', 'Ctrl+C aborts', '1'], { encoding: 'utf8', timeout: 1600, killSignal: 'SIGKILL' });
+  assert.match(r.stdout, /drafting/);
+  assert.match(r.stdout, /1 s/);
+  assert.match(r.stdout, /Ctrl\+C aborts/);
+  assert.equal(withTicker({ label: 'x', elapsed: '{s}', abortHint: 'h' }, () => 42), 42);
+});
