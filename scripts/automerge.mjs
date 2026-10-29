@@ -103,7 +103,13 @@ export function inspect({ gh, repo, pr, expectSha = null, outDir, now = Date.now
     const flagged = count(`repo:${repo} is:pr label:${POLICY.label} author:${author} created:>=${since}`);
     // the search cannot exclude one pull request by number; subtract this one if it is already flagged
     const own = (info.labels || []).some((l) => l.name === POLICY.label) && Date.parse(info.created_at) >= now - DAY ? 1 : 0;
-    account = gateAccount({ createdAt: user.created_at, association: info.author_association, mergedLastDay: merged, flaggedLastDay: Math.max(0, flagged - own) }, now);
+    // author_association hides private organisation members (the job token sees NONE or CONTRIBUTOR), so ask for the
+    // repository permission too: write access or more counts as a maintainer.
+    let association = info.author_association;
+    try {
+      if (['admin', 'maintain', 'write'].includes(gh.get(`repos/${repo}/collaborators/${author}/permission`).permission)) association = 'COLLABORATOR';
+    } catch { /* no permission to ask, or not a collaborator: keep the reported association */ }
+    account = gateAccount({ createdAt: user.created_at, association, mergedLastDay: merged, flaggedLastDay: Math.max(0, flagged - own) }, now);
   } catch { /* stays refused */ }
 
   const currentSha = gh.get(`repos/${repo}/pulls/${pr}`).head.sha;

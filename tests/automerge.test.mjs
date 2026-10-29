@@ -26,7 +26,7 @@ async function realPackage(contributor = 'octocat') {
 }
 
 // A fake GitHub holding one pull request. `fork` maps path -> { type, bytes } at the head commit.
-function fakeGh({ files, changed, fork, user = 'octocat', association = 'FIRST_TIME_CONTRIBUTOR', created = '2020-01-01T00:00:00Z', cla = 'success', merged = 0, flagged = 0, heads = [HEAD], state = 'open' }) {
+function fakeGh({ files, changed, fork, user = 'octocat', association = 'FIRST_TIME_CONTRIBUTOR', created = '2020-01-01T00:00:00Z', cla = 'success', merged = 0, flagged = 0, heads = [HEAD], state = 'open', permission = null }) {
   const calls = [];
   let headReads = 0;
   const gh = {
@@ -38,6 +38,7 @@ function fakeGh({ files, changed, fork, user = 'octocat', association = 'FIRST_T
         return { state, draft: false, head: { sha, repo: { full_name: 'octocat/fork' } }, base: { ref: 'main', repo: { default_branch: 'main' } }, user: { login: user }, author_association: association, labels: [], created_at: '2026-10-30T11:00:00Z' };
       }
       if (/\/commits\/[0-9a-f]+\/status$/.test(p)) return { statuses: cla ? [{ context: 'license/cla', state: cla }] : [] };
+      if (p.includes('/collaborators/')) { if (!permission) throw new Error('404'); return { permission }; }
       if (p.startsWith('users/')) return { created_at: created };
       if (p.startsWith('search/issues')) {
         const q = decodeURIComponent(p);
@@ -212,6 +213,14 @@ test('end to end: wrong hash at the pinned commit, a symlink, a README edit, a y
 
   const other = run(fakeGh({ ...base, user: 'mallory' }));
   assert.match(other.reasons.join('\n'), /contributor/);
+});
+
+test('a private org member (reported as NONE) with write permission is treated as a maintainer', async () => {
+  const { files } = await realPackage();
+  const base = { files, changed: addedAll(files), fork: forkOf(files), association: 'NONE', created: '2026-10-25T00:00:00Z', flagged: 2 };
+  assert.match(run(fakeGh(base)).reasons.join('\n'), /younger/);
+  assert.equal(run(fakeGh({ ...base, permission: 'admin' })).merge, true);
+  assert.match(run(fakeGh({ ...base, permission: 'read' })).reasons.join('\n'), /younger/);
 });
 
 test('a pull request that touches nothing under submissions/, or is closed, is ignored', async () => {
