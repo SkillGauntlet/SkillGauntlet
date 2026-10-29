@@ -19,6 +19,7 @@ import { setLang, detectLang, errorText, t } from '../lib/i18n.js';
 import { resolveBin, backend, backendFor, isDeepseekModel, HOSTS, checkModel, draftQueries, draftQuality, runTrial, requireHost, pingHost } from '../lib/trial.js';
 import { runGain } from '../lib/gain.js';
 import { ERROR_STREAK_STOP, executeTrials, finishRun, resumeRun } from '../lib/execute.js';
+import { cmdSubmit } from '../lib/submit.js';
 
 function relLabel(root, dir) {
   const rel = path.relative(root, dir).replace(/\\/g, '/');
@@ -467,9 +468,8 @@ async function interactive() {
     if ((host === 'claude' || host === 'codebuddy' || host === 'codewhale') && process.exitCode === 3) break;
   }
 
-  // Nothing is uploaded and nothing is offered for upload: there is no board to submit to yet. The
-  // run archives are already on disk, so opening one later needs no rerun. Saying this plainly is
-  // worth more than a yes/no prompt that would have done nothing.
+  // Nothing is uploaded from here. Contributing a run is a separate, deliberate command (`submit`), which
+  // scrubs, previews and asks first; saying so plainly beats a yes/no prompt in the middle of a test run.
   say(`\n${t('shareState')}`);
 }
 
@@ -508,6 +508,10 @@ async function main() {
   }
   if (args[0] === 'resume') {
     await cmdResume(args.slice(1));
+    return;
+  }
+  if (args[0] === 'submit') {
+    await cmdSubmit(args.slice(1));
     return;
   }
   await interactive();

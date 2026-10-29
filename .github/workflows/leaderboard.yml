@@ -1,0 +1,57 @@
+# Regenerates LEADERBOARD.md after data lands on main.
+#
+# Runs only on pushes to main (merged, already-checked data) and by hand. It reads files and writes one
+# file; no model call, no secret beyond the job token. The page is rebuilt from step0/data/ and
+# submissions/ only, so a pull request cannot make it say anything the data does not.
+#
+# main requires the license/cla check, which a bot commit does not have, so this push may be refused. When
+# it is, the job says so in its summary and the page is rebuilt by hand: `npm run leaderboard`, commit,
+# open a pull request (a maintainer can also push with the admin bypass).
+name: leaderboard
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "submissions/**"
+      - "step0/data/**"
+      - "scripts/build-leaderboard.mjs"
+      - "lib/submission.js"
+      - "lib/schema.js"
+      - "schemas/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: leaderboard
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/build-leaderboard.mjs
+      - name: Commit the page if it changed
+        run: |
+          if git diff --quiet -- LEADERBOARD.md; then
+            echo "LEADERBOARD.md is up to date."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add LEADERBOARD.md
+          git commit -q -m "Regenerate LEADERBOARD.md"
+          if ! git push; then
+            {
+              echo "### LEADERBOARD.md is out of date and the bot could not push it"
+              echo
+              echo "Branch protection refused the push. Run \`npm run leaderboard\` on a branch, commit LEADERBOARD.md and open a pull request."
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 1
+          fi
