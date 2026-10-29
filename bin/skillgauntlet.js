@@ -24,6 +24,8 @@ import { runGain } from '../lib/gain.js';
 import { ERROR_STREAK_STOP, executeTrials, finishRun, resumeRun } from '../lib/execute.js';
 import { cmdSubmit } from '../lib/submit.js';
 import { gitFacts } from '../lib/submission.js';
+import { checkForUpdate, declineUpdate, currentVersion, isCheckout } from '../lib/update.js';
+import { spawnSync as runSync, execSync } from 'node:child_process';
 
 function relLabel(root, dir) {
   const rel = path.relative(root, dir).replace(/\\/g, '/');
@@ -366,6 +368,40 @@ async function pickAmong(found, root) {
   return [{ name: path.basename(dir), dir, root }];
 }
 
+// Before the questions: is there a newer published version? The user chooses; if the update cannot be fetched or
+// does not run, the session carries on with the version that is already running.
+async function offerUpdate() {
+  if (!hasTerminal() || (isCheckout() && !process.env.SG_FORCE_UPDATE_CHECK)) return; // a checkout is not nagged unless asked
+  const found = await checkForUpdate();
+  if (!found) return;
+  say(`\n${t('updateAvail', found)}`);
+  const pick = await choose(t('updateQ'), [
+    { label: t('updateNow'), value: 'now' },
+    { label: t('updateSkip'), value: 'skip' },
+  ], 1);
+  if (pick !== 'now') {
+    declineUpdate(found.latest);
+    return;
+  }
+  const spec = `skillgauntlet@${found.latest}`;
+  const env = { ...process.env, SG_NO_UPDATE_CHECK: '1' };
+  try {
+    // fetch it first and check it answers as the version asked for, so a failed download never costs the session
+    const said = withTicker(waitText(t('updating', found), { slowAfter: 600 }), () => execSync(`npx -y ${spec} --version`, { encoding: 'utf8', timeout: 180000, windowsHide: true, env, stdio: ['ignore', 'pipe', 'pipe'] }));
+    if (String(said).trim() !== found.latest) throw new Error(`it reported ${String(said).trim() || 'nothing'}`);
+  } catch (err) {
+    // npm's own words when it gave any ("... is not in this registry"), else the error's first line
+    const lines = String(err.stderr || err.message).split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
+    const why = (lines.find((l) => /no matching version|not in this registry|404/i.test(l)) || lines.find((l) => /error|ERR/.test(l)) || lines[0] || 'unknown')
+      .replace(/^npm error\s*(notarget\s*)?/i, '').replace(/[.。]+$/, '');
+    say(t('updateFailed', { why: why.slice(0, 160), current: found.current }));
+    return;
+  }
+  closeUi();
+  const r = runSync(`npx -y ${spec}`, process.argv.slice(2), { stdio: 'inherit', env, shell: true });
+  process.exit(r.status ?? 0);
+}
+
 async function interactive() {
   const langChoice = await select(`${t('langTitle')}`, [
     { label: t('langZh'), value: 'zh' },
@@ -373,6 +409,7 @@ async function interactive() {
     { label: t('langJa'), value: 'ja' },
   ], 0);
   setLang(langChoice);
+  await offerUpdate();
 
   say('');
   say(t('title'));
@@ -643,6 +680,10 @@ async function main() {
   const args = applyLang(process.argv.slice(2));
   if (args.includes('--help') || args.includes('-h')) {
     say(t('usage'));
+    return;
+  }
+  if (args.includes('--version') || args.includes('-v')) {
+    say(currentVersion() || 'unknown');
     return;
   }
   if (args[0] === 'static') {
