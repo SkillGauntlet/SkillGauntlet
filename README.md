@@ -28,6 +28,7 @@ can be compared.
 - [Codex probe](step0/data/2026-10-28_codex_probe/BATCH.md): facts only, no trigger rate (see
   "Hosts and models").
 - [Static layer](step0/data/2026-10-28_all_haiku/static/SUMMARY.md): all 18 skills, no model calls.
+- [Leaderboard](LEADERBOARD.md): the maintainer's batches and community submissions in one generated page, one table per host.
 
 ## Usage
 
@@ -102,6 +103,34 @@ and appeal is the one thing a rating must allow.
   data out, zero-width characters, external images.
 - **E description quality** — presence, whether it states when to use it, over-broad quantifiers,
   rough clause count, name/directory agreement.
+
+## Submit your results
+
+The leaderboard data has to come from people running the tests, so a finished run can be contributed with one
+command. Results stay on your machine until you run it; nothing is uploaded automatically.
+
+1. Run a test the normal way (`npx skillgauntlet`). The run is saved under `<skill>/.skillgauntlet/runs/<timestamp>/`
+   and its path is printed. The skill must come from a public git repository, with the commit you tested
+   pushed and no uncommitted edits to the skill. To help confirm an existing row of the leaderboard, test the
+   commit that row's Skill link points to: a row is for one pinned commit.
+2. Preview what would be submitted, with nothing uploaded: `npx skillgauntlet submit <run-dir> --dry-run`.
+   It checks the run against [`schemas/submission-1.json`](schemas/submission-1.json), strips local paths,
+   your login name, environment values and anything shaped like a key or token, refuses to continue if
+   something secret-looking remains, and prints exactly what would go (the package is also left on disk to read).
+3. Submit: `npx skillgauntlet submit <run-dir>`. After you confirm, it forks this repository under your account,
+   pushes a branch and opens a pull request as you, using the GitHub CLI (`gh`). Without `gh`, or when it is not
+   logged in, it prints the manual steps instead.
+4. Sign the [CLA](CLA.md) when the bot asks (once). CI then comments on the pull request with a pass, or with
+   exactly what is missing.
+
+A merged submission is a **community single sample**. It becomes **confirmed** when another independent
+submission, or a maintainer run, lands on the same grade for the same skill version, host and model.
+Disagreeing results are kept side by side. See [`LEADERBOARD.md`](LEADERBOARD.md) for the current rows and what
+each tag means, and [CONTRIBUTING.md](CONTRIBUTING.md#submitting-results) for the details, including what CI
+checks and what it cannot.
+
+The runner cannot prevent forgery. CI checks format, hashes and arithmetic; it cannot show that the trials
+were really run. The tags say how many submissions agree, not that any of them is proven.
 
 ## Status
 

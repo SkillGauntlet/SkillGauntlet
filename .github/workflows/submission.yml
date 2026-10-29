@@ -1,0 +1,58 @@
+# Checks a community submission (a pull request that adds files under submissions/).
+#
+# It calls no model, holds no secret and has only read permission. It runs the checking script from the
+# BASE branch and reads the pull request's files as data: the checkout of the pull request is never
+# executed, so a fork cannot change what the check does. The result is uploaded as an artifact; the
+# comment is posted by submission-comment.yml, which has a write token and never checks anything out.
+# Do not switch this to pull_request_target.
+name: submission-check
+
+on:
+  pull_request:
+    paths:
+      - "submissions/**"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: submission-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Base branch (trusted scripts)
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          path: base
+          persist-credentials: false
+      - name: Pull request (untrusted data, never executed)
+        uses: actions/checkout@v4
+        with:
+          path: pr
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: List changed files
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+        run: gh api --paginate "repos/$REPO/pulls/$PR/files" --jq '.[] | [.status, .filename] | @tsv' > files.tsv
+      - name: Check submissions
+        env:
+          AUTHOR: ${{ github.event.pull_request.user.login }}
+          PR: ${{ github.event.pull_request.number }}
+        run: node base/scripts/check-submission.mjs --root pr --files files.tsv --author "$AUTHOR" --pr "$PR" --out out
+      - name: Keep the result for the comment job
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: submission-result
+          path: out/
+          if-no-files-found: ignore
+          retention-days: 7

@@ -1,0 +1,48 @@
+# Posts the result of submission-check on the pull request.
+#
+# workflow_run workflows run from the default branch with a write token, even for fork pull requests,
+# which is why this one checks nothing out and executes nothing from the pull request. The artifact is
+# data: only a number (verified against the run's own head commit) and a markdown file are used.
+name: submission-comment
+
+on:
+  workflow_run:
+    workflows: ["submission-check"]
+    types: [completed]
+
+permissions:
+  actions: read
+  pull-requests: write
+
+jobs:
+  comment:
+    if: github.event.workflow_run.event == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: submission-result
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ github.token }}
+          path: result
+      - name: Post or update the comment
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          set -euo pipefail
+          pr="$(tr -d '[:space:]' < result/pr)"
+          case "$pr" in ''|*[!0-9]*) echo "artifact has no valid pull request number"; exit 1;; esac
+          # the number came from an artifact: only comment if that pull request really is at this run's commit
+          head="$(gh api "repos/$REPO/pulls/$pr" --jq .head.sha)"
+          if [ "$head" != "$HEAD_SHA" ]; then echo "pull request $pr is no longer at $HEAD_SHA; skipping"; exit 0; fi
+          marker='<!-- skillgauntlet-submission-check -->'
+          head -c 60000 result/comment.md > body.md
+          grep -qF "$marker" body.md || { echo "comment file lacks the marker"; exit 1; }
+          id="$(gh api --paginate "repos/$REPO/issues/$pr/comments" --jq ".[] | select(.user.login == \"github-actions[bot]\") | select(.body | contains(\"$marker\")) | .id" | head -n1)"
+          if [ -n "$id" ]; then
+            gh api -X PATCH "repos/$REPO/issues/comments/$id" -F body=@body.md > /dev/null
+          else
+            gh api -X POST "repos/$REPO/issues/$pr/comments" -F body=@body.md > /dev/null
+          fi

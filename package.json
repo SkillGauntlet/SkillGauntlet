@@ -10,6 +10,7 @@
     "bin",
     "lib",
     "contracts",
+    "schemas",
     "README.md",
     "LICENSE",
     "LICENSE-DATA"
@@ -20,7 +21,8 @@
   "scripts": {
     "start": "node ./bin/skillgauntlet.js",
     "static": "node ./bin/skillgauntlet.js static",
-    "test": "node --test tests/*.test.mjs"
+    "test": "node --test tests/*.test.mjs",
+    "leaderboard": "node scripts/build-leaderboard.mjs"
   },
   "keywords": [
     "agent",

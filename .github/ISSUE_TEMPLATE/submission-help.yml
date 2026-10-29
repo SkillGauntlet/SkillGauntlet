@@ -1,0 +1,42 @@
+name: Submission problem ("my submission failed or I am stuck")
+description: The submit command or the submission check failed, a merged submission looks wrong on the leaderboard, or you need a submission removed.
+title: "[Submission] <skill> - <what happened>"
+labels: ["submission"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Results are automated and nobody reviews grades by hand, so this form is for problems with the *process*. A published result you think is wrong is an appeal: use the appeal form for that.
+
+        Never paste API keys, tokens or full home-directory paths here. Paste the check comment or the command output instead.
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What happened?
+      options:
+        - skillgauntlet submit refused to package my run
+        - The submission check on my pull request failed and I do not understand why
+        - The check passed but the leaderboard row looks wrong (grade, tag, credit)
+        - I want my submission removed (for example it contains something private)
+        - Something else
+    validations:
+      required: true
+  - type: input
+    id: link
+    attributes:
+      label: Pull request or submission path
+      placeholder: "https://github.com/SkillGauntlet/SkillGauntlet/pull/..."
+  - type: textarea
+    id: details
+    attributes:
+      label: Details
+      description: The command you ran, the output or the check comment, and what you expected.
+    validations:
+      required: true
+  - type: checkboxes
+    id: cla
+    attributes:
+      label: Agreement
+      options:
+        - label: What I post here is mine to post, and I agree it falls under the project's CLA (see CONTRIBUTING.md).
+          required: true
