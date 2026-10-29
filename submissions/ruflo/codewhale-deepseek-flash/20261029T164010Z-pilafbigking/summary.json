@@ -1,0 +1,142 @@
+{
+  "trials": 20,
+  "recall": 1,
+  "fpr": 0,
+  "noToolRate": 0,
+  "questions": [
+    {
+      "query": "how do i install ruflo into this repo? it's C:/dev/acme-api, node 20 is already set up",
+      "shouldTrigger": true,
+      "hits": 1,
+      "n": 1
+    },
+    {
+      "query": "帮我在 ~/projects/shop-ui 里初始化 ruflo，顺手把 .claude 配置也生成好",
+      "shouldTrigger": true,
+      "hits": 1,
+      "n": 1
+    },
+    {
+      "query": "spin up a hierarchical ruflo swarm: one lead agent plus 4 workers to refactor src/auth/*.ts",
+      "shouldTrigger": true,
+      "hits": 1,
+      "n": 1
+    },
+    {
+      "query": "用 ruflo 跑个多层级的 swarm，先把 packages/api 的测试补全，再让 reviewer agent 过一遍",
+      "shouldTrigger": true,
+      "hits": 1,
+      "n": 1
+    },
+    {
+      "query": "use ruflo's memory tools to stash the auth conventions from last session, then search them by meaning",
+      "shouldTrigger": true,
+      "hits": 1,
+      "n": 1
+    },
+    {
+      "query": "调一下 ruflo 的 MCP hook，让每次改完 .tsx 文件自动跑路由学习和格式化",
+      "shouldTrigger": true,
+      "hits": 1,
+      "n": 1
+    },
+    {
+      "query": "run ruflo doctor --fix in C:/dev/acme-api, it keeps saying the memory db is missing",
+      "shouldTrigger": true,
+      "hits": 1,
+      "n": 1
+    },
+    {
+      "query": "看下这台机器上 ruflo 的版本和健康状态，doctor 老报 Node 不对",
+      "shouldTrigger": true,
+      "hits": 1,
+      "n": 1
+    },
+    {
+      "query": "which ruflo plugin should i use for a security audit of this monorepo?",
+      "shouldTrigger": true,
+      "hits": 1,
+      "n": 1
+    },
+    {
+      "query": "我这活儿是抓竞品价格做日报，ruflo 那堆插件里哪个比较合适？",
+      "shouldTrigger": true,
+      "hits": 1,
+      "n": 1
+    },
+    {
+      "query": "how do i init a pnpm workspace in C:/dev/shop and add eslint + prettier?",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "给这个项目初始化一个 .mcp.json，接我们自己的 Postgres MCP server",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "用 CrewAI 搭个 hierarchical process 的 multi-agent 团队，写竞品调研报告",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "build a LangGraph multi-agent supervisor in py with a planner and two tool agents",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "add a redis memory cache to the express app in src/cache.ts",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "在 .husky 里加个 pre-commit hook，提交前跑 prettier 格式化 ts",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "check the node and npm version required by package.json engines before I bump deps",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "帮我跑一下 staging api 的 health check，地址是 https://staging.acme.dev/healthz",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "找个 webpack 插件把生产构建里的 console.log 全去掉",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "discover which built-in Claude Code skill fits a docs migration in this repo",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    }
+  ],
+  "failedTrials": 0,
+  "incomplete": 0,
+  "model": "deepseek-flash",
+  "backend": "codewhale:api.deepseek.com",
+  "host": "codewhale",
+  "runs": 1,
+  "recallCi": [
+    0.7224598312333834,
+    1
+  ],
+  "fprCi": [
+    0,
+    0.2775401687666166
+  ]
+}

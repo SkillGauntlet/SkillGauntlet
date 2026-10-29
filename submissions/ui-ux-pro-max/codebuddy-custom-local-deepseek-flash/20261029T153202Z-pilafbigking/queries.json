@@ -1,0 +1,221 @@
+{
+  "schema": "skillgauntlet/queries/1",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "need a landing page for our invoicing saas, clean modern look - can u build it",
+      "shouldTrigger": true,
+      "clause": "designing pages and screens",
+      "shares": "",
+      "borrows": "",
+      "note": "asks to design and build a new page from scratch"
+    },
+    {
+      "id": "q02",
+      "query": "帮我设计个健身 app 的首页，深色系，要有高级感",
+      "shouldTrigger": true,
+      "clause": "designing pages and screens",
+      "shares": "",
+      "borrows": "",
+      "note": "new screen design with visual direction"
+    },
+    {
+      "id": "q03",
+      "query": "把这个 Button 组件重构下，要支持三种尺寸加禁用态",
+      "shouldTrigger": true,
+      "clause": "building or refactoring components",
+      "shares": "",
+      "borrows": "",
+      "note": "refactoring a UI component's variants"
+    },
+    {
+      "id": "q04",
+      "query": "our PricingCard component is a mess, refactor it into variants",
+      "shouldTrigger": true,
+      "clause": "building or refactoring components",
+      "shares": "",
+      "borrows": "",
+      "note": "component refactor work"
+    },
+    {
+      "id": "q05",
+      "query": "review the checkout flow in src/pages/checkout.tsx for ux problems",
+      "shouldTrigger": true,
+      "clause": "reviewing UI quality",
+      "shares": "",
+      "borrows": "",
+      "note": "explicit UX review of an interface"
+    },
+    {
+      "id": "q06",
+      "query": "帮我看看这个注册页有没有体验上的毛病",
+      "shouldTrigger": true,
+      "clause": "reviewing UI quality",
+      "shares": "",
+      "borrows": "",
+      "note": "asks for a UX critique of a page"
+    },
+    {
+      "id": "q07",
+      "query": "移动端卡片标题被截断了，文字溢出，怎么修",
+      "shouldTrigger": true,
+      "clause": "fixing interface defects",
+      "shares": "",
+      "borrows": "",
+      "note": "visual layout bug on a component"
+    },
+    {
+      "id": "q08",
+      "query": "the modal overflows the viewport on safari, fix the layout",
+      "shouldTrigger": true,
+      "clause": "fixing interface defects",
+      "shares": "",
+      "borrows": "",
+      "note": "fixing a rendered layout defect"
+    },
+    {
+      "id": "q09",
+      "query": "we need a design token set and color palette for a fintech dashboard",
+      "shouldTrigger": true,
+      "clause": "design systems and tokens",
+      "shares": "",
+      "borrows": "",
+      "note": "asks for system-level tokens and palette"
+    },
+    {
+      "id": "q10",
+      "query": "给我们这套后台定一套设计系统，颜色字号间距都规范下来",
+      "shouldTrigger": true,
+      "clause": "design systems and tokens",
+      "shares": "",
+      "borrows": "",
+      "note": "building a design system for a product"
+    },
+    {
+      "id": "q11",
+      "query": "form errors arent announced by screen readers, need a11y fixes",
+      "shouldTrigger": true,
+      "clause": "accessibility",
+      "shares": "",
+      "borrows": "",
+      "note": "accessibility outcome on an interface"
+    },
+    {
+      "id": "q12",
+      "query": "这个下拉菜单键盘完全操作不了，焦点也丢了，无障碍得处理",
+      "shouldTrigger": true,
+      "clause": "accessibility",
+      "shares": "",
+      "borrows": "",
+      "note": "keyboard and focus accessibility work"
+    },
+    {
+      "id": "q13",
+      "query": "sidebar collapses weirdly on tablet widths, need responsive behavior",
+      "shouldTrigger": true,
+      "clause": "interaction and responsive layout",
+      "shares": "",
+      "borrows": "",
+      "note": "responsive breakpoint behavior"
+    },
+    {
+      "id": "q14",
+      "query": "手机上导航改成底部 tab，桌面还是侧边栏，把响应式布局做了",
+      "shouldTrigger": true,
+      "clause": "interaction and responsive layout",
+      "shares": "",
+      "borrows": "",
+      "note": "responsive layout plus navigation interaction"
+    },
+    {
+      "id": "q15",
+      "query": "pick a font pairing and color scheme for a playful kids learning app",
+      "shouldTrigger": true,
+      "clause": "typography and color",
+      "shares": "",
+      "borrows": "",
+      "note": "type pairing and color choice for a product UI"
+    },
+    {
+      "id": "q16",
+      "query": "正文字号 14px 感觉太小，行高和字色也灰得看不清，帮我调下排版",
+      "shouldTrigger": true,
+      "clause": "typography and color",
+      "shares": "",
+      "borrows": "",
+      "note": "typography and text color tuning in the UI"
+    },
+    {
+      "id": "q17",
+      "query": "build a revenue line chart with tooltips and legend for the dashboard",
+      "shouldTrigger": true,
+      "clause": "charts and data display",
+      "shares": "",
+      "borrows": "",
+      "note": "building a chart inside an interface"
+    },
+    {
+      "id": "q18",
+      "query": "这个销售图表的图例和 hover 提示不清楚，优化下数据可视化",
+      "shouldTrigger": true,
+      "clause": "charts and data display",
+      "shares": "",
+      "borrows": "",
+      "note": "chart legibility and tooltip improvements"
+    },
+    {
+      "id": "q19",
+      "query": "implement this settings screen in SwiftUI with proper safe areas",
+      "shouldTrigger": true,
+      "clause": "stack-specific UI implementation",
+      "shares": "",
+      "borrows": "",
+      "note": "stack-specific UI implementation work"
+    },
+    {
+      "id": "q20",
+      "query": "用 tailwind 把这个卡片布局实现出来，注意 hover 态",
+      "shouldTrigger": true,
+      "clause": "stack-specific UI implementation",
+      "shares": "",
+      "borrows": "",
+      "note": "implementing UI in a named stack"
+    },
+    {
+      "id": "q21",
+      "query": "帮我用 matplotlib 把 data/sales.csv 画成折线图导出 png，放进周报里",
+      "shouldTrigger": false,
+      "clause": "charts and data display",
+      "shares": "折线图",
+      "borrows": "charts",
+      "note": "It produces a static analysis image for a report, not a chart inside a user interface, so the chart guidance does not apply."
+    },
+    {
+      "id": "q22",
+      "query": "帮我 review 一下这个 PR 的 diff，逻辑有没有坑",
+      "shouldTrigger": false,
+      "clause": "reviewing UI quality",
+      "shares": "review",
+      "borrows": "reviewing",
+      "note": "This is a code-logic review of a diff with no visual or UX surface, which ordinary code review covers."
+    },
+    {
+      "id": "q23",
+      "query": "把我们的设计规范整理成一份 Confluence 文档，给新人培训用",
+      "shouldTrigger": false,
+      "clause": "design systems and tokens",
+      "shares": "设计规范",
+      "borrows": "design systems",
+      "note": "It only writes a documentation page that describes existing rules; it neither designs nor applies a system."
+    },
+    {
+      "id": "q24",
+      "query": "用 Next.js 写个 cron job 每天把订单同步到 S3，代码放 src/jobs/",
+      "shouldTrigger": false,
+      "clause": "stack-specific UI implementation",
+      "shares": "Next.js",
+      "borrows": "stack-specific UI implementation",
+      "note": "It names the same stack but the job is background data sync with no interface, so the UI implementation guidance is irrelevant."
+    }
+  ]
+}
