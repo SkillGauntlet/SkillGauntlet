@@ -6,18 +6,24 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { analyze } from '../lib/static.js';
 import { staticMarkdown, trialSection, gainSection, probeSection, scorecard } from '../lib/report.js';
-import { findSkills, resolveSpec } from '../lib/discover.js';
+import { findSkills, resolveSpec, skillNameOf } from '../lib/discover.js';
 import { installedSkills } from '../lib/installed.js';
 import { probeActivation } from '../lib/codex.js';
 import { fingerprint, cacheFileFor, readCachedQueries, writeCachedQueries } from '../lib/queries.js';
-import { openRun, querySetHash } from '../lib/runs.js';
-import { DEPTHS, estimate } from '../lib/depth.js';
-import { ask, choose, select, confirm, say, closeUi } from '../lib/ui.js';
+import { openRun, querySetHash, readRun, validRecords } from '../lib/runs.js';
+import { DEPTHS, minutesFor } from '../lib/depth.js';
+import { ask, choose, select, confirm, say, closeUi, hasTerminal, setBack, Back } from '../lib/ui.js';
+import { hostModels } from '../lib/models.js';
+import { browseDir } from '../lib/browse.js';
+import { withTicker } from '../lib/ticker.js';
+import { renderResult, bar } from '../lib/chart.js';
 import { setLang, detectLang, errorText, t } from '../lib/i18n.js';
-import { resolveBin, backend, backendFor, isDeepseekModel, HOSTS, checkModel, draftQueries, draftQuality, runTrial, requireHost } from '../lib/trial.js';
+import { resolveBin, backend, backendFor, isDeepseekModel, HOSTS, checkModel, draftQueries, draftQuality, runTrial, requireHost, pingHost, setHostBin, binInstalled } from '../lib/trial.js';
+import { HOST_CLI, searchHost, installCommand, installHost } from '../lib/findhost.js';
 import { runGain } from '../lib/gain.js';
 import { ERROR_STREAK_STOP, executeTrials, finishRun, resumeRun } from '../lib/execute.js';
 import { cmdSubmit } from '../lib/submit.js';
+import { gitFacts } from '../lib/submission.js';
 
 function relLabel(root, dir) {
   const rel = path.relative(root, dir).replace(/\\/g, '/');
@@ -40,9 +46,92 @@ function writeOut(skillDir, name, md, sc) {
   return out;
 }
 
+// The host CLI is not on PATH. Look for it elsewhere on the machine, offer to install it where an installer
+// exists, and otherwise let the user pick another host. True when the host can now be used.
+async function fixMissingHost(hostId, err) {
+  const { bin } = HOST_CLI[hostId];
+  const label = err.vars?.host || hostId;
+  say(`\n${t('hostNotOnPath', { host: label })}`);
+  const options = withTicker(waitText(t('waitSearch', { host: label }), { slowAfter: 600 }), () => searchHost(hostId)).slice(0, 3).map((f) => ({ label: t('hostUseFound', { path: f }), value: { use: f } }));
+  const cmd = installCommand(hostId);
+  if (cmd) options.push({ label: t('hostInstallNow', { cmd }), value: { install: true } });
+  else say(t(err.howKey));
+  options.push({ label: t('hostOther'), value: { other: true } });
+
+  const pick = await select(t('hostFixQ'), options, 0);
+  if (pick.use) {
+    setHostBin(bin, pick.use);
+    say(`  ${pick.use}`);
+    return true;
+  }
+  if (pick.install) {
+    say(`\n${t('hostInstalling', { host: label })}`);
+    try { installHost(hostId); } catch (e) {
+      say(t('hostInstallFailed', { why: e.message }));
+      return false;
+    }
+    if (binInstalled(bin)) return true;
+    const again = searchHost(hostId)[0]; // npm's folder may not be on this process's PATH yet
+    if (again) { setHostBin(bin, again); return true; }
+    say(t('hostStillMissing', { host: label }));
+  }
+  return false;
+}
+
+let approvedFollowing = false; // the user said not to ask again for the remaining skills
+
+async function approveTrials({ q, runs, n }) {
+  if (approvedFollowing) return true;
+  const pick = await choose(t('trialsQ', { q, runs, n, minutes: minutesFor(n) }), [
+    { label: t('trialsGo'), value: 'go' },
+    { label: t('trialsAll'), value: 'all' },
+    { label: t('trialsSkip'), value: 'skip' },
+  ], 1);
+  if (pick === 'all') approvedFollowing = true;
+  return pick !== 'skip';
+}
+
+const hostChecked = new Set();
+const finishedRuns = []; // run directories of complete runs, offered for contribution at the end
+const remoteSource = new Map(); // skill directory -> the public repository, commit and subfolder it was cloned from
+
+// The arguments `submit` needs for a run. A skill cloned from GitHub in this session already has its repository,
+// commit and subfolder, so the user is not asked for them; other skills are looked up from their own git checkout.
+function submitArgs(runDir) {
+  const skillDir = path.resolve(runDir, '..', '..', '..');
+  const src = remoteSource.get(skillDir);
+  return src ? [runDir, '--repo', src.repo, '--commit', src.commit, ...(src.subdir ? ['--subdir', src.subdir] : [])] : [runDir];
+}
+
+// Whether the public repository and commit of a run's skill can be told at all.
+function canSubmit(runDir) {
+  const skillDir = path.resolve(runDir, '..', '..', '..');
+  if (remoteSource.has(skillDir)) return true;
+  const f = gitFacts(skillDir);
+  return Boolean(f.repo && f.commit);
+}
+
+const quoteArg = (a) => (/[\s"]/.test(a) ? `"${a}"` : a);
+const waitText = (label, extra = {}) => ({ label, elapsed: t('waitElapsed'), abortHint: t('waitAbort'), ...extra });
+
+// Asking a host CLI for its models takes a few seconds (CodeBuddy about three), so it shows a wait line and is
+// remembered for the rest of the run.
+const modelCache = new Map();
+function modelsOf(host, label) {
+  if (!modelCache.has(host)) {
+    modelCache.set(host, withTicker(waitText(t('waitModels', { host: label }), { slowAfter: 600 }), () => hostModels(host, resolveBin(host))));
+  }
+  return modelCache.get(host);
+}
+const HOST_LABEL = { 'claude-code': 'Claude Code', codebuddy: 'CodeBuddy', codewhale: 'Codewhale' };
+
 async function runTriggerLayer({ skillDir, skillName, depth, model, host = 'claude-code' }) {
   requireHost(host);
   const bin = resolveBin(HOSTS[host].bin);
+  if (!hostChecked.has(host)) {
+    withTicker(waitText(t('hostPing', { host: HOST_LABEL[host] || host })), () => pingHost(host, { bin, model }));
+    hostChecked.add(host);
+  }
   const cacheFile = cacheFileFor(skillDir, depth);
   const want = { perClause: depth.perClause, negatives: depth.negatives, skillFingerprint: fingerprint(skillDir) };
 
@@ -51,8 +140,7 @@ async function runTriggerLayer({ skillDir, skillName, depth, model, host = 'clau
   if (qs) {
     say(`  ${t('queriesReused', { n: qs.queries.length, file: path.basename(cacheFile) })}`);
   } else {
-    say(`  ${t('drafting')}`);
-    qs = draftQueries({ bin, skillDir, skillName, model, perClause: depth.perClause, negatives: depth.negatives, host });
+    qs = withTicker(waitText(t('drafting')), () => draftQueries({ bin, skillDir, skillName, model, perClause: depth.perClause, negatives: depth.negatives, host }));
     say(`  ${t('drafted', { q: qs.queries.length, c: qs.clauses.length })}`);
     writeCachedQueries(cacheFile, {
       schema: 'skillgauntlet/queries/1',
@@ -74,6 +162,12 @@ async function runTriggerLayer({ skillDir, skillName, depth, model, host = 'clau
 
   const trials = [];
   for (const q of qs.queries) for (let i = 0; i < depth.runs; i += 1) trials.push({ q, i });
+
+  // The number of trials is only known now that the questions exist, so this is where the user agrees to it.
+  if (!(await approveTrials({ q: qs.queries.length, runs: depth.runs, n: trials.length }))) {
+    say(`  ${t('trialsDeclined')}`);
+    return null;
+  }
 
   // Opened before the first trial: an interrupted run keeps its conditions and every finished record,
   // which is what makes a later recompute or comparison possible without paying again.
@@ -110,7 +204,8 @@ async function runTriggerLayer({ skillDir, skillName, depth, model, host = 'clau
     say(`  ${t('runSaved', { path: run.dir })}`);
     if (outcome.stopped) reportStopped(outcome.stopped, run.dir, model);
     else if (result?.incomplete) reportIncomplete(result.incomplete, run.dir, model);
-    return result;
+    else finishedRuns.push(run.dir);
+    return result && { ...result, runDir: run.dir };
   } catch (err) {
     run.close(null, { interrupted: true });
     throw err;
@@ -145,6 +240,11 @@ function archiveProbe({ skillDir, skillName, model, probe }) {
 
 function progress() {
   return ({ row, done, total }) => {
+    // On a terminal one line is redrawn in place; the verdicts of single trials belong to the result, not the wait.
+    if (process.stdout.isTTY) {
+      process.stdout.write(`\r\x1b[2K  ${t('progressLine')} ${bar(done / total, 24)} ${done}/${total}${done >= total ? '\n' : ''}`);
+      return;
+    }
     const mark = { triggered: '✓', not_triggered: '·', other_skill: '↷' }[row.verdict] || '!';
     say(`  [${done}/${total}] ${mark} ${row.queryId}#${row.run} → ${row.verdict}`);
   };
@@ -207,6 +307,19 @@ async function pickInstalled() {
   return hit ? [{ name: hit.name, dir: hit.dir, root: hit.root }] : [];
 }
 
+// A model for hosts that have an account default: pick it, a known name, or type one. Returns null for the default.
+async function pickModel(known = []) {
+  if (!hasTerminal()) return (await ask(t('modelOptionalQ'), '')).trim() || null;
+  const other = '\u0000other';
+  const v = await select(t('modelQ'), [
+    { label: t('modelDefault'), value: '' },
+    ...known.map((m) => ({ label: m, value: m })),
+    { label: t('modelOther'), value: other },
+  ], 0);
+  if (v === other) return (await ask(t('modelOptionalQ'), '')).trim() || null;
+  return v || null;
+}
+
 async function pickRemote() {
   for (;;) {
     const raw = await ask(t('askRepo'));
@@ -217,30 +330,40 @@ async function pickRemote() {
     }
     let resolved;
     try {
-      resolved = resolveSpec(parsed.repo);
+      resolved = withTicker(waitText(t('waitCloning'), { slowAfter: 600 }), () => resolveSpec(parsed.repo));
     } catch (err) {
       say(`  ${errorText(err)}`);
       continue;
     }
     const found = findSkills(resolved.dir);
+    for (const d of found) {
+      remoteSource.set(path.resolve(d), { repo: resolved.source.repo, commit: resolved.source.commit, subdir: path.relative(resolved.dir, d).replace(/\\/g, '/') });
+    }
     if (!found.length) {
       say(`  ${t('noSkill')}`);
       return [];
     }
     if (parsed.hint) {
-      const hit = found.find((d) => relLabel(resolved.dir, d) === parsed.hint || d.endsWith(`/${parsed.hint}`));
+      const hit = found.find((d) => relLabel(resolved.dir, d) === parsed.hint || d.replace(/\\/g, '/').endsWith(`/${parsed.hint}`));
       if (hit) return [{ name: path.basename(hit), dir: hit, root: resolved.dir }];
       say(`  ${t('notFoundNamed', { name: parsed.hint, list: found.map((d) => relLabel(resolved.dir, d)).slice(0, 8).join(', ') })}`);
       return [];
     }
     if (found.length === 1) return [{ name: path.basename(found[0]), dir: found[0], root: resolved.dir }];
-    say(`  ${t('multiFound', { n: found.length })}`);
-    const name = await ask(t('pickOneQ'));
-    const hit = found.find((d) => path.basename(d) === name.trim());
-    if (hit) return [{ name: path.basename(hit), dir: hit, root: resolved.dir }];
-    say(`  ${t('notFoundNamed', { name: name.trim(), list: found.map((d) => relLabel(resolved.dir, d)).slice(0, 8).join(', ') })}`);
-    return [];
+    say(`\n${t('multiFound', { n: found.length })}`);
+    return pickAmong(found, resolved.dir);
   }
+}
+
+// Several skills in one place: all of them, or one picked from the full list.
+async function pickAmong(found, root) {
+  const scope = await choose(t('scopeQ'), [
+    { label: t('scopeAll'), hint: t('scopeAllHint', { n: found.length }), value: 'all' },
+    { label: t('scopeOne'), hint: t('scopeOneHint'), value: 'one' },
+  ], 2);
+  if (scope === 'all') return found.map((d) => ({ name: path.basename(d), dir: d, root }));
+  const dir = await select(t('pickOneQ'), found.map((d) => ({ label: relLabel(root, d), value: d })), 0);
+  return [{ name: path.basename(dir), dir, root }];
 }
 
 async function interactive() {
@@ -255,130 +378,167 @@ async function interactive() {
   say(t('title'));
   say(t('rule'));
 
-  const source = await choose(t('sourceQ'), [
-    { label: t('srcInstalled'), hint: t('srcInstalledHint'), value: 'installed' },
-    { label: t('srcPath'), value: 'path' },
-    { label: t('srcRepo'), hint: 'owner/repo', value: 'repo' },
-  ], 1);
+  setBack(true);
 
-  let targets = [];
-  if (source === 'installed') targets = await pickInstalled();
-  else if (source === 'path') {
-    const root = path.resolve(await ask(t('srcPath')));
-    const found = findSkills(root);
-    if (!found.length) say(`\n${t('noSkill')}`);
-    else if (found.length === 1) targets = [{ name: path.basename(found[0]), dir: found[0], root }];
-    else {
-      const name = await select(t('pickOneQ'), found.map((d) => ({ label: relLabel(root, d), value: d })), 0);
-      targets = [{ name: path.basename(name), dir: name, root }];
-    }
-  } else targets = await pickRemote();
-  if (!targets.length) return;
+  // The questions run as steps so ← or Esc can return to the previous one (a step that ends the run returns END).
+  const END = Symbol('end');
+  const AGAIN = Symbol('again');
+  const S = { targets: [], host: null, depth: null, model: null, wantProbe: false };
 
-  const host = await choose(t('hostQ'), [
-    { label: t('hostClaude'), hint: t('hostClaudeHint'), value: 'claude' },
-    { label: t('hostCodebuddy'), hint: t('hostCodebuddyHint'), value: 'codebuddy' },
-    { label: t('hostCodewhale'), hint: t('hostCodewhaleHint'), value: 'codewhale' },
-    { label: t('hostCodex'), hint: t('hostCodexHint'), value: 'codex' },
-  ], 1);
-
-  let depth = null;
-  let model = null;
-  let wantProbe = false;
-
-  if (host === 'claude') {
-    const depthId = await choose(t('depthQ'), [
-      { label: t('depthQuick'), hint: t('depthQuickHint'), value: 'quick' },
-      { label: t('depthStandard'), hint: t('depthStandardHint'), value: 'standard' },
-      { label: t('depthDeep'), hint: t('depthDeepHint'), value: 'deep' },
-    ], 2);
-    depth = DEPTHS[depthId];
-
-    const provider = await choose(t('providerQ'), [
-      { label: t('provClaude'), hint: t('provClaudeHint'), value: 'claude' },
-      { label: t('provDeepseek'), hint: t('provDeepseekHint'), value: 'deepseek' },
-      { label: t('provManual'), value: 'manual' },
+  const sourceStep = async () => {
+    const source = await choose(t('sourceQ'), [
+      { label: t('srcInstalled'), hint: t('srcInstalledHint'), value: 'installed' },
+      { label: t('srcPath'), value: 'path' },
+      { label: t('srcRepo'), hint: 'owner/repo', value: 'repo' },
     ], 1);
 
-    if (provider === 'claude') {
-      model = await choose(t('modelQ'), [
-        { label: 'haiku', hint: t('modelCheap'), value: 'haiku' },
-        { label: 'sonnet', hint: t('modelDaily'), value: 'sonnet' },
-        { label: 'opus', hint: t('modelExpensive'), value: 'opus' },
-      ], 1);
-    } else if (provider === 'deepseek') {
-      if (!process.env.ANTHROPIC_BASE_URL) {
-        say(`\n${t('needBaseUrl')}`);
-        return;
+    let targets = [];
+    if (source === 'installed') targets = await pickInstalled();
+    else if (source === 'path') {
+      // Arrow keys walk the folders; typing a path stays available as the last entry (and is all a pipe has).
+      const browsed = hasTerminal() ? await browseDir((a, b, c) => select(a, b, c, { clear: true })) : null;
+      if (browsed) say(`  ${browsed}`);
+      const root = path.resolve(browsed ?? await ask(t('srcPath')));
+      const found = findSkills(root);
+      if (!found.length) say(`\n${t('noSkill')}`);
+      else if (found.length === 1) targets = [{ name: path.basename(found[0]), dir: found[0], root }];
+      else {
+        say(`\n${t('multiFound', { n: found.length })}`);
+        targets = await pickAmong(found, root);
       }
-      model = await choose(t('modelQ'), [
-        { label: 'deepseek-v4-flash', value: 'deepseek-v4-flash' },
-        { label: 'deepseek-v4-pro', value: 'deepseek-v4-pro' },
+    } else targets = await pickRemote();
+    if (!targets.length) return hasTerminal() ? AGAIN : END;
+    S.targets = targets.map((tg) => ({ ...tg, name: skillNameOf(tg.dir) }));
+    return null;
+  };
+
+  const hostStep = async () => {
+    S.host = await choose(t('hostQ'), [
+      { label: t('hostClaude'), hint: t('hostClaudeHint'), value: 'claude' },
+      { label: t('hostCodebuddy'), hint: t('hostCodebuddyHint'), value: 'codebuddy' },
+      { label: t('hostCodewhale'), hint: t('hostCodewhaleHint'), value: 'codewhale' },
+      { label: t('hostCodex'), hint: t('hostCodexHint'), value: 'codex' },
+    ], 1);
+
+    // Look for the host CLI before any question about depth or model: a missing one ends the run here, for free.
+    const hostId = { claude: 'claude-code', codebuddy: 'codebuddy', codewhale: 'codewhale' }[S.host];
+    if (hostId) {
+      try { requireHost(hostId); } catch (err) {
+        if (!(await fixMissingHost(hostId, err))) return AGAIN;
+      }
+    }
+    return null;
+  };
+
+  const optionsStep = async () => {
+    const { host, targets } = S;
+    S.depth = null;
+    S.model = null;
+    S.wantProbe = false;
+
+    if (host === 'claude') {
+      const depthId = await choose(t('depthQ'), [
+        { label: t('depthQuick'), hint: t('depthQuickHint'), value: 'quick' },
+        { label: t('depthStandard'), hint: t('depthStandardHint'), value: 'standard' },
+        { label: t('depthDeep'), hint: t('depthDeepHint'), value: 'deep' },
+      ], 2);
+      S.depth = DEPTHS[depthId];
+
+      const provider = await choose(t('providerQ'), [
+        { label: t('provClaude'), hint: t('provClaudeHint'), value: 'claude' },
+        { label: t('provDeepseek'), hint: t('provDeepseekHint'), value: 'deepseek' },
+        { label: t('provManual'), value: 'manual' },
       ], 1);
-    } else model = await ask(t('modelQ'));
-    checkModel(model, false);
-    say(`\n${t('backendLine', { backend: backend(), model })}`);
 
-    const est = estimate(depthId, 3);
-    say(`\n${t('estimate', {
-      skills: targets.length,
-      trials: est.trials,
-      minutes: est.minutes,
-      totalMinutes: est.minutes * targets.length,
-    })}`);
-  } else if (host === 'codewhale') {
-    say(`\n${t('codewhaleNote')}`);
-    const depthId = await choose(t('depthQ'), [
-      { label: t('depthQuick'), hint: t('depthQuickHint'), value: 'quick' },
-      { label: t('depthStandard'), hint: t('depthStandardHint'), value: 'standard' },
-    ], 1);
-    depth = DEPTHS[depthId];
-    model = (await ask(t('modelQ'), 'deepseek-flash')).trim() || 'deepseek-flash';
-    if (!process.env.DEEPSEEK_API_KEY) {
-      say(`\n${t('needDeepseekKey')}`);
-      return;
+      let model;
+      if (provider === 'claude') {
+        model = await choose(t('modelQ'), [
+          { label: 'haiku', hint: t('modelCheap'), value: 'haiku' },
+          { label: 'sonnet', hint: t('modelDaily'), value: 'sonnet' },
+          { label: 'opus', hint: t('modelExpensive'), value: 'opus' },
+        ], 1);
+      } else if (provider === 'deepseek') {
+        if (!process.env.ANTHROPIC_BASE_URL) {
+          say(`\n${t('needBaseUrl')}`);
+          return END;
+        }
+        model = await choose(t('modelQ'), [
+          { label: 'deepseek-v4-flash', value: 'deepseek-v4-flash' },
+          { label: 'deepseek-v4-pro', value: 'deepseek-v4-pro' },
+        ], 1);
+      } else model = await ask(t('modelQ'));
+      checkModel(model, false);
+      S.model = model;
+      say(`\n${t('backendLine', { backend: backend(), model })}`);
+
+      say(`\n${t('draftFirst')}`);
+    } else if (host === 'codewhale') {
+      say(`\n${t('codewhaleNote')}`);
+      const depthId = await choose(t('depthQ'), [
+        { label: t('depthQuick'), hint: t('depthQuickHint'), value: 'quick' },
+        { label: t('depthStandard'), hint: t('depthStandardHint'), value: 'standard' },
+      ], 1);
+      S.depth = DEPTHS[depthId];
+      S.model = (await pickModel(['deepseek-flash'])) || 'deepseek-flash';
+      if (!process.env.DEEPSEEK_API_KEY) {
+        say(`\n${t('needDeepseekKey')}`);
+        return END;
+      }
+      say(`\n${t('draftFirst')}`);
+    } else if (host === 'codebuddy') {
+      say(`\n${t('codebuddyNote')}`);
+      const depthId = await choose(t('depthQ'), [
+        { label: t('depthQuick'), hint: t('depthQuickHint'), value: 'quick' },
+        { label: t('depthStandard'), hint: t('depthStandardHint'), value: 'standard' },
+      ], 1);
+      S.depth = DEPTHS[depthId];
+      S.model = await pickModel(modelsOf('codebuddy', 'CodeBuddy'));
+      if (isDeepseekModel(S.model) && !process.env.DEEPSEEK_API_KEY) {
+        say(`\n${t('needDeepseekKey')}`);
+        return END;
+      }
+      say(`\n${t('draftFirst')}`);
+    } else {
+      say(`\n${t('codexNote')}`);
+      S.model = await pickModel(modelsOf('codex', 'Codex'));
+      if (isDeepseekModel(S.model) && !process.env.DEEPSEEK_API_KEY) {
+        say(`\n${t('needDeepseekKey')}`);
+        return END;
+      }
+      S.wantProbe = await confirm(t('probeQ'), false);
+      say(`\n${S.wantProbe
+        ? t('codexEstimate', { skills: targets.length, runs: 2 })
+        : t('codexStaticOnly', { skills: targets.length })}`);
     }
-    const est = estimate(depthId, 3);
-    say(`\n${t('codewhaleEstimate', { skills: targets.length, trials: est.trials * targets.length })}`);
-  } else if (host === 'codebuddy') {
-    say(`\n${t('codebuddyNote')}`);
-    const depthId = await choose(t('depthQ'), [
-      { label: t('depthQuick'), hint: t('depthQuickHint'), value: 'quick' },
-      { label: t('depthStandard'), hint: t('depthStandardHint'), value: 'standard' },
-    ], 1);
-    depth = DEPTHS[depthId];
-    model = (await ask(t('modelQ'), '')).trim() || null;
-    if (isDeepseekModel(model) && !process.env.DEEPSEEK_API_KEY) {
-      say(`\n${t('needDeepseekKey')}`);
-      return;
+    return null;
+  };
+
+  const confirmStep = async () => {
+    if (!(await confirm(t('confirmRun'), false))) {
+      say(t('cancelled'));
+      return END;
     }
-    const est = estimate(depthId, 3);
-    say(`\n${t('codebuddyEstimate', { skills: targets.length, trials: est.trials * targets.length })}`);
-  } else {
-    say(`\n${t('codexNote')}`);
-    model = (await ask(t('modelQ'), '')).trim() || null;
-    if (isDeepseekModel(model) && !process.env.DEEPSEEK_API_KEY) {
-      say(`\n${t('needDeepseekKey')}`);
-      return;
+    return null;
+  };
+
+  const steps = [sourceStep, hostStep, optionsStep, confirmStep];
+  for (let i = 0; i < steps.length;) {
+    let r;
+    try { r = await steps[i](); } catch (err) {
+      if (err instanceof Back) { i = Math.max(0, i - 1); continue; }
+      throw err;
     }
-    wantProbe = await confirm(t('probeQ'), false);
-    say(`\n${wantProbe
-      ? t('codexEstimate', { skills: targets.length, runs: 2 })
-      : t('codexStaticOnly', { skills: targets.length })}`);
+    if (r === END) return;
+    if (r !== AGAIN) i += 1;
   }
+  const { targets, host, depth, model, wantProbe } = S;
 
-  if (!(await confirm(t('confirmRun'), false))) {
-    say(t('cancelled'));
-    return;
-  }
-
+  setBack(false); // from here on a ← would have nothing to go back to
+  const outcomes = [];
   for (const target of targets) {
     say(`\n──── ${target.name} ────`);
-    const result = analyze(target.dir);
+    const result = withTicker(waitText(t('waitAnalyze'), { slowAfter: 600 }), () => analyze(target.dir));
     const sc = scorecard(result);
-    const verdicts = result.groups
-      .map((g) => `${g.id}${g.verdict === 'pass' ? '✓' : g.verdict === 'warn' ? '!' : '✗'}`).join(' ');
-    say(`  ${t('staticDone', { verdicts })}`);
 
     let trial = null;
     let gain = null;
@@ -422,14 +582,38 @@ async function interactive() {
 
     const md = `${staticMarkdown(result)}${trialSection(trial)}${gainSection(gain)}${probeSection(probe)}`;
     const out = writeOut(target.dir, target.name, md, sc);
-    say(`  ${t('reportAt', { path: path.join(out, `${target.name}.md`) })}`);
+    let records = null;
+    if (trial?.runDir) { try { records = validRecords(readRun(trial.runDir).records); } catch { /* the chart then shows the totals only */ } }
+    outcomes.push({ name: target.name, result, trial, records, gain, probe, reportPath: path.join(out, `${target.name}.md`) });
     // The run stopped on a failure streak (usage limit, dead token): the next skill would fail the same way.
     if ((host === 'claude' || host === 'codebuddy' || host === 'codewhale') && process.exitCode === 3) break;
   }
 
-  // Nothing is uploaded from here. Contributing a run is a separate, deliberate command (`submit`), which
-  // scrubs, previews and asks first; saying so plainly beats a yes/no prompt in the middle of a test run.
-  say(`\n${t('shareState')}`);
+  // Nothing is uploaded without a yes here and a second yes after the preview: `submit` scrubs local paths and
+  // keys, shows exactly what would go, and only then opens the pull request. Declining leaves the run on disk.
+  // The results are drawn only after this decision, so the choice is made on the run, not on how it looks.
+  let contributed = false;
+  let explained = false;
+  const submittable = finishedRuns.filter(canSubmit);
+  if (finishedRuns.length && !submittable.length) {
+    say(`\n${t('noSubmitNoSource')}`);
+    explained = true;
+  } else if (submittable.length && process.exitCode !== 3) {
+    if (hasTerminal() && await confirm(t('contributeQ', { n: submittable.length }), false)) {
+      for (const dir of submittable) await cmdSubmit(submitArgs(dir));
+      contributed = true;
+    }
+  } else if (!finishedRuns.length && outcomes.length) {
+    // Say why there is no upload question, instead of silently not asking.
+    say(`\n${t(outcomes.some((o) => o.probe) ? 'noSubmitProbe' : 'noSubmitNoRun')}`);
+    explained = true;
+  }
+
+  for (const o of outcomes) say(renderResult(o));
+  if (!contributed && !explained) {
+    const cmd = submittable.map((d) => `npx skillgauntlet submit ${submitArgs(d).map(quoteArg).join(' ')}`).join('\n  ');
+    say(`\n${t('shareState', { cmd: submittable.length > 1 ? `\n  ${cmd}\n` : cmd })}`);
+  }
 }
 
 async function cmdStatic(target, asJson) {
@@ -488,4 +672,10 @@ main()
     if (process.env.SG_DEBUG) say(err.stack);
     process.exitCode = 1;
   })
-  .finally(() => closeUi());
+  .finally(() => {
+    closeUi();
+    // After a ← or Esc on Windows the terminal's stdin can keep the process alive once the program has finished (or
+    // handled Ctrl+C), so the shell prompt never comes back. A terminal session is over here: end it explicitly.
+    // Output to a terminal is synchronous, so nothing is cut off; a pipe is left to end by itself.
+    if (process.stdin.isTTY && process.stdout.isTTY) process.exit(process.exitCode ?? 0);
+  });
