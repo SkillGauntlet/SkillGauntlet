@@ -23,6 +23,7 @@ import { HOST_CLI, searchHost, installCommand, installHost } from '../lib/findho
 import { runGain } from '../lib/gain.js';
 import { ERROR_STREAK_STOP, executeTrials, finishRun, resumeRun } from '../lib/execute.js';
 import { cmdSubmit } from '../lib/submit.js';
+import { gitFacts } from '../lib/submission.js';
 
 function relLabel(root, dir) {
   const rel = path.relative(root, dir).replace(/\\/g, '/');
@@ -92,6 +93,25 @@ async function approveTrials({ q, runs, n }) {
 
 const hostChecked = new Set();
 const finishedRuns = []; // run directories of complete runs, offered for contribution at the end
+const remoteSource = new Map(); // skill directory -> the public repository, commit and subfolder it was cloned from
+
+// The arguments `submit` needs for a run. A skill cloned from GitHub in this session already has its repository,
+// commit and subfolder, so the user is not asked for them; other skills are looked up from their own git checkout.
+function submitArgs(runDir) {
+  const skillDir = path.resolve(runDir, '..', '..', '..');
+  const src = remoteSource.get(skillDir);
+  return src ? [runDir, '--repo', src.repo, '--commit', src.commit, ...(src.subdir ? ['--subdir', src.subdir] : [])] : [runDir];
+}
+
+// Whether the public repository and commit of a run's skill can be told at all.
+function canSubmit(runDir) {
+  const skillDir = path.resolve(runDir, '..', '..', '..');
+  if (remoteSource.has(skillDir)) return true;
+  const f = gitFacts(skillDir);
+  return Boolean(f.repo && f.commit);
+}
+
+const quoteArg = (a) => (/[\s"]/.test(a) ? `"${a}"` : a);
 const waitText = (label) => ({ label, elapsed: t('waitElapsed'), abortHint: t('waitAbort') });
 const HOST_LABEL = { 'claude-code': 'Claude Code', codebuddy: 'CodeBuddy', codewhale: 'Codewhale' };
 
@@ -306,6 +326,9 @@ async function pickRemote() {
       continue;
     }
     const found = findSkills(resolved.dir);
+    for (const d of found) {
+      remoteSource.set(path.resolve(d), { repo: resolved.source.repo, commit: resolved.source.commit, subdir: path.relative(resolved.dir, d).replace(/\\/g, '/') });
+    }
     if (!found.length) {
       say(`  ${t('noSkill')}`);
       return [];
@@ -561,9 +584,13 @@ async function interactive() {
   // The results are drawn only after this decision, so the choice is made on the run, not on how it looks.
   let contributed = false;
   let explained = false;
-  if (finishedRuns.length && process.exitCode !== 3) {
-    if (hasTerminal() && await confirm(t('contributeQ', { n: finishedRuns.length }), false)) {
-      for (const dir of finishedRuns) await cmdSubmit([dir]);
+  const submittable = finishedRuns.filter(canSubmit);
+  if (finishedRuns.length && !submittable.length) {
+    say(`\n${t('noSubmitNoSource')}`);
+    explained = true;
+  } else if (submittable.length && process.exitCode !== 3) {
+    if (hasTerminal() && await confirm(t('contributeQ', { n: submittable.length }), false)) {
+      for (const dir of submittable) await cmdSubmit(submitArgs(dir));
       contributed = true;
     }
   } else if (!finishedRuns.length && outcomes.length) {
@@ -574,8 +601,8 @@ async function interactive() {
 
   for (const o of outcomes) say(renderResult(o));
   if (!contributed && !explained) {
-    const cmd = finishedRuns.map((d) => `npx skillgauntlet submit "${d}"`).join('\n  ');
-    say(`\n${t('shareState', { cmd: finishedRuns.length > 1 ? `\n  ${cmd}\n` : cmd })}`);
+    const cmd = submittable.map((d) => `npx skillgauntlet submit ${submitArgs(d).map(quoteArg).join(' ')}`).join('\n  ');
+    say(`\n${t('shareState', { cmd: submittable.length > 1 ? `\n  ${cmd}\n` : cmd })}`);
   }
 }
 

@@ -340,5 +340,5 @@ test('shareState says results stay local until submit, in all three languages', 
   // the message carries the full command with the real run directory, built where the run directories are known
   assert.equal([...src.matchAll(/shareState: '[^']*\{cmd\}/g)].length, 3);
   const bin = fs.readFileSync(path.join(ROOT, 'bin', 'skillgauntlet.js'), 'utf8');
-  assert.match(bin, /npx skillgauntlet submit "\$\{d\}"/);
+  assert.match(bin, /npx skillgauntlet submit \$\{submitArgs\(d\)/);
 });
