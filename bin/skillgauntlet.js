@@ -16,6 +16,7 @@ import { ask, choose, select, confirm, say, closeUi, hasTerminal, setBack, Back 
 import { hostModels } from '../lib/models.js';
 import { browseDir } from '../lib/browse.js';
 import { withTicker } from '../lib/ticker.js';
+import { renderResult, bar } from '../lib/chart.js';
 import { setLang, detectLang, errorText, t } from '../lib/i18n.js';
 import { resolveBin, backend, backendFor, isDeepseekModel, HOSTS, checkModel, draftQueries, draftQuality, runTrial, requireHost, pingHost } from '../lib/trial.js';
 import { runGain } from '../lib/gain.js';
@@ -157,6 +158,11 @@ function archiveProbe({ skillDir, skillName, model, probe }) {
 
 function progress() {
   return ({ row, done, total }) => {
+    // On a terminal one line is redrawn in place; the verdicts of single trials belong to the result, not the wait.
+    if (process.stdout.isTTY) {
+      process.stdout.write(`\r\x1b[2K  ${t('progressLine')} ${bar(done / total, 24)} ${done}/${total}${done >= total ? '\n' : ''}`);
+      return;
+    }
     const mark = { triggered: '✓', not_triggered: '·', other_skill: '↷' }[row.verdict] || '!';
     say(`  [${done}/${total}] ${mark} ${row.queryId}#${row.run} → ${row.verdict}`);
   };
@@ -451,13 +457,12 @@ async function interactive() {
   }
   const { targets, host, depth, model, wantProbe } = S;
 
+  setBack(false); // from here on a ← would have nothing to go back to
+  const outcomes = [];
   for (const target of targets) {
     say(`\n──── ${target.name} ────`);
     const result = analyze(target.dir);
     const sc = scorecard(result);
-    const verdicts = result.groups
-      .map((g) => `${g.id}${g.verdict === 'pass' ? '✓' : g.verdict === 'warn' ? '!' : '✗'}`).join(' ');
-    say(`  ${t('staticDone', { verdicts })}`);
 
     let trial = null;
     let gain = null;
@@ -501,19 +506,29 @@ async function interactive() {
 
     const md = `${staticMarkdown(result)}${trialSection(trial)}${gainSection(gain)}${probeSection(probe)}`;
     const out = writeOut(target.dir, target.name, md, sc);
-    say(`  ${t('reportAt', { path: path.join(out, `${target.name}.md`) })}`);
+    outcomes.push({ name: target.name, result, trial, gain, probe, reportPath: path.join(out, `${target.name}.md`) });
     // The run stopped on a failure streak (usage limit, dead token): the next skill would fail the same way.
     if ((host === 'claude' || host === 'codebuddy' || host === 'codewhale') && process.exitCode === 3) break;
   }
 
   // Nothing is uploaded without a yes here and a second yes after the preview: `submit` scrubs local paths and
   // keys, shows exactly what would go, and only then opens the pull request. Declining leaves the run on disk.
-  if (finishedRuns.length && hasTerminal() && process.exitCode !== 3
-    && await confirm(t('contributeQ', { n: finishedRuns.length }), false)) {
-    for (const dir of finishedRuns) await cmdSubmit([dir]);
-    return;
+  // The results are drawn only after this decision, so the choice is made on the run, not on how it looks.
+  let contributed = false;
+  let explained = false;
+  if (finishedRuns.length && process.exitCode !== 3) {
+    if (hasTerminal() && await confirm(t('contributeQ', { n: finishedRuns.length }), false)) {
+      for (const dir of finishedRuns) await cmdSubmit([dir]);
+      contributed = true;
+    }
+  } else if (!finishedRuns.length && outcomes.length) {
+    // Say why there is no upload question, instead of silently not asking.
+    say(`\n${t(outcomes.some((o) => o.probe) ? 'noSubmitProbe' : 'noSubmitNoRun')}`);
+    explained = true;
   }
-  say(`\n${t('shareState')}`);
+
+  for (const o of outcomes) say(renderResult(o));
+  if (!contributed && !explained) say(`\n${t('shareState')}`);
 }
 
 async function cmdStatic(target, asJson) {
