@@ -672,4 +672,10 @@ main()
     if (process.env.SG_DEBUG) say(err.stack);
     process.exitCode = 1;
   })
-  .finally(() => closeUi());
+  .finally(() => {
+    closeUi();
+    // After a ← or Esc on Windows the terminal's stdin can keep the process alive once the program has finished (or
+    // handled Ctrl+C), so the shell prompt never comes back. A terminal session is over here: end it explicitly.
+    // Output to a terminal is synchronous, so nothing is cut off; a pipe is left to end by itself.
+    if (process.stdin.isTTY && process.stdout.isTTY) process.exit(process.exitCode ?? 0);
+  });
