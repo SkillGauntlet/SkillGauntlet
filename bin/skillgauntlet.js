@@ -293,7 +293,8 @@ async function interactive() {
   if (source === 'installed') targets = await pickInstalled();
   else if (source === 'path') {
     // Arrow keys walk the folders; typing a path stays available as the last entry (and is all a pipe has).
-    const browsed = hasTerminal() ? await browseDir(select) : null;
+    const browsed = hasTerminal() ? await browseDir((a, b, c) => select(a, b, c, { clear: true })) : null;
+    if (browsed) say(`  ${browsed}`);
     const root = path.resolve(browsed ?? await ask(t('srcPath')));
     const found = findSkills(root);
     if (!found.length) say(`\n${t('noSkill')}`);
