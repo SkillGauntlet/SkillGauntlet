@@ -52,7 +52,7 @@ async function fixMissingHost(hostId, err) {
   const { bin } = HOST_CLI[hostId];
   const label = err.vars?.host || hostId;
   say(`\n${t('hostNotOnPath', { host: label })}`);
-  const options = searchHost(hostId).slice(0, 3).map((f) => ({ label: t('hostUseFound', { path: f }), value: { use: f } }));
+  const options = withTicker(waitText(t('waitSearch', { host: label }), { slowAfter: 600 }), () => searchHost(hostId)).slice(0, 3).map((f) => ({ label: t('hostUseFound', { path: f }), value: { use: f } }));
   const cmd = installCommand(hostId);
   if (cmd) options.push({ label: t('hostInstallNow', { cmd }), value: { install: true } });
   else say(t(err.howKey));
@@ -112,7 +112,17 @@ function canSubmit(runDir) {
 }
 
 const quoteArg = (a) => (/[\s"]/.test(a) ? `"${a}"` : a);
-const waitText = (label) => ({ label, elapsed: t('waitElapsed'), abortHint: t('waitAbort') });
+const waitText = (label, extra = {}) => ({ label, elapsed: t('waitElapsed'), abortHint: t('waitAbort'), ...extra });
+
+// Asking a host CLI for its models takes a few seconds (CodeBuddy about three), so it shows a wait line and is
+// remembered for the rest of the run.
+const modelCache = new Map();
+function modelsOf(host, label) {
+  if (!modelCache.has(host)) {
+    modelCache.set(host, withTicker(waitText(t('waitModels', { host: label }), { slowAfter: 600 }), () => hostModels(host, resolveBin(host))));
+  }
+  return modelCache.get(host);
+}
 const HOST_LABEL = { 'claude-code': 'Claude Code', codebuddy: 'CodeBuddy', codewhale: 'Codewhale' };
 
 async function runTriggerLayer({ skillDir, skillName, depth, model, host = 'claude-code' }) {
@@ -320,7 +330,7 @@ async function pickRemote() {
     }
     let resolved;
     try {
-      resolved = resolveSpec(parsed.repo);
+      resolved = withTicker(waitText(t('waitCloning'), { slowAfter: 600 }), () => resolveSpec(parsed.repo));
     } catch (err) {
       say(`  ${errorText(err)}`);
       continue;
@@ -482,7 +492,7 @@ async function interactive() {
         { label: t('depthStandard'), hint: t('depthStandardHint'), value: 'standard' },
       ], 1);
       S.depth = DEPTHS[depthId];
-      S.model = await pickModel(hostModels('codebuddy', resolveBin('codebuddy')));
+      S.model = await pickModel(modelsOf('codebuddy', 'CodeBuddy'));
       if (isDeepseekModel(S.model) && !process.env.DEEPSEEK_API_KEY) {
         say(`\n${t('needDeepseekKey')}`);
         return END;
@@ -490,7 +500,7 @@ async function interactive() {
       say(`\n${t('draftFirst')}`);
     } else {
       say(`\n${t('codexNote')}`);
-      S.model = await pickModel(hostModels('codex', resolveBin('codex')));
+      S.model = await pickModel(modelsOf('codex', 'Codex'));
       if (isDeepseekModel(S.model) && !process.env.DEEPSEEK_API_KEY) {
         say(`\n${t('needDeepseekKey')}`);
         return END;
@@ -527,7 +537,7 @@ async function interactive() {
   const outcomes = [];
   for (const target of targets) {
     say(`\n──── ${target.name} ────`);
-    const result = analyze(target.dir);
+    const result = withTicker(waitText(t('waitAnalyze'), { slowAfter: 600 }), () => analyze(target.dir));
     const sc = scorecard(result);
 
     let trial = null;
