@@ -1,4 +1,4 @@
-# SkillGauntlet
+# SkillGauntlet666
 
 *Every skill runs the gauntlet.*
 
