@@ -344,6 +344,8 @@ test('CLI submit without consent submits nothing and, without gh, prints the man
 
 test('shareState says results stay local until submit, in all three languages', () => {
   const src = fs.readFileSync(path.join(ROOT, 'lib', 'i18n.js'), 'utf8');
-  for (const needle of ['skillgauntlet submit', 'skillgauntlet submit', 'skillgauntlet submit']) assert.ok(src.includes(needle));
-  assert.equal([...src.matchAll(/shareState: '[^']*skillgauntlet submit/g)].length, 3);
+  // the message carries the full command with the real run directory, built where the run directories are known
+  assert.equal([...src.matchAll(/shareState: '[^']*\{cmd\}/g)].length, 3);
+  const bin = fs.readFileSync(path.join(ROOT, 'bin', 'skillgauntlet.js'), 'utf8');
+  assert.match(bin, /npx skillgauntlet submit \$\{submitArgs\(d\)/);
 });
