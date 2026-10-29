@@ -1,7 +1,7 @@
 # Read-only validation: runs the offline tests on pushes and pull requests.
 # It never calls a model, needs no secrets, and only holds read permission on the repository.
 # Do not switch this to pull_request_target: that event runs with the base repository's secrets and
-# write token, which must never meet code from a fork. Merge logic lives in merge.yml.
+# write token, which must never meet code from a fork. Merge logic lives in automerge.yml.
 name: validate
 
 on:

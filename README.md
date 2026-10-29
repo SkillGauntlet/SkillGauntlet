@@ -28,7 +28,7 @@ can be compared.
 - [Codex probe](step0/data/2026-10-28_codex_probe/BATCH.md): facts only, no trigger rate (see
   "Hosts and models").
 - [Static layer](step0/data/2026-10-28_all_haiku/static/SUMMARY.md): all 18 skills, no model calls.
-- [Leaderboard](LEADERBOARD.md): the maintainer's batches and community submissions in one generated page, one table per host.
+- [Leaderboard](https://skillgauntlet.github.io/SkillGauntlet/): the maintainer's batches and community submissions in one generated page, one table per host. It is rebuilt from the data on `main` every time a submission is merged.
 
 ## Usage
 
@@ -123,9 +123,23 @@ command. Results stay on your machine until you run it; nothing is uploaded auto
 4. Sign the [CLA](CLA.md) when the bot asks (once). CI then comments on the pull request with a pass, or with
    exactly what is missing.
 
+**Passing submissions are merged automatically**, usually within a few minutes, and appear on the
+[leaderboard](https://skillgauntlet.github.io/SkillGauntlet/) as a *community single sample*. A bot re-checks your files from scratch (it does not trust the
+result shown on your own pull request) and merges only when everything holds: exactly one new submission folder with
+the four files, the format and hashes check out, the CLA is signed, and the account is in good standing.
+
+**When it goes to manual review.** The pull request gets a `needs-review` label and a comment listing why, and a
+maintainer looks at it. This happens when it changes anything besides one new submission folder, fails a check, is
+over the size limits, comes from an account younger than 30 days or one whose submission was refused in the last 24
+hours, exceeds 5 automatic merges per account per day, or arrives before the CLA is signed (sign it and ask a
+maintainer to re-run the check). Maintainers' own pull requests skip the account-age and recent-refusal rules.
+
+The very first pull request from a new account still needs a maintainer to click "Approve and run" on its workflow
+run, a GitHub rule for first-time fork contributors; the automatic merge starts after that.
+
 A merged submission is a **community single sample**. It becomes **confirmed** when another independent
 submission, or a maintainer run, lands on the same grade for the same skill version, host and model.
-Disagreeing results are kept side by side. See [`LEADERBOARD.md`](LEADERBOARD.md) for the current rows and what
+Disagreeing results are kept side by side. See the [leaderboard](https://skillgauntlet.github.io/SkillGauntlet/) for the current rows and what
 each tag means, and [CONTRIBUTING.md](CONTRIBUTING.md#submitting-results) for the details, including what CI
 checks and what it cannot.
 
