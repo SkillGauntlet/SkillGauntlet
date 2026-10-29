@@ -120,7 +120,7 @@ test('searchHost finds an exact name before a release-style name and ignores unr
   assert.deepEqual(searchHost('codewhale', [dir]).map((f) => path.basename(f)), ['codewhale-windows-x64.exe']);
   fs.writeFileSync(path.join(dir, 'codewhale.exe'), 'x');
   assert.equal(path.basename(searchHost('codewhale', [dir])[0]), 'codewhale.exe');
-  assert.equal(installCommand('codewhale'), 'npm install -g codewhale');
+  assert.equal(installCommand('codewhale'), 'npm install -g codewhale --allow-scripts=codewhale');
   assert.match(installCommand('codebuddy'), /^npm install -g @tencent-ai\/codebuddy-code$/);
   const ran = [];
   installHost('codebuddy', (c) => ran.push(c));
