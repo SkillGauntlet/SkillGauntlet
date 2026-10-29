@@ -11,7 +11,7 @@ import { fileURLToPath } from 'node:url';
 import { loadSchema, validate } from '../lib/schema.js';
 import { emptyContext, findSecrets, localContext, scrubPackage, scrubValue } from '../lib/scrub.js';
 import {
-  SubmitError, buildPackage, checkPackageDir, computeSummary, gradeOfSummary, gradeTrigger, normalizeRepo, sha256, submissionPath, writePackage,
+  SubmitError, buildPackage, keySource, checkPackageDir, computeSummary, gradeOfSummary, gradeTrigger, normalizeRepo, sha256, submissionPath, writePackage,
 } from '../lib/submission.js';
 import { ghState, openPullRequest, parseSubmitArgs } from '../lib/submit.js';
 import { readRun } from '../lib/runs.js';
@@ -137,6 +137,13 @@ test('SKILL.md hash ignores line endings, so a Windows (CRLF) checkout matches t
   fs.writeFileSync(metaFile, JSON.stringify(meta));
   const pkg = buildPackage({ runDir: r.runDir, skillDir: r.skillDir, facts: FACTS, contributor: 'octocat', ctx: ctxFor() });
   assert.equal(pkg.files.meta.submission.skill.skillMdSha256, GOOD_SHA);
+});
+
+test('apiKeySource keeps "none" and env var names but not an account endpoint host name', () => {
+  assert.equal(keySource('none'), 'none');
+  assert.equal(keySource('ANTHROPIC_API_KEY'), 'ANTHROPIC_API_KEY');
+  assert.equal(keySource('copilot.tencent.com'), 'other');
+  assert.equal(keySource(null), null);
 });
 
 test('buildPackage: the contributor login is not scrubbed even when it equals the OS user name', async () => {
