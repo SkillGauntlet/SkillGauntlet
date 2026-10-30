@@ -374,3 +374,29 @@ test('a global npm folder the user cannot write gets a per-user install instead 
   assert.match(ran[0], /--prefix/);
   assert.equal(installCommand('nothing', { writable: false }), null);
 });
+
+test('a command linked into a user prefix is found, and outside Windows it is run without a shell', async () => {
+  const { searchHost } = await import('../lib/findhost.js');
+  const { runnerFor, launchSpec } = await import('../lib/spawn.js');
+  // npm puts <prefix>/bin/<name> as a symlink to the package's script
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'sg-link-'));
+  const script = path.join(dir, 'real-codebuddy');
+  fs.writeFileSync(script, '#!/usr/bin/env node\n');
+  fs.mkdirSync(path.join(dir, 'bin'));
+  const link = path.join(dir, 'bin', 'codebuddy');
+  let linked = true;
+  try { fs.symlinkSync(script, link); } catch { linked = false; } // creating a symlink can need a privilege on Windows
+  if (linked && process.platform !== 'win32') {
+    assert.deepEqual(searchHost('codebuddy', [path.join(dir, 'bin')]), [link]);
+    fs.symlinkSync(path.join(dir, 'missing'), path.join(dir, 'bin', 'codewhale'));
+    assert.deepEqual(searchHost('codewhale', [path.join(dir, 'bin')]), [], 'a dangling link is not a host');
+  }
+  // direct, unquoted: text in the prompt is never seen by a shell
+  const r = runnerFor('/home/u/.local/bin/codebuddy', 'codebuddy', 'linux');
+  assert.deepEqual(r, { cmd: '/home/u/.local/bin/codebuddy', prefix: [], shell: false });
+  const spec = launchSpec('/home/u/.local/bin/codebuddy', ['-p', 'a `rm -rf x` $(id) "q"'], 'codebuddy');
+  if (process.platform !== 'win32') assert.deepEqual(spec.args, ['-p', 'a `rm -rf x` $(id) "q"']);
+  // Windows keeps its own handling
+  assert.equal(runnerFor('C:\\n\\codebuddy.cmd', 'codebuddy', 'win32').shell, true);
+  fs.rmSync(dir, { recursive: true, force: true });
+});
