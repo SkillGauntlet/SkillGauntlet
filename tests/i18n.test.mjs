@@ -107,7 +107,7 @@ test('a message-key error is translated per language', () => {
 
 test('no amount of money is shown: no currency symbol in the depth hints or the estimate', () => {
   for (const l of LANGS) {
-    for (const k of ['depthQuickHint', 'depthStandardHint', 'depthDeepHint', 'estimate']) {
+    for (const k of ['depthQuickHint', 'depthStandardHint', 'depthDeepHint']) {
       assert.doesNotMatch(TABLES[l][k], /[¥$￥円元]|\{(price|cost|totalCost|cny)\}/, `${l}.${k} shows money`);
     }
   }

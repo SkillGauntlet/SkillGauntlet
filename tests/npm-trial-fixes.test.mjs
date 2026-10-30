@@ -7,6 +7,8 @@ import path from 'node:path';
 import { findSkills } from '../lib/discover.js';
 import { pingHost } from '../lib/trial.js';
 import { setLang, t, errorText, messageTables } from '../lib/i18n.js';
+import { fileURLToPath } from 'node:url';
+const ROOT_DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 const write = (root, rel, body) => {
   fs.mkdirSync(path.join(root, rel), { recursive: true });
@@ -33,13 +35,20 @@ test('a same-named skill with different content is kept', () => {
   fs.rmSync(root, { recursive: true, force: true });
 });
 
-test('pingHost turns a failed or silent call into a translatable message', () => {
-  const timedOut = () => { const e = new Error('x'); e.killed = true; throw e; };
-  const noLogin = () => { const e = new Error('x'); e.stderr = 'Please run /login\nmore'; throw e; };
-  assert.throws(() => pingHost('codebuddy', { bin: 'codebuddy', run: timedOut }), (e) => e.messageKey === 'hostNotReady' && /90s/.test(e.vars.why));
-  assert.throws(() => pingHost('codebuddy', { bin: 'codebuddy', run: noLogin }), (e) => e.vars.why === 'Please run /login');
-  assert.doesNotThrow(() => pingHost('codebuddy', { bin: 'codebuddy', run: () => '{}' }));
-  assert.doesNotThrow(() => pingHost('codewhale', { bin: 'codewhale', run: timedOut }));
+test('pingHost turns a failed, silent or empty call into a translatable message with the CLI own words', () => {
+  const ok = { status: 0, stdout: '{"type":"result","result":"OK"}', stderr: '' };
+  const timedOut = { status: null, signal: 'SIGTERM', stdout: '', stderr: '' };
+  const noLogin = { status: 1, stdout: '', stderr: 'Please run /login\nmore' };
+  // CodeBuddy exits 0 with nothing on stdout and the complaint on stderr for a custom model without an url
+  const exitZeroEmpty = { status: 0, stdout: '', stderr: 'Custom model x has no endpoint url configured.\n' };
+  const errorResult = { status: 0, stdout: JSON.stringify([{ type: 'result', is_error: true, result: 'model not found\nmore' }]), stderr: '' };
+  const call = (r) => () => pingHost('codebuddy', { bin: 'codebuddy', spawn: () => r });
+  assert.throws(call(timedOut), (e) => e.messageKey === 'hostNotReady' && /90s/.test(e.vars.why));
+  assert.throws(call(noLogin), (e) => e.vars.why === 'Please run /login');
+  assert.throws(call(exitZeroEmpty), (e) => /no endpoint url/.test(e.vars.why));
+  assert.throws(call(errorResult), (e) => e.vars.why === 'model not found');
+  assert.doesNotThrow(call(ok));
+  assert.doesNotThrow(() => pingHost('codewhale', { bin: 'codewhale', spawn: () => timedOut }));
 });
 
 test('the not-signed-in message exists in every language and names /login', () => {
@@ -54,7 +63,7 @@ test('the not-signed-in message exists in every language and names /login', () =
 
 test('no estimate or hint promises "no cash"', () => {
   for (const [lang, table] of Object.entries(messageTables())) {
-    for (const key of ['draftFirst', 'trialsQ', 'provClaudeHint', 'provDeepseekHint']) {
+    for (const key of ['draftFirst', 'trialsQ', 'codewhaleNote']) {
       assert.doesNotMatch(String(table[key]), /no cash|不花现金|无现金|現金不要|現金はかから|cents|几分钱|数セント/, `${lang}.${key}`);
     }
   }
@@ -148,4 +157,61 @@ test('a skill is known by its frontmatter name, not by the folder it sits in', a
   fs.writeFileSync(path.join(dir, 'SKILL.md'), '---\nname: "has spaces & slashes/"\n---\nbody');
   assert.equal(skillNameOf(dir), 'ruvnet__ruflo');
   fs.rmSync(root, { recursive: true, force: true });
+});
+
+test('the update check: newer versions, declining, caching, and every failure means no update', async () => {
+  const { isNewer, checkForUpdate, declineUpdate } = await import('../lib/update.js');
+  assert.ok(isNewer('1.2.1', '1.2.0') && isNewer('2.0.0', '1.9.9') && isNewer('1.2.0', '1.2.0-rc.1'));
+  assert.ok(!isNewer('1.2.0', '1.2.0') && !isNewer('1.1.9', '1.2.0') && !isNewer('garbage', '1.2.0') && !isNewer('1.2.0-rc.1', '1.2.0'));
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'sg-upd-'));
+  const file = path.join(dir, 'u.json');
+  let calls = 0;
+  const fetchLatest = async () => { calls += 1; return '1.3.0'; };
+  const base = { file, current: '1.2.0', env: {}, now: 1000 };
+  assert.deepEqual(await checkForUpdate({ ...base, fetchLatest }), { current: '1.2.0', latest: '1.3.0' });
+  await checkForUpdate({ ...base, fetchLatest, now: 2000 }); // inside 12 h: answered from the cache
+  assert.equal(calls, 1);
+  declineUpdate('1.3.0', file);
+  assert.equal(await checkForUpdate({ ...base, fetchLatest, now: 3000 }), null);
+  const newer = async () => '1.4.0';
+  assert.equal((await checkForUpdate({ ...base, fetchLatest: newer, now: 1000 + 13 * 3600 * 1000 })).latest, '1.4.0');
+  const boom = async () => { throw new Error('offline'); };
+  assert.equal(await checkForUpdate({ file: path.join(dir, 'none.json'), current: '1.2.0', env: {}, fetchLatest: boom }), null);
+  assert.equal(await checkForUpdate({ ...base, fetchLatest, env: { SG_NO_UPDATE_CHECK: '1' }, file: path.join(dir, 'x.json') }), null);
+  fs.rmSync(dir, { recursive: true, force: true });
+});
+
+test('--version prints the package version', async () => {
+  const { spawnSync } = await import('node:child_process');
+  const r = spawnSync(process.execPath, [path.join(ROOT_DIR, 'bin', 'skillgauntlet.js'), '--version'], { encoding: 'utf8' });
+  assert.equal(r.stdout.trim(), JSON.parse(fs.readFileSync(path.join(ROOT_DIR, 'package.json'), 'utf8')).version);
+});
+
+test('a typed model the host does not list is caught before anything is spent', async () => {
+  const { unknownModel } = await import('../lib/models.js');
+  const known = ['hy3', 'deepseek-v4.1-flash'];
+  assert.deepEqual(unknownModel('custom-local:deepseek-flash', known), known);
+  assert.equal(unknownModel('hy3', known), null);
+  assert.equal(unknownModel(null, known), null);      // the default model
+  assert.equal(unknownModel('deepseek-flash', known), null); // the package's own DeepSeek route
+  assert.equal(unknownModel('anything', []), null);   // the list could not be read: do not block
+});
+
+test('no message says how a backend is billed; cost is left to the backend and the plan', () => {
+  const claims = /spends weekly quota|bills per use|billed by DeepSeek|spends DeepSeek cash|占周额度|按 DeepSeek 用量|花 DeepSeek 现金|週間の利用枠を消費|DeepSeek の従量課金|現金がかかります/;
+  for (const [lang, table] of Object.entries(messageTables())) {
+    for (const [key, value] of Object.entries(table)) assert.doesNotMatch(String(value), claims, `${lang}.${key}`);
+  }
+});
+
+test('a DeepSeek model the host lists itself needs no key; an unlisted deepseek-* name takes the package route', async () => {
+  const { usesOwnDeepseek, setNativeModels, backendFor } = await import('../lib/trial.js');
+  setNativeModels('codebuddy', ['hy3', 'deepseek-v4.1-flash']);
+  assert.equal(usesOwnDeepseek('codebuddy', 'deepseek-v4.1-flash'), false);
+  assert.equal(usesOwnDeepseek('codebuddy', 'deepseek-flash'), true);
+  assert.equal(usesOwnDeepseek('codebuddy', 'hy3'), false);
+  assert.equal(usesOwnDeepseek('codebuddy', null), false);
+  assert.equal(backendFor('codebuddy', 'deepseek-v4.1-flash'), 'codebuddy');
+  assert.equal(backendFor('codebuddy', 'deepseek-flash'), 'codebuddy:api.deepseek.com');
+  setNativeModels('codebuddy', []);
 });

@@ -13,17 +13,19 @@ import { fingerprint, cacheFileFor, readCachedQueries, writeCachedQueries } from
 import { openRun, querySetHash, readRun, validRecords } from '../lib/runs.js';
 import { DEPTHS, minutesFor } from '../lib/depth.js';
 import { ask, choose, select, confirm, say, closeUi, hasTerminal, setBack, Back } from '../lib/ui.js';
-import { hostModels } from '../lib/models.js';
+import { hostModels, unknownModel } from '../lib/models.js';
 import { browseDir } from '../lib/browse.js';
 import { withTicker } from '../lib/ticker.js';
 import { renderResult, bar } from '../lib/chart.js';
 import { setLang, detectLang, errorText, t } from '../lib/i18n.js';
-import { resolveBin, backend, backendFor, isDeepseekModel, HOSTS, checkModel, draftQueries, draftQuality, runTrial, requireHost, pingHost, setHostBin, binInstalled } from '../lib/trial.js';
+import { resolveBin, backend, backendFor, usesOwnDeepseek, setNativeModels, HOSTS, checkModel, draftQueries, draftQuality, runTrial, requireHost, pingHost, setHostBin, binInstalled } from '../lib/trial.js';
 import { HOST_CLI, searchHost, installCommand, installHost } from '../lib/findhost.js';
 import { runGain } from '../lib/gain.js';
 import { ERROR_STREAK_STOP, executeTrials, finishRun, resumeRun } from '../lib/execute.js';
 import { cmdSubmit } from '../lib/submit.js';
 import { gitFacts } from '../lib/submission.js';
+import { checkForUpdate, declineUpdate, currentVersion, isCheckout } from '../lib/update.js';
+import { spawnSync as runSync, execSync } from 'node:child_process';
 
 function relLabel(root, dir) {
   const rel = path.relative(root, dir).replace(/\\/g, '/');
@@ -117,9 +119,19 @@ const waitText = (label, extra = {}) => ({ label, elapsed: t('waitElapsed'), abo
 // Asking a host CLI for its models takes a few seconds (CodeBuddy about three), so it shows a wait line and is
 // remembered for the rest of the run.
 const modelCache = new Map();
+
+// A typed model the host does not list: say so now, while nothing has been spent, and ask again.
+function notListed(model, known, label) {
+  const list = unknownModel(model, known);
+  if (!list) return false;
+  say(`\n${t('modelUnknown', { model, host: label, list: list.slice(0, 8).join(', ') })}`);
+  return true;
+}
 function modelsOf(host, label) {
   if (!modelCache.has(host)) {
-    modelCache.set(host, withTicker(waitText(t('waitModels', { host: label }), { slowAfter: 600 }), () => hostModels(host, resolveBin(host))));
+    const list = withTicker(waitText(t('waitModels', { host: label }), { slowAfter: 600 }), () => hostModels(host, resolveBin(host)));
+    setNativeModels(host, list);
+    modelCache.set(host, list);
   }
   return modelCache.get(host);
 }
@@ -366,6 +378,40 @@ async function pickAmong(found, root) {
   return [{ name: path.basename(dir), dir, root }];
 }
 
+// Before the questions: is there a newer published version? The user chooses; if the update cannot be fetched or
+// does not run, the session carries on with the version that is already running.
+async function offerUpdate() {
+  if (!hasTerminal() || (isCheckout() && !process.env.SG_FORCE_UPDATE_CHECK)) return; // a checkout is not nagged unless asked
+  const found = await checkForUpdate();
+  if (!found) return;
+  say(`\n${t('updateAvail', found)}`);
+  const pick = await choose(t('updateQ'), [
+    { label: t('updateNow'), value: 'now' },
+    { label: t('updateSkip'), value: 'skip' },
+  ], 1);
+  if (pick !== 'now') {
+    declineUpdate(found.latest);
+    return;
+  }
+  const spec = `skillgauntlet@${found.latest}`;
+  const env = { ...process.env, SG_NO_UPDATE_CHECK: '1' };
+  try {
+    // fetch it first and check it answers as the version asked for, so a failed download never costs the session
+    const said = withTicker(waitText(t('updating', found), { slowAfter: 600 }), () => execSync(`npx -y ${spec} --version`, { encoding: 'utf8', timeout: 180000, windowsHide: true, env, stdio: ['ignore', 'pipe', 'pipe'] }));
+    if (String(said).trim() !== found.latest) throw new Error(`it reported ${String(said).trim() || 'nothing'}`);
+  } catch (err) {
+    // npm's own words when it gave any ("... is not in this registry"), else the error's first line
+    const lines = String(err.stderr || err.message).split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
+    const why = (lines.find((l) => /no matching version|not in this registry|404/i.test(l)) || lines.find((l) => /error|ERR/.test(l)) || lines[0] || 'unknown')
+      .replace(/^npm error\s*(notarget\s*)?/i, '').replace(/[.。]+$/, '');
+    say(t('updateFailed', { why: why.slice(0, 160), current: found.current }));
+    return;
+  }
+  closeUi();
+  const r = runSync(`npx -y ${spec}`, process.argv.slice(2), { stdio: 'inherit', env, shell: true });
+  process.exit(r.status ?? 0);
+}
+
 async function interactive() {
   const langChoice = await select(`${t('langTitle')}`, [
     { label: t('langZh'), value: 'zh' },
@@ -373,6 +419,7 @@ async function interactive() {
     { label: t('langJa'), value: 'ja' },
   ], 0);
   setLang(langChoice);
+  await offerUpdate();
 
   say('');
   say(t('title'));
@@ -386,10 +433,11 @@ async function interactive() {
   const S = { targets: [], host: null, depth: null, model: null, wantProbe: false };
 
   const sourceStep = async () => {
+    say(`\n${t('sourceNote')}`);
     const source = await choose(t('sourceQ'), [
       { label: t('srcInstalled'), hint: t('srcInstalledHint'), value: 'installed' },
       { label: t('srcPath'), value: 'path' },
-      { label: t('srcRepo'), hint: 'owner/repo', value: 'repo' },
+      { label: t('srcRepo'), hint: t('srcRepoHint'), value: 'repo' },
     ], 1);
 
     let targets = [];
@@ -445,8 +493,8 @@ async function interactive() {
       S.depth = DEPTHS[depthId];
 
       const provider = await choose(t('providerQ'), [
-        { label: t('provClaude'), hint: t('provClaudeHint'), value: 'claude' },
-        { label: t('provDeepseek'), hint: t('provDeepseekHint'), value: 'deepseek' },
+        { label: t('provClaude'), value: 'claude' },
+        { label: t('provDeepseek'), value: 'deepseek' },
         { label: t('provManual'), value: 'manual' },
       ], 1);
 
@@ -493,7 +541,8 @@ async function interactive() {
       ], 1);
       S.depth = DEPTHS[depthId];
       S.model = await pickModel(modelsOf('codebuddy', 'CodeBuddy'));
-      if (isDeepseekModel(S.model) && !process.env.DEEPSEEK_API_KEY) {
+      if (notListed(S.model, modelsOf('codebuddy', 'CodeBuddy'), 'CodeBuddy')) return AGAIN;
+      if (usesOwnDeepseek('codebuddy', S.model) && !process.env.DEEPSEEK_API_KEY) {
         say(`\n${t('needDeepseekKey')}`);
         return END;
       }
@@ -501,7 +550,8 @@ async function interactive() {
     } else {
       say(`\n${t('codexNote')}`);
       S.model = await pickModel(modelsOf('codex', 'Codex'));
-      if (isDeepseekModel(S.model) && !process.env.DEEPSEEK_API_KEY) {
+      if (notListed(S.model, modelsOf('codex', 'Codex'), 'Codex')) return AGAIN;
+      if (usesOwnDeepseek('codex', S.model) && !process.env.DEEPSEEK_API_KEY) {
         say(`\n${t('needDeepseekKey')}`);
         return END;
       }
@@ -596,7 +646,8 @@ async function interactive() {
   let explained = false;
   const submittable = finishedRuns.filter(canSubmit);
   if (finishedRuns.length && !submittable.length) {
-    say(`\n${t('noSubmitNoSource')}`);
+    const manual = finishedRuns.map((d) => `npx skillgauntlet submit "${d}" --repo https://github.com/owner/repo --commit <sha> [--subdir path]`).join('\n  ');
+    say(`\n${t('noSubmitNoSource', { cmd: manual })}`);
     explained = true;
   } else if (submittable.length && process.exitCode !== 3) {
     if (hasTerminal() && await confirm(t('contributeQ', { n: submittable.length }), false)) {
@@ -643,6 +694,10 @@ async function main() {
   const args = applyLang(process.argv.slice(2));
   if (args.includes('--help') || args.includes('-h')) {
     say(t('usage'));
+    return;
+  }
+  if (args.includes('--version') || args.includes('-v')) {
+    say(currentVersion() || 'unknown');
     return;
   }
   if (args[0] === 'static') {
