@@ -1,7 +1,7 @@
 // A machine with nothing installed: the tools it needs and the wait after the pull request, all with fakes.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { installPlan, ensureTool, ensureSignedIn, claState, watchPullRequest, addKnownDirsToPath } from '../lib/github.js';
+import { installPlan, ensureTool, ensureSignedIn, loginArgs, claState, watchPullRequest, addKnownDirsToPath } from '../lib/github.js';
 import { setLang } from '../lib/i18n.js';
 
 setLang('en');
@@ -69,7 +69,7 @@ test('the GitHub sign-in is the CLI browser flow, offered until it works or the 
   const ran = [];
   const ok = await ensureSignedIn({ exec, out: s.out, pick: async (t, o) => o[0].value, run: (cmd, args) => { ran.push([cmd, ...args]); signed = true; } });
   assert.equal(ok, true);
-  assert.deepEqual(ran[0], ['gh', 'auth', 'login', '-h', 'github.com', '-p', 'https', '-w']);
+  assert.deepEqual(ran[0], ['gh', 'auth', 'login', '-h', 'github.com', '-w']);
   assert.equal(await ensureSignedIn({ exec: throwing, out: s.out, pick: async () => 'skip', run: () => assert.fail('no') }), false);
 });
 
@@ -137,4 +137,22 @@ test('on Linux the install runs each step through sudo and says a password may b
   assert.equal(ok, true);
   assert.deepEqual(ran, [['sudo', 'apt-get', 'update'], ['sudo', 'apt-get', 'install', '-y', 'git']]);
   assert.ok(s.lines.some((l) => /administrator rights.*password/.test(l)));
+});
+
+test('the browser sign-in only passes -p https to a gh that has the flag', () => {
+  const old = () => 'Flags:\n  -h, --hostname string\n  -s, --scopes strings\n  -w, --web\n      --with-token';
+  const recent = () => 'Flags:\n  -h, --hostname string\n  -p, --git-protocol string   The protocol to use for git operations\n  -w, --web';
+  assert.deepEqual(loginArgs(old), ['auth', 'login', '-h', 'github.com', '-w']);
+  assert.deepEqual(loginArgs(recent), ['auth', 'login', '-h', 'github.com', '-w', '-p', 'https']);
+  assert.deepEqual(loginArgs(() => { throw Object.assign(new Error('x'), { stdout: '', stderr: '' }); }), ['auth', 'login', '-h', 'github.com', '-w']);
+});
+
+test('a sign-in that fails says so and is offered again instead of looping silently', async () => {
+  const s = sink();
+  let tries = 0;
+  const exec = (cmd, args) => { if (args[1] === 'login') return '-w'; throw new Error('not logged in'); };
+  const ok = await ensureSignedIn({ exec, out: s.out, run: () => { tries += 1; return { status: 1 }; }, pick: async (title, options) => (tries < 2 ? options[0].value : 'skip') });
+  assert.equal(ok, false);
+  assert.equal(tries, 2);
+  assert.equal(s.lines.filter((l) => /did not finish/.test(l)).length, 2);
 });
