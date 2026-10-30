@@ -293,9 +293,31 @@ test('openPullRequest: forks, branches, commits as the contributor, pushes to th
   assert.ok(flat.some((c) => c.startsWith('gh repo fork SkillGauntlet/SkillGauntlet --clone=false')));
   assert.ok(flat.some((c) => c.includes('checkout -b submit/demo-claude-code-')));
   assert.ok(flat.some((c) => c.includes('user.email=583231+octocat@users.noreply.github.com')));
-  assert.ok(flat.some((c) => c.includes('push -q fork submit/')) && flat.some((c) => c.includes('credential.helper=')));
+  assert.ok(flat.some((c) => c.includes('push -q origin submit/')) && flat.some((c) => c.includes('credential.helper=')));
   assert.ok(flat.some((c) => c.includes('--head octocat:submit/') && c.includes('--base main')));
-  assert.ok(!flat.some((c) => /push .*(origin|SkillGauntlet\/SkillGauntlet\.git)/.test(c)), 'never pushes to upstream');
+  // the branch is made on the contributor's own fork, so upstream's workflow files are never part of the push
+  const clone = flat.find((c) => c.startsWith('git clone'));
+  assert.ok(clone.includes('https://github.com/octocat/SkillGauntlet.git'), 'clones the fork');
+  assert.ok(!flat.some((c) => c.includes('https://github.com/SkillGauntlet/SkillGauntlet.git')), 'upstream is never cloned or pushed to');
+});
+
+test('openPullRequest: a fork that is not cloneable yet is retried, and a stale fork needs no workflow scope', async () => {
+  const { pkg, out } = await packageOf();
+  let tries = 0;
+  const calls = [];
+  const exec = (cmd, args) => {
+    calls.push([cmd, ...args].join(' '));
+    if (args[0] === 'clone') {
+      tries += 1;
+      if (tries < 3) throw new Error('repository not found yet');
+      fs.mkdirSync(args.at(-1), { recursive: true });
+    }
+    if (cmd === 'gh' && args[0] === 'pr') return 'https://github.com/SkillGauntlet/SkillGauntlet/pull/8\n';
+    return '';
+  };
+  const url = openPullRequest({ pkgDir: out, pkg, gh: { user: 'octocat', id: '1' }, exec, say: () => {}, cloneWait: 1 });
+  assert.equal(url, 'https://github.com/SkillGauntlet/SkillGauntlet/pull/8');
+  assert.equal(tries, 3, 'two failures, then the clone worked');
 });
 
 function runCli(args, env = {}) {
