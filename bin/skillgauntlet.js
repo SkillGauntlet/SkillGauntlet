@@ -217,7 +217,7 @@ async function runTriggerLayer({ skillDir, skillName, depth, model, host = 'clau
     if (outcome.stopped) reportStopped(outcome.stopped, run.dir, model);
     else if (result?.incomplete) reportIncomplete(result.incomplete, run.dir, model);
     else finishedRuns.push(run.dir);
-    return result && { ...result, runDir: run.dir };
+    return result && { ...result, runDir: run.dir, queries: qs.queries };
   } catch (err) {
     run.close(null, { interrupted: true });
     throw err;
@@ -630,10 +630,10 @@ async function interactive() {
       archiveProbe({ skillDir: target.dir, skillName: target.name, model, probe });
     }
 
-    const md = `${staticMarkdown(result)}${trialSection(trial)}${gainSection(gain)}${probeSection(probe)}`;
-    const out = writeOut(target.dir, target.name, md, sc);
     let records = null;
-    if (trial?.runDir) { try { records = validRecords(readRun(trial.runDir).records); } catch { /* the chart then shows the totals only */ } }
+    if (trial?.runDir) { try { records = validRecords(readRun(trial.runDir).records); } catch { /* the report then shows the totals only */ } }
+    const md = `${staticMarkdown(result)}${trialSection(trial, records)}${gainSection(gain)}${probeSection(probe)}`;
+    const out = writeOut(target.dir, target.name, md, sc);
     outcomes.push({ name: target.name, result, trial, records, gain, probe, reportPath: path.join(out, `${target.name}.md`) });
     // The run stopped on a failure streak (usage limit, dead token): the next skill would fail the same way.
     if ((host === 'claude' || host === 'codebuddy' || host === 'codewhale') && process.exitCode === 3) break;

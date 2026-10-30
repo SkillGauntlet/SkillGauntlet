@@ -215,3 +215,37 @@ test('a DeepSeek model the host lists itself needs no key; an unlisted deepseek-
   assert.equal(backendFor('codebuddy', 'deepseek-flash'), 'codebuddy:api.deepseek.com');
   setNativeModels('codebuddy', []);
 });
+
+test('the full report lists every question with what was expected, what happened and what the model did', async () => {
+  const { trialSection } = await import('../lib/report.js');
+  setLang('en');
+  const queries = [
+    { id: 'q01', query: 'build a landing page | with a pipe', shouldTrigger: true, clause: 'design', note: 'new page' },
+    { id: 'q02', query: 'refactor this button', shouldTrigger: true, clause: 'design', note: 'component' },
+    { id: 'q03', query: 'review this diff', shouldTrigger: false, clause: 'design', shares: 'review', note: 'plain code review' },
+  ];
+  const records = [
+    { queryId: 'q01', run: 0, shouldTrigger: true, verdict: 'triggered', invokedSkill: 'demo', firstTool: 'Skill' },
+    { queryId: 'q02', run: 0, shouldTrigger: true, verdict: 'not_triggered', firstTool: 'Bash' },
+    { queryId: 'q03', run: 0, shouldTrigger: false, verdict: 'triggered', invokedSkill: 'demo', firstTool: 'Skill' },
+  ];
+  const trial = {
+    host: 'codebuddy', backend: 'codebuddy', model: 'm', runs: 1, trials: 3, recall: 0.5, fpr: 1, noToolRate: 0,
+    questions: [
+      { query: queries[0].query, shouldTrigger: true, hits: 1, n: 1 },
+      { query: queries[1].query, shouldTrigger: true, hits: 0, n: 1 },
+      { query: queries[2].query, shouldTrigger: false, hits: 1, n: 1 },
+    ],
+    queries,
+  };
+  const md = trialSection(trial, records);
+  assert.match(md, /At a glance/);
+  assert.match(md, /Clause: design/);
+  assert.match(md, /\| should trigger \| triggered \| ✓ \| build a landing page \\| with a pipe \| invoked skill demo \|/);
+  assert.match(md, /\| should trigger \| did not trigger \| ✗ \| refactor this button \| Bash \|/);
+  assert.match(md, /\| should not \| false trigger 1\/1 \| ✗ \| review this diff \|.*borrowed words: review/);
+  assert.match(md, /The 1 misses: what the model did instead/);
+  // without the run records the old compact table is still produced
+  assert.match(trialSection(trial, null), /\| 1\/1 \|/);
+  setLang('en');
+});
