@@ -20,7 +20,9 @@ import { renderResult } from '../lib/chart.js';
 import { makeProgress } from '../lib/progress.js';
 import { setLang, detectLang, errorText, t } from '../lib/i18n.js';
 import { resolveBin, backend, backendFor, usesOwnDeepseek, setNativeModels, HOSTS, checkModel, draftQueries, draftQuality, runTrial, requireHost, pingHost, setHostBin, binInstalled } from '../lib/trial.js';
-import { HOST_CLI, searchHost, installCommand, installHost } from '../lib/findhost.js';
+import { HOST_CLI, searchHost, installCommand, installHost, LOGIN, loginCommand } from '../lib/findhost.js';
+import { launchSpec } from '../lib/spawn.js';
+import { spawnSync as runLogin } from 'node:child_process';
 import { runGain } from '../lib/gain.js';
 import { ERROR_STREAK_STOP, executeTrials, finishRun, resumeRun } from '../lib/execute.js';
 import { cmdSubmit } from '../lib/submit.js';
@@ -145,12 +147,40 @@ function modelsOf(host, label) {
 }
 const HOST_LABEL = { 'claude-code': 'Claude Code', codebuddy: 'CodeBuddy', codewhale: 'Codewhale' };
 
+// The host did not answer its sign-in check. Show why, and let the user sign in with one press of enter: the host's own
+// login runs on this terminal, then the check is made again. True when a sign-in was run (the caller checks again).
+async function offerLogin(host, bin, err) {
+  const label = HOST_LABEL[host] || host;
+  const spec = LOGIN[host];
+  const cmd = loginCommand(host, path.basename(bin).replace(/\.(cmd|exe|bat)$/i, ''));
+  say(`\n${errorText(err)}`);
+  const pick = await choose(t('loginQ'), [
+    { label: t('loginNow', { host: label }), hint: cmd ? t('loginRuns', { cmd }) : '', value: 'now' },
+    { label: t('loginSkip'), value: 'skip' },
+  ], 1);
+  if (pick !== 'now') return false;
+  say(`\n${t(spec.hint)}\n`);
+  closeUi(); // hand the terminal to the host's own login
+  const launch = launchSpec(bin, spec.args, HOSTS[host].bin);
+  const r = runLogin(launch.cmd, launch.args, { stdio: 'inherit', shell: launch.shell });
+  say('');
+  return !r.error;
+}
+
 async function runTriggerLayer({ skillDir, skillName, depth, model, host = 'claude-code' }) {
   requireHost(host);
   const bin = resolveBin(HOSTS[host].bin);
-  if (!hostChecked.has(host)) {
-    withTicker(waitText(t('hostPing', { host: HOST_LABEL[host] || host })), () => pingHost(host, { bin, model }));
-    hostChecked.add(host);
+  while (!hostChecked.has(host)) {
+    try {
+      withTicker(waitText(t('hostPing', { host: HOST_LABEL[host] || host })), () => pingHost(host, { bin, model }));
+      hostChecked.add(host);
+    } catch (err) {
+      // Not signed in is the common reason: offer the sign-in right here, then check again.
+      if (err.messageKey !== 'hostNotReady' || !LOGIN[host] || !hasTerminal() || !(await offerLogin(host, bin, err))) {
+        if (err.messageKey === 'hostNotReady') err.hostDown = true;
+        throw err;
+      }
+    }
   }
   const cacheFile = cacheFileFor(skillDir, depth);
   const want = { perClause: depth.perClause, negatives: depth.negatives, skillFingerprint: fingerprint(skillDir) };
@@ -607,7 +637,7 @@ async function interactive() {
         });
       } catch (err) {
         say(`  ${t('trialFail', { err: errorText(err) })}`);
-        hostDown = err.messageKey === 'hostNotReady';
+        hostDown = Boolean(err.hostDown) || err.messageKey === 'hostNotReady';
       }
       if (host === 'claude' && depth.layers.includes('gain') && !hostDown) {
         say(`  ${t('gainNote')}`);

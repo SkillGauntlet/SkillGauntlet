@@ -346,3 +346,18 @@ test('a failing json result gives its own reason, not the first line of the JSON
   }
   setLang('en');
 });
+
+test('every host that can be signed in from here has a login command and a hint in every language', async () => {
+  const { LOGIN, loginCommand } = await import('../lib/findhost.js');
+  assert.deepEqual(LOGIN['claude-code'].args, ['auth', 'login']);
+  assert.deepEqual(LOGIN.codewhale.args, ['login']);
+  assert.deepEqual(LOGIN.codebuddy.args, []);
+  assert.equal(loginCommand('claude-code', 'claude'), 'claude auth login');
+  assert.equal(loginCommand('codebuddy', 'codebuddy'), 'codebuddy');
+  for (const lang of ['zh', 'en', 'ja']) {
+    setLang(lang);
+    for (const spec of Object.values(LOGIN)) assert.ok(t(spec.hint).length > 10, `${lang}.${spec.hint}`);
+    for (const key of ['loginQ', 'loginNow', 'loginRuns', 'loginSkip']) assert.ok(t(key, { host: 'X', cmd: 'y' }).length > 0, `${lang}.${key}`);
+  }
+  setLang('en');
+});
