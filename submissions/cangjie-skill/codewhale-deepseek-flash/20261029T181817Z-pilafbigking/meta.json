@@ -1,0 +1,69 @@
+{
+  "schema": "skillgauntlet/run/1",
+  "runId": "20261030-031817",
+  "runnerVersion": "1.2.0",
+  "skill": "cangjie-skill",
+  "host": "codewhale",
+  "backend": "codewhale:api.deepseek.com",
+  "model": "deepseek-flash",
+  "runs": 1,
+  "maxExplore": 0,
+  "depth": {
+    "id": "quick",
+    "perClause": 2,
+    "negatives": 10
+  },
+  "querySets": [
+    {
+      "id": "main",
+      "source": "drafted",
+      "file": "queries-2x10.json",
+      "queries": 18,
+      "clauses": 4,
+      "sha256": "8ec73ce4f703a935",
+      "negativesQuality": {
+        "total": 10,
+        "weak": 0
+      }
+    }
+  ],
+  "skillFingerprint": "cf52d455623c3fea",
+  "platform": "win32 10.0.26300 / Node v24.19.0",
+  "startedAt": "2026-10-29T18:18:17.776Z",
+  "finishedAt": "2026-10-29T18:19:55.583Z",
+  "trials": 18,
+  "interrupted": false,
+  "submission": {
+    "schema": "skillgauntlet/submission/1",
+    "contributor": "pilafbigking",
+    "skill": {
+      "name": "cangjie-skill",
+      "repo": "https://github.com/kangarooking/cangjie-skill",
+      "commit": "a28de55ba881b9928956a55048f743f7a9e3b23e",
+      "subdir": "",
+      "skillMdSha256": "cd9e3e844cf405773a30b2640a56e07a77d66caf909055a1ebe0808a561d3c45"
+    },
+    "host": {
+      "id": "codewhale",
+      "version": null
+    },
+    "model": {
+      "requested": "deepseek-flash",
+      "resolved": null
+    },
+    "queryPack": {
+      "id": "main",
+      "sha256": "8ec73ce4f703a9359d21ae138e8e77972085e46f99fc2e47e850403c69aba3c6",
+      "queries": 18
+    },
+    "environment": {
+      "id": "6f2ca0101a71",
+      "platform": "win32 10.0.26300 / Node v24.19.0",
+      "hostVersion": null,
+      "backend": "codewhale:api.deepseek.com",
+      "loadedSkills": [],
+      "toolCount": 0
+    },
+    "submittedAt": "2026-10-29T18:21:50Z"
+  }
+}
