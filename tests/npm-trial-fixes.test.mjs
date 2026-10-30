@@ -361,3 +361,16 @@ test('every host that can be signed in from here has a login command and a hint 
   }
   setLang('en');
 });
+
+test('a global npm folder the user cannot write gets a per-user install instead of a sudo one', async () => {
+  const { installCommand, installHost, userInstallDir } = await import('../lib/findhost.js');
+  assert.equal(installCommand('codebuddy', { writable: true }), 'npm install -g @tencent-ai/codebuddy-code');
+  assert.match(installCommand('codebuddy', { writable: false }), /^npm install -g @tencent-ai\/codebuddy-code --prefix ".*\.local"$/);
+  assert.match(installCommand('codewhale', { writable: false }), /npm install -g codewhale --allow-scripts=codewhale --prefix /);
+  assert.equal(userInstallDir({ writable: true }), null);
+  assert.match(userInstallDir({ writable: false }), /\.local$/);
+  const ran = [];
+  installHost('codebuddy', (c) => ran.push(c), { writable: false });
+  assert.match(ran[0], /--prefix/);
+  assert.equal(installCommand('nothing', { writable: false }), null);
+});
