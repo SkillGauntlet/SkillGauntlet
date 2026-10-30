@@ -329,3 +329,20 @@ test('the trial bar is drawn at once, counts seconds, and ends its line', async 
   r({ row: { verdict: 'triggered', queryId: 'q01', run: 0 }, done: 1, total: 2 });
   assert.deepEqual(lines, ['  [1/2] ✓ q01#0 → triggered']);
 });
+
+test('a failing json result gives its own reason, not the first line of the JSON', async () => {
+  const { hostAnswerProblem } = await import('../lib/trial.js');
+  // the shape a logged-out Claude Code prints: exit 1, usage fields first, the reason far down in `result`
+  const out = JSON.stringify({ duration_api_ms: 0, total_cost_usd: 0, usage: { input_tokens: 0 }, terminal_reason: 'api_error', is_error: true, subtype: 'success', result: 'Not logged in · Please run /login', type: 'result' });
+  assert.equal(hostAnswerProblem({ status: 1, stdout: out, stderr: '' }, 90), 'Not logged in · Please run /login');
+  assert.equal(hostAnswerProblem({ status: 0, stdout: out, stderr: '' }, 90), 'Not logged in · Please run /login');
+  assert.equal(hostAnswerProblem({ status: 0, stdout: JSON.stringify([{ type: 'result', result: 'OK' }]), stderr: '' }, 90), null);
+  assert.equal(hostAnswerProblem({ status: 1, stdout: 'plain words\nmore', stderr: '' }, 90), 'plain words');
+  for (const lang of ['zh', 'en', 'ja']) {
+    setLang(lang);
+    const msg = errorText({ messageKey: 'hostNotReady', vars: { host: 'Claude Code', why: 'Not logged in' } });
+    assert.match(msg, /Not logged in/);
+    assert.match(msg, /\/login/);
+  }
+  setLang('en');
+});

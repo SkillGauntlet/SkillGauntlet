@@ -600,14 +600,16 @@ async function interactive() {
     let probe = null;
 
     if (host === 'claude' || host === 'codebuddy' || host === 'codewhale') {
+      let hostDown = false; // the host did not answer the sign-in check: nothing else will work either
       try {
         trial = await runTriggerLayer({
           skillDir: target.dir, skillName: target.name, depth, model, host: { claude: 'claude-code', codebuddy: 'codebuddy', codewhale: 'codewhale' }[host],
         });
       } catch (err) {
         say(`  ${t('trialFail', { err: errorText(err) })}`);
+        hostDown = err.messageKey === 'hostNotReady';
       }
-      if (host === 'claude' && depth.layers.includes('gain')) {
+      if (host === 'claude' && depth.layers.includes('gain') && !hostDown) {
         say(`  ${t('gainNote')}`);
         const g = await runGain({
           bin: resolveBin('claude'),
