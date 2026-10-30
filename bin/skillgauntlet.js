@@ -644,7 +644,8 @@ async function interactive() {
   let explained = false;
   const submittable = finishedRuns.filter(canSubmit);
   if (finishedRuns.length && !submittable.length) {
-    say(`\n${t('noSubmitNoSource')}`);
+    const manual = finishedRuns.map((d) => `npx skillgauntlet submit "${d}" --repo https://github.com/owner/repo --commit <sha> [--subdir path]`).join('\n  ');
+    say(`\n${t('noSubmitNoSource', { cmd: manual })}`);
     explained = true;
   } else if (submittable.length && process.exitCode !== 3) {
     if (hasTerminal() && await confirm(t('contributeQ', { n: submittable.length }), false)) {
