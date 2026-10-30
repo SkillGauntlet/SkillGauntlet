@@ -8,12 +8,29 @@ setLang('en');
 const sink = () => { const lines = []; return { lines, out: (l) => lines.push(l) }; };
 const throwing = () => { throw new Error('not found'); };
 
-test('install plans exist only where they need no password', () => {
-  assert.deepEqual(installPlan('gh', 'win32').args.slice(0, 3), ['install', '--id', 'GitHub.cli']);
-  assert.equal(installPlan('git', 'win32').cmd, 'winget');
-  assert.deepEqual(installPlan('git', 'darwin'), { cmd: 'brew', args: ['install', 'git'] });
-  assert.equal(installPlan('git', 'linux'), null);
-  assert.equal(installPlan('nothing', 'win32'), null);
+test('the install command follows the system and the package manager found on it', () => {
+  const only = (...names) => ({ have: (c) => names.includes(c) });
+  const w = installPlan('gh', 'win32', only('winget'));
+  assert.deepEqual(w.steps[0].slice(0, 4), ['winget', 'install', '--id', 'GitHub.cli']);
+  assert.equal(w.sudo, false);
+  assert.deepEqual(installPlan('git', 'win32', only('choco')).steps, [['choco', 'install', 'git', '-y']]);
+  assert.deepEqual(installPlan('git', 'win32', only('scoop')).steps, [['scoop', 'install', 'git']]);
+  assert.deepEqual(installPlan('git', 'darwin', only('brew')).steps, [['brew', 'install', 'git']]);
+  // Linux: the first manager found, run through sudo, with the package name that manager uses
+  const apt = installPlan('gh', 'linux', only('apt-get', 'sudo'));
+  assert.deepEqual(apt.steps, [['sudo', 'apt-get', 'update'], ['sudo', 'apt-get', 'install', '-y', 'gh']]);
+  assert.equal(apt.sudo, true);
+  assert.deepEqual(installPlan('gh', 'linux', only('pacman', 'sudo')).steps, [['sudo', 'pacman', '-S', '--noconfirm', 'github-cli']]);
+  assert.deepEqual(installPlan('git', 'linux', only('dnf', 'sudo')).steps, [['sudo', 'dnf', 'install', '-y', 'git']]);
+  assert.deepEqual(installPlan('git', 'linux', only('zypper', 'sudo')).steps, [['sudo', 'zypper', '--non-interactive', 'install', 'git']]);
+  assert.deepEqual(installPlan('gh', 'linux', only('apk', 'sudo')).steps, [['sudo', 'apk', 'add', 'github-cli']]);
+  // root needs no sudo; a user with neither root nor sudo gets no plan
+  assert.deepEqual(installPlan('git', 'linux', { ...only('apt-get'), uid: 0 }).steps[1], ['apt-get', 'install', '-y', 'git']);
+  assert.equal(installPlan('git', 'linux', only('apt-get')), null);
+  // nothing found, or a tool that is not known
+  assert.equal(installPlan('git', 'linux', only()), null);
+  assert.equal(installPlan('git', 'win32', only()), null);
+  assert.equal(installPlan('nothing', 'win32', only('winget')), null);
 });
 
 test('a tool that is there is left alone; a missing one is installed on enter and checked again', async () => {
@@ -37,11 +54,11 @@ test('a tool that is there is left alone; a missing one is installed on enter an
 
 test('choosing to install it yourself, a failed install and an unsupported system all end without installing', async () => {
   const s = sink();
-  const base = { exec: throwing, exists: () => false, out: s.out };
+  const base = { exec: throwing, exists: () => false, out: s.out, ctx: { have: (c) => c === 'winget' } }; // the tool is missing, a package manager is there
   assert.equal(await ensureTool('gh', { ...base, platform: 'win32', pick: async () => 'self', run: () => assert.fail('must not run') }), false);
   assert.equal(await ensureTool('gh', { ...base, platform: 'win32', pick: async () => 'now', run: () => ({ status: 1 }) }), false);
   assert.ok(s.lines.some((l) => /did not install/.test(l)));
-  assert.equal(await ensureTool('git', { ...base, platform: 'linux', pick: async () => assert.fail('nothing to offer'), run: () => assert.fail('no') }), false);
+  assert.equal(await ensureTool('git', { ...base, ctx: { have: () => false }, platform: 'linux', pick: async () => assert.fail('nothing to offer'), run: () => assert.fail('no') }), false);
   assert.ok(s.lines.some((l) => /cannot install git automatically/.test(l)));
 });
 
@@ -104,4 +121,20 @@ test('a PATH that predates an install is extended with the directories the insta
   assert.deepEqual(added, [gh]);
   assert.equal(env.Path, `${gh};${String.raw`C:\Windows`}`);
   assert.deepEqual(addKnownDirsToPath('win32', (d) => d === gh, env), [], 'not added twice');
+});
+
+test('on Linux the install runs each step through sudo and says a password may be asked', async () => {
+  const s = sink();
+  let installed = false;
+  const exec = () => { if (!installed) throw new Error('missing'); return 'ok'; };
+  const ran = [];
+  const ok = await ensureTool('git', {
+    exec, platform: 'linux', exists: () => false, out: s.out,
+    ctx: { have: (c) => c === 'apt-get' || c === 'sudo', uid: 1000 },
+    pick: async (title, options) => options[0].value,
+    run: (cmd, args) => { ran.push([cmd, ...args]); if (args.includes('install')) installed = true; return { status: 0 }; },
+  });
+  assert.equal(ok, true);
+  assert.deepEqual(ran, [['sudo', 'apt-get', 'update'], ['sudo', 'apt-get', 'install', '-y', 'git']]);
+  assert.ok(s.lines.some((l) => /administrator rights.*password/.test(l)));
 });
