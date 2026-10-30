@@ -13,10 +13,11 @@ import { fingerprint, cacheFileFor, readCachedQueries, writeCachedQueries } from
 import { openRun, querySetHash, readRun, readAnswers, validRecords } from '../lib/runs.js';
 import { DEPTHS, minutesFor } from '../lib/depth.js';
 import { ask, choose, select, confirm, say, closeUi, hasTerminal, setBack, Back } from '../lib/ui.js';
-import { hostModels, unknownModel } from '../lib/models.js';
+import { hostModels, unknownModel, codebuddyCatalog } from '../lib/models.js';
 import { browseDir } from '../lib/browse.js';
 import { withTicker } from '../lib/ticker.js';
-import { renderResult, bar } from '../lib/chart.js';
+import { renderResult } from '../lib/chart.js';
+import { makeProgress } from '../lib/progress.js';
 import { setLang, detectLang, errorText, t } from '../lib/i18n.js';
 import { resolveBin, backend, backendFor, usesOwnDeepseek, setNativeModels, HOSTS, checkModel, draftQueries, draftQuality, runTrial, requireHost, pingHost, setHostBin, binInstalled } from '../lib/trial.js';
 import { HOST_CLI, searchHost, installCommand, installHost } from '../lib/findhost.js';
@@ -127,6 +128,13 @@ function notListed(model, known, label) {
   say(`\n${t('modelUnknown', { model, host: label, list: list.slice(0, 8).join(', ') })}`);
   return true;
 }
+// Models in CodeBuddy's cached catalog that its --help does not list for this account right now.
+function catalogOnly(host) {
+  if (host !== 'codebuddy') return [];
+  const listed = new Set(modelsOf('codebuddy', 'CodeBuddy'));
+  return codebuddyCatalog().filter((m) => !listed.has(m) && !m.startsWith('custom-local:'));
+}
+
 function modelsOf(host, label) {
   if (!modelCache.has(host)) {
     const list = withTicker(waitText(t('waitModels', { host: label }), { slowAfter: 600 }), () => hostModels(host, resolveBin(host)));
@@ -205,13 +213,15 @@ async function runTriggerLayer({ skillDir, skillName, depth, model, host = 'clau
     queries: { schema: 'skillgauntlet/queries/1', queries: qs.queries },
   });
 
+  const prog = progress(trials.length);
   try {
     const outcome = await executeTrials({
       run,
       trials,
       doTrial: ({ q }) => runTrial({ bin, skillDir, skillName, query: q.query, model, maxExplore: depth.maxExplore, host }),
-      onTrial: progress(),
+      onTrial: prog,
     });
+    prog.finish();
     const result = finishRun(run, { model, backend: backendFor(host, model), host, runs: depth.runs, expected: trials.length }, outcome.stopped);
     say(`  ${t('runSaved', { path: run.dir })}`);
     if (outcome.stopped) reportStopped(outcome.stopped, run.dir, model);
@@ -219,6 +229,7 @@ async function runTriggerLayer({ skillDir, skillName, depth, model, host = 'clau
     else finishedRuns.push(run.dir);
     return result && { ...result, runDir: run.dir, queries: qs.queries };
   } catch (err) {
+    prog.finish();
     run.close(null, { interrupted: true });
     throw err;
   }
@@ -250,17 +261,7 @@ function archiveProbe({ skillDir, skillName, model, probe }) {
   say(`  ${t('runSaved', { path: run.dir })}`);
 }
 
-function progress() {
-  return ({ row, done, total }) => {
-    // On a terminal one line is redrawn in place; the verdicts of single trials belong to the result, not the wait.
-    if (process.stdout.isTTY) {
-      process.stdout.write(`\r\x1b[2K  ${t('progressLine')} ${bar(done / total, 24)} ${done}/${total}${done >= total ? '\n' : ''}`);
-      return;
-    }
-    const mark = { triggered: '✓', not_triggered: '·', other_skill: '↷' }[row.verdict] || '!';
-    say(`  [${done}/${total}] ${mark} ${row.queryId}#${row.run} → ${row.verdict}`);
-  };
-}
+const progress = makeProgress;
 
 function reportIncomplete(n, dir, model) {
   say(`
@@ -286,12 +287,14 @@ async function cmdResume(args) {
   const runMeta = JSON.parse(fs.readFileSync(path.join(full, 'meta.json'), 'utf8'));
   const runHost = runMeta.host || 'claude-code';
   requireHost(runHost);
+  const resumeProgress = progress();
   const result = await resumeRun({
     dir: full,
     bin: resolveBin((HOSTS[runHost] || HOSTS['claude-code']).bin),
     want: { model: flag('--model'), runs: flag('--runs'), maxExplore: flag('--max-explore'), backend: backendFor(runHost, flag('--model') ?? runMeta.model) },
-    onTrial: progress(),
+    onTrial: resumeProgress,
   });
+  resumeProgress.finish();
   if (result.nothing) {
     say(t('resumeNothing'));
     return;
@@ -320,12 +323,14 @@ async function pickInstalled() {
 }
 
 // A model for hosts that have an account default: pick it, a known name, or type one. Returns null for the default.
-async function pickModel(known = []) {
+async function pickModel(known = [], more = []) {
   if (!hasTerminal()) return (await ask(t('modelOptionalQ'), '')).trim() || null;
   const other = '\u0000other';
+  // `known` is what the account can use now; `more` is in the host's catalog but not promised to the account
   const v = await select(t('modelQ'), [
     { label: t('modelDefault'), value: '' },
-    ...known.map((m) => ({ label: m, value: m })),
+    ...known.map((m) => ({ label: m, hint: more.length ? t('modelAccountHint') : '', value: m })),
+    ...more.map((m) => ({ label: m, hint: t('modelCatalogHint'), value: m })),
     { label: t('modelOther'), value: other },
   ], 0);
   if (v === other) return (await ask(t('modelOptionalQ'), '')).trim() || null;
@@ -540,8 +545,8 @@ async function interactive() {
         { label: t('depthStandard'), hint: t('depthStandardHint'), value: 'standard' },
       ], 1);
       S.depth = DEPTHS[depthId];
-      S.model = await pickModel(modelsOf('codebuddy', 'CodeBuddy'));
-      if (notListed(S.model, modelsOf('codebuddy', 'CodeBuddy'), 'CodeBuddy')) return AGAIN;
+      S.model = await pickModel(modelsOf('codebuddy', 'CodeBuddy'), catalogOnly('codebuddy'));
+      if (notListed(S.model, [...modelsOf('codebuddy', 'CodeBuddy'), ...catalogOnly('codebuddy')], 'CodeBuddy')) return AGAIN;
       if (usesOwnDeepseek('codebuddy', S.model) && !process.env.DEEPSEEK_API_KEY) {
         say(`\n${t('needDeepseekKey')}`);
         return END;

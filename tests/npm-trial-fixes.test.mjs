@@ -286,3 +286,46 @@ test('the report shows what the model said and did first, and says a trial stops
   assert.match(md, /Before acting it said:\n\n {4}> I will check the repo first\.\n {4}> Then edit\./);
   assert.doesNotMatch(trialSection(trial, records, new Map()), /Per question: what the model said/);
 });
+
+test('the CodeBuddy catalog is read from its cache even when --help lists only a few models', async () => {
+  const { catalogFromTexts, codebuddyCatalog } = await import('../lib/models.js');
+  const entry = JSON.stringify([{ userId: 'u', data: { agents: [{ name: 'cli', models: ['hy3', 'glm-5.3', 'deepseek-v4-pro'], tools: ['Read'] }, { name: 'x', models: ['hy3', 'bad name!'] }] } }]);
+  assert.deepEqual(catalogFromTexts([entry, 'not json']).sort(), ['deepseek-v4-pro', 'glm-5.3', 'hy3']);
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'sg-cat-'));
+  fs.writeFileSync(path.join(dir, 'entry_1.info'), entry);
+  fs.writeFileSync(path.join(dir, 'other.txt'), '{"models":["nope-x"]}');
+  assert.deepEqual(codebuddyCatalog(dir).sort(), ['deepseek-v4-pro', 'glm-5.3', 'hy3']);
+  assert.deepEqual(codebuddyCatalog(path.join(dir, 'missing')), []);
+  fs.rmSync(dir, { recursive: true, force: true });
+});
+
+test('the trial bar is drawn at once, counts seconds, and ends its line', async () => {
+  const { makeProgress } = await import('../lib/progress.js');
+  setLang('en');
+  const out = [];
+  let clock = 0;
+  const ticks = [];
+  const env = { tty: true, write: (s) => out.push(s), now: () => clock, every: (fn) => { ticks.push(fn); return ticks.length; }, stopEvery: () => { ticks.length = 0; } };
+  const p = makeProgress(4, env);
+  assert.equal(out.length, 1, 'drawn before any trial has finished');
+  assert.match(out[0], /0\/4/);
+  assert.match(out[0], /0 s elapsed/);
+  clock = 7000;
+  ticks[0]();
+  assert.match(out.at(-1), /0\/4.* 7 s elapsed/, 'the seconds move while the first trial is still running');
+  p({ row: {}, done: 1, total: 4 });
+  assert.match(out.at(-1), /1\/4/);
+  p({ row: {}, done: 4, total: 4 });
+  assert.equal(out.at(-1), '\n', 'the line is ended when the last trial is done');
+  assert.equal(ticks.length, 0, 'the redraw is stopped');
+  // stopped early: finish() ends the line too
+  const out2 = [];
+  const q = makeProgress(3, { ...env, write: (s) => out2.push(s) });
+  q.finish();
+  assert.equal(out2.at(-1), '\n');
+  // not a terminal: one line per trial, no redraw
+  const lines = [];
+  const r = makeProgress(2, { tty: false, line: (l) => lines.push(l) });
+  r({ row: { verdict: 'triggered', queryId: 'q01', run: 0 }, done: 1, total: 2 });
+  assert.deepEqual(lines, ['  [1/2] ✓ q01#0 → triggered']);
+});
