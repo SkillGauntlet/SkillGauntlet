@@ -249,3 +249,40 @@ test('the full report lists every question with what was expected, what happened
   assert.match(trialSection(trial, null), /\| 1\/1 \|/);
   setLang('en');
 });
+
+test('what the model said and did first is kept beside the run, not in the raw rows', async () => {
+  const { executeTrials } = await import('../lib/execute.js');
+  const { addSaid, inputSummary, SAID_LIMIT } = await import('../lib/trial.js');
+  const rows = [];
+  const answers = [];
+  const run = { meta: { tools: [1] }, patch() {}, append: (r) => rows.push(r), appendAnswer: (a) => answers.push(a) };
+  const doTrial = async () => ({ host: 'x', verdict: 'not_triggered', firstTool: 'Bash', said: 'Let me look.', firstInput: 'ls -la' });
+  await executeTrials({ run, trials: [{ q: { id: 'q01', query: 'qq', shouldTrigger: true }, i: 0 }], doTrial });
+  assert.equal(rows.length, 1);
+  assert.ok(!('said' in rows[0]) && !('firstInput' in rows[0]), 'the raw row, which is what gets submitted, carries neither');
+  assert.deepEqual(answers, [{ queryId: 'q01', run: 0, said: 'Let me look.', firstInput: 'ls -la' }]);
+  const rec = {};
+  addSaid(rec, 'a'.repeat(SAID_LIMIT + 500));
+  assert.equal(rec.said.length, SAID_LIMIT);
+  assert.equal(inputSummary('Bash', { command: 'ls -la' }), 'ls -la');
+  assert.equal(inputSummary('Read', { file_path: 'a.md' }), 'a.md');
+  assert.equal(inputSummary('Bash', {}), '');
+});
+
+test('the report shows what the model said and did first, and says a trial stops at the first action', async () => {
+  const { trialSection } = await import('../lib/report.js');
+  setLang('en');
+  const queries = [{ id: 'q01', query: 'refactor this button', shouldTrigger: true, clause: 'design', note: 'component' }];
+  const records = [{ queryId: 'q01', run: 0, shouldTrigger: true, verdict: 'not_triggered', firstTool: 'Bash' }];
+  const trial = {
+    host: 'codebuddy', backend: 'b', model: 'm', runs: 1, trials: 1, recall: 0, fpr: null, noToolRate: 0,
+    questions: [{ query: 'refactor this button', shouldTrigger: true, hits: 0, n: 1 }], queries,
+  };
+  const answers = new Map([['q01#0', { queryId: 'q01', run: 0, said: 'I will check the repo first.\nThen edit.', firstInput: 'ls -la' }]]);
+  const md = trialSection(trial, records, answers);
+  assert.match(md, /Per question: what the model said and did first/);
+  assert.match(md, /stops at the model's first action/);
+  assert.match(md, /- Bash: `ls -la`/);
+  assert.match(md, /Before acting it said:\n\n {4}> I will check the repo first\.\n {4}> Then edit\./);
+  assert.doesNotMatch(trialSection(trial, records, new Map()), /Per question: what the model said/);
+});
