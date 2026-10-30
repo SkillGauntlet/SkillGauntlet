@@ -18,7 +18,7 @@ import { browseDir } from '../lib/browse.js';
 import { withTicker } from '../lib/ticker.js';
 import { renderResult, bar } from '../lib/chart.js';
 import { setLang, detectLang, errorText, t } from '../lib/i18n.js';
-import { resolveBin, backend, backendFor, isDeepseekModel, HOSTS, checkModel, draftQueries, draftQuality, runTrial, requireHost, pingHost, setHostBin, binInstalled } from '../lib/trial.js';
+import { resolveBin, backend, backendFor, usesOwnDeepseek, setNativeModels, HOSTS, checkModel, draftQueries, draftQuality, runTrial, requireHost, pingHost, setHostBin, binInstalled } from '../lib/trial.js';
 import { HOST_CLI, searchHost, installCommand, installHost } from '../lib/findhost.js';
 import { runGain } from '../lib/gain.js';
 import { ERROR_STREAK_STOP, executeTrials, finishRun, resumeRun } from '../lib/execute.js';
@@ -129,7 +129,9 @@ function notListed(model, known, label) {
 }
 function modelsOf(host, label) {
   if (!modelCache.has(host)) {
-    modelCache.set(host, withTicker(waitText(t('waitModels', { host: label }), { slowAfter: 600 }), () => hostModels(host, resolveBin(host))));
+    const list = withTicker(waitText(t('waitModels', { host: label }), { slowAfter: 600 }), () => hostModels(host, resolveBin(host)));
+    setNativeModels(host, list);
+    modelCache.set(host, list);
   }
   return modelCache.get(host);
 }
@@ -540,7 +542,7 @@ async function interactive() {
       S.depth = DEPTHS[depthId];
       S.model = await pickModel(modelsOf('codebuddy', 'CodeBuddy'));
       if (notListed(S.model, modelsOf('codebuddy', 'CodeBuddy'), 'CodeBuddy')) return AGAIN;
-      if (isDeepseekModel(S.model) && !process.env.DEEPSEEK_API_KEY) {
+      if (usesOwnDeepseek('codebuddy', S.model) && !process.env.DEEPSEEK_API_KEY) {
         say(`\n${t('needDeepseekKey')}`);
         return END;
       }
@@ -549,7 +551,7 @@ async function interactive() {
       say(`\n${t('codexNote')}`);
       S.model = await pickModel(modelsOf('codex', 'Codex'));
       if (notListed(S.model, modelsOf('codex', 'Codex'), 'Codex')) return AGAIN;
-      if (isDeepseekModel(S.model) && !process.env.DEEPSEEK_API_KEY) {
+      if (usesOwnDeepseek('codex', S.model) && !process.env.DEEPSEEK_API_KEY) {
         say(`\n${t('needDeepseekKey')}`);
         return END;
       }

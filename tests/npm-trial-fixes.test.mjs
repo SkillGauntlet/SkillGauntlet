@@ -203,3 +203,15 @@ test('no message says how a backend is billed; cost is left to the backend and t
     for (const [key, value] of Object.entries(table)) assert.doesNotMatch(String(value), claims, `${lang}.${key}`);
   }
 });
+
+test('a DeepSeek model the host lists itself needs no key; an unlisted deepseek-* name takes the package route', async () => {
+  const { usesOwnDeepseek, setNativeModels, backendFor } = await import('../lib/trial.js');
+  setNativeModels('codebuddy', ['hy3', 'deepseek-v4.1-flash']);
+  assert.equal(usesOwnDeepseek('codebuddy', 'deepseek-v4.1-flash'), false);
+  assert.equal(usesOwnDeepseek('codebuddy', 'deepseek-flash'), true);
+  assert.equal(usesOwnDeepseek('codebuddy', 'hy3'), false);
+  assert.equal(usesOwnDeepseek('codebuddy', null), false);
+  assert.equal(backendFor('codebuddy', 'deepseek-v4.1-flash'), 'codebuddy');
+  assert.equal(backendFor('codebuddy', 'deepseek-flash'), 'codebuddy:api.deepseek.com');
+  setNativeModels('codebuddy', []);
+});
