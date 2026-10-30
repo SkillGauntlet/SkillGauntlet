@@ -286,3 +286,15 @@ test('the report shows what the model said and did first, and says a trial stops
   assert.match(md, /Before acting it said:\n\n {4}> I will check the repo first\.\n {4}> Then edit\./);
   assert.doesNotMatch(trialSection(trial, records, new Map()), /Per question: what the model said/);
 });
+
+test('the CodeBuddy catalog is read from its cache even when --help lists only a few models', async () => {
+  const { catalogFromTexts, codebuddyCatalog } = await import('../lib/models.js');
+  const entry = JSON.stringify([{ userId: 'u', data: { agents: [{ name: 'cli', models: ['hy3', 'glm-5.3', 'deepseek-v4-pro'], tools: ['Read'] }, { name: 'x', models: ['hy3', 'bad name!'] }] } }]);
+  assert.deepEqual(catalogFromTexts([entry, 'not json']).sort(), ['deepseek-v4-pro', 'glm-5.3', 'hy3']);
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'sg-cat-'));
+  fs.writeFileSync(path.join(dir, 'entry_1.info'), entry);
+  fs.writeFileSync(path.join(dir, 'other.txt'), '{"models":["nope-x"]}');
+  assert.deepEqual(codebuddyCatalog(dir).sort(), ['deepseek-v4-pro', 'glm-5.3', 'hy3']);
+  assert.deepEqual(codebuddyCatalog(path.join(dir, 'missing')), []);
+  fs.rmSync(dir, { recursive: true, force: true });
+});

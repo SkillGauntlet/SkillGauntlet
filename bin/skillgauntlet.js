@@ -13,7 +13,7 @@ import { fingerprint, cacheFileFor, readCachedQueries, writeCachedQueries } from
 import { openRun, querySetHash, readRun, readAnswers, validRecords } from '../lib/runs.js';
 import { DEPTHS, minutesFor } from '../lib/depth.js';
 import { ask, choose, select, confirm, say, closeUi, hasTerminal, setBack, Back } from '../lib/ui.js';
-import { hostModels, unknownModel } from '../lib/models.js';
+import { hostModels, unknownModel, codebuddyCatalog } from '../lib/models.js';
 import { browseDir } from '../lib/browse.js';
 import { withTicker } from '../lib/ticker.js';
 import { renderResult, bar } from '../lib/chart.js';
@@ -127,6 +127,13 @@ function notListed(model, known, label) {
   say(`\n${t('modelUnknown', { model, host: label, list: list.slice(0, 8).join(', ') })}`);
   return true;
 }
+// Models in CodeBuddy's cached catalog that its --help does not list for this account right now.
+function catalogOnly(host) {
+  if (host !== 'codebuddy') return [];
+  const listed = new Set(modelsOf('codebuddy', 'CodeBuddy'));
+  return codebuddyCatalog().filter((m) => !listed.has(m) && !m.startsWith('custom-local:'));
+}
+
 function modelsOf(host, label) {
   if (!modelCache.has(host)) {
     const list = withTicker(waitText(t('waitModels', { host: label }), { slowAfter: 600 }), () => hostModels(host, resolveBin(host)));
@@ -320,12 +327,14 @@ async function pickInstalled() {
 }
 
 // A model for hosts that have an account default: pick it, a known name, or type one. Returns null for the default.
-async function pickModel(known = []) {
+async function pickModel(known = [], more = []) {
   if (!hasTerminal()) return (await ask(t('modelOptionalQ'), '')).trim() || null;
   const other = '\u0000other';
+  // `known` is what the account can use now; `more` is in the host's catalog but not promised to the account
   const v = await select(t('modelQ'), [
     { label: t('modelDefault'), value: '' },
-    ...known.map((m) => ({ label: m, value: m })),
+    ...known.map((m) => ({ label: m, hint: more.length ? t('modelAccountHint') : '', value: m })),
+    ...more.map((m) => ({ label: m, hint: t('modelCatalogHint'), value: m })),
     { label: t('modelOther'), value: other },
   ], 0);
   if (v === other) return (await ask(t('modelOptionalQ'), '')).trim() || null;
@@ -540,8 +549,8 @@ async function interactive() {
         { label: t('depthStandard'), hint: t('depthStandardHint'), value: 'standard' },
       ], 1);
       S.depth = DEPTHS[depthId];
-      S.model = await pickModel(modelsOf('codebuddy', 'CodeBuddy'));
-      if (notListed(S.model, modelsOf('codebuddy', 'CodeBuddy'), 'CodeBuddy')) return AGAIN;
+      S.model = await pickModel(modelsOf('codebuddy', 'CodeBuddy'), catalogOnly('codebuddy'));
+      if (notListed(S.model, [...modelsOf('codebuddy', 'CodeBuddy'), ...catalogOnly('codebuddy')], 'CodeBuddy')) return AGAIN;
       if (usesOwnDeepseek('codebuddy', S.model) && !process.env.DEEPSEEK_API_KEY) {
         say(`\n${t('needDeepseekKey')}`);
         return END;
