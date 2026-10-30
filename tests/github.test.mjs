@@ -1,7 +1,6 @@
 // A machine with nothing installed: the tools it needs and the wait after the pull request, all with fakes.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import path from 'node:path';
 import { installPlan, ensureTool, ensureSignedIn, claState, watchPullRequest, addKnownDirsToPath } from '../lib/github.js';
 import { setLang } from '../lib/i18n.js';
 
@@ -103,6 +102,6 @@ test('a PATH that predates an install is extended with the directories the insta
   const env = { Path: String.raw`C:\Windows` };
   const added = addKnownDirsToPath('win32', (d) => d === gh, env);
   assert.deepEqual(added, [gh]);
-  assert.equal(env.Path, [gh, String.raw`C:\Windows`].join(path.delimiter));
+  assert.equal(env.Path, `${gh};${String.raw`C:\Windows`}`);
   assert.deepEqual(addKnownDirsToPath('win32', (d) => d === gh, env), [], 'not added twice');
 });
