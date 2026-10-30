@@ -16,7 +16,8 @@ import { ask, choose, select, confirm, say, closeUi, hasTerminal, setBack, Back 
 import { hostModels, unknownModel, codebuddyCatalog } from '../lib/models.js';
 import { browseDir } from '../lib/browse.js';
 import { withTicker } from '../lib/ticker.js';
-import { renderResult, bar } from '../lib/chart.js';
+import { renderResult } from '../lib/chart.js';
+import { makeProgress } from '../lib/progress.js';
 import { setLang, detectLang, errorText, t } from '../lib/i18n.js';
 import { resolveBin, backend, backendFor, usesOwnDeepseek, setNativeModels, HOSTS, checkModel, draftQueries, draftQuality, runTrial, requireHost, pingHost, setHostBin, binInstalled } from '../lib/trial.js';
 import { HOST_CLI, searchHost, installCommand, installHost } from '../lib/findhost.js';
@@ -212,13 +213,15 @@ async function runTriggerLayer({ skillDir, skillName, depth, model, host = 'clau
     queries: { schema: 'skillgauntlet/queries/1', queries: qs.queries },
   });
 
+  const prog = progress(trials.length);
   try {
     const outcome = await executeTrials({
       run,
       trials,
       doTrial: ({ q }) => runTrial({ bin, skillDir, skillName, query: q.query, model, maxExplore: depth.maxExplore, host }),
-      onTrial: progress(),
+      onTrial: prog,
     });
+    prog.finish();
     const result = finishRun(run, { model, backend: backendFor(host, model), host, runs: depth.runs, expected: trials.length }, outcome.stopped);
     say(`  ${t('runSaved', { path: run.dir })}`);
     if (outcome.stopped) reportStopped(outcome.stopped, run.dir, model);
@@ -226,6 +229,7 @@ async function runTriggerLayer({ skillDir, skillName, depth, model, host = 'clau
     else finishedRuns.push(run.dir);
     return result && { ...result, runDir: run.dir, queries: qs.queries };
   } catch (err) {
+    prog.finish();
     run.close(null, { interrupted: true });
     throw err;
   }
@@ -257,17 +261,7 @@ function archiveProbe({ skillDir, skillName, model, probe }) {
   say(`  ${t('runSaved', { path: run.dir })}`);
 }
 
-function progress() {
-  return ({ row, done, total }) => {
-    // On a terminal one line is redrawn in place; the verdicts of single trials belong to the result, not the wait.
-    if (process.stdout.isTTY) {
-      process.stdout.write(`\r\x1b[2K  ${t('progressLine')} ${bar(done / total, 24)} ${done}/${total}${done >= total ? '\n' : ''}`);
-      return;
-    }
-    const mark = { triggered: '✓', not_triggered: '·', other_skill: '↷' }[row.verdict] || '!';
-    say(`  [${done}/${total}] ${mark} ${row.queryId}#${row.run} → ${row.verdict}`);
-  };
-}
+const progress = makeProgress;
 
 function reportIncomplete(n, dir, model) {
   say(`
@@ -293,12 +287,14 @@ async function cmdResume(args) {
   const runMeta = JSON.parse(fs.readFileSync(path.join(full, 'meta.json'), 'utf8'));
   const runHost = runMeta.host || 'claude-code';
   requireHost(runHost);
+  const resumeProgress = progress();
   const result = await resumeRun({
     dir: full,
     bin: resolveBin((HOSTS[runHost] || HOSTS['claude-code']).bin),
     want: { model: flag('--model'), runs: flag('--runs'), maxExplore: flag('--max-explore'), backend: backendFor(runHost, flag('--model') ?? runMeta.model) },
-    onTrial: progress(),
+    onTrial: resumeProgress,
   });
+  resumeProgress.finish();
   if (result.nothing) {
     say(t('resumeNothing'));
     return;
