@@ -20,7 +20,7 @@ import { renderResult } from '../lib/chart.js';
 import { makeProgress } from '../lib/progress.js';
 import { setLang, detectLang, errorText, t } from '../lib/i18n.js';
 import { resolveBin, backend, backendFor, usesOwnDeepseek, setNativeModels, HOSTS, checkModel, draftQueries, draftQuality, runTrial, requireHost, pingHost, setHostBin, binInstalled } from '../lib/trial.js';
-import { HOST_CLI, searchHost, installCommand, installHost, LOGIN, loginCommand } from '../lib/findhost.js';
+import { HOST_CLI, searchHost, installCommand, installHost, userInstallDir, LOGIN, loginCommand } from '../lib/findhost.js';
 import { launchSpec } from '../lib/spawn.js';
 import { ensureTool } from '../lib/github.js';
 import { spawnSync as runLogin } from 'node:child_process';
@@ -71,6 +71,8 @@ async function fixMissingHost(hostId, err) {
     return true;
   }
   if (pick.install) {
+    const userDir = userInstallDir();
+    if (userDir) say(`\n${t('hostInstallUserDir', { dir: userDir })}`);
     say(`\n${t('hostInstalling', { host: label })}`);
     try { installHost(hostId); } catch (e) {
       say(t('hostInstallFailed', { why: e.message }));
