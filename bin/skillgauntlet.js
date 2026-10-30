@@ -491,8 +491,8 @@ async function interactive() {
       S.depth = DEPTHS[depthId];
 
       const provider = await choose(t('providerQ'), [
-        { label: t('provClaude'), hint: t('provClaudeHint'), value: 'claude' },
-        { label: t('provDeepseek'), hint: t('provDeepseekHint'), value: 'deepseek' },
+        { label: t('provClaude'), value: 'claude' },
+        { label: t('provDeepseek'), value: 'deepseek' },
         { label: t('provManual'), value: 'manual' },
       ], 1);
 

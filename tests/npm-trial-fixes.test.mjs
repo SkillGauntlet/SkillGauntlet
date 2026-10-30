@@ -63,7 +63,7 @@ test('the not-signed-in message exists in every language and names /login', () =
 
 test('no estimate or hint promises "no cash"', () => {
   for (const [lang, table] of Object.entries(messageTables())) {
-    for (const key of ['draftFirst', 'trialsQ', 'provClaudeHint', 'provDeepseekHint']) {
+    for (const key of ['draftFirst', 'trialsQ', 'codewhaleNote']) {
       assert.doesNotMatch(String(table[key]), /no cash|不花现金|无现金|現金不要|現金はかから|cents|几分钱|数セント/, `${lang}.${key}`);
     }
   }
@@ -195,4 +195,11 @@ test('a typed model the host does not list is caught before anything is spent', 
   assert.equal(unknownModel(null, known), null);      // the default model
   assert.equal(unknownModel('deepseek-flash', known), null); // the package's own DeepSeek route
   assert.equal(unknownModel('anything', []), null);   // the list could not be read: do not block
+});
+
+test('no message says how a backend is billed; cost is left to the backend and the plan', () => {
+  const claims = /spends weekly quota|bills per use|billed by DeepSeek|spends DeepSeek cash|占周额度|按 DeepSeek 用量|花 DeepSeek 现金|週間の利用枠を消費|DeepSeek の従量課金|現金がかかります/;
+  for (const [lang, table] of Object.entries(messageTables())) {
+    for (const [key, value] of Object.entries(table)) assert.doesNotMatch(String(value), claims, `${lang}.${key}`);
+  }
 });
