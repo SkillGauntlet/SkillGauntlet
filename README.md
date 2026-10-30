@@ -279,3 +279,5 @@ The data is free forever for personal and non-commercial use; for commercial use
 
 Issues and appeals are open to everyone. Pull requests need a signed Contributor License Agreement; see
 [CONTRIBUTING.md](CONTRIBUTING.md).
+
+<!-- refusal demo -->
