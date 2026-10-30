@@ -1,6 +1,6 @@
 {
   "name": "skillgauntlet",
-  "version": "1.3.7",
+  "version": "1.3.8",
   "description": "Check an agent skill before you install it: context cost, permission surface, code risk, instruction hijacking, description quality, trigger rate and gain.",
   "type": "module",
   "bin": {
