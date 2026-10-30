@@ -1,0 +1,142 @@
+{
+  "trials": 20,
+  "recall": 0.7,
+  "fpr": 0.2,
+  "noToolRate": 0.3,
+  "questions": [
+    {
+      "query": "start a governed vibe run for the billing refactor — I want this under the VCO runtime, not freeform",
+      "shouldTrigger": true,
+      "hits": 1,
+      "n": 1
+    },
+    {
+      "query": "这个迁移我想走受控运行时，用 vibe 起一个受控的 run",
+      "shouldTrigger": true,
+      "hits": 1,
+      "n": 1
+    },
+    {
+      "query": "freeze the requirements for the CSV export before any code gets written, I don't want scope creep",
+      "shouldTrigger": true,
+      "hits": 1,
+      "n": 1
+    },
+    {
+      "query": "先把需求冻住再动手：冻结一下上传功能的需求，后面按冻结的来",
+      "shouldTrigger": true,
+      "hits": 1,
+      "n": 1
+    },
+    {
+      "query": "bound the execution — the agent may only touch src/billing and nothing else in this run",
+      "shouldTrigger": true,
+      "hits": 1,
+      "n": 1
+    },
+    {
+      "query": "执行范围要限定住，这轮只允许改 packages/api 下的文件，超出的直接停下",
+      "shouldTrigger": true,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "don't call it done until every step has real verification, actual test output not just claims",
+      "shouldTrigger": true,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "每一步都得有真实验证，跑完测试贴输出再说完成",
+      "shouldTrigger": true,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "make sure phase cleanup actually runs at the end and give me the cleanup receipts",
+      "shouldTrigger": true,
+      "hits": 1,
+      "n": 1
+    },
+    {
+      "query": "阶段清算别跳过，收尾的清理做完把回执给我",
+      "shouldTrigger": true,
+      "hits": 1,
+      "n": 1
+    },
+    {
+      "query": "how do I register the governed runtime entry command in our host manifest? just need the doc link",
+      "shouldTrigger": false,
+      "hits": 1,
+      "n": 1
+    },
+    {
+      "query": "把 vibe 这个 skill 装到 ~/.claude/skills 下面，安装完顺手更新旧版本",
+      "shouldTrigger": false,
+      "hits": 1,
+      "n": 1
+    },
+    {
+      "query": "pip install fails, requirements.txt has a bad pin on pandas",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "把需求文档写成 markdown 放到 docs/onboarding-requirements.md，不用走流程，直接写",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "bound execution of the backfill script to batches of 500 rows so the db doesn't lock",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "把沙箱收紧一点，执行的时候只能写仓库里的文件，别碰 C 盘其他地方",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "add email verification to the signup endpoint, resend the link when it expires",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "跑一下 tests/test_api.py 验证下现在是绿的吗，失败用例贴给我",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "clean up the unused imports and dead helpers in utils.py before the release",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "把 build/ 目录和昨天留下的临时产物删掉，磁盘快满了",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    }
+  ],
+  "failedTrials": 0,
+  "incomplete": 0,
+  "model": "deepseek-flash",
+  "backend": "codewhale:api.deepseek.com",
+  "host": "codewhale",
+  "runs": 1,
+  "recallCi": [
+    0.39677321997956516,
+    0.892210712513788
+  ],
+  "fprCi": [
+    0.056680947980693314,
+    0.5098431532792765
+  ]
+}
