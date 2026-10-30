@@ -22,6 +22,7 @@ import { setLang, detectLang, errorText, t } from '../lib/i18n.js';
 import { resolveBin, backend, backendFor, usesOwnDeepseek, setNativeModels, HOSTS, checkModel, draftQueries, draftQuality, runTrial, requireHost, pingHost, setHostBin, binInstalled } from '../lib/trial.js';
 import { HOST_CLI, searchHost, installCommand, installHost, LOGIN, loginCommand } from '../lib/findhost.js';
 import { launchSpec } from '../lib/spawn.js';
+import { ensureTool } from '../lib/github.js';
 import { spawnSync as runLogin } from 'node:child_process';
 import { runGain } from '../lib/gain.js';
 import { ERROR_STREAK_STOP, executeTrials, finishRun, resumeRun } from '../lib/execute.js';
@@ -375,6 +376,8 @@ async function pickRemote() {
       say(`  ${t('needRepo')}`);
       continue;
     }
+    // cloning needs git; a machine without it is offered the install here, not given a raw error
+    if (hasTerminal() && !(await ensureTool('git', { pick: choose, out: say }))) return [];
     let resolved;
     try {
       resolved = withTicker(waitText(t('waitCloning'), { slowAfter: 600 }), () => resolveSpec(parsed.repo));
