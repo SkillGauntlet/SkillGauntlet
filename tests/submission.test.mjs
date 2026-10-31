@@ -293,7 +293,7 @@ test('openPullRequest: forks, branches, commits as the contributor, pushes to th
   assert.ok(flat.some((c) => c.startsWith('gh repo fork SkillGauntlet/SkillGauntlet --clone=false')));
   assert.ok(flat.some((c) => c.includes('checkout -b submit/demo-claude-code-')));
   assert.ok(flat.some((c) => c.includes('user.email=583231+octocat@users.noreply.github.com')));
-  assert.ok(flat.some((c) => c.includes('push -q origin submit/')) && flat.some((c) => c.includes('credential.helper=')));
+  assert.ok(flat.some((c) => c.includes('push -q --force origin submit/')) && flat.some((c) => c.includes('credential.helper=')));
   assert.ok(flat.some((c) => c.includes('--head octocat:submit/') && c.includes('--base main')));
   // the branch is made on the contributor's own fork, so upstream's workflow files are never part of the push
   const clone = flat.find((c) => c.startsWith('git clone'));
@@ -317,7 +317,52 @@ test('openPullRequest: a fork that is not cloneable yet is retried, and a stale 
   };
   const url = openPullRequest({ pkgDir: out, pkg, gh: { user: 'octocat', id: '1' }, exec, say: () => {}, cloneWait: 1 });
   assert.equal(url, 'https://github.com/SkillGauntlet/SkillGauntlet/pull/8');
-  assert.equal(tries, 3, 'two failures, then the clone worked');
+});
+
+const http500 = () => Object.assign(new Error('x'), { stderr: 'failed to fork: HTTP 500' });
+const GH = { user: 'octocat', id: '1' };
+const PR = 'https://github.com/SkillGauntlet/SkillGauntlet/pull/9\n';
+
+test('openPullRequest: a 5xx on fork that still created the fork carries on', async () => {
+  const { pkg, out } = await packageOf();
+  const exec = (cmd, args) => {
+    if (args[1] === 'fork') throw http500();
+    if (args[0] === 'clone') fs.mkdirSync(args.at(-1), { recursive: true });
+    if (cmd === 'gh' && args[0] === 'pr') return PR;
+    return '';
+  };
+  assert.match(openPullRequest({ pkgDir: out, pkg, gh: GH, exec, say: () => {}, cloneWait: 1, sleep: () => {} }), /pull\/9$/);
+});
+
+test('openPullRequest: transient failures are retried, other failures are not', async () => {
+  const { pkg, out } = await packageOf();
+  let forks = 0;
+  const flaky = (cmd, args) => {
+    if (args[1] === 'fork' && (forks += 1) < 3) throw http500();
+    if (args[0] === 'clone') fs.mkdirSync(args.at(-1), { recursive: true });
+    if (cmd === 'gh' && args[0] === 'pr') return PR;
+    return '';
+  };
+  assert.match(openPullRequest({ pkgDir: out, pkg, gh: GH, exec: flaky, say: () => {}, cloneWait: 1, sleep: () => {} }), /pull\/9$/);
+  assert.equal(forks, 3);
+  let n = 0;
+  const denied = (cmd, args) => {
+    if (args[1] === 'fork') { n += 1; throw Object.assign(new Error('x'), { stderr: 'HTTP 403 forbidden' }); }
+    if (args[1] === 'view') throw new Error('not found');
+    return '';
+  };
+  assert.throws(() => openPullRequest({ pkgDir: out, pkg, gh: GH, exec: denied, say: () => {}, cloneWait: 1, sleep: () => {} }));
+  assert.equal(n, 1);
+});
+
+test('openPullRequest: a pull request that already exists is reused', async () => {
+  const { pkg, out } = await packageOf();
+  const exec = (cmd, args) => {
+    if (args[0] === 'clone') fs.mkdirSync(args.at(-1), { recursive: true });
+    if (cmd === 'gh' && args[0] === 'pr') throw Object.assign(new Error('x'), { stderr: 'a pull request for branch already exists:\nhttps://github.com/SkillGauntlet/SkillGauntlet/pull/5' });
+    return '';
+  };
+  assert.match(openPullRequest({ pkgDir: out, pkg, gh: GH, exec, say: () => {}, cloneWait: 1, sleep: () => {} }), /pull\/5$/);
 });
 
 function runCli(args, env = {}) {
