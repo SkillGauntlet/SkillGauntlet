@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 342" width="640" height="342" role="img" aria-label="Terminal running the free static layer on an example skill and printing a verdict per group.">
+  <style>
+    .l { opacity: 0; animation: in .25s ease-out forwards; }
+    text { font-family: ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace; }
+    @keyframes in { to { opacity: 1; } }
+    @media (prefers-reduced-motion: reduce) { .l { animation: none; opacity: 1; } }
+  </style>
+  <rect width="640" height="342" rx="12" fill="#0d1117"/>
+  <rect x=".5" y=".5" width="639" height="341" rx="11.5" fill="none" stroke="#30363d"/>
+  <circle cx="24" cy="22" r="6" fill="#f85149"/><circle cx="44" cy="22" r="6" fill="#d29922"/><circle cx="64" cy="22" r="6" fill="#3fb950"/>
+  <g class="l" style="animation-delay:0.20s"><text x="26" y="66" font-size="15.5" font-weight="600" fill="#f0f6fc">$ npx skillgauntlet static step0/examples/csv-dedupe</text></g>
+  <g class="l" style="animation-delay:0.90s"><text x="26" y="91" font-size="15" font-weight="700" fill="#FB923C">csv-dedupe</text></g>
+  <g class="l" style="animation-delay:1.06s"><text x="26" y="116" font-size="14" fill="#9da7b3">SKILL.md: 304 chars ≈ 76 tokens; description 133 chars</text></g>
+  <g class="l" style="animation-delay:1.22s"><text x="26" y="141" font-size="14" fill="#9da7b3">Package: 1 files, 0 executable, 0.3 KB</text></g>
+  
+  <g class="l" style="animation-delay:1.38s"><text x="26" y="178" font-size="14.5" fill="#e6edf3">A Context cost</text><text x="340" y="178" font-size="14.5" font-weight="600" fill="#3fb950">✓ pass</text></g>
+  <g class="l" style="animation-delay:1.54s"><text x="26" y="203" font-size="14.5" fill="#e6edf3">B Permission surface</text><text x="340" y="203" font-size="14.5" font-weight="600" fill="#d29922">! warn</text></g>
+  <g class="l" style="animation-delay:1.70s"><text x="26" y="228" font-size="14.5" fill="#e6edf3">C Code risk</text><text x="340" y="228" font-size="14.5" font-weight="600" fill="#3fb950">✓ pass</text></g>
+  <g class="l" style="animation-delay:1.86s"><text x="26" y="253" font-size="14.5" fill="#e6edf3">D Instruction hijacking</text><text x="340" y="253" font-size="14.5" font-weight="600" fill="#3fb950">✓ pass</text></g>
+  <g class="l" style="animation-delay:2.02s"><text x="26" y="278" font-size="14.5" fill="#e6edf3">E Description quality</text><text x="340" y="278" font-size="14.5" font-weight="600" fill="#3fb950">✓ pass</text></g>
+  
+  <g class="l" style="animation-delay:2.18s"><text x="26" y="315" font-size="14" fill="#9da7b3">No model calls. No quota spent.</text></g>
+</svg>

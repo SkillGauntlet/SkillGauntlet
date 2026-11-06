@@ -2,8 +2,11 @@
 #
 # THREAT MODEL. The pull request comes from a fork, so everything about it is hostile until proven otherwise:
 #  * Its own CI result proves nothing. A fork runs ITS copy of submission.yml and can make it say "passed".
-#    This workflow therefore uses the submission-check run only as a trigger (and as the maintainer's
-#    approval of a first-time contributor's run); it never reads that run's output or artifacts.
+#    This workflow therefore uses the submission-check run only as a trigger; it never reads that run's
+#    output or artifacts.
+#  * The other triggers: the CLA bot's green status, because signing is usually slower than the first check and
+#    nothing else would look again, and automerge-sweep.yml (through workflow_dispatch) for a run that was missed.
+#    A status comes from whoever can write statuses here; a fork cannot, and each trigger only starts the checks below.
 #  * No code from the pull request is checked out, installed or run. The checkout below is the default
 #    branch. The four submission files are downloaded through the GitHub API as bytes, parsed by the
 #    validator on the default branch, and deleted. Do not add pull_request_target or a checkout of the
@@ -26,6 +29,7 @@ on:
   workflow_run:
     workflows: ["submission-check"]
     types: [completed]
+  status:
   workflow_dispatch:
     inputs:
       pr:
@@ -34,14 +38,18 @@ on:
 
 permissions: {}
 
-# one at a time, so the per-account daily count is exact
+# one at a time, so the per-account daily count is exact. Every other status on this repository gets a group of its
+# own: it does nothing, and in the shared group it would push a real run out of the queue.
 concurrency:
-  group: automerge
+  group: ${{ (github.event_name != 'status' || (github.event.context == 'license/cla' && github.event.state == 'success')) && 'automerge' || format('ignored-{0}', github.run_id) }}
   cancel-in-progress: false
 
 jobs:
   inspect:
-    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.event == 'pull_request'
+    if: >-
+      github.event_name == 'workflow_dispatch'
+      || github.event.workflow_run.event == 'pull_request'
+      || (github.event_name == 'status' && github.event.context == 'license/cla' && github.event.state == 'success')
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -63,7 +71,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
           DISPATCH_PR: ${{ github.event.inputs.pr }}
-          RUN_SHA: ${{ github.event.workflow_run.head_sha }}
+          RUN_SHA: ${{ github.event.workflow_run.head_sha || github.event.sha }}
         run: |
           set -euo pipefail
           expect=""

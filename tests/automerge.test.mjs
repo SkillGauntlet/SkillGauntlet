@@ -4,8 +4,8 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { buildPackage, sha256, writePackage, FILES } from '../lib/submission.js';
-import { POLICY, decide, gateAccount, gateFiles } from '../lib/automerge.js';
-import { apply, inspect } from '../scripts/automerge.mjs';
+import { POLICY, decide, gateAccount, gateFiles, pickWaiting, renderVerdict } from '../lib/automerge.js';
+import { apply, inspect, sweep } from '../scripts/automerge.mjs';
 import { buildRows } from '../scripts/build-leaderboard.mjs';
 import { escapeHtml, renderPage, safeLink } from '../scripts/build-pages.mjs';
 import { FACTS, SKILL_MD, makeRun, tmpdir } from './_submit-fixture.mjs';
@@ -133,6 +133,33 @@ test('decide: a moved head, a missing CLA, or any failed gate stops the merge', 
   assert.ok(!bad.waitForCla);
   assert.equal(decide({ ...good, account: { ok: false, reasons: ['young'] } }).merge, false);
   assert.equal(decide({ ...good, files: { ok: false, reasons: ['x'], dir: null } }).merge, false);
+});
+
+test('a waiting-for-CLA comment promises the recheck and no maintainer; other refusals name a maintainer', () => {
+  assert.match(renderVerdict({ merge: false, reasons: ['x'], waitForCla: true }), /checked again and merged automatically/);
+  assert.doesNotMatch(renderVerdict({ merge: false, reasons: ['x'], waitForCla: true }), /maintainer/);
+  assert.match(renderVerdict({ merge: false, reasons: ['x'] }), /maintainer/);
+});
+
+// ---- the sweep ----
+
+test('sweep: only signed, submission-only, undecided pull requests; one dispatch at a time, oldest first', () => {
+  const cla = (state) => [{ context: 'license/cla', state }];
+  const pr = (number, over = {}) => ({ number, isDraft: false, labels: [], files: [{ path: 'submissions/a/b/c/meta.json' }], statusCheckRollup: cla('SUCCESS'), ...over });
+  const prs = [
+    pr(9), pr(4),
+    pr(1, { statusCheckRollup: cla('PENDING') }),
+    pr(2, { labels: [{ name: 'needs-review' }] }),
+    pr(3, { files: [{ path: 'lib/x.js' }, { path: 'submissions/a/b/c/meta.json' }] }),
+    pr(5, { isDraft: true }),
+    pr(6, { statusCheckRollup: [] }),
+  ];
+  assert.deepEqual(pickWaiting(prs), [4, 9]);
+  const sent = [];
+  assert.equal(sweep({ prs, dispatchPr: (n) => sent.push(n) }), 4);
+  assert.deepEqual(sent, [4]);
+  assert.equal(sweep({ prs: [], dispatchPr: (n) => sent.push(n) }), null);
+  assert.deepEqual(sent, [4]);
 });
 
 // ---- inspect + apply against the fake GitHub ----

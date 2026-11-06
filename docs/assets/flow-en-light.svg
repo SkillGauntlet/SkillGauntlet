@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 262" width="960" height="262" role="img" aria-label="Test: one command: Pick a skill, Static checks, Draft questions, Run the trials, Grade, Report. Contribute: one more yes: Scrub, preview, Say yes, Open your PR, CI checks, Merge, Leaderboard.">
+  <text x="12" y="18" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="15" font-weight="700" fill="#1f2328">Test: one command</text>
+      <rect x="12" y="30" width="142" height="84" rx="10" fill="#fff1e8" stroke="#C2410C" stroke-width="2"/>
+      <rect x="22" y="39" width="34" height="17" rx="8.5" fill="#C2410C"/><text x="39" y="51.5" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="10.5" font-weight="700" fill="#ffffff">YOU</text>
+      <text x="23" y="77" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="14.5" font-weight="700" fill="#1f2328">Pick a skill</text>
+      <text x="23" y="97" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="11" fill="#57606a">arrow keys, enter</text>
+      <path d="M156 72 h8 m-4 -4 l4 4 l-4 4" fill="none" stroke="#6e7781" stroke-width="1.5"/>
+      <rect x="167" y="30" width="142" height="84" rx="10" fill="#ffffff" stroke="#d0d7de" stroke-width="1.5"/>
+      <text x="178" y="51.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="10.5" fill="#6e7781">automatic</text>
+      <text x="178" y="77" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="14.5" font-weight="700" fill="#1f2328">Static checks</text>
+      <text x="178" y="97" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="11" fill="#57606a">22 checks, no model</text>
+      <path d="M311 72 h8 m-4 -4 l4 4 l-4 4" fill="none" stroke="#6e7781" stroke-width="1.5"/>
+      <rect x="322" y="30" width="142" height="84" rx="10" fill="#ffffff" stroke="#d0d7de" stroke-width="1.5"/>
+      <text x="333" y="51.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="10.5" fill="#6e7781">automatic</text>
+      <text x="333" y="77" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="14.5" font-weight="700" fill="#1f2328">Draft questions</text>
+      <text x="333" y="97" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="10" fill="#57606a">should and should not fire</text>
+      <path d="M466 72 h8 m-4 -4 l4 4 l-4 4" fill="none" stroke="#6e7781" stroke-width="1.5"/>
+      <rect x="477" y="30" width="142" height="84" rx="10" fill="#ffffff" stroke="#d0d7de" stroke-width="1.5"/>
+      <text x="488" y="51.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="10.5" fill="#6e7781">automatic</text>
+      <text x="488" y="77" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="14.5" font-weight="700" fill="#1f2328">Run the trials</text>
+      <text x="488" y="97" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="11" fill="#57606a">on your host and model</text>
+      <path d="M621 72 h8 m-4 -4 l4 4 l-4 4" fill="none" stroke="#6e7781" stroke-width="1.5"/>
+      <rect x="632" y="30" width="142" height="84" rx="10" fill="#ffffff" stroke="#d0d7de" stroke-width="1.5"/>
+      <text x="643" y="51.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="10.5" fill="#6e7781">automatic</text>
+      <text x="643" y="77" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="14.5" font-weight="700" fill="#1f2328">Grade</text>
+      <text x="643" y="97" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="11" fill="#57606a">by program, with ranges</text>
+      <path d="M776 72 h8 m-4 -4 l4 4 l-4 4" fill="none" stroke="#6e7781" stroke-width="1.5"/>
+      <rect x="787" y="30" width="142" height="84" rx="10" fill="#ffffff" stroke="#d0d7de" stroke-width="1.5"/>
+      <text x="798" y="51.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="10.5" fill="#6e7781">automatic</text>
+      <text x="798" y="77" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="14.5" font-weight="700" fill="#1f2328">Report</text>
+      <text x="798" y="97" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="11" fill="#57606a">raw records stay local</text>
+      
+  <text x="12" y="152" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="15" font-weight="700" fill="#1f2328">Contribute: one more yes</text>
+      <rect x="12" y="164" width="142" height="84" rx="10" fill="#ffffff" stroke="#d0d7de" stroke-width="1.5"/>
+      <text x="23" y="185.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="10.5" fill="#6e7781">automatic</text>
+      <text x="23" y="211" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="14.5" font-weight="700" fill="#1f2328">Scrub, preview</text>
+      <text x="23" y="231" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="11" fill="#57606a">paths, logins, keys</text>
+      <path d="M156 206 h8 m-4 -4 l4 4 l-4 4" fill="none" stroke="#6e7781" stroke-width="1.5"/>
+      <rect x="167" y="164" width="142" height="84" rx="10" fill="#fff1e8" stroke="#C2410C" stroke-width="2"/>
+      <rect x="177" y="173" width="34" height="17" rx="8.5" fill="#C2410C"/><text x="194" y="185.5" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="10.5" font-weight="700" fill="#ffffff">YOU</text>
+      <text x="178" y="211" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="14.5" font-weight="700" fill="#1f2328">Say yes</text>
+      <text x="178" y="231" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="10" fill="#57606a">nothing leaves before this</text>
+      <path d="M311 206 h8 m-4 -4 l4 4 l-4 4" fill="none" stroke="#6e7781" stroke-width="1.5"/>
+      <rect x="322" y="164" width="142" height="84" rx="10" fill="#ffffff" stroke="#d0d7de" stroke-width="1.5"/>
+      <text x="333" y="185.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="10.5" fill="#6e7781">automatic</text>
+      <text x="333" y="211" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="14.5" font-weight="700" fill="#1f2328">Open your PR</text>
+      <text x="333" y="231" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="11" fill="#57606a">forks and pushes as you</text>
+      <path d="M466 206 h8 m-4 -4 l4 4 l-4 4" fill="none" stroke="#6e7781" stroke-width="1.5"/>
+      <rect x="477" y="164" width="142" height="84" rx="10" fill="#ffffff" stroke="#d0d7de" stroke-width="1.5"/>
+      <text x="488" y="185.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="10.5" fill="#6e7781">automatic</text>
+      <text x="488" y="211" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="14.5" font-weight="700" fill="#1f2328">CI checks</text>
+      <text x="488" y="231" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="10" fill="#57606a">format, hashes, arithmetic</text>
+      <path d="M621 206 h8 m-4 -4 l4 4 l-4 4" fill="none" stroke="#6e7781" stroke-width="1.5"/>
+      <rect x="632" y="164" width="142" height="84" rx="10" fill="#ffffff" stroke="#d0d7de" stroke-width="1.5"/>
+      <text x="643" y="185.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="10.5" fill="#6e7781">automatic</text>
+      <text x="643" y="211" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="14.5" font-weight="700" fill="#1f2328">Merge</text>
+      <text x="643" y="231" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="11" fill="#57606a">if every check holds</text>
+      <path d="M776 206 h8 m-4 -4 l4 4 l-4 4" fill="none" stroke="#6e7781" stroke-width="1.5"/>
+      <rect x="787" y="164" width="142" height="84" rx="10" fill="#ffffff" stroke="#d0d7de" stroke-width="1.5"/>
+      <text x="798" y="185.5" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="10.5" fill="#6e7781">automatic</text>
+      <text x="798" y="211" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="14.5" font-weight="700" fill="#1f2328">Leaderboard</text>
+      <text x="798" y="231" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="10" fill="#57606a">with your name on the row</text>
+      
+</svg>

@@ -6,7 +6,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { analyze } from '../lib/static.js';
 import { staticMarkdown, trialSection, gainSection, probeSection, scorecard } from '../lib/report.js';
-import { findSkills, resolveSpec, skillNameOf } from '../lib/discover.js';
+import { findSkills, resolveSpec, resolvePinned, skillNameOf } from '../lib/discover.js';
 import { installedSkills } from '../lib/installed.js';
 import { probeActivation } from '../lib/codex.js';
 import { fingerprint, cacheFileFor, readCachedQueries, writeCachedQueries } from '../lib/queries.js';
@@ -28,6 +28,7 @@ import { runGain } from '../lib/gain.js';
 import { ERROR_STREAK_STOP, executeTrials, finishRun, resumeRun } from '../lib/execute.js';
 import { cmdSubmit } from '../lib/submit.js';
 import { gitFacts } from '../lib/submission.js';
+import { loadSuggestions } from '../lib/recommend.js';
 import { checkForUpdate, declineUpdate, currentVersion, isCheckout } from '../lib/update.js';
 import { spawnSync as runSync, execSync } from 'node:child_process';
 
@@ -370,6 +371,28 @@ async function pickModel(known = [], more = []) {
   return v || null;
 }
 
+// A leaderboard row nobody has confirmed yet, at the commit that row is for. The first entry is the cheapest, so a
+// person with no skill in mind gets a result that counts by pressing enter.
+async function pickSuggested(list) {
+  const pick = await select(t('suggestQ'), list.map((s) => ({ label: s.skill, hint: s.repo.replace('https://github.com/', ''), value: s })), 0);
+  if (hasTerminal() && !(await ensureTool('git', { pick: choose, out: say }))) return [];
+  let resolved;
+  try {
+    resolved = withTicker(waitText(t('waitCloning'), { slowAfter: 600 }), () => resolvePinned(pick.repo, pick.commit));
+  } catch (err) {
+    say(`  ${errorText(err)}`);
+    return [];
+  }
+  const dir = path.join(resolved.dir, ...pick.subdir.split('/').filter(Boolean));
+  if (!fs.existsSync(path.join(dir, 'SKILL.md'))) {
+    say(`  ${t('noSkill')}`);
+    return [];
+  }
+  remoteSource.set(path.resolve(dir), { repo: pick.repo, commit: pick.commit, subdir: pick.subdir });
+  say(`\n${t('suggestNote')}`);
+  return [{ name: path.basename(dir), dir, root: resolved.dir }];
+}
+
 async function pickRemote() {
   for (;;) {
     const raw = await ask(t('askRepo'));
@@ -472,16 +495,20 @@ async function interactive() {
   const AGAIN = Symbol('again');
   const S = { targets: [], host: null, depth: null, model: null, wantProbe: false };
 
+  let suggestions = null;
   const sourceStep = async () => {
+    suggestions ??= await loadSuggestions();
     say(`\n${t('sourceNote')}`);
     const source = await choose(t('sourceQ'), [
+      ...(suggestions.length ? [{ label: t('srcSuggest'), hint: t('srcSuggestHint'), value: 'suggest' }] : []),
       { label: t('srcInstalled'), hint: t('srcInstalledHint'), value: 'installed' },
       { label: t('srcPath'), value: 'path' },
       { label: t('srcRepo'), hint: t('srcRepoHint'), value: 'repo' },
     ], 1);
 
     let targets = [];
-    if (source === 'installed') targets = await pickInstalled();
+    if (source === 'suggest') targets = await pickSuggested(suggestions);
+    else if (source === 'installed') targets = await pickInstalled();
     else if (source === 'path') {
       // Arrow keys walk the folders; typing a path stays available as the last entry (and is all a pipe has).
       const browsed = hasTerminal() ? await browseDir((a, b, c) => select(a, b, c, { clear: true })) : null;

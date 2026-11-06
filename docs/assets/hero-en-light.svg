@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 300" width="960" height="300" role="img" aria-label="SkillGauntlet. Every skill runs the gauntlet.">
+  <style>
+    .lit { opacity: 0; animation: lit 6s ease-in-out infinite; }
+    .g1 .lit { animation-delay: 0.9s; } .g2 .lit { animation-delay: 1.8s; }
+    .token { animation: run 6s ease-in-out infinite; }
+    @keyframes lit { 0%, 12% { opacity: 0; } 20%, 62% { opacity: 1; } 76%, 100% { opacity: 0; } }
+    @keyframes run { 0% { transform: translateX(0); opacity: 0; } 8% { opacity: 1; } 58% { transform: translateX(370px); opacity: 1; } 70%, 100% { transform: translateX(370px); opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) { .lit { animation: none; opacity: 1; } .token { animation: none; opacity: 0; } }
+  </style>
+  <rect x="1" y="1" width="958" height="298" rx="16" fill="#f6f8fa" stroke="#d0d7de" stroke-width="2"/>
+  <text x="52" y="136" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="56" font-weight="800" letter-spacing="-1.5" fill="#1f2328">Skill<tspan fill="#C2410C">Gauntlet</tspan></text>
+  <text x="54" y="178" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="23" font-weight="500" fill="#1f2328">Every skill runs the gauntlet.</text>
+  <text x="54" y="212" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="16" fill="#57606a">Does it trigger?  Does it help?  Is it safe?</text>
+  <line x1="500" y1="196" x2="880" y2="196" stroke="#d0d7de" stroke-width="2"/>
+  
+    <g class="g g0">
+      <path d="M526 196 V128 a34 34 0 0 1 68 0 V196" fill="#ffffff" stroke="#d0d7de" stroke-width="2"/>
+      <path class="lit" d="M526 196 V128 a34 34 0 0 1 68 0 V196" fill="#fff1e8" stroke="#C2410C" stroke-width="3"/>
+      <text x="560" y="150" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="26" font-weight="700" fill="#1f2328">0</text>
+      <text x="560" y="222" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="15" font-weight="600" fill="#1f2328">static</text>
+      <text x="560" y="242" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12.5" fill="#6e7781">free</text>
+    </g>
+    <g class="g g1">
+      <path d="M646 196 V128 a34 34 0 0 1 68 0 V196" fill="#ffffff" stroke="#d0d7de" stroke-width="2"/>
+      <path class="lit" d="M646 196 V128 a34 34 0 0 1 68 0 V196" fill="#fff1e8" stroke="#C2410C" stroke-width="3"/>
+      <text x="680" y="150" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="26" font-weight="700" fill="#1f2328">1</text>
+      <text x="680" y="222" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="15" font-weight="600" fill="#1f2328">trigger</text>
+      <text x="680" y="242" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12.5" fill="#6e7781">model calls</text>
+    </g>
+    <g class="g g2">
+      <path d="M766 196 V128 a34 34 0 0 1 68 0 V196" fill="#ffffff" stroke="#d0d7de" stroke-width="2"/>
+      <path class="lit" d="M766 196 V128 a34 34 0 0 1 68 0 V196" fill="#fff1e8" stroke="#C2410C" stroke-width="3"/>
+      <text x="800" y="150" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="26" font-weight="700" fill="#1f2328">2</text>
+      <text x="800" y="222" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="15" font-weight="600" fill="#1f2328">gain</text>
+      <text x="800" y="242" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12.5" fill="#6e7781">model calls ×2</text>
+    </g>
+  <circle class="token" cx="505" cy="196" r="8" fill="#C2410C"/>
+</svg>

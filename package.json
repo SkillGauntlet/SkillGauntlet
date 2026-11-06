@@ -1,6 +1,6 @@
 {
   "name": "skillgauntlet",
-  "version": "1.3.9",
+  "version": "1.4.0",
   "description": "Check an agent skill before you install it: context cost, permission surface, code risk, instruction hijacking, description quality, trigger rate and gain.",
   "type": "module",
   "bin": {
@@ -11,6 +11,7 @@
     "lib",
     "contracts",
     "schemas",
+    "step0/data/leaderboard-maintainer.json",
     "README.md",
     "LICENSE",
     "LICENSE-DATA"
