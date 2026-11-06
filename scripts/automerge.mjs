@@ -16,7 +16,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
-import { POLICY, decide, gateAccount, gateFiles, mergeTitle, pickWaiting, renderVerdict } from '../lib/automerge.js';
+import { POLICY, claRecheckUrl, decide, gateAccount, gateFiles, mergeTitle, pickMissingCla, pickWaiting, renderVerdict } from '../lib/automerge.js';
 import { checkChanged } from './check-submission.mjs';
 
 const DAY = 86400000;
@@ -173,13 +173,23 @@ export function sweep({ prs, dispatchPr }) {
   return next ?? null;
 }
 
+// The CLA bot answers a recheck by writing its status, and a green one starts automerge. A failure here is no reason to
+// stop the sweep: the next one asks again.
+export async function recheckMissingCla({ prs, repo, now = Date.now(), get = (url) => fetch(url, { redirect: 'manual', signal: AbortSignal.timeout(20000) }) }) {
+  const asked = pickMissingCla(prs, now);
+  for (const pr of asked) {
+    try { await get(claRecheckUrl(repo, pr)); } catch { /* the next sweep */ }
+  }
+  return asked;
+}
+
 // ---- CLI -----------------------------------------------------------------------------------------------
 function arg(name, def = null) {
   const i = process.argv.indexOf(name);
   return i >= 0 ? process.argv[i + 1] : def;
 }
 
-function main() {
+async function main() {
   const cmd = process.argv[2];
   const repo = arg('--repo');
   if (!/^[\w.-]+\/[\w.-]+$/.test(repo || '')) throw new Error('--repo owner/name is required');
@@ -196,12 +206,13 @@ function main() {
     const d = JSON.parse(fs.readFileSync(arg('--decision'), 'utf8'));
     process.stdout.write(`${JSON.stringify(apply({ gh, repo, d }))}\n`);
   } else if (cmd === 'sweep') {
-    const prs = JSON.parse(execFileSync('gh', ['pr', 'list', '--repo', repo, '--state', 'open', '--limit', '100', '--json', 'number,isDraft,labels,files,statusCheckRollup'], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 }));
+    const prs = JSON.parse(execFileSync('gh', ['pr', 'list', '--repo', repo, '--state', 'open', '--limit', '100', '--json', 'number,isDraft,labels,files,statusCheckRollup,createdAt'], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 }));
     const next = sweep({ prs, dispatchPr: (pr) => execFileSync('gh', ['api', '-X', 'POST', `repos/${repo}/actions/workflows/automerge.yml/dispatches`, '-f', 'ref=main', '-f', `inputs[pr]=${pr}`], { stdio: 'ignore' }) });
-    process.stdout.write(`${next ? `asked for a check of #${next}` : 'nothing waiting'}\n`);
+    const asked = await recheckMissingCla({ prs, repo });
+    process.stdout.write(`${next ? `asked for a check of #${next}` : 'nothing waiting'}; CLA bot asked again about: ${asked.join(', ') || 'none'}\n`);
   } else {
     throw new Error('usage: automerge.mjs inspect|apply|sweep');
   }
 }
 
-if (process.argv[1]?.endsWith('automerge.mjs')) main();
+if (process.argv[1]?.endsWith('automerge.mjs')) main().catch((err) => { process.stderr.write(`${err.stack || err}\n`); process.exitCode = 1; });

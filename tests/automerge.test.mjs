@@ -4,8 +4,8 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { buildPackage, sha256, writePackage, FILES } from '../lib/submission.js';
-import { POLICY, decide, gateAccount, gateFiles, pickWaiting, renderVerdict } from '../lib/automerge.js';
-import { apply, inspect, sweep } from '../scripts/automerge.mjs';
+import { POLICY, claRecheckUrl, decide, gateAccount, gateFiles, pickMissingCla, pickWaiting, renderVerdict } from '../lib/automerge.js';
+import { apply, inspect, recheckMissingCla, sweep } from '../scripts/automerge.mjs';
 import { buildRows } from '../scripts/build-leaderboard.mjs';
 import { escapeHtml, renderPage, safeLink } from '../scripts/build-pages.mjs';
 import { FACTS, SKILL_MD, makeRun, tmpdir } from './_submit-fixture.mjs';
@@ -136,7 +136,7 @@ test('decide: a moved head, a missing CLA, or any failed gate stops the merge', 
 });
 
 test('a waiting-for-CLA comment promises the recheck and no maintainer; other refusals name a maintainer', () => {
-  assert.match(renderVerdict({ merge: false, reasons: ['x'], waitForCla: true }), /checked again and merged automatically/);
+  assert.match(renderVerdict({ merge: false, reasons: ['x'], waitForCla: true }), /merged automatically once the CLA check is green/);
   assert.doesNotMatch(renderVerdict({ merge: false, reasons: ['x'], waitForCla: true }), /maintainer/);
   assert.match(renderVerdict({ merge: false, reasons: ['x'] }), /maintainer/);
 });
@@ -160,6 +160,30 @@ test('sweep: only signed, submission-only, undecided pull requests; one dispatch
   assert.deepEqual(sent, [4]);
   assert.equal(sweep({ prs: [], dispatchPr: (n) => sent.push(n) }), null);
   assert.deepEqual(sent, [4]);
+});
+
+test('a pull request the CLA bot never reported on is asked about again, once it has had time to answer', async () => {
+  const old = '2026-10-30T11:00:00Z';
+  const pr = (number, over = {}) => ({ number, isDraft: false, labels: [], files: [{ path: 'submissions/a/b/c/meta.json' }], statusCheckRollup: [], createdAt: old, ...over });
+  const signed = [{ context: 'license/cla', state: 'SUCCESS' }];
+  const prs = [
+    pr(9), pr(4),
+    pr(1, { statusCheckRollup: signed }),
+    pr(2, { statusCheckRollup: [{ context: 'license/cla', state: 'PENDING' }] }),
+    pr(3, { labels: [{ name: 'needs-review' }] }),
+    pr(5, { isDraft: true }),
+    pr(6, { files: [{ path: 'lib/x.js' }] }),
+    pr(7, { createdAt: '2026-10-30T11:59:30Z' }),
+    pr(8, { statusCheckRollup: [{ name: 'node', conclusion: 'SUCCESS' }] }),
+  ];
+  assert.deepEqual(pickMissingCla(prs, NOW), [4, 8, 9]);
+  assert.equal(pickMissingCla(Array.from({ length: 20 }, (_, i) => pr(i + 1)), NOW).length, POLICY.claRechecksPerSweep);
+
+  const asked = [];
+  const got = await recheckMissingCla({ prs, repo: REPO, now: NOW, get: async (u) => { asked.push(u); if (u.endsWith('=4')) throw new Error('offline'); } });
+  assert.deepEqual(got, [4, 8, 9]);
+  assert.deepEqual(asked, [4, 8, 9].map((n) => claRecheckUrl(REPO, n)), 'one failure does not stop the others');
+  assert.equal(asked[0], 'https://cla-assistant.io/check/SkillGauntlet/SkillGauntlet?pullRequest=4');
 });
 
 // ---- inspect + apply against the fake GitHub ----

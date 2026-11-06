@@ -87,7 +87,7 @@ Your help is needed right now: **no row on the leaderboard has been independentl
    npx skillgauntlet
    ```
 
-2. **Press `y`** when it asks whether to contribute the run. Missing `git` or the GitHub CLI? It offers to install them and walks you through the browser sign-in.
+2. **Press `y`** when it asks whether to contribute the run. Missing `git` or the GitHub CLI? It offers to install them, with no Homebrew or password needed on a Mac (Apple's installer for `git`, the official release for `gh`), and walks you through the browser sign-in.
 3. **Read the preview, then press `y` again.** Local paths, your login name and anything shaped like a key are removed first. If something secret-looking remains, it refuses to continue.
 4. **Sign the [CLA](CLA.md) once**, with one click, when the bot gives you the link.
 5. **Done.** A bot re-checks your files and merges them, usually within a few minutes of signing. The leaderboard then rebuilds with your name on the row.

@@ -24,13 +24,13 @@ Add `--lang zh|ja|en`, or set `SG_LANG`, to choose the language without the menu
 
 The interactive flow asks the following, in this order, and takes only arrow keys, `y`/`n` and enter:
 
-1. **Language**: 中文, 日本語 or English.
-2. **Where the skill comes from**: already installed (scanned in `.agents/skills`,
-   `.claude/skills`, `.codex/skills`, user and project scope), another local directory, or a GitHub
-   repository for a skill you have not installed.
-3. **How many**: all discovered skills, or just one picked with the arrow keys.
-4. **Host**: Claude Code, CodeBuddy Code, Codewhale or Codex (see "Hosts and models").
-5. **Depth**, then **backend** and **model**.
+1. **Language**: 中文, English or 日本語, with the system's language as the default. `--lang` or `SG_LANG` skips this question.
+2. **Host**: Claude Code, CodeBuddy Code, Codewhale or Codex (see "Hosts and models"). A missing one is offered for install here, before anything is spent. A file found in Downloads, Desktop or Documents is listed but is never the default, since its name says nothing about where it came from.
+3. **Which skill**: a suggested leaderboard row for that host (the default, fetched at the commit the row is for), already installed
+   (scanned in `.agents/skills`, `.claude/skills`, `.codex/skills`, user and project scope), another local directory, or a GitHub
+   repository for a skill you have not installed. With several skills found, all of them or one picked with the arrow keys.
+4. **Depth** (Standard by default), then **backend** and **model**. A missing DeepSeek key can be pasted for that run only: it is not echoed or saved.
+5. **What a run can reach**: a short note on third-party skills and your environment variables, then the question.
 6. **An estimate before anything is spent**: trials and minutes for the whole selection, not just
    per skill. No cash figure is shown, because what a run costs depends on the backend and the plan,
    and a number would be a guess.

@@ -15,9 +15,24 @@ const pick = (rows) => pickSuggestions(rows, { contracted: [] });
 
 test('only an unconfirmed, gradeable row on the default host and model is suggested', () => {
   assert.equal(pick([row()]).length, 1);
-  for (const over of [{ tag: 'confirmed (maintainer run + community)' }, { tag: 'community single sample' }, { grade: 'disagree' }, { grade: 'insufficient' }, { host: 'codebuddy' }, { model: 'deepseek-v4-flash' }]) {
+  for (const over of [{ tag: 'confirmed (maintainer run + community)' }, { tag: 'conflicting' }, { grade: 'disagree' }, { grade: 'insufficient' }, { host: 'codebuddy' }, { model: 'deepseek-v4-flash' }]) {
     assert.equal(pick([row(over)]).length, 0, JSON.stringify(over));
   }
+});
+
+test('the list follows the host: its own rows on the model enter picks, and otherwise the default skills as new rows', async () => {
+  const cw = row({ skill: 'cw', host: 'codewhale', model: 'deepseek-flash', tag: 'community single sample' });
+  assert.deepEqual(pickSuggestions([row(), cw], { contracted: [], host: 'codewhale' }).map((s) => s.skill), ['cw']);
+  assert.deepEqual(pickSuggestions([row({ host: 'codewhale', model: 'other' })], { contracted: [], host: 'codewhale' }), []);
+  assert.deepEqual(pickSuggestions([row({ skill: 'cb', host: 'codebuddy', model: 'anything' })], { contracted: [], host: 'codebuddy' }).map((s) => s.skill), ['cb']);
+  const live = await loadSuggestions({ host: 'codewhale', remote: async () => [cw], bundled: () => [] });
+  assert.equal(live[0].skill, 'cw');
+  assert.ok(!live[0].newRow);
+  const fresh = await loadSuggestions({ host: 'codebuddy', remote: async () => [row()], bundled: () => [] });
+  assert.equal(fresh[0].skill, 's');
+  assert.equal(fresh[0].newRow, true);
+  const offline = await loadSuggestions({ host: 'codebuddy', remote: async () => { throw new Error('x'); } });
+  assert.ok(offline.length && offline.every((s) => s.newRow));
 });
 
 test('anything that would leave a repository or reach a shell is refused, the list being untrusted', () => {

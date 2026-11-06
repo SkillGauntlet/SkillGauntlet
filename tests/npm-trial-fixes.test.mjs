@@ -107,7 +107,11 @@ test('model lists are read from the host and any failure gives an empty list', a
   assert.deepEqual(parseCodexModels(json), ['a']);
   assert.deepEqual(parseCodexModels('not json'), []);
   assert.deepEqual(hostModels('codex', 'codex', () => json), ['a']);
-  assert.deepEqual(hostModels('codex', 'codex', () => { throw new Error('x'); }), []);
+  // the command can't answer: what Codex last fetched, then nothing, whatever is in this machine's own cache
+  assert.deepEqual(hostModels('codex', 'codex', () => { throw new Error('x'); }, () => json), ['a']);
+  assert.deepEqual(hostModels('codex', 'codex', () => '[]', () => json), ['a']);
+  assert.deepEqual(hostModels('codex', 'codex', () => { throw new Error('x'); }, () => ''), []);
+  assert.deepEqual(hostModels('codex', 'codex', () => { throw new Error('x'); }, () => 'not json'), []);
   assert.deepEqual(hostModels('codewhale', 'codewhale', () => json), []);
 });
 

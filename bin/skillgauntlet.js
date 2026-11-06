@@ -12,15 +12,15 @@ import { probeActivation } from '../lib/codex.js';
 import { fingerprint, cacheFileFor, readCachedQueries, writeCachedQueries } from '../lib/queries.js';
 import { openRun, querySetHash, readRun, readAnswers, validRecords } from '../lib/runs.js';
 import { DEPTHS, minutesFor } from '../lib/depth.js';
-import { ask, choose, select, confirm, say, closeUi, hasTerminal, setBack, Back } from '../lib/ui.js';
+import { ask, askSecret, choose, select, confirm, say, closeUi, lendTerminal, hasTerminal, setBack, Back } from '../lib/ui.js';
 import { hostModels, unknownModel, codebuddyCatalog } from '../lib/models.js';
 import { browseDir } from '../lib/browse.js';
 import { withTicker } from '../lib/ticker.js';
 import { renderResult } from '../lib/chart.js';
 import { makeProgress } from '../lib/progress.js';
-import { setLang, detectLang, errorText, t } from '../lib/i18n.js';
+import { setLang, detectLang, errorText, lang, t } from '../lib/i18n.js';
 import { resolveBin, backend, backendFor, usesOwnDeepseek, setNativeModels, HOSTS, checkModel, draftQueries, draftQuality, runTrial, requireHost, pingHost, setHostBin, binInstalled } from '../lib/trial.js';
-import { HOST_CLI, searchHost, installCommand, installHost, userInstallDir, LOGIN, loginCommand } from '../lib/findhost.js';
+import { HOST_CLI, isDownloadLike, searchHost, installCommand, installHost, userInstallDir, LOGIN, loginCommand } from '../lib/findhost.js';
 import { launchSpec } from '../lib/spawn.js';
 import { ensureTool } from '../lib/github.js';
 import { spawnSync as runLogin } from 'node:child_process';
@@ -59,10 +59,14 @@ async function fixMissingHost(hostId, err) {
   const { bin } = HOST_CLI[hostId];
   const label = err.vars?.host || hostId;
   say(`\n${t('hostNotOnPath', { host: label })}`);
-  const options = withTicker(waitText(t('waitSearch', { host: label }), { slowAfter: 600 }), () => searchHost(hostId)).slice(0, 3).map((f) => ({ label: t('hostUseFound', { path: f }), value: { use: f } }));
+  const found = withTicker(waitText(t('waitSearch', { host: label }), { slowAfter: 600 }), () => searchHost(hostId));
+  // Enter is never a file that only happens to have the right name in Downloads: what is first is an install location
+  // or the official installer, and anything else has to be chosen on purpose.
+  const options = found.filter((f) => !isDownloadLike(f)).slice(0, 3).map((f) => ({ label: t('hostUseFound', { path: f }), value: { use: f } }));
   const cmd = installCommand(hostId);
   if (cmd) options.push({ label: t('hostInstallNow', { cmd }), value: { install: true } });
   else say(t(err.howKey));
+  options.push(...found.filter((f) => isDownloadLike(f)).slice(0, 3).map((f) => ({ label: t('hostUseDownloaded', { path: f }), hint: t('hostUseDownloadedHint'), value: { use: f } })));
   options.push({ label: t('hostOther'), value: { other: true } });
 
   const pick = await select(t('hostFixQ'), options, 0);
@@ -80,7 +84,7 @@ async function fixMissingHost(hostId, err) {
       return false;
     }
     if (binInstalled(bin)) return true;
-    const again = searchHost(hostId)[0]; // npm's folder may not be on this process's PATH yet
+    const again = searchHost(hostId).find((f) => !isDownloadLike(f)); // npm's folder may not be on this process's PATH yet
     if (again) { setHostBin(bin, again); return true; }
     say(t('hostStillMissing', { host: label }));
   }
@@ -146,10 +150,13 @@ function modelsOf(host, label) {
     const list = withTicker(waitText(t('waitModels', { host: label }), { slowAfter: 600 }), () => hostModels(host, resolveBin(host)));
     setNativeModels(host, list);
     modelCache.set(host, list);
+    // Said once: without this an empty list looks like a host with no models.
+    if (!list.length) say(`\n${t('modelsUnread', { host: label })}`);
   }
   return modelCache.get(host);
 }
-const HOST_LABEL = { 'claude-code': 'Claude Code', codebuddy: 'CodeBuddy', codewhale: 'Codewhale' };
+const HOST_ID = { claude: 'claude-code', codebuddy: 'codebuddy', codewhale: 'codewhale' };
+const HOST_LABEL = { 'claude-code': 'Claude Code', codebuddy: 'CodeBuddy', codewhale: 'Codewhale', codex: 'Codex' };
 
 // The host did not answer its sign-in check. Show why, and let the user sign in with one press of enter: the host's own
 // login runs on this terminal, then the check is made again. True when a sign-in was run (the caller checks again).
@@ -164,11 +171,26 @@ async function offerLogin(host, bin, err) {
   ], 1);
   if (pick !== 'now') return false;
   say(`\n${t(spec.hint)}\n`);
-  closeUi(); // hand the terminal to the host's own login
-  const launch = launchSpec(bin, spec.args, HOSTS[host].bin);
+  if (spec.pause) await choose(t('loginOpenQ'), [{ label: t('loginOpen', { host: label }), value: 'open' }], 1);
+  lendTerminal(); // the host's own login runs on this terminal, then the questions go on
+  const launch = launchSpec(bin, spec.args, HOST_CLI[host].bin);
   const r = runLogin(launch.cmd, launch.args, { stdio: 'inherit', shell: launch.shell });
   say('');
   return !r.error;
+}
+
+// The probe spends a Codex run on each side, so a missing sign-in is settled before it starts. False leaves the probe out.
+async function codexSignedIn() {
+  const bin = resolveBin('codex');
+  for (;;) {
+    const launch = launchSpec(bin, ['login', 'status'], 'codex');
+    const r = runLogin(launch.cmd, launch.args, { stdio: 'ignore', shell: launch.shell, windowsHide: true });
+    if (r.status === 0) return true;
+    const err = new Error('codex is not signed in');
+    err.messageKey = 'hostNotReady';
+    err.vars = { host: 'Codex', why: 'codex login status' };
+    if (!hasTerminal() || !(await offerLogin('codex', bin, err))) return false;
+  }
 }
 
 async function runTriggerLayer({ skillDir, skillName, depth, model, host = 'claude-code' }) {
@@ -373,8 +395,9 @@ async function pickModel(known = [], more = []) {
 
 // A leaderboard row nobody has confirmed yet, at the commit that row is for. The first entry is the cheapest, so a
 // person with no skill in mind gets a result that counts by pressing enter.
-async function pickSuggested(list) {
-  const pick = await select(t('suggestQ'), list.map((s) => ({ label: s.skill, hint: s.repo.replace('https://github.com/', ''), value: s })), 0);
+async function pickSuggested(list, host) {
+  const fresh = list.some((s) => s.newRow);
+  const pick = await select(t(fresh ? 'suggestQNew' : 'suggestQ'), list.map((s) => ({ label: s.skill, hint: s.repo.replace('https://github.com/', ''), value: s })), 0);
   if (hasTerminal() && !(await ensureTool('git', { pick: choose, out: say }))) return [];
   let resolved;
   try {
@@ -389,8 +412,34 @@ async function pickSuggested(list) {
     return [];
   }
   remoteSource.set(path.resolve(dir), { repo: pick.repo, commit: pick.commit, subdir: pick.subdir });
-  say(`\n${t('suggestNote')}`);
+  say(`\n${t(fresh ? 'suggestNoteNew' : host === 'claude' ? 'suggestNote' : 'suggestNoteOther')}`);
   return [{ name: path.basename(dir), dir, root: resolved.dir }];
+}
+
+// A DeepSeek key that is not set: take it for this run, or go another way. It stays in this process's environment and
+// is never written anywhere; submit scrubs the values of variables named like keys. Returns 'ok', 'back' or 'quit'.
+async function getDeepseekKey({ throughAnthropic = false } = {}) {
+  const how = t(throughAnthropic ? 'needBaseUrl' : 'needDeepseekKey');
+  if (!hasTerminal()) {
+    say(`\n${how}`);
+    return 'quit';
+  }
+  say(`\n${t('keyMissing')}`);
+  const pick = await select(t('keyQ'), [
+    { label: t('keyEnter'), hint: t('keyEnterHint'), value: 'enter' },
+    { label: t('keyBack'), value: 'back' },
+    { label: t('keyQuit'), value: 'quit' },
+  ], 0);
+  if (pick === 'quit') say(`\n${how}`);
+  if (pick !== 'enter') return pick;
+  const key = await askSecret(t('keyPrompt'));
+  if (!key) return 'back';
+  process.env.DEEPSEEK_API_KEY = key;
+  if (throughAnthropic) {
+    process.env.ANTHROPIC_BASE_URL = 'https://api.deepseek.com/anthropic';
+    process.env.ANTHROPIC_AUTH_TOKEN = key;
+  }
+  return 'ok';
 }
 
 async function pickRemote() {
@@ -475,13 +524,16 @@ async function offerUpdate() {
   process.exit(r.status ?? 0);
 }
 
-async function interactive() {
-  const langChoice = await select(`${t('langTitle')}`, [
-    { label: t('langZh'), value: 'zh' },
-    { label: t('langEn'), value: 'en' },
-    { label: t('langJa'), value: 'ja' },
-  ], 0);
-  setLang(langChoice);
+async function interactive({ langGiven = false } = {}) {
+  // Already told, or at least already known: --lang or SG_LANG skips the question, and enter keeps the system's language.
+  if (!langGiven) {
+    const langs = ['zh', 'en', 'ja'];
+    setLang(await select(`${t('langTitle')}`, [
+      { label: t('langZh'), value: 'zh' },
+      { label: t('langEn'), value: 'en' },
+      { label: t('langJa'), value: 'ja' },
+    ], Math.max(0, langs.indexOf(lang()))));
+  }
   await offerUpdate();
 
   say('');
@@ -493,11 +545,14 @@ async function interactive() {
   // The questions run as steps so ← or Esc can return to the previous one (a step that ends the run returns END).
   const END = Symbol('end');
   const AGAIN = Symbol('again');
+  const TO_HOST = Symbol('to-host');
   const S = { targets: [], host: null, depth: null, model: null, wantProbe: false };
 
-  let suggestions = null;
+  const suggestionsByHost = new Map();
   const sourceStep = async () => {
-    suggestions ??= await loadSuggestions();
+    // Codex has no trigger rate, so no row of the leaderboard could come out of a run there.
+    const suggestions = S.host === 'codex' ? [] : (suggestionsByHost.get(S.host) ?? await loadSuggestions({ host: HOST_ID[S.host] }));
+    suggestionsByHost.set(S.host, suggestions);
     say(`\n${t('sourceNote')}`);
     const source = await choose(t('sourceQ'), [
       ...(suggestions.length ? [{ label: t('srcSuggest'), hint: t('srcSuggestHint'), value: 'suggest' }] : []),
@@ -507,7 +562,7 @@ async function interactive() {
     ], 1);
 
     let targets = [];
-    if (source === 'suggest') targets = await pickSuggested(suggestions);
+    if (source === 'suggest') targets = await pickSuggested(suggestions, S.host);
     else if (source === 'installed') targets = await pickInstalled();
     else if (source === 'path') {
       // Arrow keys walk the folders; typing a path stays available as the last entry (and is all a pipe has).
@@ -524,6 +579,8 @@ async function interactive() {
     } else targets = await pickRemote();
     if (!targets.length) return hasTerminal() ? AGAIN : END;
     S.targets = targets.map((tg) => ({ ...tg, name: skillNameOf(tg.dir) }));
+    // Say it before any quota is spent, not after: a copy with no public repository behind it can't go on the leaderboard.
+    if (S.host !== 'codex' && source !== 'suggest' && source !== 'repo' && targets.some((tg) => { const f = gitFacts(tg.dir); return !(f.repo && f.commit); })) say(`\n${t('noSubmitEarly')}`);
     return null;
   };
 
@@ -536,7 +593,8 @@ async function interactive() {
     ], 1);
 
     // Look for the host CLI before any question about depth or model: a missing one ends the run here, for free.
-    const hostId = { claude: 'claude-code', codebuddy: 'codebuddy', codewhale: 'codewhale' }[S.host];
+    if (S.host === 'codex' && !binInstalled('codex') && !(await fixMissingHost('codex', { vars: { host: 'Codex' } }))) return AGAIN;
+    const hostId = HOST_ID[S.host];
     if (hostId) {
       try { requireHost(hostId); } catch (err) {
         if (!(await fixMissingHost(hostId, err))) return AGAIN;
@@ -574,8 +632,9 @@ async function interactive() {
         ], 1);
       } else if (provider === 'deepseek') {
         if (!process.env.ANTHROPIC_BASE_URL) {
-          say(`\n${t('needBaseUrl')}`);
-          return END;
+          const k = await getDeepseekKey({ throughAnthropic: true });
+          if (k === 'quit') return END;
+          if (k === 'back') return AGAIN;
         }
         model = await choose(t('modelQ'), [
           { label: 'deepseek-v4-flash', value: 'deepseek-v4-flash' },
@@ -592,12 +651,12 @@ async function interactive() {
       const depthId = await choose(t('depthQ'), [
         { label: t('depthQuick'), hint: t('depthQuickHint'), value: 'quick' },
         { label: t('depthStandard'), hint: t('depthStandardHint'), value: 'standard' },
-      ], 1);
+      ], 2);
       S.depth = DEPTHS[depthId];
       S.model = (await pickModel(['deepseek-flash'])) || 'deepseek-flash';
       if (!process.env.DEEPSEEK_API_KEY) {
-        say(`\n${t('needDeepseekKey')}`);
-        return END;
+        const k = await getDeepseekKey();
+        if (k !== 'ok') return k === 'quit' ? END : TO_HOST;
       }
       say(`\n${t('draftFirst')}`);
     } else if (host === 'codebuddy') {
@@ -605,13 +664,13 @@ async function interactive() {
       const depthId = await choose(t('depthQ'), [
         { label: t('depthQuick'), hint: t('depthQuickHint'), value: 'quick' },
         { label: t('depthStandard'), hint: t('depthStandardHint'), value: 'standard' },
-      ], 1);
+      ], 2);
       S.depth = DEPTHS[depthId];
       S.model = await pickModel(modelsOf('codebuddy', 'CodeBuddy'), catalogOnly('codebuddy'));
       if (notListed(S.model, [...modelsOf('codebuddy', 'CodeBuddy'), ...catalogOnly('codebuddy')], 'CodeBuddy')) return AGAIN;
       if (usesOwnDeepseek('codebuddy', S.model) && !process.env.DEEPSEEK_API_KEY) {
-        say(`\n${t('needDeepseekKey')}`);
-        return END;
+        const k = await getDeepseekKey();
+        if (k !== 'ok') return k === 'quit' ? END : TO_HOST;
       }
       say(`\n${t('draftFirst')}`);
     } else {
@@ -619,10 +678,10 @@ async function interactive() {
       S.model = await pickModel(modelsOf('codex', 'Codex'));
       if (notListed(S.model, modelsOf('codex', 'Codex'), 'Codex')) return AGAIN;
       if (usesOwnDeepseek('codex', S.model) && !process.env.DEEPSEEK_API_KEY) {
-        say(`\n${t('needDeepseekKey')}`);
-        return END;
+        const k = await getDeepseekKey();
+        if (k !== 'ok') return k === 'quit' ? END : TO_HOST;
       }
-      S.wantProbe = await confirm(t('probeQ'), false);
+      S.wantProbe = await confirm(t('probeQ'), false) && await codexSignedIn();
       say(`\n${S.wantProbe
         ? t('codexEstimate', { skills: targets.length, runs: 2 })
         : t('codexStaticOnly', { skills: targets.length })}`);
@@ -631,6 +690,7 @@ async function interactive() {
   };
 
   const confirmStep = async () => {
+    say(`\n${t('riskNote')}`);
     if (!(await confirm(t('confirmRun'), false))) {
       say(t('cancelled'));
       return END;
@@ -638,7 +698,8 @@ async function interactive() {
     return null;
   };
 
-  const steps = [sourceStep, hostStep, optionsStep, confirmStep];
+  // The host comes first: it decides which leaderboard rows a run could confirm, and a missing one ends the run for free.
+  const steps = [hostStep, sourceStep, optionsStep, confirmStep];
   for (let i = 0; i < steps.length;) {
     let r;
     try { r = await steps[i](); } catch (err) {
@@ -646,6 +707,7 @@ async function interactive() {
       throw err;
     }
     if (r === END) return;
+    if (r === TO_HOST) { i = 0; continue; }
     if (r !== AGAIN) i += 1;
   }
   const { targets, host, depth, model, wantProbe } = S;
@@ -753,12 +815,15 @@ async function cmdStatic(target, asJson) {
   say(asJson ? JSON.stringify(scorecard(result), null, 2) : staticMarkdown(result));
 }
 
-// --lang zh|ja|en, else SG_LANG, else the OS locale. Interactive mode asks instead.
+// --lang zh|ja|en, else SG_LANG, else the OS locale. Interactive mode asks, unless one of the first two said.
 function applyLang(args) {
   const i = args.indexOf('--lang');
   setLang(i >= 0 ? args[i + 1] : detectLang());
+  langGiven = i >= 0 || Boolean(process.env.SG_LANG);
   return i >= 0 ? [...args.slice(0, i), ...args.slice(i + 2)] : args;
 }
+
+let langGiven = false;
 
 async function main() {
   const args = applyLang(process.argv.slice(2));
@@ -782,7 +847,7 @@ async function main() {
     await cmdSubmit(args.slice(1));
     return;
   }
-  await interactive();
+  await interactive({ langGiven });
 }
 
 main()
