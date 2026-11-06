@@ -129,6 +129,8 @@ export function buildRows(entries) {
 const pct = (x) => (x == null ? '–' : `${Math.round(x * 100)}%`);
 const ci = (c) => (c && c[0] != null ? `${Math.round(c[0] * 100)}–${Math.round(c[1] * 100)}%` : '–');
 const esc = (s) => String(s).replace(/\|/g, '\\|');
+// The owner shows on the row, not only behind the link: any repository can name its skill `tdd`.
+const repoName = (url) => String(url ?? '').replace(/^https:\/\/github\.com\//, '').replace(/[`|\r\n]/g, ' ');
 
 function credit(row) {
   const names = row.contributors || (row.contributor ? [row.contributor] : []);
@@ -157,7 +159,7 @@ export function render({ rows, skipped = [], counts }) {
       '|---|---|---|---|---|---|---|---|---|---|---|');
     for (const r of rows.filter((x) => x.host === host)) {
       const link = `[${r.source === 'maintainer' ? 'batch report' : 'raw data'}](${r.links[0]})${r.links.length > 1 ? ` +${r.links.length - 1}` : ''}`;
-      out.push(`| [${esc(r.skill)}](${r.repo}/tree/${r.commit}${r.subdir ? `/${r.subdir}` : ''}) | ${esc(r.model)} | ${GRADE_TEXT[r.grade] || r.grade} | ${pct(r.recall)} (${ci(r.recallCi)}) | ${pct(r.fpr)} (${ci(r.fprCi)}) | ${r.qPos} / ${r.qNeg} | ${r.tag} | ${r.submissions} | ${r.date} | ${link} | ${credit(r)} |`);
+      out.push(`| [${esc(r.skill)}](${r.repo}/tree/${r.commit}${r.subdir ? `/${r.subdir}` : ''})<br>\`${repoName(r.repo)}\` | ${esc(r.model)} | ${GRADE_TEXT[r.grade] || r.grade} | ${pct(r.recall)} (${ci(r.recallCi)}) | ${pct(r.fpr)} (${ci(r.fprCi)}) | ${r.qPos} / ${r.qNeg} | ${r.tag} | ${r.submissions} | ${r.date} | ${link} | ${credit(r)} |`);
     }
     out.push('');
   }

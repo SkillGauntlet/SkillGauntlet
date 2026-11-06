@@ -3,6 +3,7 @@
 //
 //   inspect  (read-only token)   reads one pull request through the GitHub API, as data, and decides.
 //   apply    (write token)       comments, labels, merges or refuses, exactly as decided.
+//   sweep    (dispatch only)     asks for one more `inspect` of a pull request that missed its trigger.
 //
 // Nothing here checks out, installs or runs anything from the pull request. The pull request's four files
 // are downloaded as bytes, parsed by the validator of the base branch, and thrown away. Facts the decision
@@ -11,10 +12,11 @@
 //
 //   node scripts/automerge.mjs inspect --repo o/r --pr 12 [--expect-sha <sha>] --out dir
 //   node scripts/automerge.mjs apply   --repo o/r --decision dir/decision.json
+//   node scripts/automerge.mjs sweep   --repo o/r
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
-import { POLICY, decide, gateAccount, gateFiles, mergeTitle, renderVerdict } from '../lib/automerge.js';
+import { POLICY, decide, gateAccount, gateFiles, mergeTitle, pickWaiting, renderVerdict } from '../lib/automerge.js';
 import { checkChanged } from './check-submission.mjs';
 
 const DAY = 86400000;
@@ -163,6 +165,14 @@ export function apply({ gh, repo, d, workflow = 'pages.yml' }) {
   return { action: 'merged' };
 }
 
+// ---- sweep ---------------------------------------------------------------------------------------------
+// One at a time: the merge workflow queues a single run, and a second dispatch would push the first one out.
+export function sweep({ prs, dispatchPr }) {
+  const [next] = pickWaiting(prs);
+  if (next) dispatchPr(next);
+  return next ?? null;
+}
+
 // ---- CLI -----------------------------------------------------------------------------------------------
 function arg(name, def = null) {
   const i = process.argv.indexOf(name);
@@ -185,8 +195,12 @@ function main() {
   } else if (cmd === 'apply') {
     const d = JSON.parse(fs.readFileSync(arg('--decision'), 'utf8'));
     process.stdout.write(`${JSON.stringify(apply({ gh, repo, d }))}\n`);
+  } else if (cmd === 'sweep') {
+    const prs = JSON.parse(execFileSync('gh', ['pr', 'list', '--repo', repo, '--state', 'open', '--limit', '100', '--json', 'number,isDraft,labels,files,statusCheckRollup'], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 }));
+    const next = sweep({ prs, dispatchPr: (pr) => execFileSync('gh', ['api', '-X', 'POST', `repos/${repo}/actions/workflows/automerge.yml/dispatches`, '-f', 'ref=main', '-f', `inputs[pr]=${pr}`], { stdio: 'ignore' }) });
+    process.stdout.write(`${next ? `asked for a check of #${next}` : 'nothing waiting'}\n`);
   } else {
-    throw new Error('usage: automerge.mjs inspect|apply');
+    throw new Error('usage: automerge.mjs inspect|apply|sweep');
   }
 }
 

@@ -42,6 +42,8 @@ const link = (href, text, repo) => {
 const pct = (x) => (x == null ? '–' : `${Math.round(x * 100)}%`);
 const ci = (c) => (c && c[0] != null ? `${Math.round(c[0] * 100)}–${Math.round(c[1] * 100)}%` : '–');
 
+// The owner shows on the row, not only behind the link: any repository can name its skill `tdd`.
+export const repoLabel = (url) => String(url ?? '').replace(/^https:\/\/github\.com\//, '');
 const skillUrl = (r) => `${r.repo}/tree/${r.commit}${r.subdir ? `/${r.subdir}` : ''}`;
 
 function credit(r, repo) {
@@ -76,7 +78,7 @@ export function renderPage({ rows, skipped = [], counts }, { repo = 'SkillGauntl
     for (const r of rows.filter((x) => x.host === host)) {
       const data = r.links.map((l, i) => link(l, i === 0 ? (r.source === 'maintainer' ? 'batch report' : 'raw data') : `+${i}`, repo)).join(' ');
       out.push('<tr>',
-        `<td>${link(skillUrl(r), r.skill, repo)}</td><td>${escapeHtml(r.model)}</td><td>${escapeHtml(GRADE_TEXT[r.grade] || r.grade)}</td>`,
+        `<td>${link(skillUrl(r), r.skill, repo)}<br><small>${escapeHtml(repoLabel(r.repo))}</small></td><td>${escapeHtml(r.model)}</td><td>${escapeHtml(GRADE_TEXT[r.grade] || r.grade)}</td>`,
         `<td>${pct(r.recall)} (${ci(r.recallCi)})</td><td>${pct(r.fpr)} (${ci(r.fprCi)})</td><td>${escapeHtml(r.qPos)} / ${escapeHtml(r.qNeg)}</td>`,
         `<td class="tag">${escapeHtml(r.tag)}</td><td>${escapeHtml(r.submissions)}</td><td>${escapeHtml(r.date)}</td><td>${data}</td><td>${credit(r, repo)}</td></tr>`);
     }
@@ -91,6 +93,11 @@ export function renderPage({ rows, skipped = [], counts }, { repo = 'SkillGauntl
   return `${out.join('\n')}\n`;
 }
 
+// What the CLI reads to suggest a row that still needs confirming (lib/recommend.js). Only what that needs.
+export function rowList(rows) {
+  return { schema: 'skillgauntlet/rows/1', rows: rows.map(({ skill, repo: skillRepo, subdir, commit, host, model, grade, tag, qPos }) => ({ skill, repo: skillRepo, subdir, commit, host, model, grade, tag, qPos })) };
+}
+
 export function buildSite(root, { repo, built } = {}) {
   const maintainer = maintainerEntries(root);
   const { entries: community, skipped } = submissionEntries(root);
@@ -101,7 +108,7 @@ export function buildSite(root, { repo, built } = {}) {
     community: community.length,
     skills: new Set(rows.map((r) => `${r.repo}|${r.subdir}|${r.skill}`)).size,
   };
-  return { html: renderPage({ rows, skipped, counts }, { repo, built }), markdown: build(root) };
+  return { html: renderPage({ rows, skipped, counts }, { repo, built }), markdown: build(root), rowsJson: rowList(rows) };
 }
 
 function main() {
@@ -109,10 +116,11 @@ function main() {
   const root = path.resolve(arg('--root', '.'));
   const out = path.resolve(arg('--out', '_site'));
   const repo = arg('--repo', process.env.GITHUB_REPOSITORY || 'SkillGauntlet/SkillGauntlet');
-  const { html, markdown } = buildSite(root, { repo, built: `at ${new Date().toISOString().slice(0, 16)}Z` });
+  const { html, markdown, rowsJson } = buildSite(root, { repo, built: `at ${new Date().toISOString().slice(0, 16)}Z` });
   fs.mkdirSync(out, { recursive: true });
   fs.writeFileSync(path.join(out, 'index.html'), html);
   fs.writeFileSync(path.join(out, 'LEADERBOARD.md'), markdown);
+  fs.writeFileSync(path.join(out, 'rows.json'), `${JSON.stringify(rowsJson)}\n`);
   fs.writeFileSync(path.join(out, '.nojekyll'), '');
   process.stdout.write(`wrote ${out}\n`);
 }

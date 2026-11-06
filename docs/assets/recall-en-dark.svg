@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 616" width="960" height="616" role="img" aria-label="Recall: share of requests that should use the skill and did. design-mobile-apps 85%, agent-browser 74%, deploy-to-vercel 72%, lark-doc 71%, hyperframes 68%, xlsx 57%, mcp-builder 54%, prototype 46%, domain-modeling 36%, tdd 33%, web-design-guidelines 33%, find-skills 20%, diagnosing-bugs 18%, webapp-testing 17%, skill-creator 16%, doc-coauthoring 13%, frontend-design 13%, vercel-react-best-practices 3%.">
+  <text x="262" y="20" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="14.5" font-weight="600" fill="#f0f6fc">Recall: share of requests that should use the skill and did</text>
+  <text x="416.5" y="48" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#9da7b3">under 50%</text><text x="663.7" y="48" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#9da7b3">50–80%</text><text x="818.2" y="48" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#9da7b3">80%+</text>
+  <rect x="262" y="58" width="309" height="498" fill="#2a1a10" opacity="0.7"/>
+  <line x1="571" y1="58" x2="571" y2="556" stroke="#8b949e" stroke-width="1" stroke-dasharray="3 4"/><line x1="756.4000000000001" y1="58" x2="756.4000000000001" y2="556" stroke="#8b949e" stroke-width="1" stroke-dasharray="3 4"/>
+  
+    <text x="248" y="82" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13.5" fill="#f0f6fc">design-mobile-apps</text>
+    <line x1="696.5" y1="77.5" x2="838.6" y2="77.5" stroke="#EA580C" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
+    <circle cx="788.5" cy="77.5" r="5" fill="#EA580C" stroke="#0d1117" stroke-width="2"/>
+    <text x="920" y="82" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13.5" font-weight="600" fill="#f0f6fc">85%</text>
+    <text x="248" y="109" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13.5" fill="#f0f6fc">agent-browser</text>
+    <line x1="630.9" y1="104.5" x2="781.1" y2="104.5" stroke="#EA580C" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
+    <circle cx="716.8" cy="104.5" r="5" fill="#EA580C" stroke="#0d1117" stroke-width="2"/>
+    <text x="920" y="109" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13.5" font-weight="600" fill="#f0f6fc">74%</text>
+    <text x="248" y="136" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13.5" fill="#f0f6fc">deploy-to-vercel</text>
+    <line x1="599.4" y1="131.5" x2="783.6" y2="131.5" stroke="#EA580C" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
+    <circle cx="706.3" cy="131.5" r="5" fill="#EA580C" stroke="#0d1117" stroke-width="2"/>
+    <text x="920" y="136" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13.5" font-weight="600" fill="#f0f6fc">72%</text>
+    <text x="248" y="163" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13.5" fill="#f0f6fc">lark-doc</text>
+    <line x1="613.0" y1="158.5" x2="767.5" y2="158.5" stroke="#EA580C" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
+    <circle cx="699.5" cy="158.5" r="5" fill="#EA580C" stroke="#0d1117" stroke-width="2"/>
+    <text x="920" y="163" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13.5" font-weight="600" fill="#f0f6fc">71%</text>
+    <text x="248" y="190" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13.5" fill="#f0f6fc">hyperframes</text>
+    <line x1="588.9" y1="185.5" x2="760.1" y2="185.5" stroke="#EA580C" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
+    <circle cx="684.1" cy="185.5" r="5" fill="#EA580C" stroke="#0d1117" stroke-width="2"/>
+    <text x="920" y="190" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13.5" font-weight="600" fill="#f0f6fc">68%</text>
+    <text x="248" y="217" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13.5" fill="#f0f6fc">xlsx</text>
+    <line x1="517.9" y1="212.5" x2="699.5" y2="212.5" stroke="#EA580C" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
+    <circle cx="612.4" cy="212.5" r="5" fill="#EA580C" stroke="#0d1117" stroke-width="2"/>
+    <text x="920" y="217" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13.5" font-weight="600" fill="#f0f6fc">57%</text>
+    <text x="248" y="244" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13.5" fill="#f0f6fc">mcp-builder</text>
+    <line x1="478.9" y1="239.5" x2="707.6" y2="239.5" stroke="#EA580C" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
+    <circle cx="597.0" cy="239.5" r="5" fill="#EA580C" stroke="#0d1117" stroke-width="2"/>
+    <text x="920" y="244" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13.5" font-weight="600" fill="#f0f6fc">54%</text>
+    <text x="248" y="271" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13.5" fill="#f0f6fc">prototype</text>
+    <line x1="434.4" y1="266.5" x2="663.1" y2="266.5" stroke="#EA580C" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
+    <circle cx="545.0" cy="266.5" r="5" fill="#EA580C" stroke="#0d1117" stroke-width="2"/>
+    <text x="920" y="271" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13.5" font-weight="600" fill="#f0f6fc">46%</text>
+    <text x="248" y="298" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13.5" fill="#f0f6fc">domain-modeling</text>
+    <line x1="386.2" y1="293.5" x2="608.1" y2="293.5" stroke="#EA580C" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
+    <circle cx="485.1" cy="293.5" r="5" fill="#EA580C" stroke="#0d1117" stroke-width="2"/>
+    <text x="920" y="298" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13.5" font-weight="600" fill="#f0f6fc">36%</text>
+    <text x="248" y="325" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13.5" fill="#f0f6fc">tdd</text>
+    <line x1="383.1" y1="320.5" x2="575.3" y2="320.5" stroke="#EA580C" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
+    <circle cx="467.8" cy="320.5" r="5" fill="#EA580C" stroke="#0d1117" stroke-width="2"/>
+    <text x="920" y="325" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13.5" font-weight="600" fill="#f0f6fc">33%</text>
+    <text x="248" y="352" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13.5" fill="#f0f6fc">web-design-guidelines</text>
+    <line x1="386.2" y1="347.5" x2="558.6" y2="347.5" stroke="#EA580C" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
+    <circle cx="462.9" cy="347.5" r="5" fill="#EA580C" stroke="#0d1117" stroke-width="2"/>
+    <text x="920" y="352" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13.5" font-weight="600" fill="#f0f6fc">33%</text>
+    <text x="248" y="379" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13.5" fill="#f0f6fc">find-skills</text>
+    <line x1="321.3" y1="374.5" x2="487.6" y2="374.5" stroke="#EA580C" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
+    <circle cx="384.4" cy="374.5" r="5" fill="#EA580C" stroke="#0d1117" stroke-width="2"/>
+    <text x="920" y="379" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13.5" font-weight="600" fill="#f0f6fc">20%</text>
+    <text x="248" y="406" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13.5" fill="#f0f6fc">diagnosing-bugs</text>
+    <line x1="317.0" y1="401.5" x2="467.2" y2="401.5" stroke="#EA580C" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
+    <circle cx="373.2" cy="401.5" r="5" fill="#EA580C" stroke="#0d1117" stroke-width="2"/>
+    <text x="920" y="406" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13.5" font-weight="600" fill="#f0f6fc">18%</text>
+    <text x="248" y="433" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13.5" fill="#f0f6fc">webapp-testing</text>
+    <line x1="312.7" y1="428.5" x2="453.6" y2="428.5" stroke="#EA580C" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
+    <circle cx="365.2" cy="428.5" r="5" fill="#EA580C" stroke="#0d1117" stroke-width="2"/>
+    <text x="920" y="433" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13.5" font-weight="600" fill="#f0f6fc">17%</text>
+    <text x="248" y="460" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13.5" fill="#f0f6fc">skill-creator</text>
+    <line x1="309.0" y1="455.5" x2="447.4" y2="455.5" stroke="#EA580C" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
+    <circle cx="359.6" cy="455.5" r="5" fill="#EA580C" stroke="#0d1117" stroke-width="2"/>
+    <text x="920" y="460" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13.5" font-weight="600" fill="#f0f6fc">16%</text>
+    <text x="248" y="487" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13.5" fill="#f0f6fc">doc-coauthoring</text>
+    <line x1="296.0" y1="482.5" x2="423.3" y2="482.5" stroke="#EA580C" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
+    <circle cx="339.3" cy="482.5" r="5" fill="#EA580C" stroke="#0d1117" stroke-width="2"/>
+    <text x="920" y="487" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13.5" font-weight="600" fill="#f0f6fc">13%</text>
+    <text x="248" y="514" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13.5" fill="#f0f6fc">frontend-design</text>
+    <line x1="296.0" y1="509.5" x2="423.3" y2="509.5" stroke="#EA580C" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
+    <circle cx="339.3" cy="509.5" r="5" fill="#EA580C" stroke="#0d1117" stroke-width="2"/>
+    <text x="920" y="514" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13.5" font-weight="600" fill="#f0f6fc">13%</text>
+    <text x="248" y="541" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13.5" fill="#f0f6fc">vercel-react-best-practices</text>
+    <line x1="266.3" y1="536.5" x2="349.1" y2="536.5" stroke="#EA580C" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
+    <circle cx="282.4" cy="536.5" r="5" fill="#EA580C" stroke="#0d1117" stroke-width="2"/>
+    <text x="920" y="541" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="13.5" font-weight="600" fill="#f0f6fc">3%</text>
+  <line x1="262" y1="556" x2="880" y2="556" stroke="#30363d"/>
+  <text x="262" y="575" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="12" fill="#8b949e">0%</text><text x="416.5" y="575" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="12" fill="#8b949e">25%</text><text x="571" y="575" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="12" fill="#8b949e">50%</text><text x="756.4000000000001" y="575" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="12" fill="#8b949e">80%</text><text x="880" y="575" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace" font-size="12" fill="#8b949e">100%</text>
+  <text x="480" y="608" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12.5" fill="#8b949e">Claude Code × claude-haiku-5-5, 18 skills, tested 2026-10-28. Line: 95% interval, computed over questions. Automated results under these conditions only.</text>
+</svg>
