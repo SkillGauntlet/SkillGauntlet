@@ -102,6 +102,18 @@ test('a first submission is given the CLA link, asked to come back with enter, a
   assert.match(text, /Merged ✓ Here is your submission record: https:\/\/github\.com\/SkillGauntlet\/SkillGauntlet\/pull\/42/);
 });
 
+test('a CLA bot that stays silent is said out loud once and asked again, and the wait goes on', async () => {
+  const asked = [];
+  const w = watch([view(), view(), view(), view(), view({ state: 'MERGED', mergedAt: '2026-10-30T00:00:00Z' })], {
+    pick: async () => assert.fail('no question'), claPatience: 2, recheck: async (u) => { asked.push(u); throw new Error('offline'); },
+  });
+  assert.equal(await w.run(), 'merged');
+  assert.deepEqual(asked, ['https://cla-assistant.io/check/SkillGauntlet/SkillGauntlet?pullRequest=42']);
+  assert.equal(w.s.lines.filter((l) => /CLA bot has not answered/.test(l)).length, 1);
+  const signed = watch([view({ statusCheckRollup: [{ context: 'license/cla', state: 'SUCCESS' }] })], { pick: async () => assert.fail('no'), claPatience: 1, recheck: async () => assert.fail('it answered') });
+  assert.equal(await signed.run(), 'timeout');
+});
+
 test('looking later, a manual review, a closed pull request and a long wait each end the watch with a plain message', async () => {
   const pending = view({ statusCheckRollup: [{ context: 'license/cla', state: 'PENDING' }] });
   assert.equal(await watch([pending], { pick: async () => 'later' }).run(), 'later');
@@ -111,7 +123,7 @@ test('looking later, a manual review, a closed pull request and a long wait each
   assert.equal(await watch([view({ state: 'CLOSED' })], { pick: async () => assert.fail('no') }).run(), 'closed');
   const slow = watch([view({ statusCheckRollup: [{ context: 'license/cla', state: 'SUCCESS' }] })], { pick: async () => assert.fail('no') });
   assert.equal(await slow.run(), 'timeout');
-  assert.match(slow.s.lines.join('\n'), /Waited \d+ minutes/);
+  assert.match(slow.s.lines.join('\n'), /Not merged after \d+ minutes.*merged automatically/);
 });
 
 test('a PATH that predates an install is extended with the directories the installers use', () => {

@@ -1,6 +1,8 @@
 # Looks for a submission pull request that is ready but was never decided, and asks automerge for one more check.
 # It is the safety net behind automerge's triggers: the queue of that workflow holds a single waiting run, so a run can
 # be pushed out when several pull requests arrive together, and a contributor would otherwise wait for a maintainer.
+# It also asks the CLA bot again about a pull request it has said nothing about: the bot can accept a webhook and never
+# report, and with no status nothing else would look again. That request carries no token and no data from the pull request.
 #
 # It reads the list of pull requests through the API and runs nothing from any of them. The check it asks for is the
 # whole automerge workflow, which trusts nothing about the pull request. Its own write access is only to start a workflow.
