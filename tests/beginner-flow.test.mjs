@@ -10,7 +10,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { installPlan, ensureTool, knownDirs } from '../lib/github.js';
 import { assetName, ghBinDir, installGhRelease } from '../lib/ghrelease.js';
-import { isDownloadLike } from '../lib/findhost.js';
+import { HOST_CLI, LOGIN, installCommand, isDownloadLike } from '../lib/findhost.js';
 import { isNewer, checkForUpdate } from '../lib/update.js';
 import { setLang } from '../lib/i18n.js';
 
@@ -104,6 +104,12 @@ test('files in a downloads-type folder are told apart from install locations', (
   const home = path.join(path.sep, 'home', 'a');
   for (const f of ['Downloads/claude', 'Desktop/x/codewhale', 'Documents/codebuddy']) assert.equal(isDownloadLike(path.join(home, f), home), true, f);
   for (const f of ['.local/bin/claude', 'bin/claude', 'Downloads-old/claude']) assert.equal(isDownloadLike(path.join(home, f), home), false, f);
+});
+
+test('Codex is offered from its official package, with a sign-in, like the other hosts', () => {
+  assert.equal(HOST_CLI.codex.pkg, '@openai/codex');
+  assert.equal(installCommand('codex', { writable: true }), 'npm install -g @openai/codex');
+  assert.deepEqual(LOGIN.codex.args, ['login']);
 });
 
 test('a version reply that could change the update command is not a version', () => {

@@ -150,11 +150,13 @@ function modelsOf(host, label) {
     const list = withTicker(waitText(t('waitModels', { host: label }), { slowAfter: 600 }), () => hostModels(host, resolveBin(host)));
     setNativeModels(host, list);
     modelCache.set(host, list);
+    // Said once: without this an empty list looks like a host with no models.
+    if (!list.length) say(`\n${t('modelsUnread', { host: label })}`);
   }
   return modelCache.get(host);
 }
 const HOST_ID = { claude: 'claude-code', codebuddy: 'codebuddy', codewhale: 'codewhale' };
-const HOST_LABEL = { 'claude-code': 'Claude Code', codebuddy: 'CodeBuddy', codewhale: 'Codewhale' };
+const HOST_LABEL = { 'claude-code': 'Claude Code', codebuddy: 'CodeBuddy', codewhale: 'Codewhale', codex: 'Codex' };
 
 // The host did not answer its sign-in check. Show why, and let the user sign in with one press of enter: the host's own
 // login runs on this terminal, then the check is made again. True when a sign-in was run (the caller checks again).
@@ -170,10 +172,24 @@ async function offerLogin(host, bin, err) {
   if (pick !== 'now') return false;
   say(`\n${t(spec.hint)}\n`);
   lendTerminal(); // the host's own login runs on this terminal, then the questions go on
-  const launch = launchSpec(bin, spec.args, HOSTS[host].bin);
+  const launch = launchSpec(bin, spec.args, HOST_CLI[host].bin);
   const r = runLogin(launch.cmd, launch.args, { stdio: 'inherit', shell: launch.shell });
   say('');
   return !r.error;
+}
+
+// The probe spends a Codex run on each side, so a missing sign-in is settled before it starts. False leaves the probe out.
+async function codexSignedIn() {
+  const bin = resolveBin('codex');
+  for (;;) {
+    const launch = launchSpec(bin, ['login', 'status'], 'codex');
+    const r = runLogin(launch.cmd, launch.args, { stdio: 'ignore', shell: launch.shell, windowsHide: true });
+    if (r.status === 0) return true;
+    const err = new Error('codex is not signed in');
+    err.messageKey = 'hostNotReady';
+    err.vars = { host: 'Codex', why: 'codex login status' };
+    if (!hasTerminal() || !(await offerLogin('codex', bin, err))) return false;
+  }
 }
 
 async function runTriggerLayer({ skillDir, skillName, depth, model, host = 'claude-code' }) {
@@ -563,7 +579,7 @@ async function interactive({ langGiven = false } = {}) {
     if (!targets.length) return hasTerminal() ? AGAIN : END;
     S.targets = targets.map((tg) => ({ ...tg, name: skillNameOf(tg.dir) }));
     // Say it before any quota is spent, not after: a copy with no public repository behind it can't go on the leaderboard.
-    if (source !== 'suggest' && source !== 'repo' && targets.some((tg) => { const f = gitFacts(tg.dir); return !(f.repo && f.commit); })) say(`\n${t('noSubmitEarly')}`);
+    if (S.host !== 'codex' && source !== 'suggest' && source !== 'repo' && targets.some((tg) => { const f = gitFacts(tg.dir); return !(f.repo && f.commit); })) say(`\n${t('noSubmitEarly')}`);
     return null;
   };
 
@@ -576,6 +592,7 @@ async function interactive({ langGiven = false } = {}) {
     ], 1);
 
     // Look for the host CLI before any question about depth or model: a missing one ends the run here, for free.
+    if (S.host === 'codex' && !binInstalled('codex') && !(await fixMissingHost('codex', { vars: { host: 'Codex' } }))) return AGAIN;
     const hostId = HOST_ID[S.host];
     if (hostId) {
       try { requireHost(hostId); } catch (err) {
@@ -663,7 +680,7 @@ async function interactive({ langGiven = false } = {}) {
         const k = await getDeepseekKey();
         if (k !== 'ok') return k === 'quit' ? END : TO_HOST;
       }
-      S.wantProbe = await confirm(t('probeQ'), false);
+      S.wantProbe = await confirm(t('probeQ'), false) && await codexSignedIn();
       say(`\n${S.wantProbe
         ? t('codexEstimate', { skills: targets.length, runs: 2 })
         : t('codexStaticOnly', { skills: targets.length })}`);
