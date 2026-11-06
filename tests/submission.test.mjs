@@ -378,7 +378,7 @@ test('CLI submit --dry-run: previews, writes the package, uploads nothing', asyn
   assert.match(res.stdout, /Nothing has been uploaded yet/);
   assert.match(res.stdout, /sha256 [0-9a-f]{16}…/);
   assert.match(res.stdout, /scrubbed\s+.*path ×/);
-  assert.match(res.stdout, /Contributor License Agreement/);
+  assert.match(res.stdout, /contributor agreement \(CLA\)/);
   assert.match(res.stdout, /cannot prove/);
   assert.match(res.stdout, /Dry run: nothing was submitted/);
   const dirs = fs.readdirSync(path.join(outDir, 'demo'));
@@ -404,8 +404,8 @@ test('CLI submit without consent submits nothing and, without gh, prints the man
     encoding: 'utf8', env: { ...process.env, PATH: empty, Path: empty }, input: '',
   });
   assert.equal(res.status, 0, res.stdout + res.stderr);
-  assert.match(res.stdout, /GitHub CLI \(gh\) is not installed or not logged in/);
-  assert.match(res.stdout, /To submit by hand/);
+  assert.match(res.stdout, /\(gh\) is not installed or not signed in/);
+  assert.match(res.stdout, /submit by hand/);
   assert.match(res.stdout, /Sign the CLA/);
 });
 

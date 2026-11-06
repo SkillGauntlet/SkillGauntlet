@@ -30,6 +30,7 @@ Be clear-eyed about these.
 - **Your environment is passed through.** Trials inherit your environment variables, including any API keys you have set, because the agent needs them to authenticate. A skill that gets the agent to run a command could see them. Do not run tests with credentials you would not hand to the skill's author.
 - **No network isolation.** Nothing blocks outbound traffic from a command the agent is allowed to run.
 - **Layer 2 (gain) lets the agent do the task.** It exists to measure whether the skill helps, so the agent works on a fixture task with the skill installed. The same permission mode applies, but this layer exercises more of the agent than the trigger test does. After the run, a contract may execute a shell command from this repository's `contracts/` files against the resulting directory. Those commands are written by us, not by skill authors, but they run on files the model produced.
+- **A host found by name.** When a host is not installed, the CLI also looks for a file with its name in your home folders. One in Downloads, Desktop or Documents is listed but never chosen by default. If you choose it, it runs as you, and we have not verified where it came from.
 - **No review of the skills we test.** Layer 0 reports facts such as shipped code, network calls and instruction-hijacking phrases. It is a signal, not a guarantee that a skill is safe, and not finding something is not proof it is absent.
 - **Fetching is git clone at the pinned ref.** We do not verify signatures on upstream repositories.
 

@@ -49,7 +49,7 @@ test('a tool that is there is left alone; a missing one is installed on enter an
   });
   assert.equal(ok, true);
   assert.deepEqual(ran[0].slice(0, 4), ['winget', 'install', '--id', 'GitHub.cli']);
-  assert.ok(s.lines.some((l) => /gh is installed/.test(l)));
+  assert.ok(s.lines.some((l) => /\(gh\) is installed/.test(l)));
 });
 
 test('choosing to install it yourself, a failed install and an unsupported system all end without installing', async () => {

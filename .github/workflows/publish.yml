@@ -1,0 +1,39 @@
+# Publishes the npm package when a version tag is pushed, with provenance: npm then shows which commit and workflow built
+# the package, and there is no long-lived npm token to steal, because the job proves who it is through GitHub's OIDC.
+#
+# One-time setup on npmjs.com: package skillgauntlet → Settings → Trusted Publisher → GitHub Actions, with
+#   organization SkillGauntlet, repository SkillGauntlet, workflow publish.yml.
+#
+# To release: bump package.json on main, then `git tag v1.2.3 && git push origin v1.2.3`.
+name: publish
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions: {}
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+      - name: The tag and package.json name the same version
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          want="v$(node -p "require('./package.json').version")"
+          if [ "$TAG" != "$want" ]; then echo "tag $TAG does not match package.json ($want)"; exit 1; fi
+      - run: npm test
+      - name: A version of npm that can use trusted publishing
+        run: npm install -g npm@11
+      - run: npm publish --provenance --access public
