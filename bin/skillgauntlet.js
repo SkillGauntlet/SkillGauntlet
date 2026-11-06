@@ -12,7 +12,7 @@ import { probeActivation } from '../lib/codex.js';
 import { fingerprint, cacheFileFor, readCachedQueries, writeCachedQueries } from '../lib/queries.js';
 import { openRun, querySetHash, readRun, readAnswers, validRecords } from '../lib/runs.js';
 import { DEPTHS, minutesFor } from '../lib/depth.js';
-import { ask, askSecret, choose, select, confirm, say, closeUi, hasTerminal, setBack, Back } from '../lib/ui.js';
+import { ask, askSecret, choose, select, confirm, say, closeUi, lendTerminal, hasTerminal, setBack, Back } from '../lib/ui.js';
 import { hostModels, unknownModel, codebuddyCatalog } from '../lib/models.js';
 import { browseDir } from '../lib/browse.js';
 import { withTicker } from '../lib/ticker.js';
@@ -169,7 +169,7 @@ async function offerLogin(host, bin, err) {
   ], 1);
   if (pick !== 'now') return false;
   say(`\n${t(spec.hint)}\n`);
-  closeUi(); // hand the terminal to the host's own login
+  lendTerminal(); // the host's own login runs on this terminal, then the questions go on
   const launch = launchSpec(bin, spec.args, HOSTS[host].bin);
   const r = runLogin(launch.cmd, launch.args, { stdio: 'inherit', shell: launch.shell });
   say('');
