@@ -1,0 +1,118 @@
+{
+  "trials": 16,
+  "recall": 0.8333333333333334,
+  "fpr": 0,
+  "noToolRate": 0,
+  "questions": [
+    {
+      "query": "Hey, in our codebase 'order' and 'purchase' seem to mean the same thing, which term should we use?",
+      "shouldTrigger": true,
+      "hits": 1,
+      "n": 1
+    },
+    {
+      "query": "我们代码里 Customer 和 User 好像混着用，这两个词到底指什么？先别改代码，先定一下术语",
+      "shouldTrigger": true,
+      "hits": 1,
+      "n": 1
+    },
+    {
+      "query": "can you add a GLOSSARY.md entry for 'Shipment' — it's a dispatched order group, not the same as a Package",
+      "shouldTrigger": true,
+      "hits": 1,
+      "n": 1
+    },
+    {
+      "query": "帮我改一下 GLOSSARY.md，把'退款'的定义改成只指原支付渠道退款，不包括积分返还",
+      "shouldTrigger": true,
+      "hits": 1,
+      "n": 1
+    },
+    {
+      "query": "把 docs/adr/0004-kafka-for-events.md 这个 ADR 更新一下，我们后来决定改用 RabbitMQ 了",
+      "shouldTrigger": true,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "record an ADR for why we picked Redis over Memcached for session cache, we chose it for pub/sub",
+      "shouldTrigger": true,
+      "hits": 1,
+      "n": 1
+    },
+    {
+      "query": "这个 terminology checker 为什么把 lint.js 里的 'ms' 报成拼写错误？修一下正则",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "Translate the terminology section in README.md into Chinese, keep code identifiers as-is",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "What does the term 'sidecar' mean in the Istio docs? one-liner please",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "帮我编辑 CHANGELOG.md，把 v2.3 的更新条目补上",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "Write a glossary page at docs/site/terms.md listing all CLI flags for the docs site",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "把 src/locales/zh.json 里缺的 key 补齐，顺便检查有没有占位符写错",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "Write an RFC for the new caching layer in docs/rfc/cache.md",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "帮我给 PR #482 记一下 Postgres 迁移改了哪些表，写进 PR 描述里",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "Fix the broken link in docs/api/orders.md that points to 0002",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "把 staging 部署步骤记录进 runbook/deploy.md，越具体越好",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    }
+  ],
+  "failedTrials": 0,
+  "incomplete": 0,
+  "model": "deepseek-v4.1-flash",
+  "backend": "codebuddy",
+  "host": "codebuddy",
+  "runs": 1,
+  "recallCi": [
+    0.43649056343635395,
+    0.9699474141282697
+  ],
+  "fprCi": [
+    0,
+    0.2775401687666166
+  ]
+}
