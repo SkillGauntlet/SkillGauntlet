@@ -1,0 +1,139 @@
+{
+  "schema": "skillgauntlet/run/1",
+  "runId": "20261107-013929",
+  "runnerVersion": "1.4.6",
+  "skill": "find-skills",
+  "host": "claude-code",
+  "backend": "anthropic",
+  "model": "haiku",
+  "runs": 3,
+  "maxExplore": 0,
+  "depth": {
+    "id": "standard",
+    "perClause": 3,
+    "negatives": 10
+  },
+  "querySets": [
+    {
+      "id": "main",
+      "source": "cache",
+      "file": "queries-3x10.json",
+      "queries": 22,
+      "clauses": 4,
+      "sha256": "8cf8fb3f04012428",
+      "negativesQuality": {
+        "total": 10,
+        "weak": 0
+      }
+    }
+  ],
+  "skillFingerprint": "c1d9628984991d7e",
+  "platform": "win32 10.0.26300 / Node v24.19.0",
+  "startedAt": "2026-11-06T16:39:29.320Z",
+  "finishedAt": "2026-11-06T16:41:33.489Z",
+  "trials": 66,
+  "interrupted": false,
+  "modelResolved": "claude-haiku-5-5",
+  "apiKeySource": "none",
+  "claudeCodeVersion": "2.1.303",
+  "loadedSkills": [
+    "find-skills",
+    "design",
+    "design-sync",
+    "dataviz",
+    "update-config",
+    "verify",
+    "debug",
+    "code-review",
+    "simplify",
+    "batch",
+    "fewer-permission-prompts",
+    "doctor",
+    "loop",
+    "schedule",
+    "claude-api",
+    "run",
+    "run-skill-generator",
+    "plugin-authoring"
+  ],
+  "tools": [
+    "Bash",
+    "CronCreate",
+    "CronDelete",
+    "CronList",
+    "DesignSync",
+    "Edit",
+    "EnterWorktree",
+    "ExitWorktree",
+    "Glob",
+    "Grep",
+    "ListAgents",
+    "Monitor",
+    "NotebookEdit",
+    "PowerShell",
+    "PushNotification",
+    "Read",
+    "RemoteTrigger",
+    "ReportFindings",
+    "ScheduleWakeup",
+    "SendMessage",
+    "Skill",
+    "Task",
+    "TaskStop",
+    "ToolSearch",
+    "WebSearch",
+    "Write"
+  ],
+  "submission": {
+    "schema": "skillgauntlet/submission/1",
+    "contributor": "pilafbigking",
+    "skill": {
+      "name": "find-skills",
+      "repo": "https://github.com/vercel-labs/skills",
+      "commit": "a80e4c9d12d607631249d4d7d059f835d4b2f13a",
+      "subdir": "skills/find-skills",
+      "skillMdSha256": "c00eeea0e13e74fe4a9d84ba0a8542205a1b736d65f13134fe1a6647eb14976f"
+    },
+    "host": {
+      "id": "claude-code",
+      "version": "2.1.303"
+    },
+    "model": {
+      "requested": "haiku",
+      "resolved": "claude-haiku-5-5"
+    },
+    "queryPack": {
+      "id": "main",
+      "sha256": "8cf8fb3f0401242874ad669201edfac1200db7041d2d66d40f86a3de4139873e",
+      "queries": 22
+    },
+    "environment": {
+      "id": "d8918bd6ed18",
+      "platform": "win32 10.0.26300 / Node v24.19.0",
+      "hostVersion": "2.1.303",
+      "backend": "anthropic",
+      "loadedSkills": [
+        "batch",
+        "claude-api",
+        "code-review",
+        "dataviz",
+        "debug",
+        "design",
+        "design-sync",
+        "doctor",
+        "fewer-permission-prompts",
+        "find-skills",
+        "loop",
+        "plugin-authoring",
+        "run",
+        "run-skill-generator",
+        "schedule",
+        "simplify",
+        "update-config",
+        "verify"
+      ],
+      "toolCount": 26
+    },
+    "submittedAt": "2026-11-06T16:41:48Z"
+  }
+}
