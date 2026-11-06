@@ -1,0 +1,139 @@
+{
+  "schema": "skillgauntlet/run/1",
+  "runId": "20261107-001353",
+  "runnerVersion": "1.4.4",
+  "skill": "domain-modeling",
+  "host": "claude-code",
+  "backend": "anthropic",
+  "model": "haiku",
+  "runs": 1,
+  "maxExplore": 0,
+  "depth": {
+    "id": "quick",
+    "perClause": 2,
+    "negatives": 10
+  },
+  "querySets": [
+    {
+      "id": "main",
+      "source": "drafted",
+      "file": "queries-2x10.json",
+      "queries": 16,
+      "clauses": 3,
+      "sha256": "2e5ee097d8c0fcfa",
+      "negativesQuality": {
+        "total": 10,
+        "weak": 0
+      }
+    }
+  ],
+  "skillFingerprint": "b62d997256cc073e",
+  "platform": "win32 10.0.26300 / Node v24.19.0",
+  "startedAt": "2026-11-06T15:13:53.548Z",
+  "finishedAt": "2026-11-06T15:14:15.106Z",
+  "trials": 16,
+  "interrupted": false,
+  "modelResolved": "claude-haiku-5-5",
+  "apiKeySource": "none",
+  "claudeCodeVersion": "2.1.303",
+  "loadedSkills": [
+    "domain-modeling",
+    "design",
+    "design-sync",
+    "dataviz",
+    "update-config",
+    "verify",
+    "debug",
+    "code-review",
+    "simplify",
+    "batch",
+    "fewer-permission-prompts",
+    "doctor",
+    "loop",
+    "schedule",
+    "claude-api",
+    "run",
+    "run-skill-generator",
+    "plugin-authoring"
+  ],
+  "tools": [
+    "Bash",
+    "CronCreate",
+    "CronDelete",
+    "CronList",
+    "DesignSync",
+    "Edit",
+    "EnterWorktree",
+    "ExitWorktree",
+    "Glob",
+    "Grep",
+    "ListAgents",
+    "Monitor",
+    "NotebookEdit",
+    "PowerShell",
+    "PushNotification",
+    "Read",
+    "RemoteTrigger",
+    "ReportFindings",
+    "ScheduleWakeup",
+    "SendMessage",
+    "Skill",
+    "Task",
+    "TaskStop",
+    "ToolSearch",
+    "WebSearch",
+    "Write"
+  ],
+  "submission": {
+    "schema": "skillgauntlet/submission/1",
+    "contributor": "pilafbigking",
+    "skill": {
+      "name": "domain-modeling",
+      "repo": "https://github.com/mattpocock/skills",
+      "commit": "5beb35b040e3de97e54fa9e386d7e42d15c295c2",
+      "subdir": "skills/engineering/domain-modeling",
+      "skillMdSha256": "7b925d7b1e341a2eeae33ad68a8a8c0ab889a38ddd22a7598e4c240e5a7556a3"
+    },
+    "host": {
+      "id": "claude-code",
+      "version": "2.1.303"
+    },
+    "model": {
+      "requested": "haiku",
+      "resolved": "claude-haiku-5-5"
+    },
+    "queryPack": {
+      "id": "main",
+      "sha256": "2e5ee097d8c0fcfa58d6713299e9b8b624ed4012c226f3cbcfb9ddb03efddb4b",
+      "queries": 16
+    },
+    "environment": {
+      "id": "afcd4659a7d9",
+      "platform": "win32 10.0.26300 / Node v24.19.0",
+      "hostVersion": "2.1.303",
+      "backend": "anthropic",
+      "loadedSkills": [
+        "batch",
+        "claude-api",
+        "code-review",
+        "dataviz",
+        "debug",
+        "design",
+        "design-sync",
+        "doctor",
+        "domain-modeling",
+        "fewer-permission-prompts",
+        "loop",
+        "plugin-authoring",
+        "run",
+        "run-skill-generator",
+        "schedule",
+        "simplify",
+        "update-config",
+        "verify"
+      ],
+      "toolCount": 26
+    },
+    "submittedAt": "2026-11-06T15:14:21Z"
+  }
+}
