@@ -1,0 +1,149 @@
+{
+  "schema": "skillgauntlet/queries/1",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "in src/ordering we call it both 'order' and 'booking' for the same thing, which one should win? can we settle the naming before i keep coding",
+      "shouldTrigger": true,
+      "clause": "discussing codebase terminology",
+      "shares": "",
+      "borrows": "",
+      "note": "Two names for one concept in the code, and the user wants a canonical term decided."
+    },
+    {
+      "id": "q02",
+      "query": "src/billing 里 'invoice' 和 'statement' 好像是一回事，代码两边都在用，术语到底统一成哪个？",
+      "shouldTrigger": true,
+      "clause": "discussing codebase terminology",
+      "shares": "",
+      "borrows": "",
+      "note": "Asks which of two overloaded code terms should be canonical, which is terminology discussion."
+    },
+    {
+      "id": "q03",
+      "query": "add a Reservation entry to GLOSSARY.md, it's the hold on stock before payment is captured",
+      "shouldTrigger": true,
+      "clause": "writing or editing GLOSSARY.md",
+      "shares": "",
+      "borrows": "",
+      "note": "Direct request to add a term to the domain glossary."
+    },
+    {
+      "id": "q04",
+      "query": "帮我改一下 GLOSSARY.md，'Cancellation' 那条只针对整个订单取消，部分取消另起一条",
+      "shouldTrigger": true,
+      "clause": "writing or editing GLOSSARY.md",
+      "shares": "",
+      "borrows": "",
+      "note": "Direct request to edit an existing glossary entry and split a term."
+    },
+    {
+      "id": "q05",
+      "query": "write up docs/adr/0003-use-outbox-for-events.md, we went with outbox over direct publish because of the dual-write problem",
+      "shouldTrigger": true,
+      "clause": "recording or editing an ADR",
+      "shares": "",
+      "borrows": "",
+      "note": "Asks to record a decision with its trade-off in an ADR file."
+    },
+    {
+      "id": "q06",
+      "query": "docs/adr/0002-postgres-for-write-model.md 要更新，后来加了读副本，状态改成 superseded 并且记一下原因",
+      "shouldTrigger": true,
+      "clause": "recording or editing an ADR",
+      "shares": "",
+      "borrows": "",
+      "note": "Asks to edit an existing ADR and mark it superseded with a reason."
+    },
+    {
+      "id": "q07",
+      "query": "What does the `terminology` key in i18n.config.json control? just explain, don't touch the file",
+      "shouldTrigger": false,
+      "clause": "discussing codebase terminology",
+      "shares": "the `terminology` key",
+      "borrows": "codebase terminology",
+      "note": "Shares the word terminology, but asks what a config key does; no domain vocabulary is being decided."
+    },
+    {
+      "id": "q08",
+      "query": "帮我在整个 codebase 里 grep 一下 cancelOrder 被调用的地方，列个清单就行",
+      "shouldTrigger": false,
+      "clause": "discussing codebase terminology",
+      "shares": "在整个 codebase 里 grep",
+      "borrows": "codebase",
+      "note": "A repo-wide call-site search is a built-in search task, not a discussion of what the terms mean."
+    },
+    {
+      "id": "q09",
+      "query": "Translate the strings in src/i18n/en.json into Traditional Chinese, keep the keys as they are",
+      "shouldTrigger": false,
+      "clause": "discussing codebase terminology",
+      "shares": "the strings in src/i18n/en.json",
+      "borrows": "codebase terminology",
+      "note": "Same UI copy files as a terminology discussion, but the job is translating display strings, not naming domain concepts."
+    },
+    {
+      "id": "q10",
+      "query": "把 src/ordering 里的 Order 类型 rename 成 PurchaseOrder，相关 import 一起改掉",
+      "shouldTrigger": false,
+      "clause": "discussing codebase terminology",
+      "shares": "Order 类型 rename 成 PurchaseOrder",
+      "borrows": "codebase terminology",
+      "note": "The user already decided the new name and wants a mechanical symbol rename, not a discussion of what the term should mean."
+    },
+    {
+      "id": "q11",
+      "query": "Turn docs/cli-reference.md into a glossary of every flag the build command accepts",
+      "shouldTrigger": false,
+      "clause": "writing or editing GLOSSARY.md",
+      "shares": "into a glossary of every flag",
+      "borrows": "writing or editing GLOSSARY.md",
+      "note": "Produces a CLI flag reference, a different artefact; the domain GLOSSARY.md must not be created or edited here."
+    },
+    {
+      "id": "q12",
+      "query": "改一下 docs/ 下面的 CHANGELOG.md，把 v2.3 的发布条目补上",
+      "shouldTrigger": false,
+      "clause": "writing or editing GLOSSARY.md",
+      "shares": "改一下 docs/ 下面的 CHANGELOG.md",
+      "borrows": "writing or editing GLOSSARY.md",
+      "note": "Same act of editing a markdown doc in the docs folder, but a release-log entry with no domain terms."
+    },
+    {
+      "id": "q13",
+      "query": "Generate API reference docs from api/openapi.yaml and drop them in docs/api/",
+      "shouldTrigger": false,
+      "clause": "writing or editing GLOSSARY.md",
+      "shares": "Generate API reference docs",
+      "borrows": "writing or editing GLOSSARY.md",
+      "note": "Endpoint reference generated from an OpenAPI spec is a docs-generation job, not a glossary of business terms."
+    },
+    {
+      "id": "q14",
+      "query": "Record the output of `pnpm audit` into reports/audit-2026-11.csv",
+      "shouldTrigger": false,
+      "clause": "recording or editing an ADR",
+      "shares": "Record the output of",
+      "borrows": "recording or editing an ADR",
+      "note": "Record here means dumping command output to a CSV, not documenting an architectural decision with context and trade-offs."
+    },
+    {
+      "id": "q15",
+      "query": "把 src/config/feature-flags.ts 里 enableOutbox 改成 true，staging 先开",
+      "shouldTrigger": false,
+      "clause": "recording or editing an ADR",
+      "shares": "把 src/config/feature-flags.ts 里 enableOutbox 改成 true",
+      "borrows": "recording or editing an ADR",
+      "note": "Flipping a flag touches code an outbox ADR may cover, but the user wants a config change, not a decision record."
+    },
+    {
+      "id": "q16",
+      "query": "帮我开个 GitHub issue，记录一下 Postgres 17 升级的待办项",
+      "shouldTrigger": false,
+      "clause": "recording or editing an ADR",
+      "shares": "记录一下 Postgres 17 升级的待办项",
+      "borrows": "recording or editing an ADR",
+      "note": "Filing a tracker issue is the issue tracker's job; an ADR records a settled decision, and a to-do item is not one."
+    }
+  ]
+}

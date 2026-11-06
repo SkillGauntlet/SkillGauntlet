@@ -1,0 +1,149 @@
+{
+  "schema": "skillgauntlet/queries/1",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "Hey, in our codebase 'order' and 'purchase' seem to mean the same thing, which term should we use?",
+      "shouldTrigger": true,
+      "clause": "discussing codebase terminology",
+      "shares": "",
+      "borrows": "",
+      "note": "User is asking which domain term is canonical, which is terminology discussion."
+    },
+    {
+      "id": "q02",
+      "query": "我们代码里 Customer 和 User 好像混着用，这两个词到底指什么？先别改代码，先定一下术语",
+      "shouldTrigger": true,
+      "clause": "discussing codebase terminology",
+      "shares": "",
+      "borrows": "",
+      "note": "User wants to resolve overloaded terms in the codebase before any code change."
+    },
+    {
+      "id": "q03",
+      "query": "can you add a GLOSSARY.md entry for 'Shipment' — it's a dispatched order group, not the same as a Package",
+      "shouldTrigger": true,
+      "clause": "writing or editing a GLOSSARY.md",
+      "shares": "",
+      "borrows": "",
+      "note": "Explicitly asks to add a term to GLOSSARY.md."
+    },
+    {
+      "id": "q04",
+      "query": "帮我改一下 GLOSSARY.md，把'退款'的定义改成只指原支付渠道退款，不包括积分返还",
+      "shouldTrigger": true,
+      "clause": "writing or editing a GLOSSARY.md",
+      "shares": "",
+      "borrows": "",
+      "note": "Asks to edit an existing GLOSSARY.md definition."
+    },
+    {
+      "id": "q05",
+      "query": "record an ADR for why we picked Redis over Memcached for session cache, we chose it for pub/sub",
+      "shouldTrigger": true,
+      "clause": "recording or editing an ADR",
+      "shares": "",
+      "borrows": "",
+      "note": "Asks to record a new architecture decision with its trade-off."
+    },
+    {
+      "id": "q06",
+      "query": "把 docs/adr/0004-kafka-for-events.md 这个 ADR 更新一下，我们后来决定改用 RabbitMQ 了",
+      "shouldTrigger": true,
+      "clause": "recording or editing an ADR",
+      "shares": "",
+      "borrows": "",
+      "note": "Asks to edit an existing ADR file."
+    },
+    {
+      "id": "q07",
+      "query": "Translate the terminology section in README.md into Chinese, keep code identifiers as-is",
+      "shouldTrigger": false,
+      "clause": "discussing codebase terminology",
+      "shares": "terminology section",
+      "borrows": "codebase terminology",
+      "note": "Translating a README section is doc localization, not defining or discussing the project's domain terms."
+    },
+    {
+      "id": "q08",
+      "query": "这个 terminology checker 为什么把 lint.js 里的 'ms' 报成拼写错误？修一下正则",
+      "shouldTrigger": false,
+      "clause": "discussing codebase terminology",
+      "shares": "terminology checker",
+      "borrows": "codebase terminology",
+      "note": "Fixing a lint regex is a tooling bug fix; the checker is code, not a domain-language discussion."
+    },
+    {
+      "id": "q09",
+      "query": "What does the term 'sidecar' mean in the Istio docs? one-liner please",
+      "shouldTrigger": false,
+      "clause": "discussing codebase terminology",
+      "shares": "the term 'sidecar'",
+      "borrows": "terminology",
+      "note": "A quick lookup of an external technical term is answered by plain research, not by modeling this project's domain."
+    },
+    {
+      "id": "q10",
+      "query": "帮我编辑 CHANGELOG.md，把 v2.3 的更新条目补上",
+      "shouldTrigger": false,
+      "clause": "writing or editing a GLOSSARY.md",
+      "shares": "编辑 CHANGELOG.md",
+      "borrows": "editing",
+      "note": "Editing a changelog is a release-notes task owned by a different workflow, though it is also a markdown edit."
+    },
+    {
+      "id": "q11",
+      "query": "Write a glossary page at docs/site/terms.md listing all CLI flags for the docs site",
+      "shouldTrigger": false,
+      "clause": "writing or editing a GLOSSARY.md",
+      "shares": "Write a glossary page",
+      "borrows": "writing or editing a GLOSSARY.md",
+      "note": "A user-facing CLI flag reference is documentation, not the project's domain-model glossary."
+    },
+    {
+      "id": "q12",
+      "query": "把 src/locales/zh.json 里缺的 key 补齐，顺便检查有没有占位符写错",
+      "shouldTrigger": false,
+      "clause": "writing or editing a GLOSSARY.md",
+      "shares": "src/locales/zh.json 里缺的 key",
+      "borrows": "editing",
+      "note": "Syncing i18n translation keys is a locale-file chore, not defining domain terms."
+    },
+    {
+      "id": "q13",
+      "query": "Write an RFC for the new caching layer in docs/rfc/cache.md",
+      "shouldTrigger": false,
+      "clause": "recording or editing an ADR",
+      "shares": "an RFC",
+      "borrows": "an ADR",
+      "note": "An RFC is a design proposal document; this skill covers ADRs only and the near-miss is in the document type."
+    },
+    {
+      "id": "q14",
+      "query": "帮我给 PR #482 记一下 Postgres 迁移改了哪些表，写进 PR 描述里",
+      "shouldTrigger": false,
+      "clause": "recording or editing an ADR",
+      "shares": "记一下",
+      "borrows": "recording",
+      "note": "Writing a PR description is git and review workflow, not recording an architectural decision."
+    },
+    {
+      "id": "q15",
+      "query": "Fix the broken link in docs/api/orders.md that points to 0002",
+      "shouldTrigger": false,
+      "clause": "recording or editing an ADR",
+      "shares": "points to 0002",
+      "borrows": "an ADR",
+      "note": "Fixing a broken link is doc maintenance; the 0002 reference is incidental and no decision is being recorded or edited."
+    },
+    {
+      "id": "q16",
+      "query": "把 staging 部署步骤记录进 runbook/deploy.md，越具体越好",
+      "shouldTrigger": false,
+      "clause": "recording or editing an ADR",
+      "shares": "记录进",
+      "borrows": "recording",
+      "note": "Recording deploy steps in a runbook is operations documentation, not an architecture decision record."
+    }
+  ]
+}
