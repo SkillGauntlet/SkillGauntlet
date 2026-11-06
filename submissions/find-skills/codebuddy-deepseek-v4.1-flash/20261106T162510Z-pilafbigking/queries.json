@@ -1,0 +1,203 @@
+{
+  "schema": "skillgauntlet/queries/1",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "how do i add e2e tests to this vue project, never set it up before",
+      "shouldTrigger": true,
+      "clause": "how-do-I-do-X task question",
+      "shares": "",
+      "borrows": "",
+      "note": "Classic 'how do I do X' where X is a common task that likely already has an installable skill."
+    },
+    {
+      "id": "q02",
+      "query": "怎么给这个 react 项目加暗色模式啊，有现成方案吗",
+      "shouldTrigger": true,
+      "clause": "how-do-I-do-X task question",
+      "shares": "",
+      "borrows": "",
+      "note": "Chinese how-to for a common frontend task; '有现成方案吗' signals looking for existing functionality."
+    },
+    {
+      "id": "q03",
+      "query": "whats the normal way to generate a changelog from commit history",
+      "shouldTrigger": true,
+      "clause": "how-do-I-do-X task question",
+      "shares": "",
+      "borrows": "",
+      "note": "Asks how to do a repeatable task that often ships as a skill."
+    },
+    {
+      "id": "q04",
+      "query": "有没有做 ppt 的 skill 推荐一个",
+      "shouldTrigger": true,
+      "clause": "explicit skill search",
+      "shares": "",
+      "borrows": "",
+      "note": "Direct request for a skill in a specific domain."
+    },
+    {
+      "id": "q05",
+      "query": "find a skill for reviewing pull requests",
+      "shouldTrigger": true,
+      "clause": "explicit skill search",
+      "shares": "",
+      "borrows": "",
+      "note": "Literal 'find a skill for X' phrasing."
+    },
+    {
+      "id": "q06",
+      "query": "有没有 terraform 最佳实践相关的 skill",
+      "shouldTrigger": true,
+      "clause": "explicit skill search",
+      "shares": "",
+      "borrows": "",
+      "note": "Asks whether a skill exists for a concrete domain."
+    },
+    {
+      "id": "q07",
+      "query": "can you generate api docs straight from our express routes",
+      "shouldTrigger": true,
+      "clause": "capability check",
+      "shares": "",
+      "borrows": "",
+      "note": "Specialized capability question; the answer may be an installable skill."
+    },
+    {
+      "id": "q08",
+      "query": "你能做无障碍审计吗，查一下这个页面的 contrast",
+      "shouldTrigger": true,
+      "clause": "capability check",
+      "shares": "",
+      "borrows": "",
+      "note": "Chinese 'can you do X' for a specialized capability."
+    },
+    {
+      "id": "q09",
+      "query": "can u handle figma to code conversion at all",
+      "shouldTrigger": true,
+      "clause": "capability check",
+      "shares": "",
+      "borrows": "",
+      "note": "Capability probe for a specialized conversion task, phrased casually."
+    },
+    {
+      "id": "q10",
+      "query": "我想让你多会一点 k8s 部署的活",
+      "shouldTrigger": true,
+      "clause": "extending agent capabilities",
+      "shares": "",
+      "borrows": "",
+      "note": "User wants to extend what the agent can do in a domain."
+    },
+    {
+      "id": "q11",
+      "query": "i want to give you design review abilities, is that possible",
+      "shouldTrigger": true,
+      "clause": "extending agent capabilities",
+      "shares": "",
+      "borrows": "",
+      "note": "Explicit interest in adding a new ability to the agent."
+    },
+    {
+      "id": "q12",
+      "query": "怎么让你更擅长处理 excel 表格",
+      "shouldTrigger": true,
+      "clause": "extending agent capabilities",
+      "shares": "",
+      "borrows": "",
+      "note": "Expresses desire to extend agent competence in a domain."
+    },
+    {
+      "id": "q13",
+      "query": "how do I write my own skill from scratch — folder layout and the frontmatter fields?",
+      "shouldTrigger": false,
+      "clause": "how-do-I-do-X task question",
+      "shares": "write my own skill",
+      "borrows": "how do I do X",
+      "note": "Authoring a new skill is creation work, not discovery of an installable skill."
+    },
+    {
+      "id": "q14",
+      "query": "帮我看看本地现在装了哪些 skill，列个清单",
+      "shouldTrigger": false,
+      "clause": "explicit skill search",
+      "shares": "装了哪些 skill",
+      "borrows": "install agent skills",
+      "note": "Inventory of already-installed skills, not a search for new ones."
+    },
+    {
+      "id": "q15",
+      "query": "上周装的那个 skill 太吵了，怎么卸载掉",
+      "shouldTrigger": false,
+      "clause": "explicit skill search",
+      "shares": "怎么卸载掉",
+      "borrows": "install agent skills",
+      "note": "Removal/management of an installed skill, not discovery or installation."
+    },
+    {
+      "id": "q16",
+      "query": "把 pdf 那个 skill 的文件夹找出来，打开 handler.ts 我看看",
+      "shouldTrigger": false,
+      "clause": "explicit skill search",
+      "shares": "skill 的文件夹找出来",
+      "borrows": "find a skill for X",
+      "note": "Locating files in a local installed skill, not searching the ecosystem."
+    },
+    {
+      "id": "q17",
+      "query": "怎么把自己写的 skill 发布到 skills.sh 让别人装",
+      "shouldTrigger": false,
+      "clause": "extending agent capabilities",
+      "shares": "发布到 skills.sh",
+      "borrows": "discover and install agent skills",
+      "note": "Publishing a skill to others is the reverse direction from discovering and installing."
+    },
+    {
+      "id": "q18",
+      "query": "帮我装一下 docker desktop，装完跑 compose up",
+      "shouldTrigger": false,
+      "clause": "extending agent capabilities",
+      "shares": "帮我装一下 docker",
+      "borrows": "install agent skills",
+      "note": "Installing software shares the verb 'install' but has nothing to do with skills."
+    },
+    {
+      "id": "q19",
+      "query": "can you add a retry wrapper around the fetch in api.ts",
+      "shouldTrigger": false,
+      "clause": "capability check",
+      "shares": "can you add",
+      "borrows": "can you do X",
+      "note": "A routine code edit owned by built-in editing, not a specialized capability needing a skill."
+    },
+    {
+      "id": "q20",
+      "query": "how do I add a custom slash command so you can do more stuff",
+      "shouldTrigger": false,
+      "clause": "extending agent capabilities",
+      "shares": "so you can do more stuff",
+      "borrows": "express interest in extending capabilities",
+      "note": "Uses a built-in extension mechanism, not the installable-skill ecosystem."
+    },
+    {
+      "id": "q21",
+      "query": "review the PR that adds the skill loader and check the yaml parsing",
+      "shouldTrigger": false,
+      "clause": "capability check",
+      "shares": "skill loader",
+      "borrows": "agent skills",
+      "note": "Code review of skill-related code; the goal is reviewing, not discovering skills."
+    },
+    {
+      "id": "q22",
+      "query": "search github for repos with 'skills' in the name and list the top ones",
+      "shouldTrigger": false,
+      "clause": "explicit skill search",
+      "shares": "repos with 'skills' in the name",
+      "borrows": "find a skill for X",
+      "note": "General repo search is a sibling capability; 'skills' here is just a repo-name string."
+    }
+  ]
+}
