@@ -1,0 +1,142 @@
+{
+  "trials": 20,
+  "recall": 0.6,
+  "fpr": 0,
+  "noToolRate": 0,
+  "questions": [
+    {
+      "query": "怎么给 vue 项目快速加上单元测试？每次从零配太费劲了",
+      "shouldTrigger": true,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "how do I set up e2e tests for a next.js app? I keep wiring playwright by hand every time",
+      "shouldTrigger": true,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "帮我找个 skill 做 code review 的，越成熟越好",
+      "shouldTrigger": true,
+      "hits": 1,
+      "n": 1
+    },
+    {
+      "query": "can you find a skill for generating changelogs from git history",
+      "shouldTrigger": true,
+      "hits": 1,
+      "n": 1
+    },
+    {
+      "query": "is there a skill that can migrate a CRA app to vite automatically?",
+      "shouldTrigger": true,
+      "hits": 1,
+      "n": 1
+    },
+    {
+      "query": "我想让 agent 多会点东西，比如看懂设计稿，有办法扩展吗？",
+      "shouldTrigger": true,
+      "hits": 1,
+      "n": 1
+    },
+    {
+      "query": "有没有能自动写 commit message 的 skill？",
+      "shouldTrigger": true,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "we do the same release checklist by hand every week, is there a plugin I can just install for that?",
+      "shouldTrigger": true,
+      "hits": 1,
+      "n": 1
+    },
+    {
+      "query": "I want to extend what my agent can do — right now it can't touch our internal docs at all",
+      "shouldTrigger": true,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "重复的周报整理太浪费时间了，有什么能装进 agent 直接用的工具吗？",
+      "shouldTrigger": true,
+      "hits": 1,
+      "n": 1
+    },
+    {
+      "query": "how do I fix this TypeError in cart.tsx? Cannot read properties of undefined (reading 'map')",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "how do I install Docker Desktop on mac? brew keeps failing halfway",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "帮我在这个 repo 里找一下处理退款的那个 service 在哪个文件",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "show me which skills are already installed in ~/.claude/skills and their versions",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "我们代码库里是不是有个现成的函数能重试 fetch？",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "is there a node library that can render pdf invoices?",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "how do I add a hook in settings.json so prettier runs on save",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "我想扩展一下 agent 的能力，自己写个 MCP server 把内部 API 包成工具，从哪开始？",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "tweak the install script of my local skill so it drops into the project dir instead of global",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    },
+    {
+      "query": "npm 上有没有现成的库能做图片压缩？要能批量处理的",
+      "shouldTrigger": false,
+      "hits": 0,
+      "n": 1
+    }
+  ],
+  "failedTrials": 0,
+  "incomplete": 0,
+  "model": "deepseek-v4.1-flash",
+  "backend": "codebuddy",
+  "host": "codebuddy",
+  "runs": 1,
+  "recallCi": [
+    0.3126695474501864,
+    0.8318224187964902
+  ],
+  "fprCi": [
+    0,
+    0.2775401687666166
+  ]
+}

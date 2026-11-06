@@ -1,0 +1,185 @@
+{
+  "schema": "skillgauntlet/queries/1",
+  "queries": [
+    {
+      "id": "q01",
+      "query": "how do I set up e2e tests for a next.js app? I keep wiring playwright by hand every time",
+      "shouldTrigger": true,
+      "clause": "how do I do X questions",
+      "shares": "",
+      "borrows": "",
+      "note": "A how-do-I on a common task where a packaged skill likely exists."
+    },
+    {
+      "id": "q02",
+      "query": "怎么给 vue 项目快速加上单元测试？每次从零配太费劲了",
+      "shouldTrigger": true,
+      "clause": "how do I do X questions",
+      "shares": "",
+      "borrows": "",
+      "note": "How-do-I phrasing on a standard task, the case the description names first."
+    },
+    {
+      "id": "q03",
+      "query": "帮我找个 skill 做 code review 的，越成熟越好",
+      "shouldTrigger": true,
+      "clause": "find a skill for X",
+      "shares": "",
+      "borrows": "",
+      "note": "Explicit request to locate a skill for a named task."
+    },
+    {
+      "id": "q04",
+      "query": "can you find a skill for generating changelogs from git history",
+      "shouldTrigger": true,
+      "clause": "find a skill for X",
+      "shares": "",
+      "borrows": "",
+      "note": "Literal 'find a skill for X' request."
+    },
+    {
+      "id": "q05",
+      "query": "is there a skill that can migrate a CRA app to vite automatically?",
+      "shouldTrigger": true,
+      "clause": "is there a skill that can...",
+      "shares": "",
+      "borrows": "",
+      "note": "Existence check phrased as 'is there a skill that can'."
+    },
+    {
+      "id": "q06",
+      "query": "有没有能自动写 commit message 的 skill？",
+      "shouldTrigger": true,
+      "clause": "is there a skill that can...",
+      "shares": "",
+      "borrows": "",
+      "note": "Asks whether a skill for a capability exists."
+    },
+    {
+      "id": "q07",
+      "query": "我想让 agent 多会点东西，比如看懂设计稿，有办法扩展吗？",
+      "shouldTrigger": true,
+      "clause": "interest in extending capabilities",
+      "shares": "",
+      "borrows": "",
+      "note": "Expresses a wish to extend what the agent can do."
+    },
+    {
+      "id": "q08",
+      "query": "I want to extend what my agent can do — right now it can't touch our internal docs at all",
+      "shouldTrigger": true,
+      "clause": "interest in extending capabilities",
+      "shares": "",
+      "borrows": "",
+      "note": "Interest in adding capability, the extending-capabilities case."
+    },
+    {
+      "id": "q09",
+      "query": "we do the same release checklist by hand every week, is there a plugin I can just install for that?",
+      "shouldTrigger": true,
+      "clause": "functionality that might exist as an installable skill",
+      "shares": "",
+      "borrows": "",
+      "note": "Seeks an installable add-on for existing functionality, without naming a skill."
+    },
+    {
+      "id": "q10",
+      "query": "重复的周报整理太浪费时间了，有什么能装进 agent 直接用的工具吗？",
+      "shouldTrigger": true,
+      "clause": "functionality that might exist as an installable skill",
+      "shares": "",
+      "borrows": "",
+      "note": "Looks for installable functionality that may already exist as a skill."
+    },
+    {
+      "id": "q11",
+      "query": "how do I fix this TypeError in cart.tsx? Cannot read properties of undefined (reading 'map')",
+      "shouldTrigger": false,
+      "clause": "how do I do X questions",
+      "shares": "how do I fix this",
+      "borrows": "how do I do X",
+      "note": "Local debugging of code the user already pasted; the ask is for a fix, not a skill lookup."
+    },
+    {
+      "id": "q12",
+      "query": "how do I install Docker Desktop on mac? brew keeps failing halfway",
+      "shouldTrigger": false,
+      "clause": "how do I do X questions",
+      "shares": "how do I install",
+      "borrows": "how do I do X",
+      "note": "OS-level software setup answered from built-in knowledge; nothing to discover or install as a skill."
+    },
+    {
+      "id": "q13",
+      "query": "帮我在这个 repo 里找一下处理退款的那个 service 在哪个文件",
+      "shouldTrigger": false,
+      "clause": "find a skill for X",
+      "shares": "找一下",
+      "borrows": "find a skill for X",
+      "note": "Code search inside the local repository, not a search of the skills registry."
+    },
+    {
+      "id": "q14",
+      "query": "show me which skills are already installed in ~/.claude/skills and their versions",
+      "shouldTrigger": false,
+      "clause": "find a skill for X",
+      "shares": "skills are already installed",
+      "borrows": "install agent skills",
+      "note": "Inventory of what is already on disk; no discovery and no installation of a new skill."
+    },
+    {
+      "id": "q15",
+      "query": "is there a node library that can render pdf invoices?",
+      "shouldTrigger": false,
+      "clause": "is there a skill that can...",
+      "shares": "is there a node library that can",
+      "borrows": "is there a skill that can...",
+      "note": "Asks about an npm library, a different ecosystem from agent skills."
+    },
+    {
+      "id": "q16",
+      "query": "我们代码库里是不是有个现成的函数能重试 fetch？",
+      "shouldTrigger": false,
+      "clause": "is there a skill that can...",
+      "shares": "是不是有个现成的函数能",
+      "borrows": "is there a skill that can...",
+      "note": "Checks for an existing helper inside the project, not for an installable skill."
+    },
+    {
+      "id": "q17",
+      "query": "我想扩展一下 agent 的能力，自己写个 MCP server 把内部 API 包成工具，从哪开始？",
+      "shouldTrigger": false,
+      "clause": "interest in extending capabilities",
+      "shares": "扩展一下 agent 的能力",
+      "borrows": "interest in extending capabilities",
+      "note": "The user wants to build the extension themselves; no existing skill is to be found or installed."
+    },
+    {
+      "id": "q18",
+      "query": "how do I add a hook in settings.json so prettier runs on save",
+      "shouldTrigger": false,
+      "clause": "interest in extending capabilities",
+      "shares": "add a hook",
+      "borrows": "interest in extending capabilities",
+      "note": "Configuring a built-in hook the agent already supports; nothing to discover or install."
+    },
+    {
+      "id": "q19",
+      "query": "npm 上有没有现成的库能做图片压缩？要能批量处理的",
+      "shouldTrigger": false,
+      "clause": "functionality that might exist as an installable skill",
+      "shares": "现成的库",
+      "borrows": "functionality that might exist as an installable skill",
+      "note": "Wants an npm package for image compression, not an agent skill."
+    },
+    {
+      "id": "q20",
+      "query": "tweak the install script of my local skill so it drops into the project dir instead of global",
+      "shouldTrigger": false,
+      "clause": "functionality that might exist as an installable skill",
+      "shares": "install script",
+      "borrows": "functionality that might exist as an installable skill",
+      "note": "Editing an existing skill package's install script; no discovery or fresh install is involved."
+    }
+  ]
+}
