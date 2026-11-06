@@ -1,0 +1,36 @@
+
+{
+  "skill": "skill-creator",
+  "tasks": [
+    {
+      "id": "sc1",
+      "prompt": "Create a new agent skill named release-notes. Create release-notes/SKILL.md with valid YAML frontmatter containing the name release-notes and a clear description. Add instructions explaining how to summarize commits into release notes, group changes into Added, Changed and Fixed sections, and avoid inventing changes.",
+      "files": {},
+      "contracts": [
+        {
+          "desc": "A new SKILL.md file was created",
+          "type": "files_added_matching",
+          "glob": "**/SKILL.md"
+        },
+        {
+          "desc": "The skill has the correct name",
+          "type": "file_contains",
+          "glob": "release-notes/SKILL.md",
+          "regex": "name:\\s*release-notes"
+        },
+        {
+          "desc": "The skill includes a description",
+          "type": "file_contains",
+          "glob": "release-notes/SKILL.md",
+          "regex": "description:"
+        },
+        {
+          "desc": "The instructions include release note categories",
+          "type": "file_contains",
+          "glob": "release-notes/SKILL.md",
+          "regex": "Added"
+        }
+      ]
+    }
+  ]
+}
