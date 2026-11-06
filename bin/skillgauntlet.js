@@ -171,6 +171,7 @@ async function offerLogin(host, bin, err) {
   ], 1);
   if (pick !== 'now') return false;
   say(`\n${t(spec.hint)}\n`);
+  if (spec.pause) await choose(t('loginOpenQ'), [{ label: t('loginOpen', { host: label }), value: 'open' }], 1);
   lendTerminal(); // the host's own login runs on this terminal, then the questions go on
   const launch = launchSpec(bin, spec.args, HOST_CLI[host].bin);
   const r = runLogin(launch.cmd, launch.args, { stdio: 'inherit', shell: launch.shell });

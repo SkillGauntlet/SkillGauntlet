@@ -24,6 +24,8 @@ FAKE_HOST = """#!/bin/sh
 case "$1" in
   --version) echo "2.0.0 (Claude Code)"; exit 0;;
   auth) touch "$HOME/signed-in"; echo "Login successful."; exit 0;;
+  --help) exit 0;;
+  "") touch "$HOME/signed-in"; echo "fake interface opened"; exit 0;;
 esac
 if [ ! -e "$HOME/signed-in" ]; then
   echo '{"type":"result","is_error":true,"result":"Not logged in - Please run /login"}'
@@ -48,8 +50,9 @@ class SignInOnATerminal(unittest.TestCase):
         shutil.copytree(ROOT / "step0" / "examples" / "csv-dedupe", skill)
         fake = self.home / "fakebin"
         fake.mkdir()
-        (fake / "claude").write_text(FAKE_HOST)
-        (fake / "claude").chmod(stat.S_IRWXU)
+        for name in ("claude", "codebuddy"):
+            (fake / name).write_text(FAKE_HOST)
+            (fake / name).chmod(stat.S_IRWXU)
         queries = [{"query": f"please dedupe file {i}", "should_trigger": True, "clause": "c"} for i in range(3)]
         queries += [{"query": f"dedupe my inbox {i}", "should_trigger": False, "clause": "c", "shares": "dedupe", "borrows": "dedupe"} for i in range(3)]
         (self.home / "draft.json").write_text(json.dumps({"type": "result", "result": json.dumps({"clauses": ["c"], "queries": queries})}))
@@ -63,6 +66,15 @@ class SignInOnATerminal(unittest.TestCase):
         }
 
     def test_questions_still_work_after_signing_in(self):
+        self._sign_in_and_decline(first_key=b"\r")
+
+    def test_codebuddy_says_how_to_come_back_before_opening_its_screen(self):
+        out = self._sign_in_and_decline(first_key=DOWN + b"\r")
+        opened = out.index("fake interface opened")
+        self.assertIn("/exit", out[:opened])
+        self.assertRegex(out[:opened], r"Open CodeBuddy \(press enter\)")
+
+    def _sign_in_and_decline(self, first_key):
         pid, fd = self.pty.fork()
         if pid == 0:
             os.chdir(self.home)
@@ -95,7 +107,7 @@ class SignInOnATerminal(unittest.TestCase):
                 reached = True
                 break
             # Installed skill, not the suggested one, so nothing is fetched; every other question takes its default.
-            key = DOWN + b"\r" if "Which skill should be tested" in tail else b"y" if "Start drafting" in tail else b"\r"
+            key = first_key if "Which AI coding tool" in tail else DOWN + b"\r" if "Which skill should be tested" in tail else b"y" if "Start drafting" in tail else b"\r"
             answered = len(out)
             os.write(fd, key)
             last = time.time()
@@ -124,6 +136,7 @@ class SignInOnATerminal(unittest.TestCase):
                 out += ANSI.sub("", data.decode("utf8", "replace"))
         self.assertTrue(finished, f"the keys were not read:\n{out[-800:]}")
         self.assertRegex(out[answered:], r"(?i)skip|not run|no trial|declin", out[-800:])
+        return out
 
     @staticmethod
     def _kill(pid):
