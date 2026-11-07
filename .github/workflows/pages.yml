@@ -14,6 +14,8 @@ on:
       - "submissions/**"
       - "step0/data/**"
       - "scripts/build-pages.mjs"
+      - "docs/assets/favicon*"
+      - "docs/assets/apple-touch-icon.png"
       - "scripts/build-leaderboard.mjs"
       - "lib/submission.js"
       - "lib/schema.js"

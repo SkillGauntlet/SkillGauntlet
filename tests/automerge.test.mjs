@@ -7,7 +7,7 @@ import { buildPackage, sha256, writePackage, FILES } from '../lib/submission.js'
 import { POLICY, claRecheckUrl, decide, gateAccount, gateFiles, pickMissingCla, pickWaiting, renderVerdict } from '../lib/automerge.js';
 import { apply, inspect, recheckMissingCla, sweep } from '../scripts/automerge.mjs';
 import { buildRows } from '../scripts/build-leaderboard.mjs';
-import { escapeHtml, renderPage, safeLink } from '../scripts/build-pages.mjs';
+import { SITE_ICONS, escapeHtml, renderPage, safeLink } from '../scripts/build-pages.mjs';
 import { FACTS, SKILL_MD, makeRun, tmpdir } from './_submit-fixture.mjs';
 
 const GOOD_SHA = sha256(SKILL_MD);
@@ -320,6 +320,14 @@ test('page: only https://github.com links are written', () => {
   const rows = buildRows([row({ repo: 'javascript:alert(1)', links: ['javascript:alert(1)'] })]);
   const html = renderPage({ rows, counts }, { repo: REPO });
   assert.ok(!/href="javascript:/i.test(html));
+});
+
+test('page: every icon it links to exists, by a path relative to the site', () => {
+  const html = renderPage({ rows: [], counts: { skills: 0, rows: 0, maintainer: 0, community: 0 } }, { repo: REPO });
+  for (const icon of SITE_ICONS) {
+    assert.ok(html.includes(`href="${icon}"`), icon);
+    assert.ok(fs.statSync(new URL(`../docs/assets/${icon}`, import.meta.url)).size > 0, icon);
+  }
 });
 
 test('page: one table per host, tags and raw-data links, no cross-host average', () => {

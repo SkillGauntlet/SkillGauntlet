@@ -53,10 +53,15 @@ function credit(r, repo) {
   return parts.join(', ') || '–';
 }
 
+// Copied as they are from docs/assets/ into the site.
+export const SITE_ICONS = ['favicon.svg', 'favicon-32.png', 'apple-touch-icon.png'];
+
 export function renderPage({ rows, skipped = [], counts }, { repo = 'SkillGauntlet/SkillGauntlet', built = '' } = {}) {
   const out = [];
   out.push('<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">',
     '<title>SkillGauntlet leaderboard</title>',
+    // Relative, because the site is served from /SkillGauntlet/ and not from the root of the domain.
+    '<link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32"><link rel="apple-touch-icon" href="apple-touch-icon.png">',
     '<style>:root{color-scheme:light dark}body{font:15px/1.5 system-ui,sans-serif;max-width:1200px;margin:0 auto;padding:16px}',
     'table{border-collapse:collapse;width:100%;margin:0 0 24px}th,td{border:1px solid #8884;padding:4px 8px;text-align:left;vertical-align:top}',
     'th{background:#8882}.wrap{overflow-x:auto}.tag{white-space:nowrap}</style></head><body>',
@@ -122,6 +127,7 @@ function main() {
   fs.writeFileSync(path.join(out, 'LEADERBOARD.md'), markdown);
   fs.writeFileSync(path.join(out, 'rows.json'), `${JSON.stringify(rowsJson)}\n`);
   fs.writeFileSync(path.join(out, '.nojekyll'), '');
+  for (const icon of SITE_ICONS) fs.copyFileSync(path.join(root, 'docs/assets', icon), path.join(out, icon));
   process.stdout.write(`wrote ${out}\n`);
 }
 
